@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@nautui/core": ["../../packages/core/src"],
+      "@nautui/core/*": ["../../packages/core/src/*"],
+      "@nautui/blocks": ["../../packages/blocks/src"],
+      "@nautui/blocks/*": ["../../packages/blocks/src/*"]
+    }
+  }
+}
