@@ -1,5 +1,12 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/astro"
+  ],
+  "html": {
+    "experimentalFullSupportEnabled": true
+  },
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -10,7 +17,7 @@
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "tab"
+    "indentStyle": "space"
   },
   "linter": {
     "enabled": true,
@@ -27,12 +34,31 @@
     "enabled": true,
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": "on",
+        "useSortedAttributes": "on"
       }
     }
   },
-  "extends": [
-    "ultracite/biome/core",
-    "ultracite/biome/astro"
+  "overrides": [
+    {
+      "includes": [
+        "**/*.astro"
+      ],
+      "linter": {
+        "enabled": true,
+        "rules": {
+          "style": {
+            "useConst": "off",
+            "useImportType": "off",
+            "useSelfClosingElements": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off",
+            "noUndeclaredVariables": "off"
+          }
+        }
+      }
+    }
   ]
 }
