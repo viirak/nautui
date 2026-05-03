@@ -1,0 +1,141 @@
+---
+import type { Base } from "../types";
+import Button from "./Button.astro";
+
+export interface ThemeToggleProps extends Base {}
+
+const { class: className } = Astro.props as ThemeToggleProps;
+---
+
+<Button
+  variant="ghost"
+  aria-label="Toggle theme"
+  onclick="toggleTheme()"
+  class:list={["naut-theme-toggle", className]}
+  title="Toggle theme"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <title>Sun and Moon</title>
+    <g class="naut-theme-toggle--sun">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2" />
+      <path d="M12 20v2" />
+      <path d="m4.93 4.93 1.41 1.41" />
+      <path d="m17.66 17.66 1.41 1.41" />
+      <path d="M2 12h2" />
+      <path d="M20 12h2" />
+      <path d="m6.34 17.66-1.41 1.41" />
+      <path d="m19.07 4.93-1.41 1.41" />
+    </g>
+    <g class="naut-theme-toggle--moon">
+      <path
+        d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
+      />
+    </g>
+  </svg>
+</Button>
+
+<style>
+  .naut-theme-toggle--sun {
+    display: block;
+  }
+
+  .naut-theme-toggle--moon {
+    display: none;
+  }
+
+  :global([data-theme="dark"]) .naut-theme-toggle--sun {
+    display: none;
+  }
+
+  :global([data-theme="dark"]) .naut-theme-toggle--moon {
+    display: block;
+  }
+</style>
+
+<script>
+  declare global {
+    interface Window {
+      setTheme: (theme: string) => void;
+      toggleTheme: () => void;
+    }
+  }
+
+  // Function to apply theme with naut-theme attribute
+  const applyTheme = (theme: string, isUserChoice = true) => {
+    document.documentElement.setAttribute("naut-theme", theme);
+    localStorage.setItem("theme", theme);
+    localStorage.setItem("themeSourceType", isUserChoice ? "user" : "system");
+  };
+
+  // Function to handle theme change
+  const setTheme = (theme: string) => {
+    applyTheme(theme);
+  };
+
+  // Initialize theme on load
+  const initializeTheme = () => {
+    // Ensure themeSourceType is set if missing
+    if (!localStorage.getItem("themeSourceType")) {
+      localStorage.setItem("themeSourceType", "system");
+    }
+  };
+
+  // Main toggle function
+  const toggleTheme = () => {
+    const currentTheme =
+      document.documentElement.getAttribute("naut-theme") ||
+      localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light");
+
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    // Check if the new theme matches system preference
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+      ? "dark"
+      : "light";
+
+    // Only mark as "user" choice if it differs from system preference
+    const isOverridingSystem = newTheme !== systemTheme;
+    applyTheme(newTheme, isOverridingSystem);
+  };
+
+  // Listen for system preference changes
+  const handleSystemThemeChange = (e: MediaQueryListEvent) => {
+    const themeSourceType = localStorage.getItem("themeSourceType");
+    const systemTheme = e.matches ? "dark" : "light";
+    const currentTheme = localStorage.getItem("theme");
+
+    if (themeSourceType === "system") {
+      // Auto-switch because user hasn't overridden
+      applyTheme(systemTheme, false);
+    } else if (themeSourceType === "user" && currentTheme === systemTheme) {
+      // User's override now matches system preference, so re-enable auto-switching
+      localStorage.setItem("themeSourceType", "system");
+    }
+  };
+
+  // Set up system preference listener
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  mediaQuery.addEventListener("change", handleSystemThemeChange);
+
+  // Initialize on load
+  initializeTheme();
+
+  // Expose functions to window
+  window.toggleTheme = toggleTheme;
+  window.setTheme = setTheme;
+</script>

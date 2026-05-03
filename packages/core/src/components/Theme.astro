@@ -1,0 +1,232 @@
+---
+import type { Base } from "../types";
+
+export interface ThemeProps extends Base {
+  dark?: boolean;
+}
+
+const { class: className, dark = true } = Astro.props as ThemeProps;
+---
+
+<Fragment class:list={["naut-theme", className]}> <slot /> </Fragment>
+
+<script is:inline define:vars={{ dark }}>
+  (() => {
+    if (dark) {
+      if (window.__nautThemeInitialized) {
+        return;
+      }
+      window.__nautThemeInitialized = true;
+
+      const getTheme = () => {
+        const stored = localStorage.getItem("theme");
+        if (["dark", "light"].includes(stored)) {
+          return stored;
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      };
+
+      const theme = getTheme();
+      document.documentElement.setAttribute("data-theme", theme);
+    }
+  })();
+</script>
+
+<style>
+  /* Layer Base */
+  @layer naut-base, naut-theme, naut-component;
+
+  @layer naut-base {
+    /*
+   * Naut UI — Derived Theme
+   *
+   * All tokens below are derived from the inputs in colors.css. They are not
+   * meant to be overridden directly — override the inputs and every derived
+   * token updates at runtime.
+   */
+
+    :root {
+      --naut-font-family: "Inter", sans-serif;
+
+      --naut-font-size-xs: 0.785rem;
+      --naut-font-size-sm: 0.875rem;
+      --naut-font-size-md: 1rem;
+      --naut-font-size-lg: 1.255rem;
+      --naut-font-size-xl: 1.565rem;
+      --naut-font-size-xxl: 1.875rem;
+
+      --naut-naut-line-height-ratio: 1.55;
+
+      /* Spacing */
+      --naut-spacing-0: 0;
+      --naut-naut-spacing-xs: 0.5rem;
+      --naut-spacing-sm: 1rem;
+      --naut-spacing-md: 1.5rem;
+      --naut-spacing-lg: 2rem;
+      --naut-spacing-xl: 2.5rem;
+      --naut-spacing-xxl: 3rem;
+
+      --naut-border-radius-sm: 0.35rem;
+      --naut-border-radius-md: 0.5rem;
+      --naut-border-radius-lg: 0.75rem;
+
+      --naut-border-width-sm: 0.031rem;
+      --naut-border-width-md: 0.063rem;
+      --naut-border-width-lg: 0.125rem;
+      --naut-border-width-xl: 0.195rem;
+
+      /* === Theme inputs (overridable) === */
+      --naut-color-primary: #5423e7;
+      --naut-color-secondary: #121217;
+
+      /* === Tint Strength (overridable) === */
+      --naut-tint: 3%; /* tint amount for mixing with white/black */
+      --naut-tint-base: 3%;
+      --naut-tint-primary: 25%;
+      --naut-tint-secondary: 35%;
+      --naut-tint-destructive: 10%;
+
+      /* === Opinionated semantic defaults === */
+      --naut-color-destructive: #f3164e;
+      --naut-color-success: #16a34a;
+      --naut-color-warning: #d97706;
+      --naut-color-highlight: #ddd522;
+      --naut-color-link: blue;
+
+      /* Neutrals derived from primary + tint */
+      --naut-color-base: color-mix(
+        in oklch,
+        white,
+        var(--naut-color-primary) var(--naut-tint-base)
+      );
+      --naut-color-text: color-mix(
+        in oklch,
+        black,
+        var(--naut-color-primary) var(--naut-tint)
+      );
+      --naut-color-surface: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        black 5%
+      );
+      --naut-color-border: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        black 10%
+      );
+      --naut-color-border-outline: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        black 50%
+      );
+      --naut-color-dimmed: color-mix(
+        in oklch,
+        var(--naut-color-text),
+        white 60%
+      );
+      --naut-color-link-dimmed: color-mix(
+        in oklch,
+        var(--naut-color-link),
+        white 60%
+      );
+      --naut-color-pattern: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        black 10%
+      );
+      --naut-color-pattern-stripe: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        black 1.7%
+      );
+      --naut-color-selection: color-mix(
+        in oklch,
+        var(--naut-color-primary),
+        white 80%
+      );
+    }
+
+    [data-theme="dark"] {
+      --naut-color-secondary: var(--naut-color-text);
+      --naut-color-base: color-mix(
+        in oklch,
+        black,
+        var(--naut-color-primary) var(--naut-tint)
+      );
+      --naut-color-text: color-mix(
+        in oklch,
+        white,
+        var(--naut-color-primary) var(--naut-tint)
+      );
+      --naut-color-link: color-mix(in oklch, blue, white 80%);
+      --naut-color-link-dimmed: color-mix(
+        in oklch,
+        var(--naut-color-link),
+        black 30%
+      );
+      --naut-color-surface: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        white 32%
+      );
+      --naut-color-border: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        white 40%
+      );
+      --naut-color-border-outline: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        white 80%
+      );
+      --naut-color-dimmed: color-mix(
+        in oklch,
+        var(--naut-color-text),
+        black 30%
+      );
+      --naut-color-pattern: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        white 45%
+      );
+      --naut-color-pattern-stripe: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        white 25%
+      );
+      --naut-color-selection: color-mix(
+        in oklch,
+        var(--naut-color-primary),
+        white 90%
+      );
+    }
+
+    /* Global styles */
+    body {
+      margin: 0;
+      font-family: var(--naut-font-family);
+      font-size: var(--naut-font-size-md);
+      line-height: calc(
+        var(--naut-font-size-md) *
+        var(--naut-line-height-ratio)
+      );
+      color: var(--naut-color-text);
+      background-color: var(--naut-color-base);
+    }
+
+    /* Links */
+    a {
+      color: var(--naut-color-link);
+    }
+
+    /* Selection */
+    ::selection {
+      background: var(--naut-color-selection);
+    }
+    ::-moz-selection {
+      background: var(--naut-color-selection);
+    }
+  }
+</style>

@@ -1,0 +1,364 @@
+---
+import type { Base, Radius, Size } from "../types";
+
+type ButtonVariant = "default" | "primary" | "secondary" | "destructive";
+type ButtonSize = Omit<Size, "xl">;
+type ButtonType = "button" | "submit" | "reset";
+
+export interface ButtonProps extends Base {
+  border?: Omit<Size, "xl"> | "none";
+  href?: string;
+  rounded?: Radius;
+  size?: ButtonSize;
+  type?: ButtonType;
+  variant?: ButtonVariant;
+}
+
+const {
+  href,
+  class: className,
+  size = "md",
+  type = "button",
+  variant = "default",
+  rounded = "md",
+  border = "md",
+  pill = false,
+  ...rest
+} = Astro.props as ButtonProps;
+
+const classlist = [
+  "naut-button",
+  `size-${size}`,
+  `variant-${variant}`,
+  `rounded-${rounded}`,
+  `border-${border}`,
+  pill && "pill",
+  className,
+];
+---
+
+{href && <a href={href} class:list={classlist} {...rest}><slot /></a>}
+{!href && <button class:list={classlist} type={type} {...rest}><slot /></button>}
+
+<style>
+  .naut-button {
+    --naut-font-size: 0.875rem;
+    --naut-color-surface-hover: color-mix(
+      in oklch,
+      var(--naut-color-base),
+      black 7%
+    );
+    --naut-color-primary-hover: color-mix(
+      in oklch,
+      var(--naut-color-primary),
+      black var(--naut-tint-primary)
+    );
+    --naut-color-secondary-hover: color-mix(
+      in oklch,
+      var(--naut-color-secondary),
+      white var(--naut-tint-secondary)
+    );
+    --naut-color-destructive-hover: color-mix(
+      in oklch,
+      var(--naut-color-destructive),
+      black var(--naut-tint-destructive)
+    );
+    --naut-color-button: linear-gradient(
+      var(--naut-color-base),
+      var(--naut-color-surface) 30%
+    );
+    --naut-color-button-hover: linear-gradient(
+      var(--naut-color-base),
+      var(--naut-color-surface-hover) 30%
+    );
+    --naut-color-button-border: color-mix(
+      in oklch,
+      var(--naut-color-border),
+      black 5%
+    );
+    --naut-color-button-border-outline: color-mix(
+      in oklch,
+      var(--naut-color-border),
+      black 20%
+    );
+    --naut-color-outline-primary-hover: rgb(
+      from var(--naut-color-primary) r g b /
+      0.15
+    );
+    --naut-color-outline-secondary-hover: rgb(
+      from var(--naut-color-secondary) r g b /
+      0.1
+    );
+    --naut-rainbow-conic-gradient: conic-gradient(
+      from 0turn,
+      hsl(110 90% 50%),
+      hsl(210 90% 60%),
+      hsl(220 70% 60%),
+      hsl(30 70% 60%),
+      hsl(100 90% 50%)
+    );
+    --naut-color-rainbow:
+      linear-gradient(var(--naut-color-base), var(--naut-color-surface))
+      padding-box,
+      var(--naut-rainbow-conic-gradient) border-box;
+    --naut-color-rainbow-hover:
+      linear-gradient(var(--naut-color-surface), var(--naut-color-base))
+      padding-box,
+      var(--naut-rainbow-conic-gradient) border-box;
+
+    position: relative;
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+
+    /* Size */
+    height: 2.5rem;
+    padding: 0 1rem;
+    font-family: inherit;
+    font-size: var(--naut-font-size);
+    font-weight: 400;
+    line-height: 1.5rem;
+
+    /* Variant default */
+    color: var(--naut-color);
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    background: var(--naut-color-button);
+    border-color: var(--naut-color-button-border);
+    border-style: solid;
+    border-width: 0.063rem;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 2px 0.5px rgb(from #000 r g b / 0.1);
+    transition-duration: 0.1s;
+
+    &:hover:not(:disabled) {
+      background: var(--naut-color-button-hover);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0.0625rem);
+      transition-duration: 0;
+    }
+
+    &.variant-primary {
+      color: white;
+      background: var(--naut-color-primary);
+      border-color: var(--naut-color-primary);
+
+      &:hover:not(:disabled) {
+        background: var(--naut-color-primary-hover);
+      }
+    }
+
+    &.variant-secondary {
+      color: var(--naut-color-base);
+      background: var(--naut-color-secondary);
+      border-color: var(--naut-color-secondary);
+
+      &:hover:not(:disabled) {
+        background: var(--naut-color-secondary-hover);
+      }
+    }
+
+    &.variant-destructive {
+      color: white;
+      background: var(--naut-color-destructive);
+      border-color: var(--naut-color-destructive);
+
+      &:hover:not(:disabled) {
+        background: var(--naut-color-destructive-hover);
+      }
+    }
+
+    &.variant-outline,
+    &.variant-outline-primary,
+    &.variant-outline-secondary {
+      color: var(--naut-color);
+      background: transparent;
+      border-color: var(--naut-color-button-border-outline);
+    }
+
+    &.variant-outline:hover:not(:disabled) {
+      background: var(--naut-color-surface-hover);
+    }
+
+    &.variant-outline-primary {
+      border-color: var(--naut-color-primary);
+
+      &:hover:not(:disabled) {
+        background: var(--naut-color-outline-primary-hover);
+      }
+    }
+
+    &.variant-outline-secondary {
+      border-color: var(--naut-color-secondary);
+
+      &:hover:not(:disabled) {
+        background: var(--naut-color-outline-secondary-hover);
+      }
+    }
+
+    &.variant-flat {
+      background: var(--naut-color-surface);
+      border-color: transparent;
+      box-shadow: none;
+
+      &:hover:not(:disabled) {
+        background: var(--naut-color-surface-hover);
+      }
+    }
+
+    &.variant-ghost {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+
+      &:hover:not(:disabled) {
+        background: var(--naut-color-surface-hover);
+      }
+    }
+
+    &.variant-link {
+      color: var(--naut-color-primary);
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
+
+      &:hover:not(:disabled) {
+        text-decoration: underline;
+        background: transparent;
+      }
+    }
+
+    &.variant-rainbow {
+      background: var(--naut-color-rainbow);
+      border-color: transparent;
+      &:hover:not(:disabled) {
+        background: var(--naut-color-rainbow-hover);
+      }
+    }
+
+    &:disabled {
+      color: rgb(from var(--naut-color) r g b / 0.3);
+      pointer-events: none;
+      background: rgb(from var(--naut-color-surface) r g b / 0.7);
+      border-color: rgb(from var(--naut-color-border) r g b / 0.1);
+      box-shadow: none;
+    }
+
+    /* Border thickness */
+
+    &.border-none {
+      border: none;
+    }
+
+    &.border-sm {
+      border-width: var(--naut-border-width-sm);
+    }
+
+    &.border-md {
+      border-width: var(--naut-border-width-md);
+    }
+
+    &.border-lg {
+      border-width: var(--naut-border-width-lg);
+    }
+
+    &.border-xl {
+      border-width: var(--naut-border-width-xl);
+    }
+
+    /* Border Radius */
+
+    &.rounded-none {
+      border-radius: 0;
+    }
+
+    &.rounded-sm {
+      border-radius: var(--naut-border-radius-sm);
+    }
+
+    &.rounded-md {
+      border-radius: var(--naut-border-radius-md);
+    }
+
+    &.rounded-lg {
+      border-radius: var(--naut-border-radius-lg);
+    }
+
+    &.rounded-full {
+      border-radius: 9999px;
+    }
+
+    /* square */
+    &:has(> :only-child):has(> svg:first-child) {
+      padding: 0 0.438rem;
+    }
+
+    /* Sizes */
+    &.size-sm {
+      height: 2rem;
+      padding: 0 0.85rem;
+      font-size: calc(var(--naut-font-size) * 0.875);
+
+      /* square */
+      &:has(> :only-child):has(> svg:first-child) {
+        padding: 0 0.375rem;
+      }
+    }
+
+    &.size-lg {
+      height: 3rem;
+      padding: 0 2.5rem;
+      font-size: calc(var(--naut-font-size) * 1.125);
+
+      /* square */
+      &:has(> :only-child):has(> svg:first-child) {
+        padding: 0 0.562rem;
+      }
+    }
+  }
+
+  /* Dark theme overrides */
+  :global([data-theme="dark"] .dara-button) {
+    --naut-color-surface-hover: color-mix(
+      in oklch,
+      var(--naut-color-base),
+      white 40%
+    );
+    --naut-color-button: var(--naut-color-surface);
+    --naut-color-button-hover: var(--naut-color-surface-hover);
+    --naut-color-button-border: color-mix(
+      in oklch,
+      var(--naut-color-border),
+      white 25%
+    );
+    --naut-color-button-border-outline: color-mix(
+      in oklch,
+      var(--naut-color-border),
+      white 50%
+    );
+    --naut-color-outline-primary-hover: rgb(
+      from var(--naut-color-primary) r g b /
+      0.5
+    );
+    --naut-color-secondary-hover: color-mix(
+      in oklch,
+      var(--naut-color-secondary),
+      black 10%
+    );
+    --naut-color-outline-secondary-hover: rgb(
+      from var(--naut-color-secondary) r g b /
+      0.4
+    );
+    --naut-color-rainbow:
+      linear-gradient(hsl(199 61% 17%), hsl(199 61% 17%)) padding-box,
+      var(--naut-rainbow-conic-gradient) border-box;
+    --naut-color-rainbow-hover:
+      linear-gradient(hsl(210 40% 35%), hsl(180 60% 20%)) padding-box,
+      var(--naut-rainbow-conic-gradient) border-box;
+  }
+</style>
