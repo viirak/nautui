@@ -6,7 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "Astro",
+    "UI",
+    "Components",
+    "library",
+    "NautUI"
+  ],
   "author": "",
   "license": "ISC"
 }
