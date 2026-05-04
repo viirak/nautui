@@ -25,10 +25,10 @@ bun add @nautui/core @nautui/blocks
    git clone https://github.com/viirak/nautui.git
    cd nautui
    ```
-2. Create a new Astro project (or use an existing one), then install the local @nautui packages:
+2. Create a new Astro project (or use an existing one), then link the local @nautui packages:
    ```bash
-   pnpm install <path-to-local-nautui>/packages/core
-   pnpm install <path-to-local-nautui>/packages/blocks
+   pnpm link <path-to-local-nautui>/packages/core
+   pnpm link <path-to-local-nautui>/packages/blocks
    ```
 
 ## Usage
