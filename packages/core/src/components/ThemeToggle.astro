@@ -73,8 +73,8 @@ const { class: className } = Astro.props as ThemeToggleProps;
 
   // Function to apply theme with naut-theme attribute
   const applyTheme = (theme: string, isUserChoice = true) => {
-    document.documentElement.setAttribute("naut-theme", theme);
-    localStorage.setItem("theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("naut-theme", theme);
     localStorage.setItem("themeSourceType", isUserChoice ? "user" : "system");
   };
 
@@ -94,8 +94,8 @@ const { class: className } = Astro.props as ThemeToggleProps;
   // Main toggle function
   const toggleTheme = () => {
     const currentTheme =
-      document.documentElement.getAttribute("naut-theme") ||
-      localStorage.getItem("theme") ||
+      document.documentElement.getAttribute("data-theme") ||
+      localStorage.getItem("naut-theme") ||
       (window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light");
@@ -117,7 +117,7 @@ const { class: className } = Astro.props as ThemeToggleProps;
   const handleSystemThemeChange = (e: MediaQueryListEvent) => {
     const themeSourceType = localStorage.getItem("themeSourceType");
     const systemTheme = e.matches ? "dark" : "light";
-    const currentTheme = localStorage.getItem("theme");
+    const currentTheme = localStorage.getItem("naut-theme");
 
     if (themeSourceType === "system") {
       // Auto-switch because user hasn't overridden

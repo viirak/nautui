@@ -19,7 +19,7 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
       window.__nautThemeInitialized = true;
 
       const getTheme = () => {
-        const stored = localStorage.getItem("theme");
+        const stored = localStorage.getItem("naut-theme");
         if (["dark", "light"].includes(stored)) {
           return stored;
         }
@@ -34,7 +34,7 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
   })();
 </script>
 
-<style>
+<style is:global>
   /* Layer Base */
   @layer naut-base, naut-theme, naut-component;
 
