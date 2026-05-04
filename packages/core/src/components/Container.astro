@@ -2,25 +2,24 @@
 import type { Base } from "../types";
 
 export interface ContainerProps extends Base {
-  display?: "block" | "grid";
+  fluid?: boolean; // if true, the container will take the full width of the viewport
   maxWidth?: number;
 }
 
 const {
   class: className,
-  display = "block",
+  fluid = false,
   maxWidth,
 } = Astro.props as ContainerProps;
 
 const isMax = maxWidth !== undefined;
-const isGrid = display === "grid";
 ---
 
 <div
   class:list={[
     "naut-container",
     isMax && "max",
-    isGrid && "grid",
+    fluid && "fluid",
     className
   ]}
 >
@@ -32,30 +31,32 @@ const isGrid = display === "grid";
     display: flow-root; /* Prevents margin collapsing */
     flex: 0 1 100%; /* respect max-width */
     padding: 0 var(--naut-spacing-md);
-    margin: 0 auto;
 
-    /*Mobile*/
-    @media only screen and (min-width: 576px) and (max-width: 817px) {
-      max-width: 576px;
+    &.fluid {
+      width: 100%;
     }
 
-    /* Tablet */
-    @media only screen and (min-width: 818px) and (max-width: 1041px) {
-      max-width: 768px;
-    }
+    &:not(.fluid) {
+      margin: 0 auto;
+      /*Mobile*/
+      @media only screen and (min-width: 576px) and (max-width: 817px) {
+        max-width: 576px;
+      }
 
-    /* Desktop */
-    @media only screen and (min-width: 1042px) and (max-width: 1249px) {
-      max-width: 992px;
-    }
+      /* Tablet */
+      @media only screen and (min-width: 818px) and (max-width: 1041px) {
+        max-width: 768px;
+      }
 
-    /* Large Desktop */
-    @media only screen and (min-width: 1250px) {
-      max-width: 1200px;
-    }
+      /* Desktop */
+      @media only screen and (min-width: 1042px) and (max-width: 1249px) {
+        max-width: 992px;
+      }
 
-    &.grid {
-      display: grid;
+      /* Large Desktop */
+      @media only screen and (min-width: 1250px) {
+        max-width: 1200px;
+      }
     }
 
     &.max {
