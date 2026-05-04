@@ -1,0 +1,74 @@
+---
+import { getPatternStyle } from "../lib/pattern";
+import type { Base, Pattern, Radius, Spacing } from "../types";
+
+export interface BoxProps extends Base {
+  bordered?: boolean;
+  display?: "block" | "flex" | "grid";
+  margin?: { x: Spacing; y: Spacing };
+  padding?: { x: Spacing; y: Spacing };
+  pattern?: Pattern;
+  radius?: Radius;
+}
+
+const {
+  bordered = false,
+  radius,
+  display = "block",
+  padding = { x: "md", y: "md" },
+  margin = { x: "0", y: "0" },
+  pattern,
+  class: className,
+} = Astro.props as BoxProps;
+
+const borderStyle = bordered ? "1px solid var(--naut-color-border)" : "none";
+const py = `var(--spacing-${padding.y ? padding.y : "md"})`;
+const px = `var(--spacing-${padding.x ? padding.x : "md"})`;
+const my = `var(--spacing-${margin.y ? margin.y : "0"})`;
+const mx = `var(--spacing-${margin.x ? margin.x : "0"})`;
+const paddingStyle = `${py} ${px}`;
+const marginStyle = `${my} ${mx}`;
+const backgroundPattern = pattern ? getPatternStyle(pattern) : "transparent";
+const borderRadius = radius ? `var(--border-radius-${radius})` : "none";
+---
+
+<div class:list={["naut-box", className]}>
+  <div class:list={["naut-box--wrapper", `${display}`]}><slot /></div>
+</div>
+
+<style
+  define:vars={{
+    display,
+    borderStyle,
+    paddingStyle,
+    marginStyle,
+    borderRadius,
+    backgroundPattern
+  }}
+>
+  .naut-box {
+    position: relative;
+    display: flow-root; /* Prevents margin collapsing */
+    padding: var(--paddingStyle);
+    margin: var(--marginStyle);
+    margin-bottom: var(--spacing-md);
+    background: var(--backgroundPattern);
+    border: var(--borderStyle);
+    border-radius: var(--borderRadius);
+
+    .naut-box--wrapper {
+      position: relative;
+
+      &.flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+</style>

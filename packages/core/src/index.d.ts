@@ -1,3 +1,4 @@
+import type { BoxProps } from "./components/Box.astro";
 import type { ButtonProps } from "./components/Button.astro";
 import type { ContainerProps } from "./components/Container.astro";
 import type { SectionProps } from "./components/Section.astro";
@@ -13,6 +14,7 @@ export declare const ThemeToggle: (props: ThemeToggleProps) => AstroComponent;
 // Layout
 export declare const Container: (props: ContainerProps) => AstroComponent;
 export declare const Section: (props: SectionProps) => AstroComponent;
+export declare const Box: (props: BoxProps) => AstroComponent;
 
 // Elements
 export declare const Button: (props: ButtonProps) => AstroComponent;
