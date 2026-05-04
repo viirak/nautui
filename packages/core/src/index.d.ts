@@ -4,6 +4,7 @@ import type { ContainerProps } from "./components/Container.astro";
 import type { GridProps } from "./components/Grid.astro";
 import type { GroupProps } from "./components/Group.astro";
 import type { LinkProps } from "./components/Link.astro";
+import type { ListProps } from "./components/List.astro";
 import type { SectionProps } from "./components/Section.astro";
 import type { ThemeProps } from "./components/Theme.astro";
 import type { ThemeToggleProps } from "./components/ThemeToggle.astro";
@@ -24,3 +25,4 @@ export declare const Grid: (props: GridProps) => AstroComponent;
 // Elements
 export declare const Button: (props: ButtonProps) => AstroComponent;
 export declare const Link: (props: LinkProps) => AstroComponent;
+export declare const List: (props: ListProps) => AstroComponent;

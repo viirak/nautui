@@ -1,0 +1,56 @@
+---
+import type { Base, Spacing } from "../types";
+
+export interface ListProps extends Base {
+  gap?: Spacing;
+  horizontal?: boolean;
+  marker?: "none" | string;
+  noMarker?: boolean;
+  ordered?: boolean;
+}
+
+const {
+  class: className,
+  gap = "sm",
+  ordered = false,
+  horizontal = false,
+  marker,
+  ...rest
+} = Astro.props as ListProps;
+const markerValue = marker && marker !== "none" ? `"${marker}  "` : undefined;
+const classList = [
+  "naut-list",
+  horizontal && "horizontal",
+  marker === "none" && "no-marker",
+  className,
+];
+const spacing = `var(--naut-spacing-${gap})`;
+---
+
+{!ordered && <ul class:list={classList} {...rest}>
+  <slot />
+</ul>}
+
+{ordered && <ol class:list={classList} {...rest}>
+  <slot />
+</ol>}
+
+<style define:vars={{ marker: markerValue, spacing }}>
+  .naut-list {
+    display: grid;
+    gap: var(--naut-spacing);
+    padding-left: var(--naut-spacing-md);
+
+    &.no-marker {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    &.horizontal {
+      display: flex;
+      flex-direction: row;
+      gap: calc(var(--naut-spacing) * 1.5);
+      padding: 0;
+    }
+  }
+</style>
