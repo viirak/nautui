@@ -10,6 +10,7 @@ import List from "./components/List.astro";
 import ListItem from "./components/ListItem.astro";
 import Mark from "./components/Mark.astro";
 import Section from "./components/Section.astro";
+import Text from "./components/Text.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
 
@@ -24,6 +25,7 @@ export {
   ListItem,
   Mark,
   Section,
+  Text,
   Theme,
   ThemeToggle,
 };

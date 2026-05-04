@@ -1,0 +1,297 @@
+---
+import type { Base, Margin, Size } from "../types";
+
+export interface TextProps extends Base {
+  decoration?: "underline" | "strikethrough";
+  dimmed?: boolean;
+  inline?: boolean;
+  italic?: boolean;
+  margin?: Margin;
+  size?: "inherit" | (Size & "xxl");
+  transform?: "capitalize" | "uppercase" | "lowercase";
+  weight?: "light" | "normal" | "medium" | "bold" | "semi-bold" | "extra-bold";
+}
+
+const {
+  class: className,
+  weight,
+  transform,
+  decoration,
+  size,
+  margin,
+  italic = false,
+  inline = false,
+  dimmed = false,
+  ...rest
+} = Astro.props as TextProps;
+const classList = [
+  "text",
+  italic && "italic",
+  dimmed && "dimmed",
+  size && `size-${size}`,
+  weight && `weight-${weight}`,
+  transform && `transform-${transform}`,
+  decoration && `decoration-${decoration}`,
+  margin?.top && `mt-${margin.top}`,
+  margin?.bottom && `mb-${margin.bottom}`,
+  margin?.left && `ml-${margin.left}`,
+  margin?.right && `mr-${margin.right}`,
+  className,
+];
+---
+
+{inline && <span class:list={classList} {...rest}><slot /></span>}
+{!inline && <p class:list={classList} {...rest}><slot /></p>}
+
+<style>
+  .text {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+
+    &.inline {
+      display: inline-block;
+    }
+
+    &.italic {
+      font-style: italic;
+    }
+
+    &.dimmed {
+      color: var(--naut-color-dimmed);
+    }
+
+    &.size-xs {
+      font-size: var(--naut-font-size-xs);
+      line-height: calc(
+        var(--naut-font-size-xs) *
+        var(--naut-line-height-ratio)
+      );
+    }
+    &.size-sm {
+      font-size: var(--naut-font-size-sm);
+      line-height: calc(
+        var(--naut-font-size-sm) *
+        var(--naut-line-height-ratio)
+      );
+    }
+    &.size-md {
+      font-size: var(--naut-font-size-md);
+      line-height: calc(
+        var(--naut-font-size-md) *
+        var(--naut-line-height-ratio)
+      );
+    }
+    &.size-lg {
+      font-size: calc(var(--naut-font-size-lg) - 0.2rem);
+      line-height: calc(
+        (var(--naut-font-size-lg) - 0.2rem) *
+        var(--naut-line-height-ratio)
+      );
+
+      @media only screen and (min-width: 576px) {
+        font-size: calc(var(--naut-font-size-lg) - 0.12rem);
+        line-height: calc(
+          (var(--naut-font-size-lg) - 0.12rem) *
+          var(--naut-line-height-ratio)
+        );
+      }
+
+      @media only screen and (min-width: 818px) {
+        font-size: var(--naut-font-size-lg);
+        line-height: calc(
+          var(--naut-font-size-lg) *
+          var(--naut-line-height-ratio)
+        );
+      }
+    }
+    &.size-xl {
+      font-size: calc(var(--naut-font-size-xl) - 0.38rem);
+      line-height: calc(
+        (var(--naut-font-size-xl) - 0.38rem) *
+        var(--naut-line-height-ratio)
+      );
+
+      @media only screen and (min-width: 576px) {
+        font-size: calc(var(--naut-font-size-xl) - 0.35rem);
+        line-height: calc(
+          (var(--naut-font-size-xl) - 0.35rem) *
+          var(--naut-line-height-ratio)
+        );
+      }
+
+      @media only screen and (min-width: 818px) {
+        font-size: calc(var(--naut-font-size-xl) - 0.2rem);
+        line-height: calc(
+          (var(--naut-font-size-xl) - 0.2rem) *
+          var(--naut-line-height-ratio)
+        );
+      }
+
+      @media only screen and (min-width: 1042px) {
+        font-size: var(--naut-font-size-xl);
+        line-height: calc(
+          var(--naut-font-size-xl) *
+          var(--naut-line-height-ratio)
+        );
+      }
+    }
+
+    &.size-xxl {
+      font-size: calc(var(--naut-font-size-xxl) - 0.59rem);
+      line-height: calc(
+        (var(--naut-font-size-xxl) - 0.58rem) *
+        var(--naut-line-height-ratio)
+      );
+
+      @media only screen and (min-width: 576px) {
+        font-size: calc(var(--naut-font-size-xxl) - 0.5rem);
+        line-height: calc(
+          (var(--naut-font-size-xxl) - 0.5rem) *
+          var(--naut-line-height-ratio)
+        );
+      }
+
+      @media only screen and (min-width: 818px) {
+        font-size: calc(var(--naut-font-size-xxl) - 0.3rem);
+        line-height: calc(
+          (var(--naut-font-size-xxl) - 0.3rem) *
+          var(--naut-line-height-ratio)
+        );
+      }
+
+      @media only screen and (min-width: 1042px) {
+        font-size: var(--naut-font-size-xxl);
+        line-height: calc(
+          var(--naut-font-size-xxl) *
+          var(--naut-line-height-ratio)
+        );
+      }
+    }
+
+    &.weight-light {
+      font-weight: 300;
+    }
+
+    &.weight-medium {
+      font-weight: 500;
+    }
+
+    &.weight-bold {
+      font-weight: 700;
+    }
+
+    &.weight-semi-bold {
+      font-weight: 600;
+    }
+
+    &.weight-extra-bold {
+      font-weight: 800;
+    }
+
+    &.transform-capitalize {
+      text-transform: capitalize;
+    }
+    &.transform-uppercase {
+      text-transform: uppercase;
+    }
+    &.transform-lowercase {
+      text-transform: lowercase;
+    }
+
+    &.decoration-underline {
+      text-decoration: underline;
+    }
+    &.decoration-strikethrough {
+      text-decoration: line-through;
+    }
+
+    /* Margins */
+    &.mt-0 {
+      margin-top: 0;
+    }
+    &.mb-0 {
+      margin-bottom: 0;
+    }
+    &.ml-0 {
+      margin-left: 0;
+    }
+    &.mr-0 {
+      margin-right: 0;
+    }
+
+    &.mt-xs {
+      margin-top: var(--naut-spacing-xs);
+    }
+    &.mb-xs {
+      margin-bottom: var(--naut-spacing-xs);
+    }
+    &.ml-xs {
+      margin-left: var(--naut-spacing-xs);
+    }
+    &.mr-xs {
+      margin-right: var(--naut-spacing-xs);
+    }
+
+    &.mt-sm {
+      margin-top: var(--naut-spacing-sm);
+    }
+    &.mb-sm {
+      margin-bottom: var(--naut-spacing-sm);
+    }
+    &.ml-sm {
+      margin-left: var(--naut-spacing-sm);
+    }
+    &.mr-sm {
+      margin-right: var(--naut-spacing-sm);
+    }
+
+    &.mt-md {
+      margin-top: var(--naut-spacing-md);
+    }
+    &.mb-md {
+      margin-bottom: var(--naut-spacing-md);
+    }
+    &.ml-md {
+      margin-left: var(--naut-spacing-md);
+    }
+    &.mr-md {
+      margin-right: var(--naut-spacing-md);
+    }
+
+    &.mt-lg {
+      margin-top: var(--naut-spacing-lg);
+    }
+    &.mb-lg {
+      margin-bottom: var(--naut-spacing-lg);
+    }
+    &.ml-lg {
+      margin-left: var(--naut-spacing-lg);
+    }
+    &.mr-lg {
+      margin-right: var(--naut-spacing-lg);
+    }
+
+    &.mt-xl {
+      margin-top: var(--naut-spacing-xl);
+    }
+    &.mb-xl {
+      margin-bottom: var(--naut-spacing-xl);
+    }
+    &.ml-xl {
+      margin-left: var(--naut-spacing-xl);
+    }
+    &.mr-xl {
+      margin-right: var(--naut-spacing-xl);
+    }
+  }
+
+  p.text {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+</style>

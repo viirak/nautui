@@ -8,6 +8,7 @@ import type { ListProps } from "./components/List.astro";
 import type { ListItemProps } from "./components/ListItem.astro";
 import type { MarkProps } from "./components/Mark.astro";
 import type { SectionProps } from "./components/Section.astro";
+import type { TextProps } from "./components/Text.astro";
 import type { ThemeProps } from "./components/Theme.astro";
 import type { ThemeToggleProps } from "./components/ThemeToggle.astro";
 
@@ -30,3 +31,4 @@ export declare const Link: (props: LinkProps) => AstroComponent;
 export declare const List: (props: ListProps) => AstroComponent;
 export declare const ListItem: (props: ListItemProps) => AstroComponent;
 export declare const Mark: (props: MarkProps) => AstroComponent;
+export declare const Text: (props: TextProps) => AstroComponent;
