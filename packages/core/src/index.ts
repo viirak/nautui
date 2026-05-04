@@ -5,6 +5,7 @@ import Box from "./components/Box.astro";
 import Button from "./components/Button.astro";
 import Card from "./components/Card.astro";
 import Container from "./components/Container.astro";
+import Divider from "./components/Divider.astro";
 import Grid from "./components/Grid.astro";
 import Group from "./components/Group.astro";
 import Link from "./components/Link.astro";
@@ -23,6 +24,7 @@ export {
   Button,
   Card,
   Container,
+  Divider,
   Grid,
   Group,
   Link,

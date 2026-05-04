@@ -1,0 +1,80 @@
+---
+import type { Base } from "../types";
+
+export interface DividerProps extends Base {
+  label?: string;
+  orientation?: "horizontal" | "vertical";
+  size?: "sm" | "md" | "lg" | "xl";
+  spacing?: "sm" | "md" | "lg" | "xl";
+  variant?: "solid" | "dotted" | "dashed";
+}
+
+const {
+  class: className,
+  label,
+  orientation = "horizontal",
+  size = "md",
+  spacing = "md",
+  variant = "solid",
+} = Astro.props as DividerProps;
+
+const margin = `var(--naut-spacing-${spacing})`;
+const borderVar = `var(--border-width-${size}) ${variant} var(--naut-color-border)`;
+---
+
+<div
+  class:list={[
+    "naut-divider",
+    orientation && `${orientation}`,
+    size && `size--${size}`,
+    spacing && `spacing--${spacing}`,
+    variant && `${variant}`,
+    label && "with-label",
+    className,
+  ]}
+>
+  {label && <span class="label">{label}</span>}
+</div>
+
+<style define:vars={{ borderVar, margin }}>
+  .naut-divider {
+    display: flex;
+    align-items: center;
+
+    &::before {
+      flex: 1;
+      content: "";
+      border-top: var(--borderVar);
+    }
+
+    &::after {
+      flex: 1;
+      content: "";
+      border-top: var(--borderVar);
+    }
+
+    &.with-label {
+      &::before {
+        margin-inline-end: var(--naut-spacing-md);
+      }
+      &::after {
+        margin-inline-start: var(--naut-spacing-md);
+      }
+    }
+
+    &.horizontal {
+      height: 1px;
+      margin: var(--margin) 0;
+    }
+
+    &.vertical {
+      width: 1px;
+      margin: 0 var(--margin);
+    }
+
+    .label {
+      font-size: var(--naut-font-size-sm);
+      color: var(--naut-color-dimmed);
+    }
+  }
+</style>
