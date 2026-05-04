@@ -1,13 +1,21 @@
 ---
 import { getPatternStyle } from "../lib/pattern";
-import type { Base, Border, Pattern, Spacing } from "../types";
+import type { Base, Pattern, Spacing } from "../types";
 import Container from "./Container.astro";
 
 export interface SectionProps extends Base {
   as?: "div" | "section" | "article" | "main" | "header" | "footer";
-  border?: Border;
-  cross?: "box" | "circle" | "diamond";
   mode?: "default" | "dimmed" | "highlighted" | "inverted";
+  outline?: {
+    top: boolean;
+    right: boolean;
+    bottom: boolean;
+    left: boolean;
+    x?: boolean; // shorthand for left and right
+    y?: boolean; // shorthand for top and bottom
+    style: "solid" | "dashed" | "dotted";
+    decoration: "diamond" | "square" | "circle";
+  };
   pattern?: Pattern;
   py?: Spacing;
 }
@@ -17,37 +25,43 @@ const {
   mode,
   pattern,
   border,
+  outline,
   cross,
   py = "md",
   ...rest
 } = Astro.props as SectionProps;
 const backgroundPattern = pattern ? getPatternStyle(pattern) : "transparent";
-const borderStyle = "1px solid var(--naut-color-border)";
-const borderTop = border?.top ? borderStyle : "none";
-const borderRight = border?.right ? borderStyle : "none";
-const borderBottom = border?.bottom ? borderStyle : "none";
-const borderLeft = border?.left ? borderStyle : "none";
-const paddingLeft = border?.left ? "1.5rem" : "0";
-const paddingRight = border?.right ? "1.5rem" : "0";
 const mainPaddingY = `var(--naut-spacing-${py})`;
+// outlines
+const borderStyle = outline?.style || "solid";
+const borderValue = `1px ${borderStyle} var(--naut-color-border)`;
+const borderTop = outline?.top || outline?.y ? borderValue : "none";
+const borderRight = outline?.right || outline?.x ? borderValue : "none";
+const borderBottom = outline?.bottom || outline?.y ? borderValue : "none";
+const borderLeft = outline?.left || outline?.x ? borderValue : "none";
+
+const paddingLeft =
+  outline?.left || outline?.x ? "var(--naut-spacing-md)" : "0";
+const paddingRight =
+  outline?.right || outline?.x ? "var(--naut-spacing-md)" : "0";
 ---
 
 <section
   class:list={[
     "naut-section",
     mode && `${mode}`,
-    cross && `cross cross--${cross}`,
+    outline?.decoration && `outline-decoration outline-decoration--${outline.decoration}`,
     className,
   ]}
   {...rest}
 >
   {pattern && <div class="section--pattern"></div>}
-  <div class="section--wrapper">
-    <div class="section--left"></div>
+  <div class="naut-section--wrapper">
+    <div class="naut-section--left"></div>
     <Container>
-      <div class:list={["section--main", py && `py-${py}`]}><slot /></div>
+      <div class:list={["naut-section--main", py && `py-${py}`]}><slot /></div>
     </Container>
-    <div class="section--right"></div>
+    <div class="naut-section--right"></div>
   </div>
 </section>
 
@@ -68,36 +82,36 @@ const mainPaddingY = `var(--naut-spacing-${py})`;
     border-top: var(--borderTop);
     border-bottom: var(--borderBottom);
 
-    .section--wrapper {
+    .naut-section--wrapper {
       position: relative;
       z-index: 1;
       display: flex;
 
-      .section--main {
+      .naut-section--main {
         flex: 0 1 100%; /* respect max-width */
         padding: var(--mainPaddingY) 0;
       }
 
-      .section--left,
-      .section--right {
+      .naut-section--left,
+      .naut-section--right {
         position: relative;
         flex-grow: 1;
       }
 
-      .section--left {
+      .naut-section--left {
         padding-right: var(--paddingLeft);
         border-right: var(--borderRight);
       }
 
-      .section--right {
+      .naut-section--right {
         padding-left: var(--paddingRight);
         border-left: var(--borderLeft);
       }
     }
 
-    &.cross {
-      .section--left::after,
-      .section--right::before {
+    &.outline-decoration {
+      .naut-section--left::after,
+      .naut-section--right::before {
         position: absolute;
         top: -5px;
         z-index: 1;
@@ -106,42 +120,42 @@ const mainPaddingY = `var(--naut-spacing-${py})`;
         content: "";
       }
 
-      .section--left::after {
+      .naut-section--left::after {
         right: -5px;
       }
 
-      .section--right::before {
+      .naut-section--right::before {
         left: -5px;
       }
     }
 
-    &.cross--square {
-      .section--left::after,
-      .section--right::before {
+    &.outline-decoration--square {
+      .naut-section--left::after,
+      .naut-section--right::before {
         background: var(--naut-color-base);
         border: 1px solid var(--naut-color-border);
       }
     }
 
-    &.cross--circle {
-      .section--left::after,
-      .section--right::before {
+    &.outline-decoration--circle {
+      .naut-section--left::after,
+      .naut-section--right::before {
         background: var(--naut-color-base);
         border: 1px solid var(--naut-color-border);
         border-radius: 50%;
       }
     }
 
-    &.cross--diamond {
-      .section--left::after,
-      .section--right::before {
+    &.outline-decoration--diamond {
+      .naut-section--left::after,
+      .naut-section--right::before {
         background: var(--naut-color-base);
         border: 1px solid var(--naut-color-border);
         transform: rotate(45deg);
       }
     }
 
-    .section--pattern {
+    .naut-section--pattern {
       position: absolute;
       inset: 0;
       z-index: 0;
