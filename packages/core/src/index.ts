@@ -8,6 +8,7 @@ import Group from "./components/Group.astro";
 import Link from "./components/Link.astro";
 import List from "./components/List.astro";
 import ListItem from "./components/ListItem.astro";
+import Mark from "./components/Mark.astro";
 import Section from "./components/Section.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
@@ -21,6 +22,7 @@ export {
   Link,
   List,
   ListItem,
+  Mark,
   Section,
   Theme,
   ThemeToggle,
