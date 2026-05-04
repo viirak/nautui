@@ -21,6 +21,7 @@ const {
   sticky = false,
   fluid = false,
   shadow,
+  glassy,
   offset = 0,
   zi = 99,
   ...rest
@@ -36,6 +37,7 @@ const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
       sticky && "sticky",
       bordered && "bordered",
       shadow && "shadow",
+      glassy && "glassy",
       fluid && "fluid",
       className
     ]}
@@ -125,6 +127,13 @@ const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
     &.shadow {
       box-shadow: calc(0.0625 * calc(1rem * 1)) calc(0.5 * calc(1rem * 1))
         calc(1 * calc(1rem * 1)) #0000001a;
+    }
+
+    &.glassy {
+      background: var(--naut-color-background-glass);
+      border-color: var(--naut-color-background-glass);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
     }
 
     .naut-navbar--content {
