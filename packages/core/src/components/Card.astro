@@ -1,0 +1,95 @@
+---
+import type { Base, Radius } from "../types";
+
+export interface CardProps extends Base {
+  bordered?: boolean;
+  radius?: Radius | "none";
+  shadow?: "sm" | "md" | "lg" | "xl";
+}
+
+const {
+  class: className,
+  bordered,
+  shadow,
+  radius = "none",
+} = Astro.props as CardProps;
+---
+
+<div
+  class:list={["naut-card", bordered && "bordered", radius && `radius-${radius}`, shadow && `shadow-${shadow}`, className]}
+>
+  <div class="naut-card--header"><slot name="header" /></div>
+  <div class="naut-card--body"><slot /></div>
+  <div class="naut-card--footer"><slot name="footer" /></div>
+</div>
+
+<style>
+  .naut-card {
+    --radius-scale: 1.575;
+    --shadow-scale: 1;
+    --s: calc(1rem * var(--shadow-scale));
+
+    /* Single Source of Truth */
+    --sh-x: calc(0.0625 * var(--s)); /* 1px Right */
+    --sh-c: #0000001a; /* 10% Opacity Black */
+
+    --shadow-sm: var(--sh-x) calc(0.125 * var(--s)) calc(0.25 * var(--s))
+      var(--sh-c);
+    --shadow-md: var(--sh-x) calc(0.25 * var(--s)) calc(0.5 * var(--s))
+      var(--sh-c);
+    --shadow-lg: var(--sh-x) calc(0.5 * var(--s)) calc(1 * var(--s)) var(--sh-c);
+    --shadow-xl: var(--sh-x) calc(1 * var(--s)) calc(2 * var(--s)) var(--sh-c);
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .naut-card--body {
+      padding: var(--spacing-md);
+    }
+
+    .naut-card--header:empty {
+      display: none;
+    }
+
+    .naut-card--footer:empty {
+      display: none;
+    }
+
+    &.bordered {
+      border: 1px solid var(--naut-color-border);
+    }
+
+    &.radius-none {
+      border-radius: 0;
+    }
+
+    &.radius-sm {
+      border-radius: calc(var(--naut-border-radius-sm) * var(--radius-scale));
+    }
+
+    &.radius-md {
+      border-radius: calc(var(--naut-border-radius-md) * var(--radius-scale));
+    }
+
+    &.radius-lg {
+      border-radius: calc(var(--naut-border-radius-lg) * var(--radius-scale));
+    }
+
+    &.shadow-sm {
+      box-shadow: var(--shadow-sm);
+    }
+
+    &.shadow-md {
+      box-shadow: var(--shadow-md);
+    }
+
+    &.shadow-lg {
+      box-shadow: var(--shadow-lg);
+    }
+
+    &.shadow-xl {
+      box-shadow: var(--shadow-xl);
+    }
+  }
+</style>

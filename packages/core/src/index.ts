@@ -3,6 +3,7 @@
 import Badge from "./components/Badge.astro";
 import Box from "./components/Box.astro";
 import Button from "./components/Button.astro";
+import Card from "./components/Card.astro";
 import Container from "./components/Container.astro";
 import Grid from "./components/Grid.astro";
 import Group from "./components/Group.astro";
@@ -20,6 +21,7 @@ export {
   Badge,
   Box,
   Button,
+  Card,
   Container,
   Grid,
   Group,

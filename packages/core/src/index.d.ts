@@ -1,6 +1,7 @@
 import type { BadgeProps } from "./components/Badge.astro";
 import type { BoxProps } from "./components/Box.astro";
 import type { ButtonProps } from "./components/Button.astro";
+import type { CardProps } from "./components/Card.astro";
 import type { ContainerProps } from "./components/Container.astro";
 import type { GridProps } from "./components/Grid.astro";
 import type { GroupProps } from "./components/Group.astro";
@@ -38,3 +39,4 @@ export declare const ListItem: (props: ListItemProps) => AstroComponent;
 // UI
 export declare const Button: (props: ButtonProps) => AstroComponent;
 export declare const Badge: (props: BadgeProps) => AstroComponent;
+export declare const Card: (props: CardProps) => AstroComponent;
