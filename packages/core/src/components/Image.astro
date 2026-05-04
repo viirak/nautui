@@ -1,0 +1,56 @@
+---
+import type { Base } from "../types";
+
+export interface ImageProps extends Base {
+  alt: string;
+  ratio?: "1:1" | "16:9" | "4:3" | "3:2" | "2:1";
+  src: string;
+  [key: string]: unknown;
+}
+
+const {
+  src,
+  alt,
+  class: className,
+  ratio = "16:9",
+  ...rest
+} = Astro.props as ImageProps;
+const ratioName = ratio.replace(":", "x");
+---
+
+<div class:list={["naut-image", `ratio-${ratioName}`, className]}>
+  <img src={src} alt={alt} {...rest}>
+</div>
+<style>
+  .naut-image {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--naut-color-surface);
+
+    img {
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    &.ratio-1x1 {
+      aspect-ratio: 1 / 1;
+    }
+
+    &.ratio-16x9 {
+      aspect-ratio: 16 / 9;
+    }
+
+    &.ratio-4x3 {
+      aspect-ratio: 4 / 3;
+    }
+
+    &.ratio-3x2 {
+      aspect-ratio: 3 / 2;
+    }
+
+    &.ratio-2x1 {
+      aspect-ratio: 2 / 1;
+    }
+  }
+</style>
