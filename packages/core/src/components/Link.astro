@@ -1,0 +1,117 @@
+---
+import type { Base } from "../types";
+
+export interface LinkProps extends Base {
+  dimmed?: boolean;
+  external?: boolean;
+  hover?: "underline" | "dimmed" | "surface";
+  to: string;
+  underline?: boolean;
+  wrap?: boolean;
+}
+
+const {
+  to,
+  title,
+  dimmed,
+  class: className,
+  hover = "underline",
+  external = false,
+  underline = false,
+  wrap = false,
+  ...rest
+} = Astro.props as LinkProps;
+---
+
+<a
+  class:list={[
+    "naut-link",
+    `hover--${hover}`,
+    wrap && "wrap",
+    dimmed && "dimmed",
+    external && "external",
+    underline && "underline",
+    className
+  ]}
+  href={to}
+  {...rest}
+>
+  <div class="link--wrapper"><slot /></div>
+  {external && (
+    <svg
+      class="lucide lucide-external-link-icon external-link-icon"
+      fill="none"
+      height="16"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>External Link</title>
+      <path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+  )}
+</a>
+<style>
+  .naut-link {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.2rem 0.8rem;
+    text-decoration: none;
+
+    .link--wrapper {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      align-items: center;
+      text-wrap: nowrap;
+    }
+
+    &.wrap {
+      flex-wrap: wrap;
+
+      .link--wrapper {
+        flex-wrap: wrap;
+        text-wrap: wrap;
+      }
+    }
+
+    &.underline {
+      text-decoration: underline;
+    }
+
+    &.dimmed {
+      color: var(--naut-color-link-dimmed);
+    }
+
+    &.external {
+      gap: 0.3rem;
+
+      .external-link-icon {
+        opacity: 0.5;
+      }
+    }
+
+    &:hover {
+      &.dimmed {
+        color: var(--naut-color-link);
+      }
+
+      &.hover--underline {
+        text-decoration: underline;
+      }
+
+      &.hover--dimmed {
+        color: var(--naut-color-link-dimmed);
+      }
+
+      &.hover--surface {
+        background-color: var(--naut-color-surface);
+      }
+    }
+  }
+</style>
