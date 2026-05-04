@@ -7,6 +7,7 @@ import Grid from "./components/Grid.astro";
 import Group from "./components/Group.astro";
 import Link from "./components/Link.astro";
 import List from "./components/List.astro";
+import ListItem from "./components/ListItem.astro";
 import Section from "./components/Section.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
@@ -19,6 +20,7 @@ export {
   Group,
   Link,
   List,
+  ListItem,
   Section,
   Theme,
   ThemeToggle,

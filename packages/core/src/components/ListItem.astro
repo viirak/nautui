@@ -1,0 +1,31 @@
+---
+import type { Base } from "../types";
+
+export interface ListItemProps extends Base {
+  marker?: "none" | string;
+}
+
+const { class: className, marker, ...rest }: ListItemProps = Astro.props;
+
+const markerVar = marker && marker !== "none" ? `"${marker}  "` : undefined;
+const itemMarker = markerVar || "var(--marker)"; // marker var from parent
+---
+
+<li
+  class:list={[ "naut-list-item", marker === "none" && "no-marker", className]}
+  {...rest}
+>
+  <slot />
+</li>
+
+<style define:vars={{ itemMarker }}>
+  li.naut-list-item {
+    &:not(.no-marker)::marker {
+      content: var(--itemMarker);
+    }
+
+    &.no-marker {
+      list-style-type: none;
+    }
+  }
+</style>
