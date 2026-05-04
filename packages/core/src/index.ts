@@ -7,6 +7,7 @@ import Button from "./components/Button.astro";
 import Card from "./components/Card.astro";
 import Container from "./components/Container.astro";
 import Divider from "./components/Divider.astro";
+import Drawer from "./components/Drawer.astro";
 import Grid from "./components/Grid.astro";
 import Group from "./components/Group.astro";
 import Image from "./components/Image.astro";
@@ -28,6 +29,7 @@ export {
   Card,
   Container,
   Divider,
+  Drawer,
   Grid,
   Group,
   Image,

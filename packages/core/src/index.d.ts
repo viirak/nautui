@@ -5,6 +5,7 @@ import type { ButtonProps } from "./components/Button.astro";
 import type { CardProps } from "./components/Card.astro";
 import type { ContainerProps } from "./components/Container.astro";
 import type { DividerProps } from "./components/Divider.astro";
+import type { DrawerProps } from "./components/Drawer.astro";
 import type { GridProps } from "./components/Grid.astro";
 import type { GroupProps } from "./components/Group.astro";
 import type { ImageProps } from "./components/Image.astro";
@@ -48,3 +49,4 @@ export declare const Image: (props: ImageProps) => AstroComponent;
 
 // Navigation
 export declare const Breadcrumb: (props: BreadcrumbProps) => AstroComponent;
+export declare const Drawer: (props: DrawerProps) => AstroComponent;

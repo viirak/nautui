@@ -1,0 +1,139 @@
+---
+import type { Base } from "../types";
+import Button from "./Button.astro";
+
+export interface DrawerProps extends Base {
+  hidden?: "mobile" | "tablet" | "desktop" | "large-desktop";
+  zIndex?: number;
+}
+
+const { hidden = "desktop", zIndex = 999 } = Astro.props as DrawerProps;
+---
+
+<div class:list={["naut-drawer-toggle", `hidden--${hidden}`]}>
+  <Button variant="ghost" onclick="toggleMenu()">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-menu-icon lucide-menu"
+    >
+      <title>Menu</title>
+      <g class="menu-icon">
+        <path d="M4 5h16" />
+        <path d="M4 12h16" />
+        <path d="M4 19h16" />
+      </g>
+    </svg>
+  </Button>
+</div>
+<div id="naut-drawer">
+  <header class="naut-drawer-header">
+    <Button variant="ghost" id="close-btn" onclick="toggleMenu()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-x"
+      >
+        <title>Close</title>
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </Button>
+  </header>
+  <div class="naut-drawer-content"><slot /></div>
+</div>
+
+<script is:inline>
+  const toggleMenu = () => {
+    const drawer = document.querySelector("#naut-drawer");
+    if (drawer) {
+      drawer.classList.toggle("active");
+      document.body.appendChild(drawer);
+      // disable scroll
+      document.body.style.overflow =
+        document.body.style.overflow === "hidden" ? "auto" : "hidden";
+    }
+  };
+</script>
+
+<style define:vars={{ zIndex }}>
+  .naut-drawer-toggle {
+    display: inline-block;
+
+    &.hidden--mobile {
+      @media only screen and (min-width: 576px) {
+        display: none;
+      }
+    }
+
+    &.hidden--tablet {
+      @media only screen and (min-width: 818px) {
+        display: none;
+      }
+    }
+
+    &.hidden--desktop {
+      @media only screen and (min-width: 1042px) {
+        display: none;
+      }
+    }
+
+    &.only--desktop-large {
+      @media only screen and (min-width: 1250px) {
+        display: none;
+      }
+    }
+  }
+
+  #naut-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--zIndex);
+    visibility: hidden;
+    overflow: hidden;
+    color: var(--naut-color-text);
+    background: rgb(
+      from var(--naut-color-base) r g b /
+      0.7
+    ); /* Semi-transparent color */
+    opacity: 0;
+    -webkit-backdrop-filter: blur(5px); /* Required for Safari support */
+    backdrop-filter: blur(5px); /* Blurs what's behind this box */
+    transition:
+      opacity 0.4s ease-in-out,
+      visibility 0.4s ease-in-out;
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    #close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      z-index: 12;
+    }
+
+    .naut-drawer-content {
+      padding: var(--naut-spacing-md);
+    }
+  }
+</style>
