@@ -1,0 +1,60 @@
+---
+import type { Base } from "../types";
+
+export interface ContainerProps extends Base {
+  display?: "block" | "grid";
+  maxWidth?: number;
+}
+
+const {
+  class: className,
+  display = "block",
+  maxWidth,
+} = Astro.props as ContainerProps;
+
+const isMax = maxWidth !== undefined;
+const isGrid = display === "grid";
+---
+
+<div
+  class:list={["naut-container", isMax && "max", isGrid && "grid", className]}
+>
+  <slot />
+</div>
+
+<style define:vars={{ maxWidth }}>
+  .naut-container {
+    display: flow-root; /* Prevents margin collapsing */
+    flex: 0 1 100%; /* respect max-width */
+    padding: 0 1.5rem;
+    margin: 0 auto;
+
+    /*Mobile*/
+    @media only screen and (min-width: 576px) and (max-width: 817px) {
+      max-width: 576px;
+    }
+
+    /* Tablet */
+    @media only screen and (min-width: 818px) and (max-width: 1041px) {
+      max-width: 768px;
+    }
+
+    /* Desktop */
+    @media only screen and (min-width: 1042px) and (max-width: 1249px) {
+      max-width: 992px;
+    }
+
+    /* Large Desktop */
+    @media only screen and (min-width: 1250px) {
+      max-width: 1200px;
+    }
+
+    &.grid {
+      display: grid;
+    }
+
+    &.max {
+      max-width: var(--maxWidth);
+    }
+  }
+</style>

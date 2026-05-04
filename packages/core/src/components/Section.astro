@@ -1,0 +1,151 @@
+---
+import { getPatternStyle } from "../lib/pattern";
+import type { Base, Border, Pattern, Spacing } from "../types";
+import Container from "./Container.astro";
+
+export interface SectionProps extends Base {
+  as?: "div" | "section" | "article" | "main" | "header" | "footer";
+  border?: Border;
+  cross?: "box" | "circle" | "diamond";
+  mode?: "default" | "dimmed" | "highlighted" | "inverted";
+  pattern?: Pattern;
+  py?: Spacing;
+}
+
+const {
+  class: className,
+  mode,
+  pattern,
+  border,
+  cross,
+  py = "md",
+  ...rest
+} = Astro.props as SectionProps;
+const backgroundPattern = pattern ? getPatternStyle(pattern) : "transparent";
+const borderStyle = "1px solid var(--naut-color-border)";
+const borderTop = border?.top ? borderStyle : "none";
+const borderRight = border?.right ? borderStyle : "none";
+const borderBottom = border?.bottom ? borderStyle : "none";
+const borderLeft = border?.left ? borderStyle : "none";
+const paddingLeft = border?.left ? "1.5rem" : "0";
+const paddingRight = border?.right ? "1.5rem" : "0";
+const mainPaddingY = `var(--spacing-${py})`;
+---
+
+<section
+  class:list={[
+    "naut-section",
+    mode && `${mode}`,
+    cross && `cross cross--${cross}`,
+    className,
+  ]}
+  {...rest}
+>
+  {pattern && <div class="section--pattern"></div>}
+  <div class="section--wrapper">
+    <div class="section--left"></div>
+    <Container>
+      <div class:list={["section--main", py && `py-${py}`]}><slot /></div>
+    </Container>
+    <div class="section--right"></div>
+  </div>
+</section>
+
+<style
+  define:vars={{
+    backgroundPattern,
+    paddingLeft,
+    paddingRight,
+    borderTop,
+    borderRight,
+    borderLeft,
+    borderBottom,
+    mainPaddingY
+  }}
+>
+  .naut-section {
+    position: relative;
+    border-top: var(--borderTop);
+    border-bottom: var(--borderBottom);
+
+    .section--wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+
+      .section--main {
+        flex: 0 1 100%; /* respect max-width */
+        padding: var(--mainPaddingY) 0;
+      }
+
+      .section--left,
+      .section--right {
+        position: relative;
+        flex-grow: 1;
+      }
+
+      .section--left {
+        padding-right: var(--paddingLeft);
+        border-right: var(--borderRight);
+      }
+
+      .section--right {
+        padding-left: var(--paddingRight);
+        border-left: var(--borderLeft);
+      }
+    }
+
+    &.cross {
+      .section--left::after,
+      .section--right::before {
+        position: absolute;
+        top: -5px;
+        z-index: 1;
+        width: 7px;
+        height: 7px;
+        content: "";
+      }
+
+      .section--left::after {
+        right: -5px;
+      }
+
+      .section--right::before {
+        left: -5px;
+      }
+    }
+
+    &.cross--square {
+      .section--left::after,
+      .section--right::before {
+        background: var(--naut-color-base);
+        border: 1px solid var(--naut-color-border);
+      }
+    }
+
+    &.cross--circle {
+      .section--left::after,
+      .section--right::before {
+        background: var(--naut-color-base);
+        border: 1px solid var(--naut-color-border);
+        border-radius: 50%;
+      }
+    }
+
+    &.cross--diamond {
+      .section--left::after,
+      .section--right::before {
+        background: var(--naut-color-base);
+        border: 1px solid var(--naut-color-border);
+        transform: rotate(45deg);
+      }
+    }
+
+    .section--pattern {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: var(--backgroundPattern);
+    }
+  }
+</style>
