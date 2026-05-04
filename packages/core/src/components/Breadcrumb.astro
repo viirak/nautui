@@ -1,0 +1,62 @@
+---
+import type { Base } from "../types";
+
+interface BreadcrumbItem {
+  href?: string;
+  label: string;
+}
+
+export interface BreadcrumbProps extends Base {
+  className?: string;
+  items: BreadcrumbItem[];
+}
+
+const { items, class: className } = Astro.props as BreadcrumbProps;
+---
+
+<nav class:list={["naut-breadcrumb", className]}>
+  <ol>
+    {items.map((item) => (
+      <li>
+        {item.href && <a href={item.href} title={item.label}>{item.label}</a>}
+        {!item.href && <span>{item.label}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .naut-breadcrumb {
+    ol {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+
+      li {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+        align-items: center;
+
+        a {
+          color: var(--naut-color-dimmed);
+          text-decoration: none;
+          &:hover {
+            color: var(--naut-color-text);
+          }
+        }
+      }
+
+      li + li::before {
+        padding-inline-end: 0.5rem;
+        color: var(--naut-color-dimmed);
+        content: "/";
+        opacity: 0.5;
+      }
+    }
+  }
+</style>

@@ -1,5 +1,6 @@
 import type { BadgeProps } from "./components/Badge.astro";
 import type { BoxProps } from "./components/Box.astro";
+import type { BreadcrumbProps } from "./components/Breadcrumb.astro";
 import type { ButtonProps } from "./components/Button.astro";
 import type { CardProps } from "./components/Card.astro";
 import type { ContainerProps } from "./components/Container.astro";
@@ -44,3 +45,6 @@ export declare const Badge: (props: BadgeProps) => AstroComponent;
 export declare const Card: (props: CardProps) => AstroComponent;
 export declare const Divider: (props: DividerProps) => AstroComponent;
 export declare const Image: (props: ImageProps) => AstroComponent;
+
+// Navigation
+export declare const Breadcrumb: (props: BreadcrumbProps) => AstroComponent;
