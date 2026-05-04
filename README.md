@@ -2,6 +2,10 @@
 
 A clean, minimalist UI component library for Astro — built for marketing websites, not apps.
 
+**The missing UI library for Astro.** 
+
+Astro provides the rocket; **nautui** provides the gear. Built for speed (Aśu) and designed for the modern web, nautui gives you the core elements and marketing blocks you need to stop building setups and start being the astronaut.
+
 Why another UI library when there's already a ton of them? I couldn't find one that fit my needs. Tailwind-based libraries bring too much; shadcn, Radix, and similar are aimed at application UIs. I wanted something small, minimal, opinionated, and still customizable — focused on landing pages and marketing sites.
 
 **Status:** In development.
