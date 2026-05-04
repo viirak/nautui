@@ -4,12 +4,13 @@ import Container from "./Container.astro";
 
 export interface NavBarProps extends Base {
   bordered?: boolean;
+  fluid?: boolean; // if true, the navbar will take the full width of the viewport
   glassy?: boolean;
   height: string;
   offset?: number; // offset for sticky navbar
   shadow?: Shadow;
   sticky?: boolean;
-  variant?: "default" | "island";
+  variant?: "default" | "outline" | "island";
   zi?: number; // z-index for sticky navbar
 }
 
@@ -18,31 +19,34 @@ const {
   variant = "default",
   bordered = false,
   sticky = false,
+  fluid = false,
   offset = 0,
   zi = 99,
   ...rest
 } = Astro.props as NavBarProps;
 const offsetValue = offset ? `${offset}px` : "0";
+const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
 ---
 
-<div class="naut-bar">
-  <nav
-    class:list={[
+<nav
+  class:list={[
       "naut-navbar",
       `variant--${variant}`,
       sticky && "sticky",
       bordered && "bordered",
+      fluid && "fluid",
       className
     ]}
-    {...rest}
-  >
-    <Container>
-      <div class="naut-navbar--content"><slot /></div>
-    </Container>
-  </nav>
-</div>
+  {...rest}
+>
+  <div class="naut-space naut-space--left"></div>
+  <Container fluid={fluid} display="grid">
+    <div class="naut-navbar--content"><slot /></div>
+  </Container>
+  <div class="naut-space naut-space--right"></div>
+</nav>
 
-<style define:vars={{ zi, offsetValue }}>
+<style define:vars={{ zi, offsetValue, offsetIsland }}>
   .naut-navbar {
     --naut-navbar-height: 70px;
     display: flex;
@@ -66,6 +70,7 @@ const offsetValue = offset ? `${offset}px` : "0";
       margin: 0 var(--naut-spacing-md);
 
       &.sticky {
+        top: var(--offsetIsland);
         left: 50%;
         width: calc(100% - 2 * var(--naut-spacing-md));
         margin: 0;
@@ -76,25 +81,42 @@ const offsetValue = offset ? `${offset}px` : "0";
         border: 1px solid var(--naut-color-border);
       }
 
-      /*Mobile*/
-      @media only screen and (min-width: 576px) {
-        max-width: calc(576px + 2 * var(--naut-spacing-md));
-        margin: 0 auto;
-      }
+      &:not(.fluid) {
+        /*Mobile*/
+        @media only screen and (min-width: 576px) {
+          max-width: calc(576px + 2 * var(--naut-spacing-md));
+          margin: 0 auto;
+        }
 
-      /* Tablet */
-      @media only screen and (min-width: 818px) and (max-width: 1041px) {
-        max-width: calc(768px + 2 * var(--naut-spacing-md));
-      }
+        /* Tablet */
+        @media only screen and (min-width: 818px) and (max-width: 1041px) {
+          max-width: calc(768px + 2 * var(--naut-spacing-md));
+        }
 
-      /* Desktop */
-      @media only screen and (min-width: 1042px) and (max-width: 1249px) {
-        max-width: calc(992px + 2 * var(--naut-spacing-md));
-      }
+        /* Desktop */
+        @media only screen and (min-width: 1042px) and (max-width: 1249px) {
+          max-width: calc(992px + 2 * var(--naut-spacing-md));
+        }
 
-      /* Large Desktop */
-      @media only screen and (min-width: 1250px) {
-        max-width: calc(1200px + 2 * var(--naut-spacing-md));
+        /* Large Desktop */
+        @media only screen and (min-width: 1250px) {
+          max-width: calc(1200px + 2 * var(--naut-spacing-md));
+        }
+      }
+    }
+
+    &.variant--outline {
+      .naut-space {
+        flex-grow: 1;
+        height: 100%;
+      }
+      .naut-space--left {
+        padding-right: var(--naut-spacing-md);
+        border-right: 1px solid var(--naut-color-border);
+      }
+      .naut-space--right {
+        padding-left: var(--naut-spacing-md);
+        border-left: 1px solid var(--naut-color-border);
       }
     }
 
