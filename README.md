@@ -149,25 +149,25 @@ Theming relies on `color-mix()`, `oklch()`, and relative color syntax (`rgb(from
 
 ### Elements
 - [x] Button — link or button with 11 variants (primary, secondary, outline, ghost, destructive, rainbow, …)
-- [ ] Badge — small pill label for status, counts, or tags
+- [x] Badge — small pill label for status, counts, or tags
 - [x] Card — surface container with default, bordered, and flat variants; optional link
 - [x] Divider — horizontal rule styled with theme tokens
-- [ ] Image — responsive image with optional caption and themed border
+- [x] Image — responsive image with optional caption and themed border
 
 ### Typography
 - [x] Title — semantic h1–h6 with consistent sizing and a muted variant
 - [x] Text — body text with size variants and a muted variant
 - [x] Mark — `<mark>` styled with the highlight color token
-- [ ] Link — themed anchor with hover and focus states
-- [ ] List — styled ordered and unordered lists
-- [ ] ListItem — list item with optional leading icon and themed marker
+- [x] Link — themed anchor with hover and focus states
+- [x] List — styled ordered and unordered lists
+- [x] ListItem — list item with optional leading icon and themed marker
 - [ ] Quote — blockquote with themed border and text colors
 
 ## Navigation
-- [ ] Navbar — horizontal site navigation with dropdown support
-- [ ] Drawer — off-canvas sidebar for mobile navigation
+- [x] Navbar — horizontal site navigation with dropdown support
+- [x] Drawer — off-canvas sidebar for mobile navigation
+- [x] Breadcrumbs — hierarchical page links
 - [ ] Tabs — tabbed content switcher
-- [ ] Breadcrumbs — hierarchical page links
 
 ## Block Components
 - [x] Hero — marketing hero section with headline, subtext, and CTA slots
