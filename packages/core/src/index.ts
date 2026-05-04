@@ -15,6 +15,7 @@ import Link from "./components/Link.astro";
 import List from "./components/List.astro";
 import ListItem from "./components/ListItem.astro";
 import Mark from "./components/Mark.astro";
+import NavBar from "./components/NavBar.astro";
 import Section from "./components/Section.astro";
 import Text from "./components/Text.astro";
 import Theme from "./components/Theme.astro";
@@ -37,6 +38,7 @@ export {
   List,
   ListItem,
   Mark,
+  NavBar,
   Section,
   Text,
   Theme,

@@ -1,0 +1,154 @@
+---
+import type { Base } from "../types";
+import Container from "./Container.astro";
+
+export interface NavBarProps extends Base {
+  // border
+  // height
+  // glassy
+  // shadow?: boolean;
+  sticky?: boolean;
+  variant?: "default" | "island";
+  zIndex?: number;
+}
+
+const {
+  class: className,
+  variant = "default",
+  sticky = false,
+  zIndex = 99,
+  ...rest
+} = Astro.props as NavBarProps;
+---
+
+<nav
+  class:list={["naut-navbar", `variant--${variant}`, sticky && "sticky", className ]}
+  {...rest}
+>
+  <div class="naut-navbar--wrapper">
+    <div class="naut-navbar--space-left"></div>
+    <Container class="navbar--container">
+      <div class="naut-navbar--content"><slot /></div>
+    </Container>
+    <div class="naut-navbar--space-right"></div>
+  </div>
+</nav>
+
+<style define:vars={{ zIndex }}>
+  .naut-navbar {
+    --dara-ui-navbar-height: 60px;
+    height: var(--dara-ui-navbar-height);
+    border-bottom: 1px solid var(--naut-color-border);
+
+    .naut-navbar--wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: var(--dara-ui-navbar-height);
+      padding: 0 1.5rem;
+      background-color: var(--naut-color-base);
+    }
+
+    .naut-navbar--space-left,
+    .naut-navbar--space-right {
+      flex-grow: 1;
+      height: 100%;
+    }
+
+    .naut-navbar--space-left {
+      border-right: 1px solid var(--naut-color-border);
+    }
+
+    .naut-navbar--space-right {
+      border-left: 1px solid var(--naut-color-border);
+    }
+
+    &.sticky {
+      position: fixed;
+      top: 0;
+      z-index: var(--zIndex);
+      width: 100%;
+    }
+
+    &.variant--island {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      z-index: var(--zIndex);
+      width: 100%;
+      border-bottom: none;
+      transform: translateX(-50%);
+
+      .naut-navbar--wrapper {
+        padding: 0;
+        margin: 0 1.5rem;
+        border: 1px solid var(--naut-color-border);
+      }
+
+      .naut-navbar--space-left,
+      .naut-navbar--space-right {
+        border: none;
+      }
+
+      @media only screen and (min-width: 670px) {
+        width: 626px;
+        margin: 0 auto;
+        .naut-navbar--wrapper {
+          margin: 0;
+        }
+      }
+
+      @media only screen and (min-width: 818px) and (max-width: 860px) {
+        width: 100%;
+        .naut-navbar--wrapper {
+          margin: 0 1.5rem;
+        }
+      }
+
+      @media only screen and (min-width: 861px) and (max-width: 1041px) {
+        width: 818px;
+        .naut-navbar--wrapper {
+          margin: 0;
+        }
+      }
+
+      @media only screen and (min-width: 1042px) and (max-width: 1091px) {
+        width: 100%;
+        .naut-navbar--wrapper {
+          margin: 0 1.5rem;
+        }
+      }
+
+      @media only screen and (min-width: 1092px) and (max-width: 1249px) {
+        width: 1042px;
+        .naut-navbar--wrapper {
+          margin: 0;
+        }
+      }
+
+      @media only screen and (min-width: 1250px) and (max-width: 1299px) {
+        width: 100%;
+        .naut-navbar--wrapper {
+          margin: 0 1.5rem;
+        }
+      }
+
+      @media only screen and (min-width: 1300px) {
+        width: 1250px;
+        .naut-navbar--wrapper {
+          margin: 0;
+        }
+      }
+    }
+
+    .naut-navbar--container {
+      flex: 0 1 100%; /* respect max-width */
+    }
+
+    .naut-navbar--content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+</style>

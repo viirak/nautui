@@ -13,6 +13,7 @@ import type { LinkProps } from "./components/Link.astro";
 import type { ListProps } from "./components/List.astro";
 import type { ListItemProps } from "./components/ListItem.astro";
 import type { MarkProps } from "./components/Mark.astro";
+import type { NavBarProps } from "./components/NavBar.astro";
 import type { SectionProps } from "./components/Section.astro";
 import type { TextProps } from "./components/Text.astro";
 import type { ThemeProps } from "./components/Theme.astro";
@@ -50,3 +51,4 @@ export declare const Image: (props: ImageProps) => AstroComponent;
 // Navigation
 export declare const Breadcrumb: (props: BreadcrumbProps) => AstroComponent;
 export declare const Drawer: (props: DrawerProps) => AstroComponent;
+export declare const NavBar: (props: NavBarProps) => AstroComponent;
