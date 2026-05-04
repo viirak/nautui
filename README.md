@@ -41,7 +41,7 @@ Add the Theme (provider) to your layout:
 
 ```astro
 ---
-import { NautTheme } from "@nautui/core";
+import { Theme } from "@nautui/core";
 ---
 
 <html lang="en">
@@ -51,9 +51,9 @@ import { NautTheme } from "@nautui/core";
     <title>My Site</title>
   </head>
   <body>
-    <NautTheme>
+    <Theme>
       <slot />
-    </NautTheme>
+    </Theme>
   </body>
 </html>
 ```
@@ -63,17 +63,17 @@ import { NautTheme } from "@nautui/core";
 Dark mode is enabled by default when you wrap your layout with `<Theme>`. Disable it with `dark={false}`:
 
 ```astro
-<NautTheme dark={false}><slot /></NautTheme>
+<Theme dark={false}><slot /></Theme>
 ```
 
 There's also a theme toggle component for switching between light and dark mode. To use it, you can import and place it into your page.
 
 ```astro
 ---
-import { NautThemeToggle } from "@nautui/core";
+import { ThemeToggle } from "@nautui/core";
 ---
 <header>
-  <NautThemeToggle />
+  <ThemeToggle />
 </header>
 ```
 
