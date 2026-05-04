@@ -22,14 +22,14 @@ const {
 } = Astro.props as BoxProps;
 
 const borderStyle = bordered ? "1px solid var(--naut-color-border)" : "none";
-const py = `var(--spacing-${padding.y ? padding.y : "md"})`;
-const px = `var(--spacing-${padding.x ? padding.x : "md"})`;
-const my = `var(--spacing-${margin.y ? margin.y : "0"})`;
-const mx = `var(--spacing-${margin.x ? margin.x : "0"})`;
+const py = `var(--naut-spacing-${padding.y ? padding.y : "md"})`;
+const px = `var(--naut-spacing-${padding.x ? padding.x : "md"})`;
+const my = `var(--naut-spacing-${margin.y ? margin.y : "0"})`;
+const mx = `var(--naut-spacing-${margin.x ? margin.x : "0"})`;
 const paddingStyle = `${py} ${px}`;
 const marginStyle = `${my} ${mx}`;
 const backgroundPattern = pattern ? getPatternStyle(pattern) : "transparent";
-const borderRadius = radius ? `var(--border-radius-${radius})` : "none";
+const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "none";
 ---
 
 <div class:list={["naut-box", className]}>
