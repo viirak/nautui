@@ -1,9 +1,10 @@
 ---
-import type { Base } from "../types";
+import type { Base, Spacing } from "../types";
 
 export interface ContainerProps extends Base {
   display?: "block" | "grid";
   maxWidth?: number;
+  px?: Spacing;
 }
 
 const {
@@ -26,7 +27,7 @@ const isGrid = display === "grid";
   .naut-container {
     display: flow-root; /* Prevents margin collapsing */
     flex: 0 1 100%; /* respect max-width */
-    padding: 0 1.5rem;
+    padding: 0 var(--naut-spacing-md);
     margin: 0 auto;
 
     /*Mobile*/
