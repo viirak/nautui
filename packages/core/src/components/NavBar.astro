@@ -1,5 +1,5 @@
 ---
-import type { Base, Shadow } from "../types";
+import type { Base, Radius, Shadow } from "../types";
 import Container from "./Container.astro";
 
 export interface NavBarProps extends Base {
@@ -8,6 +8,7 @@ export interface NavBarProps extends Base {
   glassy?: boolean;
   height: string;
   offset?: number; // offset for sticky navbar
+  radius?: Radius | "full"; // border-radius for island variant
   shadow?: Shadow;
   sticky?: boolean;
   variant?: "default" | "outline" | "island";
@@ -22,12 +23,14 @@ const {
   fluid = false,
   shadow,
   glassy,
+  radius,
   offset = 0,
   zi = 99,
   ...rest
 } = Astro.props as NavBarProps;
 const offsetValue = offset ? `${offset}px` : "0";
 const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
+const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "0";
 ---
 
 <nav
@@ -38,6 +41,7 @@ const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
       bordered && "bordered",
       shadow && "shadow",
       glassy && "glassy",
+      radius && `radius--${radius}`,
       fluid && "fluid",
       className
     ]}
@@ -50,7 +54,7 @@ const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
   <div class="naut-space naut-space--right"></div>
 </nav>
 
-<style define:vars={{ zi, offsetValue, offsetIsland }}>
+<style define:vars={{ zi, borderRadius, offsetValue, offsetIsland }}>
   .naut-navbar {
     --naut-navbar-height: 70px;
     display: flex;
@@ -58,6 +62,7 @@ const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
     height: var(--naut-navbar-height);
     overflow: hidden;
     background-color: var(--naut-color-base);
+    border-radius: var(--borderRadius);
 
     &.bordered {
       border-bottom: 1px solid var(--naut-color-border);
@@ -68,6 +73,10 @@ const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
       top: var(--offsetValue);
       z-index: var(--zi);
       width: 100%;
+    }
+
+    &.radius--none {
+      border-radius: 0;
     }
 
     &.variant--island {
