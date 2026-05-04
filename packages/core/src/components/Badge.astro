@@ -1,0 +1,133 @@
+---
+import type { Base, Radius } from "../types";
+
+export interface BadgeProps extends Base {
+  gradient?: { to: string; from: string; deg: number; textColor: string };
+  iconOnly?: boolean;
+  outlineColor?: string;
+  radius?: Radius | "full";
+  size?: "sm" | "md" | "lg";
+  solid?: { background: string; color: string };
+  variant?: "default" | "solid" | "outline" | "dot" | "flat" | "gradient";
+}
+
+const {
+  size = "md",
+  solid = { background: "darkorchid", color: "white" },
+  gradient,
+  radius = "sm",
+  variant = "default",
+  outlineColor,
+  iconOnly = false,
+  ...rest
+} = Astro.props as BadgeProps;
+
+const gradientStyle = gradient
+  ? `linear-gradient(${gradient.deg}deg, ${gradient.from}, ${gradient.to});`
+  : undefined;
+---
+
+<div
+  class:list={["naut-badge", `variant--${variant}`, `radius--${radius}`, `size--${size}`, iconOnly && "icon-only"]}
+  {...rest}
+>
+  <slot />
+</div>
+<style
+  define:vars={{
+  solidBackground: solid.background,
+  solidColor: solid.color,
+  gradientStyle,
+  gradientColor: gradient?.textColor,
+  outlineColor: outlineColor ?? "var(--naut-color-text)",
+  outlineBg: outlineColor ? `rgb(from ${outlineColor} r g b / 0.15)` : "transparent",
+}}
+>
+  .naut-badge {
+    --outline-color: var(--outlineColor);
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    border: 1px solid var(--naut-color-border);
+
+    &.variant--solid {
+      color: var(--solidColor);
+      background-color: var(--solidBackground);
+      border-color: var(--solidBackground);
+    }
+
+    &.variant--gradient {
+      color: var(--gradientColor);
+      background: var(--gradientStyle);
+    }
+
+    &.variant--outline {
+      color: var(--outline-color);
+      background-color: var(--outlineBg);
+      border: 1px solid var(--outline-color);
+    }
+
+    &.variant--flat {
+      background-color: var(--naut-color-surface);
+      border: none;
+    }
+
+    &.variant--dot {
+      &::before {
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        content: "";
+        background-color: var(--naut-color-text);
+        border-radius: 50%;
+      }
+    }
+
+    &.radius--sm {
+      border-radius: var(--naut-border-radius-sm);
+    }
+
+    &.radius--md {
+      border-radius: var(--naut-border-radius-md);
+    }
+
+    &.radius--lg {
+      border-radius: var(--naut-border-radius-lg);
+    }
+
+    &.radius--full {
+      padding: 0.25rem 0.95rem;
+      border-radius: 50rem;
+    }
+
+    &.icon-only {
+      aspect-ratio: 1 / 1;
+    }
+
+    &.size--sm {
+      padding: 0.03rem 0.65rem;
+      font-size: 0.75rem;
+      &.icon-only {
+        padding: 0.65rem;
+      }
+    }
+
+    &.size--md {
+      padding: 0.2rem 0.85rem;
+      font-size: 0.875rem;
+      &.icon-only {
+        padding: 0.85rem;
+      }
+    }
+
+    &.size--lg {
+      padding: 0.35rem 1.15rem;
+      font-size: 1.125rem;
+      &.icon-only {
+        padding: 1.15rem;
+      }
+    }
+  }
+</style>

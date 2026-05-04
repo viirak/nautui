@@ -1,5 +1,6 @@
 // biome-ignore-all lint/style/noExportedImports: DX
 
+import Badge from "./components/Badge.astro";
 import Box from "./components/Box.astro";
 import Button from "./components/Button.astro";
 import Container from "./components/Container.astro";
@@ -16,6 +17,7 @@ import ThemeToggle from "./components/ThemeToggle.astro";
 import Title from "./components/Title.astro";
 
 export {
+  Badge,
   Box,
   Button,
   Container,

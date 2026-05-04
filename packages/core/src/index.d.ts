@@ -1,3 +1,4 @@
+import type { BadgeProps } from "./components/Badge.astro";
 import type { BoxProps } from "./components/Box.astro";
 import type { ButtonProps } from "./components/Button.astro";
 import type { ContainerProps } from "./components/Container.astro";
@@ -26,11 +27,14 @@ export declare const Box: (props: BoxProps) => AstroComponent;
 export declare const Group: (props: GroupProps) => AstroComponent;
 export declare const Grid: (props: GridProps) => AstroComponent;
 
-// Elements
-export declare const Button: (props: ButtonProps) => AstroComponent;
-export declare const Link: (props: LinkProps) => AstroComponent;
-export declare const List: (props: ListProps) => AstroComponent;
-export declare const ListItem: (props: ListItemProps) => AstroComponent;
-export declare const Mark: (props: MarkProps) => AstroComponent;
+// Typography
 export declare const Text: (props: TextProps) => AstroComponent;
 export declare const Title: (props: TitleProps) => AstroComponent;
+export declare const Link: (props: LinkProps) => AstroComponent;
+export declare const Mark: (props: MarkProps) => AstroComponent;
+export declare const List: (props: ListProps) => AstroComponent;
+export declare const ListItem: (props: ListItemProps) => AstroComponent;
+
+// UI
+export declare const Button: (props: ButtonProps) => AstroComponent;
+export declare const Badge: (props: BadgeProps) => AstroComponent;
