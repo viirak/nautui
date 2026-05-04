@@ -6,7 +6,7 @@ export interface NavBarProps extends Base {
   bordered?: boolean;
   fluid?: boolean; // if true, the navbar will take the full width of the viewport
   glassy?: boolean;
-  height: string;
+  height: number;
   offset?: number; // offset for sticky navbar
   radius?: Radius | "full"; // border-radius for island variant
   shadow?: Shadow;
@@ -21,6 +21,7 @@ const {
   bordered = false,
   sticky = false,
   fluid = false,
+  height = 70, // default height in pixels
   shadow,
   glassy,
   radius,
@@ -31,6 +32,7 @@ const {
 const offsetValue = offset ? `${offset}px` : "0";
 const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
 const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "0";
+const barHeight = height ? `${height}px` : "70px";
 ---
 
 <nav
@@ -54,12 +56,11 @@ const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "0";
   <div class="naut-space naut-space--right"></div>
 </nav>
 
-<style define:vars={{ zi, borderRadius, offsetValue, offsetIsland }}>
+<style define:vars={{ zi, barHeight, borderRadius, offsetValue, offsetIsland }}>
   .naut-navbar {
-    --naut-navbar-height: 70px;
     display: flex;
     align-items: center;
-    height: var(--naut-navbar-height);
+    height: var(--barHeight);
     overflow: hidden;
     background-color: var(--naut-color-base);
     border-radius: var(--borderRadius);
@@ -149,7 +150,7 @@ const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "0";
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: var(--naut-navbar-height);
+      height: var(--barHeight);
     }
   }
 </style>
