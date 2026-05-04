@@ -13,6 +13,7 @@ import Section from "./components/Section.astro";
 import Text from "./components/Text.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
+import Title from "./components/Title.astro";
 
 export {
   Box,
@@ -28,4 +29,5 @@ export {
   Text,
   Theme,
   ThemeToggle,
+  Title,
 };

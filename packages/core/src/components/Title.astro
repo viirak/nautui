@@ -1,0 +1,241 @@
+---
+import type { Base, Margin } from "../types";
+
+export interface TitleProps extends Base {
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
+  margin?: Margin;
+  rainbow?: boolean;
+  variant?: "hero" | "section" | "page";
+}
+
+const {
+  level = 2,
+  class: className,
+  margin,
+  variant,
+  rainbow,
+  ...rest
+} = Astro.props as TitleProps;
+
+const classlist = [
+  "naut-title",
+  `l-${level}`,
+  variant && `variant-${variant}`,
+  margin?.top && `mt-${margin.top}`,
+  margin?.bottom && `mb-${margin.bottom}`,
+  margin?.left && `ml-${margin.left}`,
+  margin?.right && `mr-${margin.right}`,
+  rainbow && "color--rainbow",
+  className,
+];
+---
+
+{level === 1 && <h1 class:list={classlist} {...rest}><slot /></h1>}
+{level === 2 && <h2 class:list={classlist} {...rest}><slot /></h2>}
+{level === 3 && <h3 class:list={classlist} {...rest}><slot /></h3>}
+{level === 4 && <h4 class:list={classlist} {...rest}><slot /></h4>}
+{level === 5 && <h5 class:list={classlist} {...rest}><slot /></h5>}
+{level === 6 && <h6 class:list={classlist} {...rest}><slot /></h6>}
+
+<style>
+  .naut-title {
+    margin: 0 0 var(--naut-spacing-sm) 0;
+    font-weight: bold;
+
+    &.l-1 {
+      font-size: 2.5rem;
+      line-height: calc(2.05rem * var(--naut-line-height-ratio));
+    }
+
+    &.l-2 {
+      font-size: 1.8rem;
+      line-height: calc(1.45rem * var(--naut-line-height-ratio));
+    }
+
+    &.l-3 {
+      font-size: 1.6rem;
+      line-height: calc(1.3rem * var(--naut-line-height-ratio));
+    }
+
+    &.l-4 {
+      font-size: 1.5rem;
+      line-height: calc(1.25rem * var(--naut-line-height-ratio));
+    }
+
+    &.l-5 {
+      font-size: 1.3rem;
+      line-height: calc(1.085rem * var(--naut-line-height-ratio));
+    }
+
+    &.l-6 {
+      font-size: 1.2rem;
+      line-height: calc(1.025rem * var(--naut-line-height-ratio));
+    }
+
+    /* Margins */
+    &.mt-0 {
+      margin-top: 0;
+    }
+    &.mb-0 {
+      margin-bottom: 0;
+    }
+    &.ml-0 {
+      margin-left: 0;
+    }
+    &.mr-0 {
+      margin-right: 0;
+    }
+
+    &.mt-xs {
+      margin-top: var(--naut-spacing-xs);
+    }
+    &.mb-xs {
+      margin-bottom: var(--naut-spacing-xs);
+    }
+    &.ml-xs {
+      margin-left: var(--naut-spacing-xs);
+    }
+    &.mr-xs {
+      margin-right: var(--naut-spacing-xs);
+    }
+
+    &.mt-sm {
+      margin-top: var(--naut-spacing-sm);
+    }
+    &.mb-sm {
+      margin-bottom: var(--naut-spacing-sm);
+    }
+    &.ml-sm {
+      margin-left: var(--naut-spacing-sm);
+    }
+    &.mr-sm {
+      margin-right: var(--naut-spacing-sm);
+    }
+
+    &.mt-md {
+      margin-top: var(--naut-spacing-md);
+    }
+    &.mb-md {
+      margin-bottom: var(--naut-spacing-md);
+    }
+    &.ml-md {
+      margin-left: var(--naut-spacing-md);
+    }
+    &.mr-md {
+      margin-right: var(--naut-spacing-md);
+    }
+
+    &.mt-lg {
+      margin-top: var(--naut-spacing-lg);
+    }
+    &.mb-lg {
+      margin-bottom: var(--naut-spacing-lg);
+    }
+    &.ml-lg {
+      margin-left: var(--naut-spacing-lg);
+    }
+    &.mr-lg {
+      margin-right: var(--naut-spacing-lg);
+    }
+
+    &.mt-xl {
+      margin-top: var(--naut-spacing-xl);
+    }
+    &.mb-xl {
+      margin-bottom: var(--naut-spacing-xl);
+    }
+    &.ml-xl {
+      margin-left: var(--naut-spacing-xl);
+    }
+    &.mr-xl {
+      margin-right: var(--naut-spacing-xl);
+    }
+
+    /* === Variants === */
+    &.variant-hero {
+      font-size: 2.5rem;
+      line-height: calc(2rem * var(--naut-line-height-ratio));
+
+      @media only screen and (min-width: 576px) {
+        font-size: 3rem;
+        line-height: calc(2.3rem * var(--naut-line-height-ratio));
+      }
+
+      @media only screen and (min-width: 818px) {
+        font-size: 3.5rem;
+        line-height: calc(2.7rem * var(--naut-line-height-ratio));
+      }
+
+      @media only screen and (min-width: 1042px) {
+        font-size: 4rem;
+        line-height: calc(3.1rem * var(--naut-line-height-ratio));
+      }
+
+      @media only screen and (min-width: 1250px) {
+        font-size: 4.5rem;
+        line-height: calc(3.45rem * var(--naut-line-height-ratio));
+      }
+    }
+
+    &.variant-page {
+      font-size: 2.3rem;
+      line-height: calc(1.786rem * var(--naut-line-height-ratio));
+
+      @media only screen and (min-width: 576px) {
+        font-size: 2.6rem;
+        line-height: calc(2.03rem * var(--naut-line-height-ratio));
+      }
+
+      @media only screen and (min-width: 818px) {
+        font-size: 3rem;
+        line-height: calc(2.3rem * var(--naut-line-height-ratio));
+      }
+
+      @media only screen and (min-width: 1042px) {
+        font-size: 3.4rem;
+        line-height: calc(2.6rem * var(--naut-line-height-ratio));
+      }
+
+      @media only screen and (min-width: 1250px) {
+        font-size: 3.8rem;
+        line-height: calc(2.92rem * var(--naut-line-height-ratio));
+      }
+    }
+
+    &.variant-section {
+      font-size: 2rem;
+      line-height: calc(1.55rem * var(--naut-line-height-ratio));
+
+      @media only screen and (min-width: 576px) {
+        font-size: 2.3rem;
+        line-height: calc(1.8rem * var(--naut-line-height-ratio));
+      }
+
+      @media only screen and (min-width: 818px) {
+        font-size: 2.5rem;
+        line-height: calc(2rem * var(--naut-line-height-ratio));
+      }
+
+      @media only screen and (min-width: 1042px) {
+        font-size: 2.8rem;
+        line-height: calc(2.2rem * var(--naut-line-height-ratio));
+      }
+
+      @media only screen and (min-width: 1250px) {
+        font-size: 3.2rem;
+        line-height: calc(2.51rem * var(--naut-line-height-ratio));
+      }
+    }
+
+    /* Color */
+    &.color--rainbow {
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background-image: linear-gradient(45deg, darkorchid, violet, red);
+      -webkit-background-clip: text;
+      &::selection {
+        color: var(--naut-color-text);
+      }
+    }
+  }
+</style>
