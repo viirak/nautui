@@ -23,18 +23,17 @@ const {
   ...rest
 } = Astro.props as NavBarProps;
 const offsetValue = offset ? `${offset}px` : "0";
-const isSticky = sticky;
 ---
 
 <div class="naut-bar">
   <nav
     class:list={[
-    "naut-navbar",
-    `variant--${variant}`,
-    isSticky && "sticky",
-    bordered && "bordered",
-    className
-  ]}
+      "naut-navbar",
+      `variant--${variant}`,
+      sticky && "sticky",
+      bordered && "bordered",
+      className
+    ]}
     {...rest}
   >
     <Container>
@@ -52,6 +51,7 @@ const isSticky = sticky;
     overflow: hidden;
     background-color: var(--naut-color-base);
 
+    &.bordered {
       border-bottom: 1px solid var(--naut-color-border);
     }
 
