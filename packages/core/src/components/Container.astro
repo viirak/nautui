@@ -17,7 +17,12 @@ const isGrid = display === "grid";
 ---
 
 <div
-  class:list={["naut-container", isMax && "max", isGrid && "grid", className]}
+  class:list={[
+    "naut-container",
+    isMax && "max",
+    isGrid && "grid",
+    className
+  ]}
 >
   <slot />
 </div>
