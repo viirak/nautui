@@ -2,9 +2,9 @@
 import type { Base, Margin } from "../types";
 
 export interface TitleProps extends Base {
+  gradient?: { colors: string[]; deg?: number };
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   margin?: Margin;
-  rainbow?: boolean;
   variant?: "hero" | "section" | "page";
 }
 
@@ -13,7 +13,7 @@ const {
   class: className,
   margin,
   variant,
-  rainbow,
+  gradient,
   ...rest
 } = Astro.props as TitleProps;
 
@@ -25,9 +25,13 @@ const classlist = [
   margin?.bottom && `mb-${margin.bottom}`,
   margin?.left && `ml-${margin.left}`,
   margin?.right && `mr-${margin.right}`,
-  rainbow && "color--rainbow",
+  gradient && "color--gradient",
   className,
 ];
+
+const gradientBg = gradient
+  ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
+  : "none";
 ---
 
 {level === 1 && <h1 class:list={classlist} {...rest}><slot /></h1>}
@@ -37,7 +41,7 @@ const classlist = [
 {level === 5 && <h5 class:list={classlist} {...rest}><slot /></h5>}
 {level === 6 && <h6 class:list={classlist} {...rest}><slot /></h6>}
 
-<style>
+<style define:vars={{ gradientBg }}>
   .naut-title {
     margin: 0 0 var(--naut-spacing-sm) 0;
     font-weight: bold;
@@ -228,13 +232,14 @@ const classlist = [
     }
 
     /* Color */
-    &.color--rainbow {
+    &.color--gradient {
       color: transparent;
       -webkit-text-fill-color: transparent;
-      background-image: linear-gradient(45deg, darkorchid, violet, red);
+      background-image: var(--gradientBg);
       -webkit-background-clip: text;
       &::selection {
         color: var(--naut-color-text);
+        -webkit-text-fill-color: var(--naut-color-text);
       }
     }
   }
