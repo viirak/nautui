@@ -5,14 +5,16 @@ export interface GridItemProps extends Base {
   span?: number;
 }
 
-const { class: className, span = 6, ...rest } = Astro.props as GridItemProps;
+const { class: className, span, ...rest } = Astro.props as GridItemProps;
+
+const gridColumn = span ? `span ${span}` : "auto";
 ---
 
 <div class:list={["naut-grid-item", className]} {...rest}>
   <slot />
 </div>
 
-<style define:vars={{ span }}>
+<style define:vars={{ gridColumn }}>
   .naut-grid-item {
     grid-column: 1 / -1; /* Stacked on mobile */
 
@@ -21,7 +23,7 @@ const { class: className, span = 6, ...rest } = Astro.props as GridItemProps;
     }
 
     @media only screen and (min-width: 1042px) {
-      grid-column: span var(--span); /* Use specified span on desktop */
+      grid-column: var(--gridColumn); /* Use specified span on desktop */
     }
   }
 </style>
