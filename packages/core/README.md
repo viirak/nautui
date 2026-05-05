@@ -65,22 +65,21 @@ import { Button, Container, Section, Title, Text } from "@nautui/core";
 - [x] `Button` — link or button with 11 variants (primary, secondary, outline, ghost, destructive, rainbow, …)
 - [x] `Card` — surface container with default, bordered, and flat variants
 - [x] `Divider` — horizontal rule styled with theme tokens
-- [ ] `Badge` — small pill label for status, counts, or tags
-- [ ] `Image` — responsive image with optional caption
+- [x] `Badge` — small pill label for status, counts, or tags
+- [x] `Image` — responsive image with optional caption
 
 ### Typography
 - [x] `Title` — semantic h1–h6 with consistent sizing
 - [x] `Text` — body text with size variants
 - [x] `Mark` — `<mark>` styled with highlight color
-- [ ] `Link` — themed anchor with hover and focus states
-- [ ] `List` — styled ordered and unordered lists
+- [x] `Link` — themed anchor with hover and focus states
+- [x] `List` — styled ordered and unordered lists
 - [ ] `Quote` — blockquote with themed border
 
 ### Navigation
-- [ ] `Navbar` — horizontal site navigation
-- [ ] `Drawer` — off-canvas sidebar for mobile
-- [ ] `Tabs` — tabbed content switcher
-- [ ] `Breadcrumbs` — hierarchical page links
+- [x] `Navbar` — horizontal site navigation
+- [x] `Drawer` — off-canvas sidebar for mobile
+- [x] `Breadcrumbs` — hierarchical page links
 
 ## Dark Mode
 
