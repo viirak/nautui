@@ -2,6 +2,7 @@
 import type { Base } from "../types";
 
 export interface MarkProps extends Base {
+  gradient?: { colors: string[]; deg?: number };
   rotate?: "sm" | "md" | "lg";
   variant?:
     | "default"
@@ -9,20 +10,27 @@ export interface MarkProps extends Base {
     | "halflight"
     | "parallelogram"
     | "sketch-circle"
-    | "rainbow";
 }
 
-const { class: className, variant, rotate, ...rest } = Astro.props as MarkProps;
+const { class: className, variant, rotate, gradient, ...rest } = Astro.props as MarkProps;
+const gradientBg = gradient
+  ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
+  : "none";
 ---
 
 <mark
-  class:list={["naut-mark", variant && `variant--${variant}`, rotate && `rotate--${rotate}`, className]}
+  class:list={[
+    "naut-mark", 
+    variant && `variant--${variant}`, 
+    rotate && `rotate--${rotate}`, 
+    gradient && "gradient", 
+    className]}
   {...rest}
 >
   <slot />
 </mark>
 
-<style>
+<style define:vars={{ gradientBg }}>
   .naut-mark {
     display: inline-block;
     padding-right: 1rem;
@@ -123,15 +131,16 @@ const { class: className, variant, rotate, ...rest } = Astro.props as MarkProps;
       }
     }
 
-    &.variant--rainbow {
+    &.gradient {
       color: transparent;
-      background-image: linear-gradient(45deg, darkorchid, violet, red);
+      background-color: transparent;
+      background-image: var(--gradientBg);
       -webkit-background-clip: text;
       background-clip: text;
 
       &::selection {
         color: var(--naut-color-text);
-        background-color: var(--naut-color-highlight);
+        background-color: var(--naut-color-selection);
         background-image: none;
       }
     }
