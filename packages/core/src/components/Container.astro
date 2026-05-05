@@ -2,6 +2,7 @@
 import type { Base } from "../types";
 
 export interface ContainerProps extends Base {
+  flex?: string | number; // allows custom flex values (e.g. "0 1 100%")
   fluid?: boolean; // if true, the container will take the full width of the viewport
   maxWidth?: number;
 }
@@ -9,7 +10,9 @@ export interface ContainerProps extends Base {
 const {
   class: className,
   fluid = false,
+  flex,
   maxWidth,
+  ...rest
 } = Astro.props as ContainerProps;
 
 const isMax = maxWidth !== undefined;
@@ -20,20 +23,25 @@ const isMax = maxWidth !== undefined;
     "naut-container",
     isMax && "max",
     fluid && "fluid",
+    flex && "flex",
     className
   ]}
+  {...rest}
 >
   <slot />
 </div>
 
-<style define:vars={{ maxWidth }}>
+<style define:vars={{ maxWidth, flex }}>
   .naut-container {
     display: flow-root; /* Prevents margin collapsing */
-    flex: 0 1 100%; /* respect max-width */
     padding: 0 var(--naut-spacing-md);
 
     &.fluid {
       width: 100%;
+    }
+
+    &.flex {
+      flex: var(--flex);
     }
 
     &:not(.fluid) {

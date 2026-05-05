@@ -58,7 +58,7 @@ const paddingRight =
   {pattern && <div class="naut-section--pattern"></div>}
   <div class="naut-section--wrapper">
     <div class="naut-section--left"></div>
-    <Container>
+    <Container flex="0 1 100%">
       <div class:list={["naut-section--main", py && `py-${py}`]}><slot /></div>
     </Container>
     <div class="naut-section--right"></div>
@@ -88,7 +88,6 @@ const paddingRight =
       display: flex;
 
       .naut-section--main {
-        flex: 0 1 100%; /* respect max-width */
         padding: var(--mainPaddingY) 0;
       }
 
