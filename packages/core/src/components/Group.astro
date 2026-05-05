@@ -4,13 +4,14 @@ import type { Base, Spacing } from "../types";
 export interface GroupProps extends Base {
   gap?: Spacing;
   grow?: boolean;
-  justify:
+  justify?:
     | "start"
     | "center"
     | "end"
     | "space-between"
     | "space-around"
     | "space-evenly";
+  stackOnMobile?: boolean;
   wrap?: boolean;
 }
 
@@ -19,17 +20,25 @@ const {
   gap = "md",
   grow = false,
   wrap = false,
+  stackOnMobile = false,
 } = Astro.props as GroupProps;
 const gapValue = `var(--naut-spacing-${gap})`;
 ---
 
-<div class:list={["naut-group", grow && "grow", wrap && "wrap"]}><slot /></div>
+<div class:list={["naut-group", grow && "grow", wrap && "wrap", stackOnMobile && "stack-on-mobile", className]}><slot /></div>
 <style define:vars={{ justify, gap: gapValue }}>
   .naut-group {
     display: flex;
     gap: var(--gap);
     align-items: center;
     justify-content: var(--justify);
+
+    &.stack-on-mobile {
+      flex-direction: column;
+      @media only screen and (min-width: 576px) {
+        flex-direction: row;
+      }
+    }
 
     &.grow {
       flex-grow: 1;

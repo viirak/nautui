@@ -2,6 +2,7 @@
 import type { Base, Margin, Size } from "../types";
 
 export interface TextProps extends Base {
+  align?: "left" | "center" | "right" | "justify";
   decoration?: "underline" | "strikethrough";
   dimmed?: boolean;
   inline?: boolean;
@@ -22,12 +23,14 @@ const {
   italic = false,
   inline = false,
   dimmed = false,
+  align,
   ...rest
 } = Astro.props as TextProps;
 const classList = [
   "text",
   italic && "italic",
   dimmed && "dimmed",
+  align && `align-${align}`,
   size && `size-${size}`,
   weight && `weight-${weight}`,
   transform && `transform-${transform}`,
@@ -55,6 +58,22 @@ const classList = [
 
     &.italic {
       font-style: italic;
+    }
+
+    &.align-left {
+      text-align: left;
+    }
+
+    &.align-center {
+      text-align: center;
+    }
+
+    &.align-right {
+      text-align: right;
+    }
+
+    &.align-justify {
+      text-align: justify;
     }
 
     &.dimmed {

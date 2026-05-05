@@ -8,6 +8,7 @@ import Card from "./components/Card.astro";
 import Container from "./components/Container.astro";
 import Divider from "./components/Divider.astro";
 import Drawer from "./components/Drawer.astro";
+import Glow from "./components/Glow.astro";
 import Grid from "./components/Grid.astro";
 import GridItem from "./components/GridItem.astro";
 import Group from "./components/Group.astro";
@@ -18,6 +19,7 @@ import ListItem from "./components/ListItem.astro";
 import Mark from "./components/Mark.astro";
 import NavBar from "./components/NavBar.astro";
 import Section from "./components/Section.astro";
+import Stack from "./components/Stack.astro";
 import Text from "./components/Text.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
@@ -32,6 +34,7 @@ export {
   Container,
   Divider,
   Drawer,
+  Glow,
   Grid,
   GridItem,
   Group,
@@ -42,6 +45,7 @@ export {
   Mark,
   NavBar,
   Section,
+  Stack,
   Text,
   Theme,
   ThemeToggle,

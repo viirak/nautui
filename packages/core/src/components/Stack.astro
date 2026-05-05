@@ -1,0 +1,37 @@
+---
+import type { Base, Spacing } from "../types";
+
+export interface StackProps extends Base {
+  align?: "start" | "center" | "end" | "stretch";
+  gap?: Spacing;
+  justify?:
+    | "start"
+    | "center"
+    | "end"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
+}
+
+const {
+  class: className,
+  align = "stretch",
+  justify = "start",
+  gap = "md",
+  ...rest
+} = Astro.props as StackProps;
+
+const gapValue = `var(--naut-spacing-${gap})`;
+---
+
+<div class:list={["naut-stack", className]} {...rest}><slot /></div>
+
+<style define:vars={{ align, justify, gap: gapValue }}>
+  .naut-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    align-items: var(--align);
+    justify-content: var(--justify);
+  }
+</style>

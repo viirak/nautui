@@ -1,9 +1,11 @@
 ---
-import type { Base } from "../types";
+import type { Base, Radius } from "../types";
 
 export interface ImageProps extends Base {
   alt: string;
+  radius?: Radius | "none" | "full";
   ratio?: "1:1" | "16:9" | "4:3" | "3:2" | "2:1";
+  shadow?: "sm" | "md" | "lg" | "xl";
   src: string;
   [key: string]: unknown;
 }
@@ -13,16 +15,28 @@ const {
   alt,
   class: className,
   ratio = "16:9",
+  radius = "none",
+  shadow,
   ...rest
 } = Astro.props as ImageProps;
 const ratioName = ratio.replace(":", "x");
 ---
 
-<div class:list={["naut-image", `ratio-${ratioName}`, className]}>
+<div class:list={["naut-image", `ratio-${ratioName}`, radius && `radius-${radius}`, shadow && `shadow-${shadow}`, className]}>
   <img src={src} alt={alt} {...rest}>
 </div>
 <style>
   .naut-image {
+    --radius-scale: 1.575;
+    --shadow-scale: 1;
+    --s: calc(1rem * var(--shadow-scale));
+    --sh-x: calc(0.0625 * var(--s));
+    --sh-c: #0000001a;
+    --shadow-sm: var(--sh-x) calc(0.125 * var(--s)) calc(0.25 * var(--s)) var(--sh-c);
+    --shadow-md: var(--sh-x) calc(0.25 * var(--s)) calc(0.5 * var(--s)) var(--sh-c);
+    --shadow-lg: var(--sh-x) calc(0.5 * var(--s)) calc(1 * var(--s)) var(--sh-c);
+    --shadow-xl: var(--sh-x) calc(1 * var(--s)) calc(2 * var(--s)) var(--sh-c);
+
     width: 100%;
     overflow: hidden;
     background-color: var(--naut-color-surface);
@@ -51,6 +65,42 @@ const ratioName = ratio.replace(":", "x");
 
     &.ratio-2x1 {
       aspect-ratio: 2 / 1;
+    }
+
+    &.radius-none {
+      border-radius: 0;
+    }
+
+    &.radius-sm {
+      border-radius: calc(var(--naut-border-radius-sm) * var(--radius-scale));
+    }
+
+    &.radius-md {
+      border-radius: calc(var(--naut-border-radius-md) * var(--radius-scale));
+    }
+
+    &.radius-lg {
+      border-radius: calc(var(--naut-border-radius-lg) * var(--radius-scale));
+    }
+
+    &.radius-full {
+      border-radius: 9999px;
+    }
+
+    &.shadow-sm {
+      box-shadow: var(--shadow-sm);
+    }
+
+    &.shadow-md {
+      box-shadow: var(--shadow-md);
+    }
+
+    &.shadow-lg {
+      box-shadow: var(--shadow-lg);
+    }
+
+    &.shadow-xl {
+      box-shadow: var(--shadow-xl);
     }
   }
 </style>
