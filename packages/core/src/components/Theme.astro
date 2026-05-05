@@ -78,6 +78,17 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
       --naut-border-width-lg: 0.125rem;
       --naut-border-width-xl: 0.195rem;
 
+      /* Shadows */
+      --naut-shadow-scale: 1;
+      --naut-shadow-s: calc(1rem * var(--naut-shadow-scale));
+      --naut-shadow-x: calc(0.0625 * var(--naut-shadow-s));
+      --naut-shadow-c: #0000001a;
+      
+      --naut-shadow-sm: var(--naut-shadow-x) calc(0.125 * var(--naut-shadow-s)) calc(0.25 * var(--naut-shadow-s)) var(--naut-shadow-c);
+      --naut-shadow-md: var(--naut-shadow-x) calc(0.25 * var(--naut-shadow-s)) calc(0.5 * var(--naut-shadow-s)) var(--naut-shadow-c);
+      --naut-shadow-lg: var(--naut-shadow-x) calc(0.5 * var(--naut-shadow-s)) calc(1 * var(--naut-shadow-s)) var(--naut-shadow-c);
+      --naut-shadow-xl: var(--naut-shadow-x) calc(1 * var(--naut-shadow-s)) calc(2 * var(--naut-shadow-s)) var(--naut-shadow-c);
+
       /* === Theme inputs (overridable) === */
       --naut-color-primary: #5423e7;
       --naut-color-secondary: #121217;

@@ -26,19 +26,6 @@ const {
 <style>
   .naut-card {
     --radius-scale: 1.575;
-    --shadow-scale: 1;
-    --s: calc(1rem * var(--shadow-scale));
-
-    /* Single Source of Truth */
-    --sh-x: calc(0.0625 * var(--s)); /* 1px Right */
-    --sh-c: #0000001a; /* 10% Opacity Black */
-
-    --shadow-sm: var(--sh-x) calc(0.125 * var(--s)) calc(0.25 * var(--s))
-      var(--sh-c);
-    --shadow-md: var(--sh-x) calc(0.25 * var(--s)) calc(0.5 * var(--s))
-      var(--sh-c);
-    --shadow-lg: var(--sh-x) calc(0.5 * var(--s)) calc(1 * var(--s)) var(--sh-c);
-    --shadow-xl: var(--sh-x) calc(1 * var(--s)) calc(2 * var(--s)) var(--sh-c);
 
     display: flex;
     flex-direction: column;
@@ -77,19 +64,19 @@ const {
     }
 
     &.shadow-sm {
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--naut-shadow-sm);
     }
 
     &.shadow-md {
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--naut-shadow-md);
     }
 
     &.shadow-lg {
-      box-shadow: var(--shadow-lg);
+      box-shadow: var(--naut-shadow-lg);
     }
 
     &.shadow-xl {
-      box-shadow: var(--shadow-xl);
+      box-shadow: var(--naut-shadow-xl);
     }
   }
 </style>
