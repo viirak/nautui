@@ -2,13 +2,13 @@
 import type { Base, Radius } from "../types";
 
 export interface BadgeProps extends Base {
-  gradient?: { to: string; from: string; deg: number; textColor: string };
+  gradient?: { colors: string[]; textColor: string; deg?: number };
   iconOnly?: boolean;
   outlineColor?: string;
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
   solid?: { background: string; color: string };
-  variant?: "default" | "solid" | "outline" | "dot" | "flat" | "gradient";
+  variant?: "default" | "solid" | "outline" | "dot" | "flat";
 }
 
 const {
@@ -22,13 +22,19 @@ const {
   ...rest
 } = Astro.props as BadgeProps;
 
-const gradientStyle = gradient
-  ? `linear-gradient(${gradient.deg}deg, ${gradient.from}, ${gradient.to});`
-  : undefined;
+const gradientBg = gradient
+  ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
+  : "none";
 ---
 
 <div
-  class:list={["naut-badge", `variant--${variant}`, `radius--${radius}`, `size--${size}`, iconOnly && "icon-only"]}
+  class:list={[
+    "naut-badge",
+    `variant--${variant}`,
+    `radius--${radius}`,
+    `size--${size}`,
+    gradient && "color--gradient",
+    iconOnly && "icon-only"]}
   {...rest}
 >
   <slot />
@@ -37,7 +43,7 @@ const gradientStyle = gradient
   define:vars={{
   solidBackground: solid.background,
   solidColor: solid.color,
-  gradientStyle,
+  gradientBg,
   gradientColor: gradient?.textColor,
   outlineColor: outlineColor ?? "var(--naut-color-text)",
   outlineBg: outlineColor ? `rgb(from ${outlineColor} r g b / 0.15)` : "transparent",
@@ -58,9 +64,9 @@ const gradientStyle = gradient
       border-color: var(--solidBackground);
     }
 
-    &.variant--gradient {
+    &.color--gradient {
       color: var(--gradientColor);
-      background: var(--gradientStyle);
+      background: var(--gradientBg);
     }
 
     &.variant--outline {
