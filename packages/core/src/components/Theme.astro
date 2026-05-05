@@ -93,8 +93,9 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
       --naut-color-destructive: #f3164e;
       --naut-color-success: #16a34a;
       --naut-color-warning: #d97706;
-      --naut-color-highlight: #ddd522;
       --naut-color-link: blue;
+      --naut-color-highlight: #ddd522;
+      --naut-color-selection: #22ff00;
 
       /* Neutrals derived from primary + tint */
       --naut-color-base: color-mix(
@@ -141,11 +142,6 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
         in oklch,
         var(--naut-color-base),
         black 1.7%
-      );
-      --naut-color-selection: color-mix(
-        in oklch,
-        var(--naut-color-primary),
-        white 80%
       );
     }
 
@@ -196,11 +192,6 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
         in oklch,
         var(--naut-color-base),
         white 25%
-      );
-      --naut-color-selection: color-mix(
-        in oklch,
-        var(--naut-color-primary),
-        white 90%
       );
     }
 
