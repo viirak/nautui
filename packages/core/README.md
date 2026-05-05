@@ -20,14 +20,14 @@ Wrap your layout with the theme provider to enable theming:
 
 ```astro
 ---
-import { NautTheme } from "@nautui/core";
+import { Theme } from "@nautui/core";
 ---
 
 <html lang="en">
   <body>
-    <NautTheme>
+    <Theme>
       <slot />
-    </NautTheme>
+    </Theme>
   </body>
 </html>
 ```
@@ -51,8 +51,8 @@ import { Button, Container, Section, Title, Text } from "@nautui/core";
 ## Components
 
 ### Theme
-- [x] `NautTheme` — provider that injects tokens and wires up auto dark mode
-- [x] `NautThemeToggle` — button that switches between light and dark, persists choice
+- [x] `Theme` — provider that injects tokens and wires up auto dark mode
+- [x] `ThemeToggle` — button that switches between light and dark, persists choice
 
 ### Layouts
 - [x] `Container` — center content with padding and max-width
@@ -87,13 +87,13 @@ import { Button, Container, Section, Title, Text } from "@nautui/core";
 Dark mode is enabled by default. Disable it with `dark={false}`:
 
 ```astro
-<NautTheme dark={false}><slot /></NautTheme>
+<Theme dark={false}><slot /></Theme>
 ```
 
 Use the toggle for manual switching:
 
 ```astro
-<NautThemeToggle />
+<ThemeToggle />
 ```
 
 ## Theming
