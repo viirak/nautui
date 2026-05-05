@@ -3,28 +3,36 @@ import type { Base, Spacing } from "../types";
 
 export interface GridProps extends Base {
   bordered?: boolean;
-  columns?: 1 | 2 | 3 | 4 | 5;
+  columns?: number;
   gap?: Spacing;
 }
 
 const {
   class: className,
-  columns = 3,
+  columns = 12,
   gap = "md",
   bordered = false,
 } = Astro.props as GridProps;
 ---
 
 <div
-  class:list={["naut-grid", `cols-${columns}`, `gap-${gap}`, bordered && "bordered", className]}
+  class:list={["naut-grid", `gap-${gap}`, bordered && "bordered", className]}
 >
   <slot />
 </div>
 
-<style>
+<style define:vars={{ columns }}>
   .naut-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Stacked on mobile */
+
+    @media only screen and (min-width: 576px) {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns on tablet */
+    }
+
+    @media only screen and (min-width: 1042px) {
+      grid-template-columns: repeat(var(--columns), 1fr); /* Desktop columns */
+    }
 
     &.gap-none:not(.bordered) {
       gap: 0;
@@ -51,45 +59,9 @@ const {
       background-color: var(--naut-color-border);
       border: 1px solid var(--naut-color-border);
     }
-
-    @media (min-width: 640px) {
-      &.cols-2 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      &.cols-3 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      &.cols-4 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      &.cols-5 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      &.cols-6 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (min-width: 1024px) {
-      &.cols-4 {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      &.cols-5 {
-        grid-template-columns: repeat(5, 1fr);
-      }
-
-      &.cols-6 {
-        grid-template-columns: repeat(6, 1fr);
-      }
-    }
   }
 
-  :global(.naut-grid.bordered > div) {
+  :global(.naut-grid.bordered > .naut-grid-item) {
     background-color: var(--naut-color-base);
   }
 </style>

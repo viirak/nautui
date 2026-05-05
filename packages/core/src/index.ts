@@ -9,6 +9,7 @@ import Container from "./components/Container.astro";
 import Divider from "./components/Divider.astro";
 import Drawer from "./components/Drawer.astro";
 import Grid from "./components/Grid.astro";
+import GridItem from "./components/GridItem.astro";
 import Group from "./components/Group.astro";
 import Image from "./components/Image.astro";
 import Link from "./components/Link.astro";
@@ -32,6 +33,7 @@ export {
   Divider,
   Drawer,
   Grid,
+  GridItem,
   Group,
   Image,
   Link,

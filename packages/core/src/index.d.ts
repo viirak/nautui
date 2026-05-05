@@ -7,6 +7,7 @@ import type { ContainerProps } from "./components/Container.astro";
 import type { DividerProps } from "./components/Divider.astro";
 import type { DrawerProps } from "./components/Drawer.astro";
 import type { GridProps } from "./components/Grid.astro";
+import type { GridItemProps } from "./components/GridItem.astro";
 import type { GroupProps } from "./components/Group.astro";
 import type { ImageProps } from "./components/Image.astro";
 import type { LinkProps } from "./components/Link.astro";
@@ -32,6 +33,7 @@ export declare const Section: (props: SectionProps) => AstroComponent;
 export declare const Box: (props: BoxProps) => AstroComponent;
 export declare const Group: (props: GroupProps) => AstroComponent;
 export declare const Grid: (props: GridProps) => AstroComponent;
+export declare const GridItem: (props: GridItemProps) => AstroComponent;
 
 // Typography
 export declare const Text: (props: TextProps) => AstroComponent;

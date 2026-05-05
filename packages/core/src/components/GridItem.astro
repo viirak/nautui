@@ -1,0 +1,27 @@
+---
+import type { Base } from "../types";
+
+export interface GridItemProps extends Base {
+  span?: number;
+}
+
+const { class: className, span = 6, ...rest } = Astro.props as GridItemProps;
+---
+
+<div class:list={["naut-grid-item", className]} {...rest}>
+  <slot />
+</div>
+
+<style define:vars={{ span }}>
+  .naut-grid-item {
+    grid-column: 1 / -1; /* Stacked on mobile */
+
+    @media only screen and (min-width: 576px) {
+      grid-column: auto; /* Fallback to Grid's 2-column template */
+    }
+
+    @media only screen and (min-width: 1042px) {
+      grid-column: span var(--span); /* Use specified span on desktop */
+    }
+  }
+</style>
