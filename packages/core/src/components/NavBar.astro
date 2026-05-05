@@ -50,7 +50,7 @@ const barHeight = height ? `${height}px` : "70px";
   {...rest}
 >
   <div class="naut-space naut-space--left"></div>
-  <Container fluid={fluid} display="grid">
+  <Container fluid={fluid} flex="0 0 100%">
     <div class="naut-navbar--content"><slot /></div>
   </Container>
   <div class="naut-space naut-space--right"></div>
