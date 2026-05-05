@@ -16,6 +16,7 @@ export interface GroupProps extends Base {
 }
 
 const {
+  class: className,
   justify = "start",
   gap = "md",
   grow = false,
@@ -25,7 +26,15 @@ const {
 const gapValue = `var(--naut-spacing-${gap})`;
 ---
 
-<div class:list={["naut-group", grow && "grow", wrap && "wrap", stackOnMobile && "stack-on-mobile", className]}><slot /></div>
+<div class:list={[
+  "naut-group", 
+  grow && "grow", 
+  wrap && "wrap", 
+  stackOnMobile && "stack-on-mobile", 
+  className]}>
+  <slot />
+</div>
+
 <style define:vars={{ justify, gap: gapValue }}>
   .naut-group {
     display: flex;
