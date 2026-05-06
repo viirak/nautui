@@ -1,0 +1,44 @@
+---
+import type { Base, Spacing } from "../types";
+
+export interface MenuProps extends Base {
+  gap?: Spacing;
+  layout?: "vertical" | "horizontal";
+}
+
+const {
+  class: className,
+  layout = "vertical",
+  gap = "xs",
+  ...rest
+} = Astro.props as MenuProps;
+
+const gapValue = `var(--naut-spacing-${gap})`;
+---
+
+<nav class:list={["naut-menu", `layout-${layout}`, className]} {...rest}>
+  <ul>
+    <slot />
+  </ul>
+</nav>
+
+<style define:vars={{ gap: gapValue }}>
+  .naut-menu {
+    ul {
+      display: flex;
+      gap: var(--gap);
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    &.layout-vertical ul {
+      flex-direction: column;
+    }
+
+    &.layout-horizontal ul {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+</style>
