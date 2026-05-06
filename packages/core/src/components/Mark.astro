@@ -46,6 +46,10 @@ const gradientBg = gradient
     -webkit-text-fill-color: var(--naut-color-text);
     background-color: var(--naut-color-highlight);
 
+    &::selection {
+      color: var(--naut-color-text);
+    }
+
     &.rotate--sm {
       transform: rotate(-1.25deg);
     }
