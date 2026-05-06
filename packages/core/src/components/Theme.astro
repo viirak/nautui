@@ -158,56 +158,68 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
         var(--naut-color-base),
         black 1.7%
       );
-    }
 
-    [data-theme="dark"] {
-      --naut-color-secondary: var(--naut-color-text);
-      --naut-color-base: color-mix(
+      /* Dark palette recipes — defined once, mapped where needed */
+      --naut-color-dark-base: color-mix(
         in oklch,
         black,
         var(--naut-color-primary) var(--naut-tint)
       );
-      --naut-color-text: color-mix(
+      --naut-color-dark-text: color-mix(
         in oklch,
         white,
         var(--naut-color-primary) var(--naut-tint)
       );
-      --naut-color-link: color-mix(in oklch, blue, white 80%);
-      --naut-color-link-dimmed: color-mix(
+      --naut-color-dark-link: color-mix(in oklch, blue, white 80%);
+      --naut-color-dark-link-dimmed: color-mix(
         in oklch,
-        var(--naut-color-link),
+        var(--naut-color-dark-link),
         black 30%
       );
-      --naut-color-surface: color-mix(
+      --naut-color-dark-surface: color-mix(
         in oklch,
-        var(--naut-color-base),
+        var(--naut-color-dark-base),
         white 32%
       );
-      --naut-color-border: color-mix(
+      --naut-color-dark-border: color-mix(
         in oklch,
-        var(--naut-color-base),
+        var(--naut-color-dark-base),
         white 40%
       );
-      --naut-color-border-outline: color-mix(
+      --naut-color-dark-border-outline: color-mix(
         in oklch,
-        var(--naut-color-base),
+        var(--naut-color-dark-base),
         white 80%
       );
-      --naut-color-dimmed: color-mix(
+      --naut-color-dark-dimmed: color-mix(
         in oklch,
-        var(--naut-color-text),
+        var(--naut-color-dark-text),
         black 30%
       );
-      --naut-color-pattern: color-mix(
+      --naut-color-dark-pattern: color-mix(
         in oklch,
-        var(--naut-color-base),
+        var(--naut-color-dark-base),
         white 45%
       );
-      --naut-color-pattern-stripe: color-mix(
+      --naut-color-dark-pattern-stripe: color-mix(
         in oklch,
-        var(--naut-color-base),
+        var(--naut-color-dark-base),
         white 25%
       );
+    }
+
+    [data-theme="dark"] {
+      --naut-color-secondary: var(--naut-color-text);
+      --naut-color-base: var(--naut-color-dark-base);
+      --naut-color-text: var(--naut-color-dark-text);
+      --naut-color-link: var(--naut-color-dark-link);
+      --naut-color-link-dimmed: var(--naut-color-dark-link-dimmed);
+      --naut-color-surface: var(--naut-color-dark-surface);
+      --naut-color-border: var(--naut-color-dark-border);
+      --naut-color-border-outline: var(--naut-color-dark-border-outline);
+      --naut-color-dimmed: var(--naut-color-dark-dimmed);
+      --naut-color-pattern: var(--naut-color-dark-pattern);
+      --naut-color-pattern-stripe: var(--naut-color-dark-pattern-stripe);
     }
 
     /* Global styles */
