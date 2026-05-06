@@ -7,6 +7,7 @@ export interface TextProps extends Base, MarginProps {
   dimmed?: boolean;
   inline?: boolean;
   italic?: boolean;
+  maxWidth?: number | string;
   size?: "inherit" | (Size & "xxl");
   transform?: "capitalize" | "uppercase" | "lowercase";
   weight?: "light" | "normal" | "medium" | "bold" | "semi-bold" | "extra-bold";
@@ -18,7 +19,14 @@ const {
   transform,
   decoration,
   size,
-  m, mx, my, mt, mr, mb, ml,
+  maxWidth,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
   italic = false,
   inline = false,
   dimmed = false,
@@ -31,6 +39,11 @@ const resolvedMt = mt ?? my ?? m;
 const resolvedMb = mb ?? my ?? m;
 const resolvedMl = ml ?? mx ?? m;
 const resolvedMr = mr ?? mx ?? m;
+
+const maxWidthStyle =
+  maxWidth === undefined
+    ? undefined
+    : `max-width: ${typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth}`;
 
 const classList = [
   "text",
@@ -49,8 +62,8 @@ const classList = [
 ];
 ---
 
-{inline && <span class:list={classList} {...rest}><slot /></span>}
-{!inline && <p class:list={classList} {...rest}><slot /></p>}
+{inline && <span class:list={classList} style={maxWidthStyle} {...rest}><slot /></span>}
+{!inline && <p class:list={classList} style={maxWidthStyle} {...rest}><slot /></p>}
 
 <style>
   .text {
@@ -88,24 +101,15 @@ const classList = [
 
     &.size-xs {
       font-size: var(--naut-font-size-xs);
-      line-height: calc(
-        var(--naut-font-size-xs) *
-        var(--naut-line-height-ratio)
-      );
+      line-height: calc(var(--naut-font-size-xs) * var(--naut-line-height-ratio));
     }
     &.size-sm {
       font-size: var(--naut-font-size-sm);
-      line-height: calc(
-        var(--naut-font-size-sm) *
-        var(--naut-line-height-ratio)
-      );
+      line-height: calc(var(--naut-font-size-sm) * var(--naut-line-height-ratio));
     }
     &.size-md {
       font-size: var(--naut-font-size-md);
-      line-height: calc(
-        var(--naut-font-size-md) *
-        var(--naut-line-height-ratio)
-      );
+      line-height: calc(var(--naut-font-size-md) * var(--naut-line-height-ratio));
     }
     &.size-lg {
       font-size: calc(var(--naut-font-size-lg) - 0.2rem);
