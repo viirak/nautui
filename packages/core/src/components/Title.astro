@@ -11,7 +11,13 @@ export interface TitleProps extends Base, MarginProps {
 const {
   level = 2,
   class: className,
-  m, mx, my, mt, mr, mb, ml,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
   variant,
   gradient,
   align,
@@ -181,11 +187,11 @@ const gradientBg = gradient
 
     /* === Variants === */
     &.variant-hero {
-      font-size: 2.5rem;
+      font-size: 3rem;
       line-height: calc(2rem * var(--naut-line-height-ratio));
 
       @media only screen and (min-width: 576px) {
-        font-size: 3rem;
+        font-size: 3.2rem;
         line-height: calc(2.3rem * var(--naut-line-height-ratio));
       }
 
