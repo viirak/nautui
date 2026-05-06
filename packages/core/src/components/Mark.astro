@@ -9,21 +9,27 @@ export interface MarkProps extends Base {
     | "underline"
     | "halflight"
     | "parallelogram"
-    | "sketch-circle"
+    | "sketch-circle";
 }
 
-const { class: className, variant, rotate, gradient, ...rest } = Astro.props as MarkProps;
+const {
+  class: className,
+  variant,
+  rotate,
+  gradient,
+  ...rest
+} = Astro.props as MarkProps;
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
-  : "none";
+  : undefined;
 ---
 
 <mark
   class:list={[
-    "naut-mark", 
-    variant && `variant--${variant}`, 
-    rotate && `rotate--${rotate}`, 
-    gradient && "gradient", 
+    "naut-mark",
+    variant && `variant--${variant}`,
+    rotate && `rotate--${rotate}`,
+    gradient && "gradient",
     className]}
   {...rest}
 >
