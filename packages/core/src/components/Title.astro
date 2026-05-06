@@ -45,7 +45,7 @@ const classlist = [
 
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
-  : "none";
+  : undefined;
 ---
 
 {level === 1 && <h1 class:list={classlist} {...rest}><slot /></h1>}
