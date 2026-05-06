@@ -57,7 +57,7 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
       --naut-font-size-xl: 1.565rem;
       --naut-font-size-xxl: 1.875rem;
 
-      --naut-naut-line-height-ratio: 1.55;
+      --naut-line-height-ratio: 1.55;
 
       /* Spacing */
       --naut-spacing-0: 0;
@@ -83,11 +83,15 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
       --naut-shadow-s: calc(1rem * var(--naut-shadow-scale));
       --naut-shadow-x: calc(0.0625 * var(--naut-shadow-s));
       --naut-shadow-c: #0000001a;
-      
-      --naut-shadow-sm: var(--naut-shadow-x) calc(0.125 * var(--naut-shadow-s)) calc(0.25 * var(--naut-shadow-s)) var(--naut-shadow-c);
-      --naut-shadow-md: var(--naut-shadow-x) calc(0.25 * var(--naut-shadow-s)) calc(0.5 * var(--naut-shadow-s)) var(--naut-shadow-c);
-      --naut-shadow-lg: var(--naut-shadow-x) calc(0.5 * var(--naut-shadow-s)) calc(1 * var(--naut-shadow-s)) var(--naut-shadow-c);
-      --naut-shadow-xl: var(--naut-shadow-x) calc(1 * var(--naut-shadow-s)) calc(2 * var(--naut-shadow-s)) var(--naut-shadow-c);
+
+      --naut-shadow-sm: var(--naut-shadow-x) calc(0.125 * var(--naut-shadow-s))
+        calc(0.25 * var(--naut-shadow-s)) var(--naut-shadow-c);
+      --naut-shadow-md: var(--naut-shadow-x) calc(0.25 * var(--naut-shadow-s))
+        calc(0.5 * var(--naut-shadow-s)) var(--naut-shadow-c);
+      --naut-shadow-lg: var(--naut-shadow-x) calc(0.5 * var(--naut-shadow-s))
+        calc(1 * var(--naut-shadow-s)) var(--naut-shadow-c);
+      --naut-shadow-xl: var(--naut-shadow-x) calc(1 * var(--naut-shadow-s))
+        calc(2 * var(--naut-shadow-s)) var(--naut-shadow-c);
 
       /* === Theme inputs (overridable) === */
       --naut-color-primary: #5423e7;
