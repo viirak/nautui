@@ -1,7 +1,8 @@
 ---
-import type { Base, Spacing } from "../types";
+import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import type { Base, Spacing, SpacingProps } from "../types";
 
-export interface GridProps extends Base {
+export interface GridProps extends Base, SpacingProps {
   bordered?: boolean;
   columns?: number;
   gap?: Spacing;
@@ -12,11 +13,33 @@ const {
   columns = 12,
   gap = "md",
   bordered = false,
+  p,
+  px,
+  py,
+  pt,
+  pr,
+  pb,
+  pl,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
 } = Astro.props as GridProps;
+
+const spacingStyle = [
+  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
+  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
+]
+  .filter(Boolean)
+  .join("; ");
 ---
 
 <div
   class:list={["naut-grid", `gap-${gap}`, bordered && "bordered", className]}
+  style={spacingStyle || undefined}
 >
   <slot />
 </div>

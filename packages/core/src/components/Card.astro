@@ -1,7 +1,8 @@
 ---
-import type { Base, Radius } from "../types";
+import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import type { Base, Radius, SpacingProps } from "../types";
 
-export interface CardProps extends Base {
+export interface CardProps extends Base, SpacingProps {
   bordered?: boolean;
   radius?: Radius | "none";
   shadow?: "sm" | "md" | "lg" | "xl";
@@ -12,11 +13,33 @@ const {
   bordered,
   shadow,
   radius = "none",
+  p,
+  px,
+  py,
+  pt,
+  pr,
+  pb,
+  pl,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
 } = Astro.props as CardProps;
+
+const spacingStyle = [
+  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
+  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
+]
+  .filter(Boolean)
+  .join("; ");
 ---
 
 <div
   class:list={["naut-card", bordered && "bordered", radius && `radius-${radius}`, shadow && `shadow-${shadow}`, className]}
+  style={spacingStyle || undefined}
 >
   <div class="naut-card--header"><slot name="header" /></div>
   <div class="naut-card--body"><slot /></div>

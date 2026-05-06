@@ -1,9 +1,10 @@
 ---
 import { getPatternStyle } from "../lib/pattern";
-import type { Base, Pattern, Spacing } from "../types";
+import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import type { Base, Pattern, SpacingProps } from "../types";
 import Container from "./Container.astro";
 
-export interface SectionProps extends Base {
+export interface SectionProps extends Base, SpacingProps {
   as?: "div" | "section" | "article" | "main" | "header" | "footer";
   mode?: "default" | "dimmed" | "highlighted" | "inverted";
   outline?: {
@@ -17,7 +18,6 @@ export interface SectionProps extends Base {
     decoration: "diamond" | "square" | "circle";
   };
   pattern?: Pattern;
-  py?: Spacing;
 }
 
 const {
@@ -27,11 +27,33 @@ const {
   border,
   outline,
   cross,
+  p,
+  px,
   py = "md",
+  pt,
+  pr,
+  pb,
+  pl,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
   ...rest
 } = Astro.props as SectionProps;
+
 const backgroundPattern = pattern ? getPatternStyle(pattern) : "transparent";
-const mainPaddingY = `var(--naut-spacing-${py})`;
+
+// Resolve padding for the main content area
+const resolved = resolvePadding({ p, px, py, pt, pr, pb, pl });
+const mainPaddingY = resolved.paddingTop ?? "0"; // top used for Y axis display
+const mainPaddingYBottom = resolved.paddingBottom ?? "0";
+const marginStyle = spacingToStyle(
+  resolveMargin({ m, mx, my, mt, mr, mb, ml })
+);
+
 // outlines
 const borderStyle = outline?.style || "solid";
 const borderValue = `1px ${borderStyle} var(--naut-color-border)`;
@@ -53,13 +75,14 @@ const paddingRight =
     outline?.decoration && `outline-decoration outline-decoration--${outline.decoration}`,
     className,
   ]}
+  style={marginStyle || undefined}
   {...rest}
 >
   {pattern && <div class="naut-section--pattern"></div>}
   <div class="naut-section--wrapper">
     <div class="naut-section--left"></div>
     <Container flex="0 1 100%">
-      <div class:list={["naut-section--main", py && `py-${py}`]}><slot /></div>
+      <div class="naut-section--main"><slot /></div>
     </Container>
     <div class="naut-section--right"></div>
   </div>
@@ -74,7 +97,8 @@ const paddingRight =
     borderRight,
     borderLeft,
     borderBottom,
-    mainPaddingY
+    mainPaddingY,
+    mainPaddingYBottom,
   }}
 >
   .naut-section {
@@ -88,7 +112,8 @@ const paddingRight =
       display: flex;
 
       .naut-section--main {
-        padding: var(--mainPaddingY) 0;
+        padding-top: var(--mainPaddingY);
+        padding-bottom: var(--mainPaddingYBottom);
       }
 
       .naut-section--left,

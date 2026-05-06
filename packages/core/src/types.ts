@@ -4,12 +4,30 @@ export type Spacing = "0" | Size;
 export type Shadow = Omit<Size, "xl" | "xs">;
 export type Radius = "sm" | "md" | "lg";
 
-export interface Margin {
-  bottom?: Spacing;
-  left?: Spacing;
-  right?: Spacing;
-  top?: Spacing;
+/** Flat padding shorthand props — mirrors CSS padding shorthands */
+export interface PaddingProps {
+  p?: Spacing; // all sides
+  pb?: Spacing; // bottom only
+  pl?: Spacing; // left only
+  pr?: Spacing; // right only
+  pt?: Spacing; // top only
+  px?: Spacing; // left + right
+  py?: Spacing; // top + bottom
 }
+
+/** Flat margin shorthand props — mirrors CSS margin shorthands */
+export interface MarginProps {
+  m?: Spacing; // all sides
+  mb?: Spacing; // bottom only
+  ml?: Spacing; // left only
+  mr?: Spacing; // right only
+  mt?: Spacing; // top only
+  mx?: Spacing; // left + right
+  my?: Spacing; // top + bottom
+}
+
+/** Full spacing props (padding + margin) for layout components */
+export interface SpacingProps extends PaddingProps, MarginProps {}
 
 export interface Border {
   bottom: boolean;

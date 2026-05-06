@@ -1,13 +1,12 @@
 ---
-import type { Base, Margin, Size } from "../types";
+import type { Base, MarginProps, Size } from "../types";
 
-export interface TextProps extends Base {
+export interface TextProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
   decoration?: "underline" | "strikethrough";
   dimmed?: boolean;
   inline?: boolean;
   italic?: boolean;
-  margin?: Margin;
   size?: "inherit" | (Size & "xxl");
   transform?: "capitalize" | "uppercase" | "lowercase";
   weight?: "light" | "normal" | "medium" | "bold" | "semi-bold" | "extra-bold";
@@ -19,13 +18,20 @@ const {
   transform,
   decoration,
   size,
-  margin,
+  m, mx, my, mt, mr, mb, ml,
   italic = false,
   inline = false,
   dimmed = false,
   align,
   ...rest
 } = Astro.props as TextProps;
+
+// Resolve axis shorthands: specific > axis > all
+const resolvedMt = mt ?? my ?? m;
+const resolvedMb = mb ?? my ?? m;
+const resolvedMl = ml ?? mx ?? m;
+const resolvedMr = mr ?? mx ?? m;
+
 const classList = [
   "text",
   italic && "italic",
@@ -35,10 +41,10 @@ const classList = [
   weight && `weight-${weight}`,
   transform && `transform-${transform}`,
   decoration && `decoration-${decoration}`,
-  margin?.top && `mt-${margin.top}`,
-  margin?.bottom && `mb-${margin.bottom}`,
-  margin?.left && `ml-${margin.left}`,
-  margin?.right && `mr-${margin.right}`,
+  resolvedMt && `mt-${resolvedMt}`,
+  resolvedMb && `mb-${resolvedMb}`,
+  resolvedMl && `ml-${resolvedMl}`,
+  resolvedMr && `mr-${resolvedMr}`,
   className,
 ];
 ---

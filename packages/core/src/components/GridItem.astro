@@ -1,16 +1,45 @@
 ---
-import type { Base } from "../types";
+import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import type { Base, SpacingProps } from "../types";
 
-export interface GridItemProps extends Base {
+export interface GridItemProps extends Base, SpacingProps {
   span?: number;
 }
 
-const { class: className, span, ...rest } = Astro.props as GridItemProps;
+const {
+  class: className,
+  span,
+  p,
+  px,
+  py,
+  pt,
+  pr,
+  pb,
+  pl,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
+  ...rest
+} = Astro.props as GridItemProps;
 
 const gridColumn = span ? `span ${span}` : "auto";
+const spacingStyle = [
+  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
+  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
+]
+  .filter(Boolean)
+  .join("; ");
 ---
 
-<div class:list={["naut-grid-item", className]} {...rest}>
+<div
+  class:list={["naut-grid-item", className]}
+  style={spacingStyle || undefined}
+  {...rest}
+>
   <slot />
 </div>
 

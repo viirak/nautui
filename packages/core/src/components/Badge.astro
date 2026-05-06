@@ -1,7 +1,8 @@
 ---
-import type { Base, Radius } from "../types";
+import { resolveMargin, spacingToStyle } from "../lib/spacing";
+import type { Base, MarginProps, Radius } from "../types";
 
-export interface BadgeProps extends Base {
+export interface BadgeProps extends Base, MarginProps {
   gradient?: { colors: string[]; textColor: string; deg?: number };
   iconOnly?: boolean;
   outlineColor?: string;
@@ -19,12 +20,14 @@ const {
   variant = "default",
   outlineColor,
   iconOnly = false,
+  m, mx, my, mt, mr, mb, ml,
   ...rest
 } = Astro.props as BadgeProps;
 
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : "none";
+const marginStyle = spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml }));
 ---
 
 <div
@@ -35,6 +38,7 @@ const gradientBg = gradient
     `size--${size}`,
     gradient && "color--gradient",
     iconOnly && "icon-only"]}
+  style={marginStyle || undefined}
   {...rest}
 >
   <slot />

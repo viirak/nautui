@@ -1,12 +1,11 @@
 ---
 import { getPatternStyle } from "../lib/pattern";
-import type { Base, Pattern, Radius, Spacing } from "../types";
+import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import type { Base, Pattern, Radius, SpacingProps } from "../types";
 
-export interface BoxProps extends Base {
+export interface BoxProps extends Base, SpacingProps {
   bordered?: boolean;
   display?: "block" | "flex" | "grid";
-  margin?: { x: Spacing; y: Spacing };
-  padding?: { x: Spacing; y: Spacing };
   pattern?: Pattern;
   radius?: Radius;
 }
@@ -15,43 +14,48 @@ const {
   bordered = false,
   radius,
   display = "block",
-  padding = { x: "md", y: "md" },
-  margin = { x: "0", y: "0" },
   pattern,
   class: className,
+  p,
+  px,
+  py,
+  pt,
+  pr,
+  pb,
+  pl,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
+  ...rest
 } = Astro.props as BoxProps;
 
 const borderStyle = bordered ? "1px solid var(--naut-color-border)" : "none";
-const py = `var(--naut-spacing-${padding.y ? padding.y : "md"})`;
-const px = `var(--naut-spacing-${padding.x ? padding.x : "md"})`;
-const my = `var(--naut-spacing-${margin.y ? margin.y : "0"})`;
-const mx = `var(--naut-spacing-${margin.x ? margin.x : "0"})`;
-const paddingStyle = `${py} ${px}`;
-const marginStyle = `${my} ${mx}`;
 const backgroundPattern = pattern ? getPatternStyle(pattern) : "transparent";
 const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "none";
+const paddingStyle = spacingToStyle(
+  resolvePadding({ p, px, py, pt, pr, pb, pl })
+);
+const marginStyle = spacingToStyle(
+  resolveMargin({ m, mx, my, mt, mr, mb, ml })
+);
 ---
 
-<div class:list={["naut-box", className]}>
-  <div class:list={["naut-box--wrapper", `${display}`]}><slot /></div>
+<div
+  class:list={["naut-box", className]}
+  style={`${paddingStyle}; ${marginStyle}`}
+  {...rest}
+>
+  <div class:list={["naut-box--wrapper", display]}><slot /></div>
 </div>
 
-<style
-  define:vars={{
-    display,
-    borderStyle,
-    paddingStyle,
-    marginStyle,
-    borderRadius,
-    backgroundPattern
-  }}
->
+<style define:vars={{ display, borderStyle, borderRadius, backgroundPattern }}>
   .naut-box {
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
-    padding: var(--paddingStyle);
-    margin: var(--marginStyle);
-    margin-bottom: var(--naut-spacing-md);
     background: var(--backgroundPattern);
     border: var(--borderStyle);
     border-radius: var(--borderRadius);
@@ -65,10 +69,6 @@ const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "none";
         gap: 1rem;
         align-items: center;
       }
-    }
-
-    &:last-child {
-      margin-bottom: 0;
     }
   }
 </style>

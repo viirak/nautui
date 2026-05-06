@@ -1,33 +1,38 @@
 ---
-import type { Base, Margin } from "../types";
+import type { Base, MarginProps } from "../types";
 
-export interface TitleProps extends Base {
+export interface TitleProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
   gradient?: { colors: string[]; deg?: number };
   level?: 1 | 2 | 3 | 4 | 5 | 6;
-  margin?: Margin;
   variant?: "hero" | "section" | "page";
 }
 
 const {
   level = 2,
   class: className,
-  margin,
+  m, mx, my, mt, mr, mb, ml,
   variant,
   gradient,
   align,
   ...rest
 } = Astro.props as TitleProps;
 
+// Resolve axis shorthands: specific > axis > all
+const resolvedMt = mt ?? my ?? m;
+const resolvedMb = mb ?? my ?? m;
+const resolvedMl = ml ?? mx ?? m;
+const resolvedMr = mr ?? mx ?? m;
+
 const classlist = [
   "naut-title",
   `l-${level}`,
   variant && `variant-${variant}`,
   align && `align-${align}`,
-  margin?.top && `mt-${margin.top}`,
-  margin?.bottom && `mb-${margin.bottom}`,
-  margin?.left && `ml-${margin.left}`,
-  margin?.right && `mr-${margin.right}`,
+  resolvedMt && `mt-${resolvedMt}`,
+  resolvedMb && `mb-${resolvedMb}`,
+  resolvedMl && `ml-${resolvedMl}`,
+  resolvedMr && `mr-${resolvedMr}`,
   gradient && "color--gradient",
   className,
 ];
