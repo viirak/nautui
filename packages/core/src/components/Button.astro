@@ -7,6 +7,7 @@ type ButtonType = "button" | "submit" | "reset";
 
 export interface ButtonProps extends Base {
   border?: Omit<Size, "xl"> | "none";
+  dark?: boolean;
   href?: string;
   rounded?: Radius;
   size?: ButtonSize;
@@ -23,6 +24,7 @@ const {
   rounded = "md",
   border = "md",
   pill = false,
+  dark = false,
   ...rest
 } = Astro.props as ButtonProps;
 
@@ -33,6 +35,7 @@ const classlist = [
   `rounded-${rounded}`,
   `border-${border}`,
   pill && "pill",
+  dark && "dark",
   className,
 ];
 ---
@@ -106,6 +109,44 @@ const classlist = [
       padding-box,
       var(--naut-rainbow-conic-gradient) border-box;
 
+    /* Dark palette recipes — defined once, mapped where needed */
+    --naut-color-dark-surface-hover: color-mix(
+      in oklch,
+      var(--naut-color-dark-base),
+      white 40%
+    );
+    --naut-color-dark-button: var(--naut-color-dark-surface);
+    --naut-color-dark-button-hover: var(--naut-color-dark-surface-hover);
+    --naut-color-dark-button-border: color-mix(
+      in oklch,
+      var(--naut-color-dark-border),
+      white 25%
+    );
+    --naut-color-dark-button-border-outline: color-mix(
+      in oklch,
+      var(--naut-color-dark-border),
+      white 50%
+    );
+    --naut-color-dark-outline-primary-hover: rgb(
+      from var(--naut-color-primary) r g b /
+      0.5
+    );
+    --naut-color-dark-secondary-hover: color-mix(
+      in oklch,
+      var(--naut-color-dark-text),
+      black 10%
+    );
+    --naut-color-dark-outline-secondary-hover: rgb(
+      from var(--naut-color-dark-text) r g b /
+      0.4
+    );
+    --naut-color-dark-rainbow:
+      linear-gradient(hsl(199 61% 17%), hsl(199 61% 17%)) padding-box,
+      var(--naut-rainbow-conic-gradient) border-box;
+    --naut-color-dark-rainbow-hover:
+      linear-gradient(hsl(210 40% 35%), hsl(180 60% 20%)) padding-box,
+      var(--naut-rainbow-conic-gradient) border-box;
+
     position: relative;
     display: inline-flex;
     gap: 0.5rem;
@@ -133,6 +174,28 @@ const classlist = [
     border-radius: 0.5rem;
     box-shadow: 1px 1px 2px 0.5px rgb(from #000 r g b / 0.1);
     transition-duration: 0.1s;
+
+    &.dark {
+      --naut-color-base: var(--naut-color-dark-base);
+      --naut-color-text: var(--naut-color-dark-text);
+      --naut-color-link: var(--naut-color-dark-link);
+      --naut-color-link-dimmed: var(--naut-color-dark-link-dimmed);
+      --naut-color-surface: var(--naut-color-dark-surface);
+      --naut-color-border: var(--naut-color-dark-border);
+      --naut-color-border-outline: var(--naut-color-dark-border-outline);
+      --naut-color-dimmed: var(--naut-color-dark-dimmed);
+      --naut-color-secondary: var(--naut-color-dark-text);
+      --naut-color-surface-hover: var(--naut-color-dark-surface-hover);
+      --naut-color-button: var(--naut-color-dark-button);
+      --naut-color-button-hover: var(--naut-color-dark-button-hover);
+      --naut-color-button-border: var(--naut-color-dark-button-border);
+      --naut-color-button-border-outline: var(--naut-color-dark-button-border-outline);
+      --naut-color-outline-primary-hover: var(--naut-color-dark-outline-primary-hover);
+      --naut-color-secondary-hover: var(--naut-color-dark-secondary-hover);
+      --naut-color-outline-secondary-hover: var(--naut-color-dark-outline-secondary-hover);
+      --naut-color-rainbow: var(--naut-color-dark-rainbow);
+      --naut-color-rainbow-hover: var(--naut-color-dark-rainbow-hover);
+    }
 
     &:hover:not(:disabled) {
       background: var(--naut-color-button-hover);
@@ -324,41 +387,15 @@ const classlist = [
 
   /* Dark theme overrides */
   :global([data-theme="dark"] .naut-button) {
-    --naut-color-surface-hover: color-mix(
-      in oklch,
-      var(--naut-color-base),
-      white 40%
-    );
-    --naut-color-button: var(--naut-color-surface);
-    --naut-color-button-hover: var(--naut-color-surface-hover);
-    --naut-color-button-border: color-mix(
-      in oklch,
-      var(--naut-color-border),
-      white 25%
-    );
-    --naut-color-button-border-outline: color-mix(
-      in oklch,
-      var(--naut-color-border),
-      white 50%
-    );
-    --naut-color-outline-primary-hover: rgb(
-      from var(--naut-color-primary) r g b /
-      0.5
-    );
-    --naut-color-secondary-hover: color-mix(
-      in oklch,
-      var(--naut-color-secondary),
-      black 10%
-    );
-    --naut-color-outline-secondary-hover: rgb(
-      from var(--naut-color-secondary) r g b /
-      0.4
-    );
-    --naut-color-rainbow:
-      linear-gradient(hsl(199 61% 17%), hsl(199 61% 17%)) padding-box,
-      var(--naut-rainbow-conic-gradient) border-box;
-    --naut-color-rainbow-hover:
-      linear-gradient(hsl(210 40% 35%), hsl(180 60% 20%)) padding-box,
-      var(--naut-rainbow-conic-gradient) border-box;
+    --naut-color-surface-hover: var(--naut-color-dark-surface-hover);
+    --naut-color-button: var(--naut-color-dark-button);
+    --naut-color-button-hover: var(--naut-color-dark-button-hover);
+    --naut-color-button-border: var(--naut-color-dark-button-border);
+    --naut-color-button-border-outline: var(--naut-color-dark-button-border-outline);
+    --naut-color-outline-primary-hover: var(--naut-color-dark-outline-primary-hover);
+    --naut-color-secondary-hover: var(--naut-color-dark-secondary-hover);
+    --naut-color-outline-secondary-hover: var(--naut-color-dark-outline-secondary-hover);
+    --naut-color-rainbow: var(--naut-color-dark-rainbow);
+    --naut-color-rainbow-hover: var(--naut-color-dark-rainbow-hover);
   }
 </style>
