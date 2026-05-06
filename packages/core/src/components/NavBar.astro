@@ -12,7 +12,7 @@ export interface NavBarProps extends Base {
   shadow?: Shadow;
   sticky?: boolean;
   variant?: "default" | "outline" | "island";
-  zi?: number; // z-index for sticky navbar
+  zindex?: number; // z-index for sticky navbar
 }
 
 const {
@@ -26,7 +26,7 @@ const {
   glassy,
   radius,
   offset = 0,
-  zi = 99,
+  zindex = 99,
   ...rest
 } = Astro.props as NavBarProps;
 const offsetValue = offset ? `${offset}px` : "0";
@@ -58,7 +58,7 @@ const barHeight = height ? `${height}px` : "70px";
   <div class="naut-space naut-space--right"></div>
 </nav>
 
-<style define:vars={{ zi, barHeight, borderRadius, offsetValue, offsetIsland }}>
+<style define:vars={{ zindex, barHeight, borderRadius, offsetValue, offsetIsland }}>
   .naut-navbar {
     display: flex;
     align-items: center;
@@ -74,7 +74,7 @@ const barHeight = height ? `${height}px` : "70px";
     &.sticky {
       position: fixed;
       top: var(--offsetValue);
-      z-index: var(--zi);
+      z-index: var(--zindex);
       width: 100%;
     }
 
