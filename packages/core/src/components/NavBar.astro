@@ -50,9 +50,11 @@ const barHeight = height ? `${height}px` : "70px";
   {...rest}
 >
   <div class="naut-space naut-space--left"></div>
-  <Container fluid={fluid} flex="0 0 100%">
-    <div class="naut-navbar--content"><slot /></div>
-  </Container>
+  <div class="naut-space naut-space--center">
+    <Container fluid={fluid}>
+      <div class="naut-navbar--content"><slot /></div>
+    </Container>
+  </div>
   <div class="naut-space naut-space--right"></div>
 </nav>
 
@@ -143,6 +145,10 @@ const barHeight = height ? `${height}px` : "70px";
       background: none;
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
+    }
+
+    .naut-space--center {
+      flex: 0 0 100%;
     }
 
     .naut-navbar--content {
