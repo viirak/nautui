@@ -39,7 +39,11 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
 
-  packages/blocks: {}
+  packages/blocks:
+    dependencies:
+      '@nautui/core':
+        specifier: workspace:*
+        version: link:../core
 
   packages/core: {}
 
