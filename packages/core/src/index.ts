@@ -8,7 +8,6 @@ import Card from "./components/Card.astro";
 import Container from "./components/Container.astro";
 import Divider from "./components/Divider.astro";
 import Drawer from "./components/Drawer.astro";
-import Glow from "./components/Glow.astro";
 import Grid from "./components/Grid.astro";
 import GridItem from "./components/GridItem.astro";
 import Group from "./components/Group.astro";
@@ -36,7 +35,6 @@ export {
   Container,
   Divider,
   Drawer,
-  Glow,
   Grid,
   GridItem,
   Group,
