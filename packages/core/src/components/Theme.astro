@@ -50,23 +50,28 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
     :root {
       --naut-font-family: "Inter", sans-serif;
 
+      --naut-line-height-ratio: 1.55;
+
       --naut-font-size-xs: 0.785rem;
       --naut-font-size-sm: 0.875rem;
       --naut-font-size-md: 1rem;
-      --naut-font-size-lg: 1.255rem;
+      --naut-font-size-lg: 1.355rem;
       --naut-font-size-xl: 1.565rem;
       --naut-font-size-xxl: 1.875rem;
 
-      --naut-line-height-ratio: 1.55;
-
       /* Spacing */
       --naut-spacing-0: 0;
-      --naut-naut-spacing-xs: 0.5rem;
+      --naut-spacing-xs: 0.5rem;
       --naut-spacing-sm: 1rem;
       --naut-spacing-md: 1.5rem;
       --naut-spacing-lg: 2rem;
       --naut-spacing-xl: 2.5rem;
       --naut-spacing-xxl: 3rem;
+
+      /* Spacing display */
+      --naut-spacing-display: clamp(2rem, 2vw, 4rem);
+      --naut-spacing-display-lg: clamp(3rem, 4vw, 6rem);
+      --naut-spacing-display-xl: clamp(4rem, 6vw, 8rem);
 
       --naut-border-radius-sm: 0.35rem;
       --naut-border-radius-md: 0.5rem;
