@@ -101,101 +101,37 @@ const classList = [
 
     &.size-xs {
       font-size: var(--naut-font-size-xs);
-      line-height: calc(var(--naut-font-size-xs) * var(--naut-line-height-ratio));
+      line-height: calc(
+        var(--naut-font-size-xs) *
+        var(--naut-line-height-ratio)
+      );
     }
     &.size-sm {
       font-size: var(--naut-font-size-sm);
-      line-height: calc(var(--naut-font-size-sm) * var(--naut-line-height-ratio));
+      line-height: calc(
+        var(--naut-font-size-sm) *
+        var(--naut-line-height-ratio)
+      );
     }
     &.size-md {
       font-size: var(--naut-font-size-md);
-      line-height: calc(var(--naut-font-size-md) * var(--naut-line-height-ratio));
+      line-height: calc(
+        var(--naut-font-size-md) *
+        var(--naut-line-height-ratio)
+      );
     }
     &.size-lg {
-      font-size: calc(var(--naut-font-size-lg) - 0.2rem);
-      line-height: calc(
-        (var(--naut-font-size-lg) - 0.2rem) *
-        var(--naut-line-height-ratio)
-      );
-
-      @media only screen and (min-width: 576px) {
-        font-size: calc(var(--naut-font-size-lg) - 0.12rem);
-        line-height: calc(
-          (var(--naut-font-size-lg) - 0.12rem) *
-          var(--naut-line-height-ratio)
-        );
-      }
-
-      @media only screen and (min-width: 818px) {
-        font-size: var(--naut-font-size-lg);
-        line-height: calc(
-          var(--naut-font-size-lg) *
-          var(--naut-line-height-ratio)
-        );
-      }
+      font-size: clamp(1.2rem, 2vw + 1rem, var(--naut-font-size-lg));
+      line-height: clamp(1.8rem, 2.5vw + 1rem, 1.85rem);
     }
     &.size-xl {
-      font-size: calc(var(--naut-font-size-xl) - 0.38rem);
-      line-height: calc(
-        (var(--naut-font-size-xl) - 0.38rem) *
-        var(--naut-line-height-ratio)
-      );
-
-      @media only screen and (min-width: 576px) {
-        font-size: calc(var(--naut-font-size-xl) - 0.35rem);
-        line-height: calc(
-          (var(--naut-font-size-xl) - 0.35rem) *
-          var(--naut-line-height-ratio)
-        );
-      }
-
-      @media only screen and (min-width: 818px) {
-        font-size: calc(var(--naut-font-size-xl) - 0.2rem);
-        line-height: calc(
-          (var(--naut-font-size-xl) - 0.2rem) *
-          var(--naut-line-height-ratio)
-        );
-      }
-
-      @media only screen and (min-width: 1042px) {
-        font-size: var(--naut-font-size-xl);
-        line-height: calc(
-          var(--naut-font-size-xl) *
-          var(--naut-line-height-ratio)
-        );
-      }
+      font-size: clamp(1.3rem, 1.3vw + 1rem, var(--naut-font-size-xl));
+      line-height: clamp(2rem, 2.5vw + 1rem, 2.34rem);
     }
 
     &.size-xxl {
-      font-size: calc(var(--naut-font-size-xxl) - 0.59rem);
-      line-height: calc(
-        (var(--naut-font-size-xxl) - 0.58rem) *
-        var(--naut-line-height-ratio)
-      );
-
-      @media only screen and (min-width: 576px) {
-        font-size: calc(var(--naut-font-size-xxl) - 0.5rem);
-        line-height: calc(
-          (var(--naut-font-size-xxl) - 0.5rem) *
-          var(--naut-line-height-ratio)
-        );
-      }
-
-      @media only screen and (min-width: 818px) {
-        font-size: calc(var(--naut-font-size-xxl) - 0.3rem);
-        line-height: calc(
-          (var(--naut-font-size-xxl) - 0.3rem) *
-          var(--naut-line-height-ratio)
-        );
-      }
-
-      @media only screen and (min-width: 1042px) {
-        font-size: var(--naut-font-size-xxl);
-        line-height: calc(
-          var(--naut-font-size-xxl) *
-          var(--naut-line-height-ratio)
-        );
-      }
+      font-size: clamp(1.5rem, 1.5vw + 1rem, var(--naut-font-size-xxl));
+      line-height: clamp(2.2rem, 2vw + 1rem, 3.25rem);
     }
 
     &.weight-light {

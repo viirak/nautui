@@ -5,12 +5,13 @@ export interface TitleProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
   gradient?: { colors: string[]; deg?: number };
   level?: 1 | 2 | 3 | 4 | 5 | 6;
-  variant?: "hero" | "section" | "page";
+  size?: "default" | "display" | "display-lg" | "display-xl" | "display-xxl";
 }
 
 const {
   level = 2,
   class: className,
+  size = "default",
   m,
   mx,
   my,
@@ -18,7 +19,6 @@ const {
   mr,
   mb,
   ml,
-  variant,
   gradient,
   align,
   ...rest
@@ -33,8 +33,8 @@ const resolvedMr = mr ?? mx ?? m;
 const classlist = [
   "naut-title",
   `l-${level}`,
-  variant && `variant-${variant}`,
   align && `align-${align}`,
+  size && `size-${size}`,
   resolvedMt && `mt-${resolvedMt}`,
   resolvedMb && `mb-${resolvedMb}`,
   resolvedMl && `ml-${resolvedMl}`,
@@ -185,80 +185,25 @@ const gradientBg = gradient
       margin-right: var(--naut-spacing-xl);
     }
 
-    /* === Variants === */
-    &.variant-hero {
-      font-size: 3rem;
-      line-height: calc(2rem * var(--naut-line-height-ratio));
-
-      @media only screen and (min-width: 576px) {
-        font-size: 3.2rem;
-        line-height: calc(2.3rem * var(--naut-line-height-ratio));
-      }
-
-      @media only screen and (min-width: 818px) {
-        font-size: 3.5rem;
-        line-height: calc(2.7rem * var(--naut-line-height-ratio));
-      }
-
-      @media only screen and (min-width: 1042px) {
-        font-size: 4rem;
-        line-height: calc(3.1rem * var(--naut-line-height-ratio));
-      }
-
-      @media only screen and (min-width: 1250px) {
-        font-size: 4.5rem;
-        line-height: calc(3.45rem * var(--naut-line-height-ratio));
-      }
+    /* Size display: ;*/
+    &.size-display {
+      font-size: clamp(2.2rem, 2.5vw + 1rem, 3.2rem);
+      line-height: clamp(2.8rem, 3.2vw + 1rem, 3.95rem);
     }
 
-    &.variant-page {
-      font-size: 2.3rem;
-      line-height: calc(1.786rem * var(--naut-line-height-ratio));
-
-      @media only screen and (min-width: 576px) {
-        font-size: 2.6rem;
-        line-height: calc(2.03rem * var(--naut-line-height-ratio));
-      }
-
-      @media only screen and (min-width: 818px) {
-        font-size: 3rem;
-        line-height: calc(2.3rem * var(--naut-line-height-ratio));
-      }
-
-      @media only screen and (min-width: 1042px) {
-        font-size: 3.4rem;
-        line-height: calc(2.6rem * var(--naut-line-height-ratio));
-      }
-
-      @media only screen and (min-width: 1250px) {
-        font-size: 3.8rem;
-        line-height: calc(2.92rem * var(--naut-line-height-ratio));
-      }
+    &.size-display-lg {
+      font-size: clamp(2.8rem, 4vw + 1rem, 4.2rem);
+      line-height: clamp(3rem, 4.5vw + 1rem, 4.5rem);
     }
 
-    &.variant-section {
-      font-size: 2rem;
-      line-height: calc(1.55rem * var(--naut-line-height-ratio));
+    &.size-display-xl {
+      font-size: clamp(3rem, 5vw + 1rem, 4.5rem);
+      line-height: clamp(3.2rem, 5vw + 1rem, 5rem);
+    }
 
-      @media only screen and (min-width: 576px) {
-        font-size: 2.3rem;
-        line-height: calc(1.8rem * var(--naut-line-height-ratio));
-      }
-
-      @media only screen and (min-width: 818px) {
-        font-size: 2.5rem;
-        line-height: calc(2rem * var(--naut-line-height-ratio));
-      }
-
-      @media only screen and (min-width: 1042px) {
-        font-size: 2.8rem;
-        line-height: calc(2.2rem * var(--naut-line-height-ratio));
-      }
-
-      @media only screen and (min-width: 1250px) {
-        font-size: 3.2rem;
-        line-height: calc(2.51rem * var(--naut-line-height-ratio));
-      }
+    &.size-display-xxl {
+      font-size: clamp(3.2rem, 6vw + 1rem, 5rem);
+      line-height: clamp(3.5rem, 6vw + 1rem, 5.5rem);
     }
 
     /* Color */
