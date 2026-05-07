@@ -1,6 +1,7 @@
 ---
 import { getPatternStyle } from "../lib/pattern";
-import type { Base, Pattern } from "../types";
+import { resolvePadding } from "../lib/spacing";
+import type { Base, Pattern, Spacing } from "../types";
 
 export interface SectionProps extends Base {
   as?: "div" | "section" | "article" | "main" | "header" | "footer";
@@ -15,7 +16,14 @@ export interface SectionProps extends Base {
     style: "solid" | "dashed" | "dotted";
     decoration: "diamond" | "square" | "circle";
   };
+  p?: Spacing;
   pattern?: Pattern;
+  pb?: Spacing;
+  pl?: Spacing;
+  pr?: Spacing;
+  pt?: Spacing;
+  px?: Spacing;
+  py?: Spacing;
 }
 
 const {
@@ -25,6 +33,13 @@ const {
   border,
   outline,
   cross,
+  p = "md",
+  pl,
+  pr,
+  px,
+  pb,
+  pt,
+  py,
   ...rest
 } = Astro.props as SectionProps;
 
@@ -33,10 +48,11 @@ const backgroundPattern = pattern ? getPatternStyle(pattern) : "transparent";
 // outlines
 const borderStyle = outline?.style || "solid";
 const borderValue = `1px ${borderStyle} var(--naut-color-border)`;
-const borderTop = outline?.top || outline?.y ? borderValue : "none";
-const borderRight = outline?.right || outline?.x ? borderValue : "none";
-const borderBottom = outline?.bottom || outline?.y ? borderValue : "none";
-const borderLeft = outline?.left || outline?.x ? borderValue : "none";
+const borderTop = outline?.top || outline?.y ? borderValue : undefined;
+const borderRight = outline?.right || outline?.x ? borderValue : undefined;
+const borderBottom = outline?.bottom || outline?.y ? borderValue : undefined;
+const borderLeft = outline?.left || outline?.x ? borderValue : undefined;
+const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
 ---
 
 <section
@@ -66,11 +82,16 @@ const borderLeft = outline?.left || outline?.x ? borderValue : "none";
     borderTop,
     borderRight,
     borderLeft,
-    borderBottom
+    borderBottom,
+    paddingTop: padding.paddingTop,
+    paddingBottom: padding.paddingBottom,
+    paddingLeft: padding.paddingLeft,
+    paddingRight: padding.paddingRight,
   }}
 >
   .naut-section {
     position: relative;
+    overflow: hidden;
     border-top: var(--borderTop);
     border-bottom: var(--borderBottom);
 
@@ -80,13 +101,18 @@ const borderLeft = outline?.left || outline?.x ? borderValue : "none";
       display: flex;
 
       .naut-section--content {
-        padding: var(--naut-spacing-md);
+        padding-top: var(--paddingTop);
+        padding-right: var(--paddingRight);
+        padding-bottom: var(--paddingBottom);
+        padding-left: var(--paddingLeft);
       }
 
       .naut-section--left,
       .naut-section--right {
         position: relative;
-        flex-grow: 1;
+        @media only screen and (min-width: 576px) {
+          flex-grow: 1;
+        }
       }
 
       .naut-section--left {
@@ -100,12 +126,13 @@ const borderLeft = outline?.left || outline?.x ? borderValue : "none";
       }
 
       .naut-section--center {
-        flex: 0 0 100%;
-        margin: 0 auto;
+        flex: 1;
 
         /*Mobile*/
-        @media only screen and (min-width: 576px) and (max-width: 817px) {
+        @media only screen and (min-width: 576px) {
+          flex: 1 1 100%;
           max-width: 576px;
+          margin: 0 auto;
         }
 
         /* Tablet */
