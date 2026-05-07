@@ -1,8 +1,17 @@
 export type Pattern = "dots" | "dots-x" | "paper-grid" | "stripes";
 export type Size = "xs" | "sm" | "md" | "lg" | "xl";
-export type Spacing = "0" | Size;
 export type Shadow = Omit<Size, "xl" | "xs">;
 export type Radius = "sm" | "md" | "lg";
+export type Spacing =
+  | "0"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "xxl"
+  | "display"
+  | "display-lg"
+  | "display-xl";
 
 /** Flat padding shorthand props — mirrors CSS padding shorthands */
 export interface PaddingProps {
