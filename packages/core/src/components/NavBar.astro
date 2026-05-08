@@ -6,7 +6,6 @@ export interface NavBarProps extends Base {
   bordered?: boolean;
   dark?: boolean;
   fluid?: boolean; // if true, the navbar will take the full width of the viewport
-  glassy?: boolean;
   height: number;
   offset?: number; // offset for sticky navbar
   radius?: Radius | "full"; // border-radius for island variant
@@ -25,7 +24,6 @@ const {
   fluid = false,
   height = 70, // default height in pixels
   shadow,
-  glassy,
   radius,
   offset = 0,
   zindex = 99,
@@ -44,7 +42,6 @@ const barHeight = height ? `${height}px` : "70px";
       sticky && "sticky",
       bordered && "bordered",
       shadow && "shadow",
-      glassy && "glassy",
       radius && `radius--${radius}`,
       fluid && "fluid",
       dark && "dark",
@@ -65,15 +62,16 @@ const barHeight = height ? `${height}px` : "70px";
   define:vars={{ zindex, barHeight, borderRadius, offsetValue, offsetIsland }}
 >
   .naut-navbar {
+    --naut-color-navbar-bg: var(--naut-color-base);
     display: flex;
     align-items: center;
     height: var(--barHeight);
     overflow: hidden;
     color: var(--naut-color-text);
-    background-color: var(--naut-color-base);
     border-radius: var(--borderRadius);
 
     &.dark {
+      --naut-color-navbar-bg: var(--naut-color-dark-base);
       --naut-color-base: var(--naut-color-dark-base);
       --naut-color-text: var(--naut-color-dark-text);
       --naut-color-link: var(--naut-color-dark-link);
@@ -102,6 +100,8 @@ const barHeight = height ? `${height}px` : "70px";
       top: var(--offsetValue);
       z-index: var(--zindex);
       width: 100%;
+      -webkit-backdrop-filter: blur(20px) saturate(100%);
+      backdrop-filter: blur(20px) saturate(100%);
     }
 
     &.radius--none {
@@ -165,12 +165,6 @@ const barHeight = height ? `${height}px` : "70px";
     &.shadow {
       box-shadow: calc(0.0625 * calc(1rem * 1)) calc(0.5 * calc(1rem * 1))
         calc(1 * calc(1rem * 1)) #0000001a;
-    }
-
-    &.glassy {
-      background: transparent;
-      -webkit-backdrop-filter: blur(20px) saturate(100%);
-      backdrop-filter: blur(20px) saturate(100%);
     }
 
     .naut-space--center {
