@@ -185,3 +185,15 @@ const barHeight = height ? `${height}px` : "70px";
     }
   }
 </style>
+
+<script>
+  const nav = document.querySelector(".naut-navbar");
+  const sections = document.querySelector(".naut-section.dark");
+  if (nav && sections) {
+    const observer = new IntersectionObserver(
+      ([entry]) => nav.classList.toggle("dark", entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(sections);
+  }
+</script>
