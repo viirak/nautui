@@ -70,27 +70,6 @@ const barHeight = height ? `${height}px` : "70px";
     color: var(--naut-color-text);
     border-radius: var(--borderRadius);
 
-    &.dark {
-      --naut-color-navbar-bg: var(--naut-color-dark-base);
-      --naut-color-base: var(--naut-color-dark-base);
-      --naut-color-text: var(--naut-color-dark-text);
-      --naut-color-link: var(--naut-color-dark-link);
-      --naut-color-link-dimmed: var(--naut-color-dark-link-dimmed);
-      --naut-color-surface: var(--naut-color-dark-surface);
-      --naut-color-border: var(--naut-color-dark-border);
-      --naut-color-border-outline: var(--naut-color-dark-border-outline);
-      --naut-color-dimmed: var(--naut-color-dark-dimmed);
-      background-color: rgb(from var(--naut-color-base) r g b / 0.1);
-
-      &.bordered {
-        border-bottom-color: rgb(from var(--naut-color-border) r g b / 0.5);
-      }
-
-      &.ontext:not(.glassy) {
-        background-color: rgb(from var(--naut-color-base) r g b / 0.7);
-      }
-    }
-
     &.bordered:not(.dark) {
       border-bottom: 1px solid var(--naut-color-border);
     }
