@@ -6,6 +6,7 @@ import type { CardProps } from "./components/Card.astro";
 import type { ContainerProps } from "./components/Container.astro";
 import type { DividerProps } from "./components/Divider.astro";
 import type { DrawerProps } from "./components/Drawer.astro";
+import type { FigureProps } from "./components/Figure.astro";
 import type { GridProps } from "./components/Grid.astro";
 import type { GridItemProps } from "./components/GridItem.astro";
 import type { GroupProps } from "./components/Group.astro";
@@ -49,6 +50,7 @@ export declare const Badge: (props: BadgeProps) => AstroComponent;
 export declare const Card: (props: CardProps) => AstroComponent;
 export declare const Divider: (props: DividerProps) => AstroComponent;
 export declare const Image: (props: ImageProps) => AstroComponent;
+export declare const Figure: (props: FigureProps) => AstroComponent;
 
 // Navigation
 export declare const Breadcrumb: (props: BreadcrumbProps) => AstroComponent;
