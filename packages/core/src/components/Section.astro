@@ -5,6 +5,7 @@ import type { Base, Pattern, Spacing } from "../types";
 
 export interface SectionProps extends Base {
   as?: "div" | "section" | "article" | "main" | "header" | "footer";
+  dark?: boolean;
   mode?: "default" | "dimmed" | "highlighted" | "inverted";
   outline?: {
     top: boolean;
@@ -33,6 +34,7 @@ const {
   border,
   outline,
   cross,
+  dark = false,
   p = "md",
   pl,
   pr,
@@ -59,6 +61,7 @@ const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
   class:list={[
     "naut-section",
     mode && `${mode}`,
+    dark && "dark",
     outline?.decoration && `outline-decoration outline-decoration--${outline.decoration}`,
     className,
   ]}
