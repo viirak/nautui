@@ -71,6 +71,12 @@ const classList = [
     font-size: inherit;
     line-height: inherit;
 
+    &::selection {
+      color: var(--naut-color-text);
+      -webkit-text-fill-color: var(--naut-color-text);
+      background-color: var(--naut-color-selection);
+    }
+
     &.inline {
       display: inline-block;
     }
