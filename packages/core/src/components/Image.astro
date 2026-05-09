@@ -5,6 +5,7 @@ export interface ImageProps extends Base {
   alt: string;
   cover?: boolean;
   fluid?: boolean;
+  maxWidth?: string;
   radius?: Radius;
   ratio?: "1:1" | "16:9" | "4:3" | "3:2" | "2:1" | "9:16 | 3:4" | "2:3" | "1:2";
   shadow?: "sm" | "md" | "lg" | "xl";
@@ -21,6 +22,7 @@ const {
   shadow,
   cover = false,
   fluid = false,
+  maxWidth,
   ...rest
 } = Astro.props as ImageProps;
 const ratioName = ratio ? ratio.replace(":", "x") : undefined;
@@ -39,11 +41,12 @@ const ratioName = ratio ? ratio.replace(":", "x") : undefined;
 >
   <img src={src} alt={alt} {...rest}>
 </div>
-<style>
+<style define:vars={{ maxWidth }}>
   .naut-image {
     --radius-scale: 1.575;
     position: relative;
     display: inline-block;
+    max-width: var(--max-width);
     overflow: hidden;
     background-color: var(--naut-color-surface);
 
