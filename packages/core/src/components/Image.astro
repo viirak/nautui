@@ -5,6 +5,7 @@ export interface ImageProps extends Base {
   alt: string;
   cover?: boolean;
   fluid?: boolean;
+  maxHeight?: string;
   maxWidth?: string;
   radius?: Radius;
   ratio?: "1:1" | "16:9" | "4:3" | "3:2" | "2:1" | "9:16 | 3:4" | "2:3" | "1:2";
@@ -23,10 +24,13 @@ const {
   cover = false,
   fluid = false,
   maxWidth,
+  maxHeight,
   ...rest
 } = Astro.props as ImageProps;
 const ratioName = ratio ? ratio.replace(":", "x") : undefined;
-const maxWidthVar = maxWidth ? maxWidth : "none";
+const maxWidthVar = maxWidth && !cover ? maxWidth : "none";
+const maxHeightVar = maxHeight && !cover ? maxHeight : "none";
+const heightVar = maxHeight && !cover ? maxHeight : "auto";
 ---
 
 <div
@@ -36,23 +40,28 @@ const maxWidthVar = maxWidth ? maxWidth : "none";
     radius && `radius-${radius}`,
     shadow && `shadow-${shadow}`,
     cover && "fit-cover",
+    maxHeight && !cover && "fit-height",
     fluid && "fluid",
     className
   ]}
 >
   <img src={src} alt={alt} {...rest}>
 </div>
-<style define:vars={{ maxWidthVar }}>
+<style define:vars={{ maxWidthVar, maxHeightVar, heightVar }}>
   .naut-image {
     --radius-scale: 1.575;
     position: relative;
     display: inline-block;
     max-width: var(--maxWidthVar);
+    height: var(--heightVar);
+    max-height: var(--maxHeightVar);
     overflow: hidden;
     background-color: var(--naut-color-surface);
 
     img {
       display: block;
+      width: auto;
+      height: auto;
     }
 
     &.fit-cover {
@@ -66,10 +75,22 @@ const maxWidthVar = maxWidth ? maxWidth : "none";
       }
     }
 
-    &.fluid {
+    &.fluid:not(.fit-cover) {
       width: 100%;
       img {
         width: 100%;
+      }
+    }
+
+    &.fit-height:not(.ratio):not(.fit-cover):not(.fluid) {
+      width: fit-content;
+      max-width: 100%;
+      overflow: visible;
+      img {
+        display: block;
+        width: auto;
+        max-width: none;
+        height: 100%;
       }
     }
 
