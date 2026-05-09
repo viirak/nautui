@@ -75,7 +75,7 @@ const contentAlign = isFigureRight ? "left" : "center";
     z-index: 1;
     display: flex;
     align-items: center;
-    width: 100%;
+    justify-content: center;
     margin: 0 auto;
     overflow: hidden;
     background-color: #f133ff;
@@ -96,8 +96,10 @@ const contentAlign = isFigureRight ? "left" : "center";
       &.position-right {
         position: absolute;
         top: 0;
+        right: 0;
         bottom: 0;
         left: 55%;
+        justify-content: left;
         max-width: none;
         margin: 0;
 
