@@ -26,6 +26,7 @@ const {
   ...rest
 } = Astro.props as ImageProps;
 const ratioName = ratio ? ratio.replace(":", "x") : undefined;
+const maxWidthVar = maxWidth ? maxWidth : "none";
 ---
 
 <div
@@ -41,12 +42,12 @@ const ratioName = ratio ? ratio.replace(":", "x") : undefined;
 >
   <img src={src} alt={alt} {...rest}>
 </div>
-<style define:vars={{ maxWidth }}>
+<style define:vars={{ maxWidthVar }}>
   .naut-image {
     --radius-scale: 1.575;
     position: relative;
     display: inline-block;
-    max-width: var(--max-width);
+    max-width: var(--maxWidthVar);
     overflow: hidden;
     background-color: var(--naut-color-surface);
 
