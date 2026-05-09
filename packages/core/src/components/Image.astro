@@ -6,7 +6,7 @@ export interface ImageProps extends Base {
   cover?: boolean;
   fluid?: boolean;
   radius?: Radius;
-  ratio?: "1:1" | "16:9" | "4:3" | "3:2" | "2:1";
+  ratio?: "1:1" | "16:9" | "4:3" | "3:2" | "2:1" | "9:16 | 3:4" | "2:3" | "1:2";
   shadow?: "sm" | "md" | "lg" | "xl";
   src: string;
   [key: string]: unknown;
@@ -95,6 +95,22 @@ const ratioName = ratio ? ratio.replace(":", "x") : undefined;
 
     &.ratio-2x1 {
       aspect-ratio: 2 / 1;
+    }
+
+    &.ratio-9x16 {
+      aspect-ratio: 9 / 16;
+    }
+
+    &.ratio-3x4 {
+      aspect-ratio: 3 / 4;
+    }
+
+    &.ratio-2x3 {
+      aspect-ratio: 2 / 3;
+    }
+
+    &.ratio-1x2 {
+      aspect-ratio: 1 / 2;
     }
 
     &.radius-none {
