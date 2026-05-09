@@ -1,0 +1,113 @@
+---
+import { Section, Stack } from "@nautui/core";
+
+export interface SectionHeroProps {
+  dark?: boolean; // force dark mode
+  figure?: {
+    right?: boolean;
+    clip?: "slash" | "backslash";
+  };
+}
+
+const { figure, dark = false } = Astro.props as SectionHeroProps;
+
+let contentAlign = figure?.right ? "left" : "center";
+---
+
+<Section py="display-xl" class:list={["naut-hero-section"]} dark={{ dark }}>
+  <Fragment slot="section-before"> <slot name="background" /> </Fragment>
+  <div
+    class:list={[
+      "hero-content",
+      figure?.right && "split" ,
+      `align-${contentAlign}`
+    ]}
+  >
+    <Stack gap="lg" display="block"><slot /></Stack>
+  </div>
+  <div
+    slot="section-after"
+    class:list={[
+      "hero-figure",
+      figure?.right && "position-right",
+      figure?.clip && `clip-${figure.clip}`
+    ]}
+  >
+    {figure && <slot name="figure" />}
+  </div>
+</Section>
+<style>
+  .hero-content {
+    text-align: center;
+
+    @media only screen and (min-width: 1042px) {
+      display: grid;
+
+      &.split {
+        grid-template-columns: 1fr 1fr; /* Two equal columns */
+      }
+
+      &.align-center {
+        justify-content: center;
+        text-align: center;
+      }
+
+      &.align-left {
+        justify-content: flex-start;
+        text-align: left;
+      }
+
+      &.align-right {
+        justify-content: flex-end;
+        text-align: right;
+      }
+    }
+  }
+
+  .hero-figure {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: #f133ff;
+
+    /*Mobile*/
+    @media only screen and (min-width: 576px) {
+      max-width: 576px;
+    }
+
+    /* Tablet */
+    @media only screen and (min-width: 818px) and (max-width: 1041px) {
+      max-width: 768px;
+    }
+
+    @media only screen and (min-width: 1042px) {
+      max-width: 992px;
+
+      &.position-right {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 55%;
+        max-width: none;
+        margin: 0;
+
+        &.clip-slash {
+          clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
+        }
+
+        &.clip-backslash {
+          clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 10% 100%);
+        }
+      }
+    }
+
+    /* Large Desktop */
+    @media only screen and (min-width: 1250px) {
+      max-width: 1200px;
+    }
+  }
+</style>
