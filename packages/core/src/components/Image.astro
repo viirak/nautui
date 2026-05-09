@@ -158,19 +158,19 @@ const heightVar = maxHeight && !cover ? maxHeight : "auto";
       border-radius: 9999px;
     }
 
-    &.shadow-sm {
+    &.shadow-sm:not(.cover) {
       box-shadow: var(--naut-shadow-sm);
     }
 
-    &.shadow-md {
+    &.shadow-md:not(.cover) {
       box-shadow: var(--naut-shadow-md);
     }
 
-    &.shadow-lg {
+    &.shadow-lg:not(.cover) {
       box-shadow: var(--naut-shadow-lg);
     }
 
-    &.shadow-xl {
+    &.shadow-xl:not(.cover) {
       box-shadow: var(--naut-shadow-xl);
     }
   }
