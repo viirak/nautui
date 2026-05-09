@@ -26,18 +26,20 @@ const {
 const gapValue = `var(--naut-spacing-${gap})`;
 ---
 
-<div class:list={[
-  "naut-group", 
-  grow && "grow", 
-  wrap && "wrap", 
-  stackOnMobile && "stack-on-mobile", 
-  className]}>
+<div
+  class:list={[
+  "naut-group",
+  grow && "grow",
+  wrap && "wrap",
+  stackOnMobile && "stack-on-mobile",
+  className]}
+>
   <slot />
 </div>
 
 <style define:vars={{ justify, gap: gapValue }}>
   .naut-group {
-    display: flex;
+    display: inline-flex;
     gap: var(--gap);
     align-items: center;
     justify-content: var(--justify);
