@@ -31,6 +31,8 @@ const {
 } = Astro.props as ContainerProps;
 
 const isMax = maxWidth !== undefined;
+const maxWidthVar = maxWidth ? maxWidth : "none";
+const flexVar = flex ? flex : "none";
 const spacingStyle = [
   spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
   spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
@@ -53,7 +55,7 @@ const spacingStyle = [
   <slot />
 </div>
 
-<style define:vars={{ maxWidth, flex }}>
+<style define:vars={{ maxWidthVar, flexVar }}>
   .naut-container {
     display: flow-root; /* Prevents margin collapsing */
     padding: 0 var(--naut-spacing-md);
@@ -63,7 +65,7 @@ const spacingStyle = [
     }
 
     &.flex {
-      flex: var(--flex);
+      flex: var(--flexVar);
     }
 
     &:not(.fluid) {
@@ -90,7 +92,7 @@ const spacingStyle = [
     }
 
     &.max {
-      max-width: var(--maxWidth);
+      max-width: var(--maxWidthVar);
     }
   }
 </style>
