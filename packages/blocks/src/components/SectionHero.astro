@@ -3,15 +3,21 @@ import { Section, Stack } from "@nautui/core";
 
 export interface SectionHeroProps {
   dark?: boolean; // force dark mode
-  figure?: {
-    right?: boolean;
-    clip?: "slash" | "backslash";
-  };
+  figure?:
+    | boolean
+    | {
+        position?: "right" | "bottom";
+        clip?: "slash" | "backslash";
+      };
 }
 
-const { figure, dark = false } = Astro.props as SectionHeroProps;
+const { figure = false, dark = false } = Astro.props as SectionHeroProps;
 
-let contentAlign = figure?.right ? "left" : "center";
+const figureObj = figure && typeof figure !== "boolean";
+const clip = figureObj ? figure.clip : undefined;
+const position = figureObj && figure.position ? figure.position : "right";
+const isFigureRight = position === "right";
+const contentAlign = isFigureRight ? "left" : "center";
 ---
 
 <Section py="display-xl" class:list={["naut-hero-section"]} dark={{ dark }}>
@@ -19,7 +25,7 @@ let contentAlign = figure?.right ? "left" : "center";
   <div
     class:list={[
       "hero-content",
-      figure?.right && "split" ,
+      isFigureRight && "split" ,
       `align-${contentAlign}`
     ]}
   >
@@ -29,8 +35,8 @@ let contentAlign = figure?.right ? "left" : "center";
     slot="section-after"
     class:list={[
       "hero-figure",
-      figure?.right && "position-right",
-      figure?.clip && `clip-${figure.clip}`
+      position && `position-${position}`,
+      clip && `clip-${clip}`
     ]}
   >
     {figure && <slot name="figure" />}
