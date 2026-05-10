@@ -16,6 +16,7 @@ import Link from "./components/Link.astro";
 import List from "./components/List.astro";
 import ListItem from "./components/ListItem.astro";
 import Mark from "./components/Mark.astro";
+import Marquee from "./components/Marquee.astro";
 import Masonry from "./components/Masonry.astro";
 import MasonryItem from "./components/MasonryItem.astro";
 import Menu from "./components/Menu.astro";
@@ -45,6 +46,7 @@ export {
   List,
   ListItem,
   Mark,
+  Marquee,
   Masonry,
   MasonryItem,
   Menu,
