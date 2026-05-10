@@ -1,0 +1,95 @@
+---
+import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import type { Base, Spacing, SpacingProps } from "../types";
+
+export interface MasonryProps extends Base, SpacingProps {
+  columns?: number;
+  gap?: Spacing;
+}
+
+const {
+  class: className,
+  columns = 4,
+  gap = "md",
+  p,
+  px,
+  py,
+  pt,
+  pr,
+  pb,
+  pl,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
+} = Astro.props as MasonryProps;
+
+const spacingStyle = [
+  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
+  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
+]
+  .filter(Boolean)
+  .join("; ");
+---
+
+<div class:list={["naut-masonry", `gap-${gap}`, className]} style={spacingStyle || undefined}>
+  <slot />
+</div>
+
+<style define:vars={{ columns }}>
+  .naut-masonry {
+    column-count: 1; /* Stacked on mobile */
+    column-gap: 0;
+
+    @media only screen and (min-width: 576px) {
+      column-count: 2; /* 2 columns on tablet */
+    }
+
+    @media only screen and (min-width: 1042px) {
+      column-count: var(--columns); /* Desktop columns */
+    }
+
+    &.gap-none {
+      column-gap: 0;
+    }
+
+    &.gap-sm {
+      column-gap: var(--naut-spacing-sm);
+    }
+
+    &.gap-md {
+      column-gap: var(--naut-spacing-md);
+    }
+
+    &.gap-lg {
+      column-gap: var(--naut-spacing-lg);
+    }
+
+    &.gap-xl {
+      column-gap: var(--naut-spacing-xl);
+    }
+  }
+
+  :global(.naut-masonry.gap-none > .naut-masonry-item) {
+    margin-bottom: 0;
+  }
+
+  :global(.naut-masonry.gap-sm > .naut-masonry-item) {
+    margin-bottom: var(--naut-spacing-sm);
+  }
+
+  :global(.naut-masonry.gap-md > .naut-masonry-item) {
+    margin-bottom: var(--naut-spacing-md);
+  }
+
+  :global(.naut-masonry.gap-lg > .naut-masonry-item) {
+    margin-bottom: var(--naut-spacing-lg);
+  }
+
+  :global(.naut-masonry.gap-xl > .naut-masonry-item) {
+    margin-bottom: var(--naut-spacing-xl);
+  }
+</style>

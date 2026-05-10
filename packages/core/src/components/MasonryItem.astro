@@ -1,0 +1,47 @@
+---
+import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import type { Base, SpacingProps } from "../types";
+
+export interface MasonryItemProps extends Base, SpacingProps {}
+
+const {
+  class: className,
+  p,
+  px,
+  py,
+  pt,
+  pr,
+  pb,
+  pl,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
+  ...rest
+} = Astro.props as MasonryItemProps;
+
+const spacingStyle = [
+  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
+  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
+]
+  .filter(Boolean)
+  .join("; ");
+---
+
+<div
+  class:list={["naut-masonry-item", className]}
+  style={spacingStyle || undefined}
+  {...rest}
+>
+  <slot />
+</div>
+
+<style>
+  .naut-masonry-item {
+    width: 100%;
+    break-inside: avoid;
+  }
+</style>

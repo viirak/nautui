@@ -14,6 +14,8 @@ import type { LinkProps } from "./components/Link.astro";
 import type { ListProps } from "./components/List.astro";
 import type { ListItemProps } from "./components/ListItem.astro";
 import type { MarkProps } from "./components/Mark.astro";
+import type { MasonryItemProps } from "./components/MasonryItem.astro";
+import type { MasonryProps } from "./components/Masonry.astro";
 import type { NavBarProps } from "./components/NavBar.astro";
 import type { SectionProps } from "./components/Section.astro";
 import type { TextProps } from "./components/Text.astro";
@@ -34,6 +36,8 @@ export declare const Box: (props: BoxProps) => AstroComponent;
 export declare const Group: (props: GroupProps) => AstroComponent;
 export declare const Grid: (props: GridProps) => AstroComponent;
 export declare const GridItem: (props: GridItemProps) => AstroComponent;
+export declare const Masonry: (props: MasonryProps) => AstroComponent;
+export declare const MasonryItem: (props: MasonryItemProps) => AstroComponent;
 
 // Typography
 export declare const Text: (props: TextProps) => AstroComponent;
