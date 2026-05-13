@@ -38,13 +38,6 @@ export interface MarginProps {
 /** Full spacing props (padding + margin) for layout components */
 export interface SpacingProps extends PaddingProps, MarginProps {}
 
-export interface Border {
-  bottom: boolean;
-  left: boolean;
-  right: boolean;
-  top: boolean;
-}
-
 export interface Base {
   class?: string;
   [key: string]: unknown; // for the ...rest prop

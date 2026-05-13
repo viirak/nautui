@@ -1,8 +1,10 @@
 ---
+import { getBorderStyles } from "../lib/border";
 import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
-import type { Base, Radius, SpacingProps } from "../types";
+import type { Base, Border, Radius, SpacingProps } from "../types";
 
 export interface BoxProps extends Base, SpacingProps {
+  border?: Border;
   bordered?: boolean;
   display?: "block" | "flex" | "grid";
   radius?: Radius;
@@ -10,6 +12,7 @@ export interface BoxProps extends Base, SpacingProps {
 
 const {
   bordered = false,
+  border,
   radius,
   display = "block",
   class: className,
@@ -30,36 +33,44 @@ const {
   ...rest
 } = Astro.props as BoxProps;
 
-const borderStyle = bordered ? "1px solid var(--naut-color-border)" : "none";
-const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "none";
-const paddingStyle = spacingToStyle(
-  resolvePadding({ p, px, py, pt, pr, pb, pl })
-);
-const marginStyle = spacingToStyle(
-  resolveMargin({ m, mx, my, mt, mr, mb, ml })
-);
+const borderStyles = border ? getBorderStyles(border) : undefined;
+const paddingStyles = resolvePadding({ p, px, py, pt, pr, pb, pl });
+const marginStyles = resolveMargin({ m, mx, my, mt, mr, mb, ml });
 ---
 
-<div
-  class:list={["naut-box", className]}
-  style={`${paddingStyle}; ${marginStyle}`}
-  {...rest}
->
+<div class:list={["naut-box", bordered && "bordered", className]} {...rest}>
   <slot name="before" />
   <div class:list={["naut-box--wrapper", display]}><slot /></div>
   <slot name="after" />
 </div>
 
-<style define:vars={{ display, borderStyle, borderRadius }}>
+<style
+  define:vars={{ display, ...borderStyles, ...paddingStyles, ...marginStyles }}
+>
   .naut-box {
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
-    background: var(--backgroundPattern);
-    border: var(--borderStyle);
+
+    margin-top: var(--marginTop);
+    margin-right: var(--marginRight);
+    margin-bottom: var(--marginBottom);
+    margin-left: var(--marginLeft);
+    border-top: var(--borderTop);
+    border-right: var(--borderRight);
+    border-bottom: var(--borderBottom);
+    border-left: var(--borderLeft);
     border-radius: var(--borderRadius);
+
+    &.bordered {
+      border: 1px solid var(--naut-color-border);
+    }
 
     .naut-box--wrapper {
       position: relative;
+      padding-top: var(--paddingTop);
+      padding-right: var(--paddingRight);
+      padding-bottom: var(--paddingBottom);
+      padding-left: var(--paddingLeft);
 
       &.flex {
         display: flex;
