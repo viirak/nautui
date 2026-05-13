@@ -28,6 +28,7 @@ const backgroundPattern = getGradientPattern(pattern);
 
 <div class:list={["naut-background"]}>
   {pattern && <div class:list={["naut-background-pattern", pattern.name]}></div>}
+  <slot />
 </div>
 
 <style
