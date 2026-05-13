@@ -48,6 +48,26 @@ export function resolveMargin(props: MarginProps): ResolvedMargin {
   };
 }
 
+export function createPadding(prefix: string, props: PaddingProps) {
+  const padding = resolvePadding(props);
+  return {
+    [`${prefix}PaddingTop`]: padding.paddingTop,
+    [`${prefix}PaddingRight`]: padding.paddingRight,
+    [`${prefix}PaddingBottom`]: padding.paddingBottom,
+    [`${prefix}PaddingLeft`]: padding.paddingLeft,
+  };
+}
+
+export function createMargin(prefix: string, props: MarginProps) {
+  const margin = resolveMargin(props);
+  return {
+    [`${prefix}MarginTop`]: margin.marginTop,
+    [`${prefix}MarginRight`]: margin.marginRight,
+    [`${prefix}MarginBottom`]: margin.marginBottom,
+    [`${prefix}MarginLeft`]: margin.marginLeft,
+  };
+}
+
 /**
  * Converts a ResolvedPadding / ResolvedMargin into an inline style string.
  * Only includes properties that were explicitly set.
