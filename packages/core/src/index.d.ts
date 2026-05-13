@@ -55,6 +55,7 @@ export declare const Badge: (props: BadgeProps) => AstroComponent;
 export declare const Card: (props: CardProps) => AstroComponent;
 export declare const Divider: (props: DividerProps) => AstroComponent;
 export declare const Image: (props: ImageProps) => AstroComponent;
+
 // Navigation
 export declare const Breadcrumb: (props: BreadcrumbProps) => AstroComponent;
 export declare const Drawer: (props: DrawerProps) => AstroComponent;
