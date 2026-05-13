@@ -13,7 +13,10 @@ export interface Border {
   y?: BorderWidth;
 }
 
-export function getBorderStyles(border: Border) {
+export function createBorder(prefix: string, border?: Border) {
+  if (!border) {
+    return null;
+  }
   const style = border?.style || "solid";
   const color = "var(--naut-color-border)";
   const borderTop =
@@ -36,10 +39,10 @@ export function getBorderStyles(border: Border) {
     ? `var(--naut-border-radius-${border.radius})`
     : "none";
   return {
-    borderTop,
-    borderRight,
-    borderBottom,
-    borderLeft,
-    borderRadius,
+    [`${prefix}BorderTop`]: borderTop,
+    [`${prefix}BorderRight`]: borderRight,
+    [`${prefix}BorderBottom`]: borderBottom,
+    [`${prefix}BorderLeft`]: borderLeft,
+    [`${prefix}BorderRadius`]: borderRadius,
   };
 }
