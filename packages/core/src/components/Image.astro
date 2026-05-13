@@ -30,9 +30,9 @@ const {
   ...rest
 } = Astro.props as ImageProps;
 const ratioName = ratio ? ratio.replace(":", "x") : undefined;
-const maxWidthVar = maxWidth && !cover ? maxWidth : "none";
-const maxHeightVar = maxHeight && !cover ? maxHeight : "none";
-const heightVar = maxHeight && !cover ? maxHeight : "auto";
+const imageMaxWidth = maxWidth && !cover ? maxWidth : "none";
+const imageMaxHeight = maxHeight && !cover ? maxHeight : "none";
+const imageHeight = maxHeight && !cover ? maxHeight : "auto";
 ---
 
 <div
@@ -50,14 +50,14 @@ const heightVar = maxHeight && !cover ? maxHeight : "auto";
 >
   <img src={src} alt={alt} {...rest}>
 </div>
-<style define:vars={{ maxWidthVar, maxHeightVar, heightVar }}>
+<style define:vars={{ imageHeight, imageMaxHeight, imageMaxWidth }}>
   .naut-image {
     --radius-scale: 1.575;
     position: relative;
     display: inline-block;
-    max-width: var(--maxWidthVar);
-    height: var(--heightVar);
-    max-height: var(--maxHeightVar);
+    max-width: var(--imageMaxWidth);
+    height: var(--imageHeight);
+    max-height: var(--imageMaxHeight);
     overflow: hidden;
     background-color: var(--naut-color-surface);
 
