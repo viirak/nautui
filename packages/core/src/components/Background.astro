@@ -18,10 +18,10 @@ export interface BackgroundProps {
 const { color, image, pattern, gradient, opacity } =
   Astro.props as BackgroundProps;
 const backgroundColor = color || "transparent";
-const backgroundImage = image
-  ? `url("${image}") center/cover no-repeat`
-  : undefined;
-const background = `${backgroundColor} ${backgroundImage ? backgroundImage : ""}`;
+const backgroundImage = image ? `url("${image}")` : undefined;
+const backgroundSize = image ? "cover" : undefined;
+const backgroundPosition = image ? "center" : undefined;
+const backgroundRepeat = image ? "no-repeat" : undefined;
 const backgroundOpacity = opacity || 1;
 const backgroundPattern = getGradientPattern(pattern);
 const backgroundGradient = gradient
@@ -37,7 +37,11 @@ const backgroundGradient = gradient
 
 <style
   define:vars={{
-    background,
+    backgroundColor,
+    backgroundImage,
+    backgroundSize,
+    backgroundPosition,
+    backgroundRepeat,
     backgroundOpacity,
     backgroundPattern,
     backgroundGradient
@@ -47,7 +51,11 @@ const backgroundGradient = gradient
     position: absolute;
     inset: 0;
     z-index: 0;
-    background: var(--background);
+    background-color: var(--backgroundColor);
+    background-image: var(--backgroundImage);
+    background-repeat: var(--backgroundRepeat);
+    background-position: var(--backgroundPosition);
+    background-size: var(--backgroundSize);
     opacity: var(--backgroundOpacity);
   }
 
