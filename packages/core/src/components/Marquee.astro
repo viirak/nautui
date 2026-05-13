@@ -1,5 +1,5 @@
 ---
-import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import { createMargin, createPadding } from "../lib/spacing";
 import type { Base, Spacing, SpacingProps } from "../types";
 
 export interface MarqueeProps extends Base, SpacingProps {
@@ -54,12 +54,8 @@ const {
 const safeDuration = Math.max(1, duration);
 const safeRepeat = Math.max(2, Math.floor(repeat));
 const marqueeGap = resolveGap(gap);
-const spacingStyle = [
-  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
-  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
-]
-  .filter(Boolean)
-  .join("; ");
+const padding = createPadding("marquee", { p, px, py, pt, pr, pb, pl });
+const margin = createMargin("marquee", { m, mx, my, mt, mr, mb, ml });
 ---
 
 <div
@@ -71,7 +67,6 @@ const spacingStyle = [
     !fadeEdges && "no-fade",
     className,
   ]}
-  style={spacingStyle || undefined}
   {...rest}
 >
   <div class="naut-marquee-track">
@@ -82,11 +77,23 @@ const spacingStyle = [
 </div>
 
 <style
-  define:vars={{ safeDuration, safeRepeat, marqueeGap, fadeEdgeColor, fadeEdgeSize }}
+  define:vars={{
+    safeDuration,
+    safeRepeat,
+    marqueeGap,
+    fadeEdgeColor,
+    fadeEdgeSize,
+    ...padding,
+    ...margin,
+  }}
 >
   .naut-marquee {
     position: relative;
     display: block;
+    padding: var(--marqueePaddingTop) var(--marqueePaddingRight)
+      var(--marqueePaddingBottom) var(--marqueePaddingLeft);
+    margin: var(--marqueeMarginTop) var(--marqueeMarginRight)
+      var(--marqueeMarginBottom) var(--marqueeMarginLeft);
     overflow: hidden;
   }
 
