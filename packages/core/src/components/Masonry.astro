@@ -1,5 +1,5 @@
 ---
-import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import { createMargin, createPadding } from "../lib/spacing";
 import type { Base, Spacing, SpacingProps } from "../types";
 
 export interface MasonryProps extends Base, SpacingProps {
@@ -27,22 +27,21 @@ const {
   ml,
 } = Astro.props as MasonryProps;
 
-const spacingStyle = [
-  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
-  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
-]
-  .filter(Boolean)
-  .join("; ");
+const padding = createMargin("masonry", { p, px, py, pt, pr, pb, pl });
+const margin = createMargin("masonry", { m, mx, my, mt, mr, mb, ml });
 ---
 
-<div class:list={["naut-masonry", `gap-${gap}`, className]} style={spacingStyle || undefined}>
-  <slot />
-</div>
+<div class:list={["naut-masonry", `gap-${gap}`, className]}><slot /></div>
 
-<style define:vars={{ columns }}>
+<style define:vars={{ columns, ...padding, ...margin }}>
   .naut-masonry {
     column-count: 1; /* Stacked on mobile */
     column-gap: 0;
+
+    margin: var(--masonryMarginTop) var(--masonryMarginRight)
+      var(--masonryMarginBottom) var(--masonryMarginLeft);
+    padding: var(--masonryPaddingTop) var(--masonryPaddingRight)
+      var(--masonryPaddingBottom) var(--masonryPaddingLeft);
 
     @media only screen and (min-width: 576px) {
       column-count: 2; /* 2 columns on tablet */
