@@ -1,5 +1,5 @@
 ---
-import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import { createMargin, createPadding } from "../lib/spacing";
 import type { Base, SpacingProps } from "../types";
 
 export interface GridItemProps extends Base, SpacingProps {
@@ -27,25 +27,20 @@ const {
 } = Astro.props as GridItemProps;
 
 const gridColumn = span ? `span ${span}` : "auto";
-const spacingStyle = [
-  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
-  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
-]
-  .filter(Boolean)
-  .join("; ");
+const padding = createPadding("gridItem", { p, px, py, pt, pr, pb, pl });
+const margin = createMargin("gridItem", { m, mx, my, mt, mr, mb, ml });
 ---
 
-<div
-  class:list={["naut-grid-item", className]}
-  style={spacingStyle || undefined}
-  {...rest}
->
-  <slot />
-</div>
+<div class:list={["naut-grid-item", className]} {...rest}><slot /></div>
 
-<style define:vars={{ gridColumn }}>
+<style define:vars={{ gridColumn, ...padding, ...margin }}>
   .naut-grid-item {
     grid-column: 1 / -1; /* Stacked on mobile */
+    padding: var(--gridItemPaddingTop) var(--gridItemPaddingRight)
+      var(--gridItemPaddingBottom) var(--gridItemPaddingLeft);
+
+    margin: var(--gridItemMarginTop) var(--gridItemMarginRight)
+      var(--gridItemMarginBottom) var(--gridItemMarginLeft);
 
     @media only screen and (min-width: 576px) {
       grid-column: auto; /* Fallback to Grid's 2-column template */
