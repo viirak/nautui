@@ -1,5 +1,5 @@
 ---
-import { resolveMargin, resolvePadding } from "../lib/spacing";
+import { createMargin, createPadding } from "../lib/spacing";
 import type { Base, Radius, SpacingProps } from "../types";
 
 export interface CardProps extends Base, SpacingProps {
@@ -29,8 +29,8 @@ const {
   ml,
 } = Astro.props as CardProps;
 
-const padding = resolvePadding({ p, px, py, pt, pr, pb, pl });
-const margin = resolveMargin({ m, mx, my, mt, mr, mb, ml });
+const padding = createPadding("card", { p, px, py, pt, pr, pb, pl });
+const margin = createMargin("card", { m, mx, my, mt, mr, mb, ml });
 ---
 
 <div
@@ -53,17 +53,13 @@ const margin = resolveMargin({ m, mx, my, mt, mr, mb, ml });
 
     display: flex;
     flex-direction: column;
-    margin-top: var(--marginTop);
-    margin-right: var(--marginRight);
-    margin-bottom: var(--marginBottom);
-    margin-left: var(--marginLeft);
+    margin: var(--cardMarginTop) var(--cardMarginRight) var(--cardMarginBottom)
+      var(--cardMarginLeft);
     overflow: hidden;
 
     .naut-card--body {
-      padding-top: var(--paddingTop);
-      padding-right: var(--paddingRight);
-      padding-bottom: var(--paddingBottom);
-      padding-left: var(--paddingLeft);
+      padding: var(--cardPaddingTop) var(--cardPaddingRight)
+        var(--cardPaddingBottom) var(--cardPaddingLeft);
     }
 
     .naut-card--header:empty {
