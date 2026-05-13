@@ -1,8 +1,7 @@
 ---
-import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
-import type { Base, SpacingProps } from "../types";
+import type { Base } from "../types";
 
-export interface ContainerProps extends Base, SpacingProps {
+export interface ContainerProps extends Base {
   flex?: string | number; // allows custom flex values (e.g. "0 1 100%")
   fluid?: boolean; // if true, the container will take the full width of the viewport
   maxWidth?: number;
@@ -13,32 +12,12 @@ const {
   fluid = false,
   flex,
   maxWidth,
-  p,
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
   ...rest
 } = Astro.props as ContainerProps;
 
 const isMax = maxWidth !== undefined;
 const maxWidthVar = maxWidth ? maxWidth : "none";
 const flexVar = flex ? flex : "none";
-const spacingStyle = [
-  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
-  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
-]
-  .filter(Boolean)
-  .join("; ");
 ---
 
 <div
@@ -49,7 +28,6 @@ const spacingStyle = [
     flex && "flex",
     className
   ]}
-  style={spacingStyle || undefined}
   {...rest}
 >
   <slot />
