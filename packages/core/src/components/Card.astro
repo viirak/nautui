@@ -1,5 +1,5 @@
 ---
-import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
+import { resolveMargin, resolvePadding } from "../lib/spacing";
 import type { Base, Radius, SpacingProps } from "../types";
 
 export interface CardProps extends Base, SpacingProps {
@@ -53,11 +53,6 @@ const margin = resolveMargin({ m, mx, my, mt, mr, mb, ml });
 
     display: flex;
     flex-direction: column;
-    padding-top: var(--paddingTop);
-    padding-right: var(--paddingRight);
-    padding-bottom: var(--paddingBottom);
-    padding-left: var(--paddingLeft);
-
     margin-top: var(--marginTop);
     margin-right: var(--marginRight);
     margin-bottom: var(--marginBottom);
@@ -65,7 +60,10 @@ const margin = resolveMargin({ m, mx, my, mt, mr, mb, ml });
     overflow: hidden;
 
     .naut-card--body {
-      padding: var(--naut-spacing-md);
+      padding-top: var(--paddingTop);
+      padding-right: var(--paddingRight);
+      padding-bottom: var(--paddingBottom);
+      padding-left: var(--paddingLeft);
     }
 
     .naut-card--header:empty {
