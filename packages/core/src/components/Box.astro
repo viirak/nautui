@@ -1,5 +1,5 @@
 ---
-import { type Border, getBorderStyles } from "../lib/border";
+import { type Border, createBorder } from "../lib/border";
 import { createMargin, createPadding } from "../lib/spacing";
 import type { Base, Radius, SpacingProps } from "../types";
 
@@ -33,7 +33,7 @@ const {
   ...rest
 } = Astro.props as BoxProps;
 
-const borderStyles = border ? getBorderStyles(border) : undefined;
+const boxBorder = createBorder("box", border);
 const padding = createPadding("box", { p, px, py, pt, pr, pb, pl });
 const margin = createMargin("box", { m, mx, my, mt, mr, mb, ml });
 ---
@@ -44,18 +44,18 @@ const margin = createMargin("box", { m, mx, my, mt, mr, mb, ml });
   <slot name="after" />
 </div>
 
-<style define:vars={{ display, ...borderStyles, ...padding, ...margin }}>
+<style define:vars={{ display, ...boxBorder, ...padding, ...margin }}>
   .naut-box {
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
 
     margin: var(--boxMarginTop) var(--boxMarginRight) var(--boxMarginBottom)
       var(--boxMarginLeft);
-    border-top: var(--borderTop);
-    border-right: var(--borderRight);
-    border-bottom: var(--borderBottom);
-    border-left: var(--borderLeft);
-    border-radius: var(--borderRadius);
+    border-top: var(--boxBorderTop);
+    border-right: var(--boxBorderRight);
+    border-bottom: var(--boxBorderBottom);
+    border-left: var(--boxBorderLeft);
+    border-radius: var(--boxBorderRadius);
 
     &.bordered {
       border: 1px solid var(--naut-color-border);
