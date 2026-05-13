@@ -1,54 +1,39 @@
 ---
+import { Border, createBorder } from "../lib/border";
 import { createPadding } from "../lib/spacing";
-import type { Base, Spacing } from "../types";
+import type { Base, SpacingProps } from "../types";
 
-export interface SectionProps extends Base {
+type SectionSpacing = Omit<
+  SpacingProps,
+  "m" | "mx" | "my" | "mt" | "mr" | "mb" | "ml"
+>;
+
+export interface SectionProps extends Base, SectionSpacing {
   as?: "div" | "section" | "article" | "main" | "header" | "footer";
+  border?: Border;
   dark?: boolean;
+  decoration: "diamond" | "square" | "circle";
   mode?: "default" | "dimmed" | "highlighted" | "inverted";
-  outline?: {
-    top: boolean;
-    right: boolean;
-    bottom: boolean;
-    left: boolean;
-    x?: boolean; // shorthand for left and right
-    y?: boolean; // shorthand for top and bottom
-    style: "solid" | "dashed" | "dotted";
-    decoration: "diamond" | "square" | "circle";
-  };
-  p?: Spacing;
-  pb?: Spacing;
-  pl?: Spacing;
-  pr?: Spacing;
-  pt?: Spacing;
-  px?: Spacing;
-  py?: Spacing;
 }
 
 const {
   class: className,
   mode,
   border,
-  outline,
+  decoration,
   cross,
   dark = false,
   p = "md",
-  pl,
-  pr,
   px,
-  pb,
-  pt,
   py,
+  pt,
+  pr,
+  pb,
+  pl,
   ...rest
 } = Astro.props as SectionProps;
 
-// outlines
-const borderStyle = outline?.style || "solid";
-const borderValue = `1px ${borderStyle} var(--naut-color-border)`;
-const borderTop = outline?.top || outline?.y ? borderValue : undefined;
-const borderRight = outline?.right || outline?.x ? borderValue : undefined;
-const borderBottom = outline?.bottom || outline?.y ? borderValue : undefined;
-const borderLeft = outline?.left || outline?.x ? borderValue : undefined;
+const sectionBorder = createBorder("section", border);
 const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
 ---
 
@@ -57,7 +42,7 @@ const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
     "naut-section",
     mode && `${mode}`,
     dark && "dark",
-    outline?.decoration && `outline-decoration outline-decoration--${outline.decoration}`,
+    decoration && `outline-decoration outline-decoration--${decoration}`,
     className,
   ]}
   {...rest}
@@ -75,17 +60,14 @@ const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
 
 <style
   define:vars={{
-    borderTop,
-    borderRight,
-    borderLeft,
-    borderBottom,
+    ...sectionBorder,
     ...padding
   }}
 >
   .naut-section {
     position: relative;
-    border-top: var(--borderTop);
-    border-bottom: var(--borderBottom);
+    border-top: var(--sectionBorderTop);
+    border-bottom: var(--sectionBorderBottom);
 
     .naut-section--wrapper {
       position: relative;
@@ -107,12 +89,12 @@ const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
 
       .naut-section--left {
         padding-right: var(--naut-spacing-md);
-        border-right: var(--borderRight);
+        border-right: var(--sectionBorderRight);
       }
 
       .naut-section--right {
         padding-left: var(--naut-spacing-md);
-        border-left: var(--borderLeft);
+        border-left: var(--sectionBorderLeft);
       }
 
       .naut-section--center {
