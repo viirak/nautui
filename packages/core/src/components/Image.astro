@@ -30,9 +30,9 @@ const {
   ...rest
 } = Astro.props as ImageProps;
 const ratioName = ratio ? ratio.replace(":", "x") : undefined;
-const imageMaxWidth = maxWidth && !cover ? maxWidth : "none";
-const imageMaxHeight = maxHeight && !cover ? maxHeight : "none";
-const imageHeight = maxHeight && !cover ? maxHeight : "auto";
+const imageMaxWidth = maxWidth && !cover ? maxWidth : undefined;
+const imageMaxHeight = maxHeight && !cover ? maxHeight : undefined;
+const imageHeight = maxHeight && !cover ? maxHeight : undefined;
 ---
 
 <div
