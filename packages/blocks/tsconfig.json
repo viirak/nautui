@@ -4,7 +4,12 @@
     "composite": true,
     "outDir": "./dist",
     "jsx": "preserve",
-    "jsxImportSource": "astro"
+    "jsxImportSource": "astro",
+    "paths": {
+      "@nautui/core": [
+        "../core/src/index.ts"
+      ]
+    }
   },
   "include": [
     "src"
@@ -12,5 +17,10 @@
   "exclude": [
     "node_modules",
     "dist"
+  ],
+  "references": [
+    {
+      "path": "../core"
+    }
   ]
 }
