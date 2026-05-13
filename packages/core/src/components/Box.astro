@@ -1,12 +1,10 @@
 ---
-import { getPatternStyle } from "../lib/pattern";
 import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
-import type { Base, Pattern, Radius, SpacingProps } from "../types";
+import type { Base, Radius, SpacingProps } from "../types";
 
 export interface BoxProps extends Base, SpacingProps {
   bordered?: boolean;
   display?: "block" | "flex" | "grid";
-  pattern?: Pattern;
   radius?: Radius;
 }
 
@@ -14,7 +12,6 @@ const {
   bordered = false,
   radius,
   display = "block",
-  pattern,
   class: className,
   p = "md",
   px,
@@ -34,7 +31,6 @@ const {
 } = Astro.props as BoxProps;
 
 const borderStyle = bordered ? "1px solid var(--naut-color-border)" : "none";
-const backgroundPattern = pattern ? getPatternStyle(pattern) : "transparent";
 const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "none";
 const paddingStyle = spacingToStyle(
   resolvePadding({ p, px, py, pt, pr, pb, pl })
@@ -49,10 +45,12 @@ const marginStyle = spacingToStyle(
   style={`${paddingStyle}; ${marginStyle}`}
   {...rest}
 >
+  <slot name="before" />
   <div class:list={["naut-box--wrapper", display]}><slot /></div>
+  <slot name="after" />
 </div>
 
-<style define:vars={{ display, borderStyle, borderRadius, backgroundPattern }}>
+<style define:vars={{ display, borderStyle, borderRadius }}>
   .naut-box {
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
