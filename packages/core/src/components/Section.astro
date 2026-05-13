@@ -47,6 +47,7 @@ const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
   ]}
   {...rest}
 >
+  <slot name="background" />
   <slot name="before" />
   <div class="naut-section--wrapper">
     <div class="naut-section--left"><slot name="left" /></div>

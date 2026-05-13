@@ -39,6 +39,7 @@ const margin = createMargin("box", { m, mx, my, mt, mr, mb, ml });
 ---
 
 <div class:list={["naut-box", bordered && "bordered", className]} {...rest}>
+  <slot name="background" />
   <slot name="before" />
   <div class:list={["naut-box--wrapper", display]}><slot /></div>
   <slot name="after" />
@@ -53,6 +54,7 @@ const margin = createMargin("box", { m, mx, my, mt, mr, mb, ml });
     margin-right: var(--boxMarginRight);
     margin-bottom: var(--boxMarginBottom);
     margin-left: var(--boxMarginLeft);
+    overflow: hidden; /* Clip background to borders */
 
     border-top: var(--boxBorderTop);
     border-right: var(--boxBorderRight);
