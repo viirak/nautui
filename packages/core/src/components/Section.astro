@@ -62,15 +62,15 @@ const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
   ]}
   {...rest}
 >
-  <slot name="section-before" />
+  <slot name="before" />
   <div class="naut-section--wrapper">
-    <div class="naut-section--left"></div>
+    <div class="naut-section--left"><slot name="left" /></div>
     <div class="naut-section--center">
       <div class="naut-section--content"><slot /></div>
     </div>
-    <div class="naut-section--right"></div>
+    <div class="naut-section--right"><slot name="right" /></div>
   </div>
-  <slot name="section-after" />
+  <slot name="after" />
 </section>
 
 <style
