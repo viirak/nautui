@@ -75,8 +75,10 @@ const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
       display: flex;
 
       .naut-section--content {
-        padding: var(--sectionPaddingTop) var(--sectionPaddingRight)
-          var(--sectionPaddingBottom) var(--sectionPaddingLeft);
+        padding-top: var(--sectionPaddingTop);
+        padding-right: var(--sectionPaddingRight);
+        padding-bottom: var(--sectionPaddingBottom);
+        padding-left: var(--sectionPaddingLeft);
       }
 
       .naut-section--left,
