@@ -1,5 +1,5 @@
 ---
-import { resolvePadding } from "../lib/spacing";
+import { createPadding } from "../lib/spacing";
 import type { Base, Spacing } from "../types";
 
 export interface SectionProps extends Base {
@@ -49,7 +49,7 @@ const borderTop = outline?.top || outline?.y ? borderValue : undefined;
 const borderRight = outline?.right || outline?.x ? borderValue : undefined;
 const borderBottom = outline?.bottom || outline?.y ? borderValue : undefined;
 const borderLeft = outline?.left || outline?.x ? borderValue : undefined;
-const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
+const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
 ---
 
 <section
@@ -79,10 +79,7 @@ const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
     borderRight,
     borderLeft,
     borderBottom,
-    paddingTop: padding.paddingTop,
-    paddingBottom: padding.paddingBottom,
-    paddingLeft: padding.paddingLeft,
-    paddingRight: padding.paddingRight,
+    ...padding
   }}
 >
   .naut-section {
@@ -96,10 +93,8 @@ const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
       display: flex;
 
       .naut-section--content {
-        padding-top: var(--paddingTop);
-        padding-right: var(--paddingRight);
-        padding-bottom: var(--paddingBottom);
-        padding-left: var(--paddingLeft);
+        padding: var(--sectionPaddingTop) var(--sectionPaddingRight)
+          var(--sectionPaddingBottom) var(--sectionPaddingLeft);
       }
 
       .naut-section--left,
@@ -111,12 +106,12 @@ const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
       }
 
       .naut-section--left {
-        padding-right: var(--paddingLeft);
+        padding-right: var(--naut-spacing-md);
         border-right: var(--borderRight);
       }
 
       .naut-section--right {
-        padding-left: var(--paddingRight);
+        padding-left: var(--naut-spacing-md);
         border-left: var(--borderLeft);
       }
 
