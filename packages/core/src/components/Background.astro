@@ -1,0 +1,62 @@
+---
+import { getGradientPattern, type PatternProps } from "../lib/pattern";
+
+interface GradientProps {
+  colors: string[];
+  deg?: number;
+  type: "linear" | "radial";
+}
+
+export interface BackgroundProps {
+  color?: string; // Solid/base layer
+  gradient?: GradientProps; // Gradient overlay
+  image?: string; // URL or CSS value
+  opacity?: number; // Overall opacity
+  pattern?: PatternProps; // Decorative overlay
+}
+
+const { color, image, pattern, gradient, opacity } =
+  Astro.props as BackgroundProps;
+const backgroundColor = color || "transparent";
+const backgroundImage = image ? `url("${image}")` : "none";
+const backgroundRepeat = image ? "no-repeat" : "initial";
+const backgroundSize = image ? "cover" : "initial";
+const backgroundPosition = image ? "center" : "initial";
+const backgroundOpacity = opacity || 1;
+const backgroundPattern = getGradientPattern(pattern);
+---
+
+<div class:list={["naut-background"]}>
+  {pattern && <div class:list={["naut-background-pattern", pattern.name]}></div>}
+</div>
+
+<style
+  define:vars={{
+    backgroundColor,
+    backgroundImage,
+    backgroundSize,
+    backgroundRepeat,
+    backgroundPosition,
+    backgroundOpacity,
+    backgroundPattern,
+  }}
+>
+  .naut-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: var(--backgroundColor);
+    background-image: var(--backgroundImage);
+    background-repeat: var(--backgroundRepeat);
+    background-position: var(--backgroundPosition);
+    background-size: var(--backgroundSize);
+    opacity: var(--backgroundOpacity);
+  }
+
+  .naut-background-pattern {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--backgroundPattern);
+  }
+</style>

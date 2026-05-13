@@ -1,9 +1,4 @@
-export type Pattern =
-  | "dots"
-  | "dots-x"
-  | "paper-grid"
-  | "stripes"
-  | "mini-stripes";
+export type Pattern = "dots" | "dots-x" | "grid" | "stripes";
 export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 export type Shadow = Omit<Size, "xl" | "xs">;
 export type Radius = "sm" | "md" | "lg";
