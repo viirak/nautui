@@ -12,6 +12,9 @@ export function getPatternStyle(pattern: Pattern): string | null {
     case "stripes": {
       return "repeating-linear-gradient(-45deg, transparent, transparent 32px, var(--naut-color-pattern-stripe) 32px, var(--naut-color-pattern-stripe) 64px)";
     }
+    case "mini-stripes": {
+      return "repeating-linear-gradient(130deg,var(--naut-color-pattern-stripe) 0, var(--naut-color-pattern-stripe) 1px,transparent 1px,transparent 8px)";
+    }
     default:
       return "transparent";
   }
