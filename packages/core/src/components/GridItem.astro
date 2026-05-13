@@ -36,11 +36,16 @@ const margin = createMargin("gridItem", { m, mx, my, mt, mr, mb, ml });
 <style define:vars={{ gridColumn, ...padding, ...margin }}>
   .naut-grid-item {
     grid-column: 1 / -1; /* Stacked on mobile */
-    padding: var(--gridItemPaddingTop) var(--gridItemPaddingRight)
-      var(--gridItemPaddingBottom) var(--gridItemPaddingLeft);
 
-    margin: var(--gridItemMarginTop) var(--gridItemMarginRight)
-      var(--gridItemMarginBottom) var(--gridItemMarginLeft);
+    padding-top: var(--gridItemPaddingTop);
+    padding-right: var(--gridItemPaddingRight);
+    padding-bottom: var(--gridItemPaddingBottom);
+    padding-left: var(--gridItemPaddingLeft);
+
+    margin-top: var(--gridItemMarginTop);
+    margin-right: var(--gridItemMarginRight);
+    margin-bottom: var(--gridItemMarginBottom);
+    margin-left: var(--gridItemMarginLeft);
 
     @media only screen and (min-width: 576px) {
       grid-column: auto; /* Fallback to Grid's 2-column template */

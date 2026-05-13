@@ -90,10 +90,14 @@ const margin = createMargin("marquee", { m, mx, my, mt, mr, mb, ml });
   .naut-marquee {
     position: relative;
     display: block;
-    padding: var(--marqueePaddingTop) var(--marqueePaddingRight)
-      var(--marqueePaddingBottom) var(--marqueePaddingLeft);
-    margin: var(--marqueeMarginTop) var(--marqueeMarginRight)
-      var(--marqueeMarginBottom) var(--marqueeMarginLeft);
+    padding-top: var(--marqueePaddingTop);
+    padding-right: var(--marqueePaddingRight);
+    padding-bottom: var(--marqueePaddingBottom);
+    padding-left: var(--marqueePaddingLeft);
+    margin-top: var(--marqueeMarginTop);
+    margin-right: var(--marqueeMarginRight);
+    margin-bottom: var(--marqueeMarginBottom);
+    margin-left: var(--marqueeMarginLeft);
     overflow: hidden;
   }
 

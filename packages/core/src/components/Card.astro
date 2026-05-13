@@ -53,13 +53,17 @@ const margin = createMargin("card", { m, mx, my, mt, mr, mb, ml });
 
     display: flex;
     flex-direction: column;
-    margin: var(--cardMarginTop) var(--cardMarginRight) var(--cardMarginBottom)
-      var(--cardMarginLeft);
+    margin-top: var(--cardMarginTop);
+    margin-right: var(--cardMarginRight);
+    margin-bottom: var(--cardMarginBottom);
+    margin-left: var(--cardMarginLeft);
     overflow: hidden;
 
     .naut-card--body {
-      padding: var(--cardPaddingTop) var(--cardPaddingRight)
-        var(--cardPaddingBottom) var(--cardPaddingLeft);
+      padding-top: var(--cardPaddingTop);
+      padding-right: var(--cardPaddingRight);
+      padding-bottom: var(--cardPaddingBottom);
+      padding-left: var(--cardPaddingLeft);
     }
 
     .naut-card--header:empty {

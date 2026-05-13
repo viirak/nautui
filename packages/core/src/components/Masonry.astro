@@ -38,10 +38,15 @@ const margin = createMargin("masonry", { m, mx, my, mt, mr, mb, ml });
     column-count: 1; /* Stacked on mobile */
     column-gap: 0;
 
-    margin: var(--masonryMarginTop) var(--masonryMarginRight)
-      var(--masonryMarginBottom) var(--masonryMarginLeft);
-    padding: var(--masonryPaddingTop) var(--masonryPaddingRight)
-      var(--masonryPaddingBottom) var(--masonryPaddingLeft);
+    padding-top: var(--masonryPaddintTop);
+    padding-right: var(--masonryPaddintRight);
+    padding-bottom: var(--masonryPaddintBottom);
+    padding-left: var(--masonryPaddintLeft);
+
+    margin-top: var(--masonryMarginTop);
+    margin-right: var(--masonryMarginRight);
+    margin-bottom: var(--masonryMarginBottom);
+    margin-left: var(--masonryMarginLeft);
 
     @media only screen and (min-width: 576px) {
       column-count: 2; /* 2 columns on tablet */

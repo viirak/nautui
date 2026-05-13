@@ -48,10 +48,14 @@ const margin = createMargin("grid", { m, mx, my, mt, mr, mb, ml });
   .naut-grid {
     display: grid;
     grid-template-columns: 1fr; /* Stacked on mobile */
-    padding: var(--gridPaddingTop) var(--gridPaddingRight)
-      var(--gridPaddingBottom) var(--gridPaddingLeft);
-    margin: var(--gridMarginTop) var(--gridMarginRight) var(--gridMarginBottom)
-      var(--gridMarginLeft);
+    padding-top: var(--gridPaddingTop);
+    padding-right: var(--gridPaddingRight);
+    padding-bottom: var(--gridPaddingBottom);
+    padding-left: var(--gridPaddingLeft);
+    margin-top: var(--gridMarginTop);
+    margin-right: var(--gridMarginRight);
+    margin-bottom: var(--gridMarginBottom);
+    margin-left: var(--gridMarginLeft);
 
     @media only screen and (min-width: 576px) {
       grid-template-columns: repeat(2, 1fr); /* 2 columns on tablet */

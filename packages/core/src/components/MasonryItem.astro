@@ -29,13 +29,17 @@ const margin = createMargin("masonryItem", { m, mx, my, mt, mr, mb, ml });
 
 <div class:list={["naut-masonry-item", className]} {...rest}><slot /></div>
 
-<style>
+<style define:vars={{ ...padding, ...margin }}>
   .naut-masonry-item {
     width: 100%;
-    padding: var(--masonryItemPaddingTop) var(--masonryItemPaddingRight)
-      var(--masonryItemPaddingBottom) var(--masonryItemPaddingLeft);
-    margin: var(--masonryItemMarginTop) var(--masonryItemMarginRight)
-      var(--masonryItemMarginBottom) var(--masonryItemMarginLeft);
+    padding-top: var(--masonryItemPaddingTop);
+    padding-right: var(--masonryItemPaddingRight);
+    padding-bottom: var(--masonryItemPaddingBottom);
+    padding-left: var(--masonryItemPaddingLeft);
+    margin-top: var(--masonryItemMarginTop);
+    margin-right: var(--masonryItemMarginRight);
+    margin-bottom: var(--masonryItemMarginBottom);
+    margin-left: var(--masonryItemMarginLeft);
     break-inside: avoid;
   }
 </style>

@@ -49,8 +49,11 @@ const margin = createMargin("box", { m, mx, my, mt, mr, mb, ml });
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
 
-    margin: var(--boxMarginTop) var(--boxMarginRight) var(--boxMarginBottom)
-      var(--boxMarginLeft);
+    margin-top: var(--boxMarginTop);
+    margin-right: var(--boxMarginRight);
+    margin-bottom: var(--boxMarginBottom);
+    margin-left: var(--boxMarginLeft);
+
     border-top: var(--boxBorderTop);
     border-right: var(--boxBorderRight);
     border-bottom: var(--boxBorderBottom);
@@ -64,8 +67,11 @@ const margin = createMargin("box", { m, mx, my, mt, mr, mb, ml });
     .naut-box--wrapper {
       position: relative;
       display: var(--display);
-      padding: var(--boxPaddingTop) var(--boxPaddingRight)
-        var(--boxPaddingBottom) var(--boxPaddingLeft);
+
+      padding-top: var(--boxPaddingTop);
+      padding-right: var(--boxPaddingRight);
+      padding-bottom: var(--boxPaddingBottom);
+      padding-left: var(--boxPaddingLeft);
 
       &.flex {
         display: flex;
