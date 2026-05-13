@@ -9,6 +9,7 @@ export interface ImageProps extends Base {
   maxWidth?: string;
   radius?: Radius;
   ratio?: "1:1" | "16:9" | "4:3" | "3:2" | "2:1" | "9:16 | 3:4" | "2:3" | "1:2";
+  responsive?: boolean;
   shadow?: "sm" | "md" | "lg" | "xl";
   src: string;
   [key: string]: unknown;
@@ -23,6 +24,7 @@ const {
   shadow,
   cover = false,
   fluid = false,
+  responsive = false,
   maxWidth,
   maxHeight,
   ...rest
@@ -42,6 +44,7 @@ const heightVar = maxHeight && !cover ? maxHeight : "auto";
     cover && "fit-cover",
     maxHeight && !cover && "fit-height",
     fluid && "fluid",
+    responsive && "responsive",
     className
   ]}
 >
@@ -82,10 +85,21 @@ const heightVar = maxHeight && !cover ? maxHeight : "auto";
       }
     }
 
+    &.responsive:not(.fluid) {
+      @media only screen and (max-width: 1041px) {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+
     &.fit-height:not(.ratio):not(.fit-cover):not(.fluid) {
       width: fit-content;
       max-width: 100%;
-      overflow: visible;
       img {
         display: block;
         width: auto;
