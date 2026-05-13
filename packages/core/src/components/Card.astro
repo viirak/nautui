@@ -29,29 +29,39 @@ const {
   ml,
 } = Astro.props as CardProps;
 
-const spacingStyle = [
-  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
-  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
-]
-  .filter(Boolean)
-  .join("; ");
+const padding = resolvePadding({ p, px, py, pt, pr, pb, pl });
+const margin = resolveMargin({ m, mx, my, mt, mr, mb, ml });
 ---
 
 <div
-  class:list={["naut-card", bordered && "bordered", radius && `radius-${radius}`, shadow && `shadow-${shadow}`, className]}
-  style={spacingStyle || undefined}
+  class:list={[
+    "naut-card",
+    bordered && "bordered",
+    radius && `radius-${radius}`,
+    shadow && `shadow-${shadow}`,
+    className
+  ]}
 >
   <div class="naut-card--header"><slot name="header" /></div>
   <div class="naut-card--body"><slot /></div>
   <div class="naut-card--footer"><slot name="footer" /></div>
 </div>
 
-<style>
+<style define:vars={{ ...padding, ...margin }}>
   .naut-card {
     --radius-scale: 1.575;
 
     display: flex;
     flex-direction: column;
+    padding-top: var(--paddingTop);
+    padding-right: var(--paddingRight);
+    padding-bottom: var(--paddingBottom);
+    padding-left: var(--paddingLeft);
+
+    margin-top: var(--marginTop);
+    margin-right: var(--marginRight);
+    margin-bottom: var(--marginBottom);
+    margin-left: var(--marginLeft);
     overflow: hidden;
 
     .naut-card--body {
