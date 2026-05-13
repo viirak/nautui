@@ -18,6 +18,7 @@ const clip = figureObj ? figure.clip : undefined;
 const position = figureObj && figure.position ? figure.position : "right";
 const isFigureRight = position === "right";
 const contentAlign = isFigureRight ? "left" : "center";
+console.log("has figure", figure === true);
 ---
 
 <Section py="display-xl" class:list={["naut-hero-section"]} dark={{ dark }}>
@@ -32,7 +33,7 @@ const contentAlign = isFigureRight ? "left" : "center";
     <Stack gap="lg" display="block"><slot /></Stack>
   </div>
   <div
-    slot="section-after"
+    slot="after"
     class:list={[
       "hero-figure",
       position && `position-${position}`,
