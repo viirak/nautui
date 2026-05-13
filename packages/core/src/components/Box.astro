@@ -1,6 +1,6 @@
 ---
 import { type Border, getBorderStyles } from "../lib/border";
-import { resolveMargin, resolvePadding } from "../lib/spacing";
+import { createMargin, createPadding } from "../lib/spacing";
 import type { Base, Radius, SpacingProps } from "../types";
 
 export interface BoxProps extends Base, SpacingProps {
@@ -34,8 +34,8 @@ const {
 } = Astro.props as BoxProps;
 
 const borderStyles = border ? getBorderStyles(border) : undefined;
-const paddingStyles = resolvePadding({ p, px, py, pt, pr, pb, pl });
-const marginStyles = resolveMargin({ m, mx, my, mt, mr, mb, ml });
+const padding = createPadding("box", { p, px, py, pt, pr, pb, pl });
+const margin = createMargin("box", { m, mx, my, mt, mr, mb, ml });
 ---
 
 <div class:list={["naut-box", bordered && "bordered", className]} {...rest}>
@@ -44,17 +44,13 @@ const marginStyles = resolveMargin({ m, mx, my, mt, mr, mb, ml });
   <slot name="after" />
 </div>
 
-<style
-  define:vars={{ display, ...borderStyles, ...paddingStyles, ...marginStyles }}
->
+<style define:vars={{ display, ...borderStyles, ...padding, ...margin }}>
   .naut-box {
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
 
-    margin-top: var(--marginTop);
-    margin-right: var(--marginRight);
-    margin-bottom: var(--marginBottom);
-    margin-left: var(--marginLeft);
+    margin: var(--boxMarginTop) var(--boxMarginRight) var(--boxMarginBottom)
+      var(--boxMarginLeft);
     border-top: var(--borderTop);
     border-right: var(--borderRight);
     border-bottom: var(--borderBottom);
@@ -67,10 +63,9 @@ const marginStyles = resolveMargin({ m, mx, my, mt, mr, mb, ml });
 
     .naut-box--wrapper {
       position: relative;
-      padding-top: var(--paddingTop);
-      padding-right: var(--paddingRight);
-      padding-bottom: var(--paddingBottom);
-      padding-left: var(--paddingLeft);
+      display: var(--display);
+      padding: var(--boxPaddingTop) var(--boxPaddingRight)
+        var(--boxPaddingBottom) var(--boxPaddingLeft);
 
       &.flex {
         display: flex;
