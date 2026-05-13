@@ -1,21 +1,37 @@
-import type { Pattern } from "../types";
+export interface PatternProps {
+  color?: string;
+  deg?: number;
+  gap?: number;
+  name: "dots" | "dots-x" | "grid" | "stripes";
+  size?: number;
+}
 
-export function getPatternStyle(pattern: Pattern): string | null {
-  const size = "24px";
-  switch (pattern) {
-    case "dots":
-      return "radial-gradient(circle, var(--naut-color-pattern) 1px, transparent 1px) 0 0 / 15px 15px";
-    case "dots-x":
-      return "radial-gradient(var(--naut-color-pattern) 1px, transparent 1px) 0 0 / 20px 20px, radial-gradient(var(--naut-color-pattern) 1px, transparent 1px) 10px 10px / 20px 20px";
-    case "paper-grid":
-      return `linear-gradient(90deg, var(--naut-color-pattern) 1px, transparent 1px) 0 0 / ${size} ${size} repeat, linear-gradient(var(--naut-color-pattern) 1px, transparent 1px) 0 0 / ${size} ${size} repeat`;
-    case "stripes": {
-      return "repeating-linear-gradient(-45deg, transparent, transparent 32px, var(--naut-color-pattern-stripe) 32px, var(--naut-color-pattern-stripe) 64px)";
+export function getGradientPattern(props?: PatternProps) {
+  const color = props?.color || "var(--naut-color-pattern)";
+  const size = props?.size || 1;
+
+  switch (props?.name) {
+    case "dots": {
+      const gap = props.gap || 15;
+      return `radial-gradient(circle, ${color} ${size}px, transparent ${size}px) 0 0 / ${gap}px ${gap}px`;
     }
-    case "mini-stripes": {
-      return "repeating-linear-gradient(130deg,var(--naut-color-pattern-stripe) 0, var(--naut-color-pattern-stripe) 1px,transparent 1px,transparent 8px)";
+    case "dots-x": {
+      const gap = props.gap || 24;
+      return `radial-gradient(${color} ${size}px, transparent ${size}px) 0 0 / ${gap}px ${gap}px, radial-gradient(${color} ${size}px, transparent ${size}px) ${gap / 2}px ${gap / 2}px / ${gap}px ${gap}px`;
+    }
+    case "grid": {
+      const deg = props.deg || 90;
+      const gap = props.gap || 24;
+      return `linear-gradient(${deg}deg, ${color} ${size}px, transparent ${size}px) 0 0 / ${gap}px ${gap}px repeat, linear-gradient(${color} ${size}px, transparent ${size}px) 0 0 / ${gap}px ${gap}px repeat`;
+    }
+    case "stripes": {
+      const deg = props.deg || 130;
+      const gap = props.gap || 10;
+      const size = props.size || 5;
+      const color = props.color || "var(--naut-color-pattern-stripe)";
+      return `repeating-linear-gradient(${deg}deg, ${color} 0, ${color} ${size}px,transparent ${size}px,transparent ${gap}px)`;
     }
     default:
-      return "transparent";
+      return "none";
   }
 }

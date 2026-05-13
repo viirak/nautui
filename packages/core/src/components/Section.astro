@@ -1,7 +1,6 @@
 ---
-import { getPatternStyle } from "../lib/pattern";
 import { resolvePadding } from "../lib/spacing";
-import type { Base, Pattern, Spacing } from "../types";
+import type { Base, Spacing } from "../types";
 
 export interface SectionProps extends Base {
   as?: "div" | "section" | "article" | "main" | "header" | "footer";
@@ -18,7 +17,6 @@ export interface SectionProps extends Base {
     decoration: "diamond" | "square" | "circle";
   };
   p?: Spacing;
-  pattern?: Pattern;
   pb?: Spacing;
   pl?: Spacing;
   pr?: Spacing;
@@ -30,7 +28,6 @@ export interface SectionProps extends Base {
 const {
   class: className,
   mode,
-  pattern,
   border,
   outline,
   cross,
@@ -44,8 +41,6 @@ const {
   py,
   ...rest
 } = Astro.props as SectionProps;
-
-const backgroundPattern = pattern ? getPatternStyle(pattern) : "transparent";
 
 // outlines
 const borderStyle = outline?.style || "solid";
@@ -67,7 +62,6 @@ const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
   ]}
   {...rest}
 >
-  {pattern && <div class="naut-section--pattern"></div>}
   <slot name="section-before" />
   <div class="naut-section--wrapper">
     <div class="naut-section--left"></div>
@@ -81,7 +75,6 @@ const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
 
 <style
   define:vars={{
-    backgroundPattern,
     borderTop,
     borderRight,
     borderLeft,
@@ -198,13 +191,6 @@ const padding = resolvePadding({ p, pl, pr, px, py, pt, pb });
         border: 1px solid var(--naut-color-border);
         transform: rotate(45deg);
       }
-    }
-
-    .naut-section--pattern {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background: var(--backgroundPattern);
     }
   }
 </style>
