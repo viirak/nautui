@@ -8,56 +8,60 @@ interface GradientProps {
 }
 
 export interface BackgroundProps {
-  color?: string; // Solid/base layer
-  gradient?: GradientProps; // Gradient overlay
-  image?: string; // URL or CSS value
-  opacity?: number; // Overall opacity
-  pattern?: PatternProps; // Decorative overlay
+  color?: string;
+  gradient?: GradientProps;
+  image?: string;
+  opacity?: number;
+  pattern?: PatternProps;
 }
 
 const { color, image, pattern, gradient, opacity } =
   Astro.props as BackgroundProps;
 const backgroundColor = color || "transparent";
-const backgroundImage = image ? `url("${image}")` : "none";
-const backgroundRepeat = image ? "no-repeat" : "initial";
-const backgroundSize = image ? "cover" : "initial";
-const backgroundPosition = image ? "center" : "initial";
+const backgroundImage = image
+  ? `url("${image}") center/cover no-repeat`
+  : undefined;
+const background = `${backgroundColor} ${backgroundImage ? backgroundImage : ""}`;
 const backgroundOpacity = opacity || 1;
 const backgroundPattern = getGradientPattern(pattern);
+const backgroundGradient = gradient
+  ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
+  : undefined;
 ---
 
 <div class:list={["naut-background"]}>
+  {gradient && <div class:list={["naut-background-gradient", gradient.type]}></div>}
   {pattern && <div class:list={["naut-background-pattern", pattern.type]}></div>}
   <slot />
 </div>
 
 <style
   define:vars={{
-    backgroundColor,
-    backgroundImage,
-    backgroundSize,
-    backgroundRepeat,
-    backgroundPosition,
+    background,
     backgroundOpacity,
     backgroundPattern,
+    backgroundGradient
   }}
 >
   .naut-background {
     position: absolute;
     inset: 0;
     z-index: 0;
-    background-color: var(--backgroundColor);
-    background-image: var(--backgroundImage);
-    background-repeat: var(--backgroundRepeat);
-    background-position: var(--backgroundPosition);
-    background-size: var(--backgroundSize);
+    background: var(--background);
     opacity: var(--backgroundOpacity);
   }
 
   .naut-background-pattern {
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: 2;
     background: var(--backgroundPattern);
+  }
+
+  .naut-background-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--backgroundGradient);
   }
 </style>
