@@ -2,7 +2,7 @@ type BorderStyle = "solid" | "dashed" | "dotted";
 type BorderWidth = "sm" | "md" | "lg" | "xl";
 type BorderRadius = "sm" | "md" | "lg";
 
-export interface BorderProps {
+export interface Border {
   bottom?: BorderWidth;
   left?: BorderWidth;
   radius?: BorderRadius;
@@ -13,7 +13,7 @@ export interface BorderProps {
   y?: BorderWidth;
 }
 
-export function getBorderStyles(border: BorderProps) {
+export function getBorderStyles(border: Border) {
   const style = border?.style || "solid";
   const color = "var(--naut-color-border)";
   const borderTop =

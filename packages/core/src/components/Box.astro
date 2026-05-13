@@ -1,7 +1,7 @@
 ---
-import { getBorderStyles } from "../lib/border";
-import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
-import type { Base, Border, Radius, SpacingProps } from "../types";
+import { type Border, getBorderStyles } from "../lib/border";
+import { resolveMargin, resolvePadding } from "../lib/spacing";
+import type { Base, Radius, SpacingProps } from "../types";
 
 export interface BoxProps extends Base, SpacingProps {
   border?: Border;
