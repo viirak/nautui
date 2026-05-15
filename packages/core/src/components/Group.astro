@@ -1,6 +1,8 @@
 ---
 import type { Base, Spacing } from "../types";
 
+type ScreenSize = "sm" | "md" | "lg" | "xl";
+
 export interface GroupProps extends Base {
   gap?: Spacing;
   grow?: boolean;
@@ -11,7 +13,7 @@ export interface GroupProps extends Base {
     | "space-between"
     | "space-around"
     | "space-evenly";
-  stackOnMobile?: boolean;
+  not?: ScreenSize | ScreenSize[];
   wrap?: boolean;
 }
 
@@ -21,9 +23,10 @@ const {
   gap = "md",
   grow = false,
   wrap = false,
-  stackOnMobile = false,
+  not,
 } = Astro.props as GroupProps;
 const gapValue = `var(--naut-spacing-${gap})`;
+const notScreens = typeof not === "string" ? [not] : not;
 ---
 
 <div
@@ -31,7 +34,7 @@ const gapValue = `var(--naut-spacing-${gap})`;
   "naut-group",
   grow && "grow",
   wrap && "wrap",
-  stackOnMobile && "stack-on-mobile",
+  notScreens?.map((s) => `not-${s}`).join(" "),
   className]}
 >
   <slot />
@@ -44,10 +47,27 @@ const gapValue = `var(--naut-spacing-${gap})`;
     align-items: center;
     justify-content: var(--justify);
 
-    &.stack-on-mobile {
-      flex-direction: column;
-      @media only screen and (min-width: 576px) {
-        flex-direction: row;
+    &.not-sm {
+      @media only screen and (max-width: 817px) {
+        flex-direction: column;
+      }
+    }
+
+    &.not-md {
+      @media only screen and (min-width: 818px) and (min-width: 1041px) {
+        flex-direction: column;
+      }
+    }
+
+    &.not-lg {
+      @media only screen and (min-width: 1042px) and (min-width: 1249px) {
+        flex-direction: column;
+      }
+    }
+
+    &.not-xl {
+      @media only screen and (min-width: 1250px) {
+        flex-direction: column;
       }
     }
 
