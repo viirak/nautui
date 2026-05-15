@@ -2,9 +2,11 @@
 import { createMargin, createPadding } from "../lib/spacing";
 import type { Base, Spacing, SpacingProps } from "../types";
 
+export type GridSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+
 export interface GridProps extends Base, SpacingProps {
   bordered?: boolean;
-  columns?: number;
+  columns?: GridSpan;
   gap?: Spacing;
 }
 
@@ -47,7 +49,8 @@ const margin = createMargin("grid", { m, mx, my, mt, mr, mb, ml });
 <style define:vars={{ columns, ...padding, ...margin }}>
   .naut-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Stacked on mobile */
+    grid-template-columns: repeat(var(--columns), 1fr);
+
     padding-top: var(--gridPaddingTop);
     padding-right: var(--gridPaddingRight);
     padding-bottom: var(--gridPaddingBottom);
@@ -56,14 +59,6 @@ const margin = createMargin("grid", { m, mx, my, mt, mr, mb, ml });
     margin-right: var(--gridMarginRight);
     margin-bottom: var(--gridMarginBottom);
     margin-left: var(--gridMarginLeft);
-
-    @media only screen and (min-width: 576px) {
-      grid-template-columns: repeat(2, 1fr); /* 2 columns on tablet */
-    }
-
-    @media only screen and (min-width: 1042px) {
-      grid-template-columns: repeat(var(--columns), 1fr); /* Desktop columns */
-    }
 
     &.gap-none:not(.bordered) {
       gap: 0;
@@ -89,6 +84,24 @@ const margin = createMargin("grid", { m, mx, my, mt, mr, mb, ml });
       gap: 1px;
       background-color: var(--naut-color-border);
       border: 1px solid var(--naut-color-border);
+    }
+
+    &.responsive-mobile {
+      @media only screen and (max-width: 575px) {
+        grid-template-columns: 1fr; /* Stacked on mobile */
+      }
+    }
+
+    &.responsive-tablet {
+      @media only screen and (max-width: 818px) {
+        grid-template-columns: 1fr; /* Stacked on mobile */
+      }
+    }
+
+    &.responsive-desktop {
+      @media only screen and (max-width: 1042px) {
+        grid-template-columns: 1fr; /* Stacked on mobile */
+      }
     }
   }
 
