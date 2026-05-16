@@ -1,59 +1,46 @@
 ---
 import { type Border, createBorder } from "../lib/border";
-import { createMargin, createPadding } from "../lib/spacing";
+import { createSpacingClasses, extractSpacingProps } from "../lib/spacing";
 import type { Base, Radius, SpacingProps } from "../types";
+import "../styles/spacing.css";
 
 export interface BoxProps extends Base, SpacingProps {
   border?: Border;
   bordered?: boolean;
-  display?: "block" | "flex" | "grid";
   radius?: Radius;
 }
+
+const { spacing, nonSpacing } = extractSpacingProps(Astro.props as BoxProps);
 
 const {
   bordered = false,
   border,
   radius,
-  display = "block",
   class: className,
-  p = "md",
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
   ...rest
-} = Astro.props as BoxProps;
+} = nonSpacing;
 
 const boxBorder = createBorder("box", border);
-const padding = createPadding("box", { p, px, py, pt, pr, pb, pl });
-const margin = createMargin("box", { m, mx, my, mt, mr, mb, ml });
+const spacingClasses = createSpacingClasses({ ...spacing, p: "md" });
+const classlist = [
+  "naut-box",
+  bordered && "bordered",
+  className,
+  ...spacingClasses,
+];
 ---
 
-<div class:list={["naut-box", bordered && "bordered", className]} {...rest}>
+<div class:list={classlist} {...rest}>
   <slot name="background" />
   <slot name="before" />
-  <div class:list={["naut-box--wrapper", display]}><slot /></div>
+  <div class:list={["naut-box--wrapper"]}><slot /></div>
   <slot name="after" />
 </div>
 
-<style define:vars={{ display, ...boxBorder, ...padding, ...margin }}>
+<style define:vars={{ ...boxBorder }}>
   .naut-box {
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
-
-    margin-top: var(--boxMarginTop);
-    margin-right: var(--boxMarginRight);
-    margin-bottom: var(--boxMarginBottom);
-    margin-left: var(--boxMarginLeft);
     overflow: hidden; /* Clip background to borders */
 
     border-top: var(--boxBorderTop);
@@ -68,19 +55,6 @@ const margin = createMargin("box", { m, mx, my, mt, mr, mb, ml });
 
     .naut-box--wrapper {
       position: relative;
-      display: var(--display);
-
-      padding-top: var(--boxPaddingTop);
-      padding-right: var(--boxPaddingRight);
-      padding-bottom: var(--boxPaddingBottom);
-      padding-left: var(--boxPaddingLeft);
-
-      &.flex {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        align-items: center;
-      }
     }
   }
 </style>

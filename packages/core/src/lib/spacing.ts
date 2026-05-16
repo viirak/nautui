@@ -1,5 +1,7 @@
 import type { MarginProps, PaddingProps, Spacing } from "../types";
 
+type SpacingProps = MarginProps & PaddingProps;
+
 /** Priority: specific side > axis shorthand > all-sides shorthand */
 function resolve(
   specific: Spacing | undefined,
@@ -83,4 +85,35 @@ export function spacingToStyle(
       return `${prop}: ${v}`;
     })
     .join("; ");
+}
+
+export function extractSpacingProps<T extends SpacingProps>(props: T) {
+  const {
+    p,
+    px,
+    py,
+    pt,
+    pr,
+    pb,
+    pl,
+    m,
+    mx,
+    my,
+    mt,
+    mr,
+    mb,
+    ml,
+    ...nonSpacingProps
+  } = props;
+  return {
+    spacing: { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
+    nonSpacing: nonSpacingProps as T,
+  };
+}
+
+// spacing classes
+export function createSpacingClasses(props: SpacingProps): string[] {
+  return Object.entries(props)
+    .filter(([, value]) => value !== undefined)
+    .map(([key, value]) => `${key}-${value}`);
 }
