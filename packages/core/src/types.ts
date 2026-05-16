@@ -4,6 +4,7 @@ export type Shadow = Omit<Size, "xl" | "xs">;
 export type Radius = "sm" | "md" | "lg";
 export type Spacing =
   | "0"
+  | "xs"
   | "sm"
   | "md"
   | "lg"
