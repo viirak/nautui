@@ -7,6 +7,7 @@ import type { CardProps } from "./components/Card.astro";
 import type { ContainerProps } from "./components/Container.astro";
 import type { DividerProps } from "./components/Divider.astro";
 import type { DrawerProps } from "./components/Drawer.astro";
+import type { FlowProps } from "./components/Flow.astro";
 import type { GridProps } from "./components/Grid.astro";
 import type { GridItemProps } from "./components/GridItem.astro";
 import type { GroupProps } from "./components/Group.astro";
@@ -41,6 +42,7 @@ export declare const GridItem: (props: GridItemProps) => AstroComponent;
 export declare const Marquee: (props: MarqueeProps) => AstroComponent;
 export declare const Masonry: (props: MasonryProps) => AstroComponent;
 export declare const MasonryItem: (props: MasonryItemProps) => AstroComponent;
+export declare const Flow: (props: FlowProps) => AstroComponent;
 
 // Typography
 export declare const Text: (props: TextProps) => AstroComponent;

@@ -1,0 +1,92 @@
+---
+import { Base } from "../types"
+
+type Direction = "left" | "center" | "right"
+interface ResponsiveDirection {
+  base?: Direction
+  sm?: Direction
+  md?: Direction
+  lg?: Direction
+  xl?: Direction
+}
+
+export interface FlowProps extends Base {
+  direction?: Direction | ResponsiveDirection
+}
+
+const {class: className, direction="left", ...rest} = Astro.props as FlowProps;
+const directionClass = typeof direction === "string" ? { base: direction } : direction
+---
+<div class:list={[
+  "naut-flow",
+  direction,
+  directionClass.base && `${directionClass.base}`,
+  directionClass.sm && `sm-${directionClass.sm}`,
+  directionClass.md && `md-${directionClass.md}`,
+  directionClass.lg && `lg-${directionClass.lg}`,
+  directionClass.xl && `xl-${directionClass.xl}`,
+  className
+]} {...rest}><slot /></div>
+<style>
+  .naut-flow {
+    display: contents;
+
+    &.left {
+      text-align: left;
+    }
+    &.center {
+      text-align: center;
+    }
+    &.right {
+      text-align: right;
+    }
+
+    @media only screen and (max-width: 817px) {
+      &.sm-left {
+        text-align: left;
+      }
+      &.sm-center {
+        text-align: center;
+      }
+      &.sm-right {
+        text-align: right;
+      }
+    }
+
+    @media only screen and (min-width: 818px) and (max-width: 1041px) {
+      &.md-left {
+        text-align: left;
+      }
+      &.md-center {
+        text-align: center;
+      }
+      &.md-right {
+        text-align: right;
+      }
+    }
+
+    @media only screen and (min-width: 1042px) {
+      &.lg-left {
+        text-align: left;
+      }
+      &.lg-center {
+        text-align: center;
+      }
+      &.lg-right {
+        text-align: right;
+      }
+    }
+
+    @media only screen and (min-width: 1250px) {
+      &.xl-left {
+        text-align: left;
+      }
+      &.xl-center {
+        text-align: center;
+      }
+      &.xl-right {
+        text-align: right;
+      }
+    }
+  }
+</style>
