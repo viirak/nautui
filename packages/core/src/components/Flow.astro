@@ -1,36 +1,44 @@
 ---
-import { Base } from "../types"
+import { Base } from "../types";
 
-type Direction = "left" | "center" | "right"
+type Direction = "left" | "center" | "right";
 interface ResponsiveDirection {
-  base?: Direction
-  sm?: Direction
-  md?: Direction
-  lg?: Direction
-  xl?: Direction
+  base?: Direction;
+  lg?: Direction;
+  md?: Direction;
+  sm?: Direction;
+  xl?: Direction;
 }
 
 export interface FlowProps extends Base {
-  direction?: Direction | ResponsiveDirection
+  direction?: Direction | ResponsiveDirection;
 }
 
-const {class: className, direction="left", ...rest} = Astro.props as FlowProps;
-const directionClass = typeof direction === "string" ? { base: direction } : direction
+const {
+  class: className,
+  direction = "left",
+  ...rest
+} = Astro.props as FlowProps;
+const directionClass =
+  typeof direction === "string" ? { base: direction } : direction;
 ---
-<div class:list={[
+
+<div
+  class:list={[
   "naut-flow",
-  direction,
   directionClass.base && `${directionClass.base}`,
   directionClass.sm && `sm-${directionClass.sm}`,
   directionClass.md && `md-${directionClass.md}`,
   directionClass.lg && `lg-${directionClass.lg}`,
   directionClass.xl && `xl-${directionClass.xl}`,
   className
-]} {...rest}><slot /></div>
+]}
+  {...rest}
+>
+  <slot />
+</div>
 <style>
   .naut-flow {
-    display: contents;
-
     &.left {
       text-align: left;
     }
