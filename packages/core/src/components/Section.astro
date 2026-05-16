@@ -1,11 +1,12 @@
 ---
 import { Border, createBorder } from "../lib/border";
-import { createPadding } from "../lib/spacing";
 import type { Base, SpacingProps } from "../types";
+import "../styles/spacing.css";
+import { createSpacingClasses } from "../lib/spacing";
 
-type SectionSpacing = Omit<
+type SectionSpacing = Pick<
   SpacingProps,
-  "m" | "mx" | "my" | "mt" | "mr" | "mb" | "ml"
+  "p" | "px" | "py" | "pt" | "pr" | "pb" | "pl"
 >;
 
 export interface SectionProps extends Base, SectionSpacing {
@@ -34,7 +35,7 @@ const {
 } = Astro.props as SectionProps;
 
 const sectionBorder = createBorder("section", border);
-const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
+const paddingClasses = createSpacingClasses({ p, pl, pr, px, py, pt, pb });
 ---
 
 <section
@@ -52,7 +53,9 @@ const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
   <div class="naut-section--wrapper">
     <div class="naut-section--left"><slot name="left" /></div>
     <div class="naut-section--center">
-      <div class="naut-section--content"><slot /></div>
+      <div class:list={["naut-section--content", ...paddingClasses]}>
+        <slot />
+      </div>
     </div>
     <div class="naut-section--right"><slot name="right" /></div>
   </div>
@@ -61,8 +64,7 @@ const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
 
 <style
   define:vars={{
-    ...sectionBorder,
-    ...padding
+    ...sectionBorder
   }}
 >
   .naut-section {
@@ -74,13 +76,6 @@ const padding = createPadding("section", { p, pl, pr, px, py, pt, pb });
       position: relative;
       z-index: 1;
       display: flex;
-
-      .naut-section--content {
-        padding-top: var(--sectionPaddingTop);
-        padding-right: var(--sectionPaddingRight);
-        padding-bottom: var(--sectionPaddingBottom);
-        padding-left: var(--sectionPaddingLeft);
-      }
 
       .naut-section--left,
       .naut-section--right {
