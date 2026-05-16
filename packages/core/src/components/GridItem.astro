@@ -1,7 +1,6 @@
 ---
-import { createMargin, createPadding } from "../lib/spacing";
-import type { Base, SpacingProps } from "../types";
-import { GridSpan } from "./Grid.astro";
+import type { Base } from "../types";
+import { type GridSpan } from "./Grid.astro";
 
 interface SpanObject {
   base?: GridSpan;
@@ -11,108 +10,66 @@ interface SpanObject {
   xl?: GridSpan;
 }
 
-export interface GridItemProps extends Base, SpacingProps {
+export interface GridItemProps extends Base {
   span?: GridSpan | SpanObject;
 }
 
-const {
-  class: className,
-  span,
-  p,
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
-  ...rest
-} = Astro.props as GridItemProps;
+const { class: className, span, ...rest } = Astro.props as GridItemProps;
 
-const padding = createPadding("gridItem", { p, px, py, pt, pr, pb, pl });
-const margin = createMargin("gridItem", { m, mx, my, mt, mr, mb, ml });
-const spanValue = typeof span === "number" ? { base: span } : span;
+const spanValue = typeof span === "number" ? { base: span } : span || {};
 ---
 
 <div
   class:list={[
-  "naut-grid-item",
-  spanValue?.base && `span-${spanValue.base}`,
-  spanValue?.sm && `sm-span-${spanValue.sm}`,
-  spanValue?.md && `md-span-${spanValue.md}`,
-  spanValue?.lg && `lg-span-${spanValue.lg}`,
-  spanValue?.xl && `xl-span-${spanValue.xl}`,
-  className
-]}
+    "naut-grid-item",
+    spanValue?.base && `span-${spanValue.base}`,
+    spanValue?.sm && `sm-span-${spanValue.sm}`,
+    spanValue?.md && `md-span-${spanValue.md}`,
+    spanValue?.lg && `lg-span-${spanValue.lg}`,
+    spanValue?.xl && `xl-span-${spanValue.xl}`,
+    className
+  ]}
   {...rest}
 >
   <slot />
 </div>
 
-<style define:vars={{ ...padding, ...margin }}>
+<style>
   .naut-grid-item {
     grid-column: auto;
-
-    padding-top: var(--gridItemPaddingTop);
-    padding-right: var(--gridItemPaddingRight);
-    padding-bottom: var(--gridItemPaddingBottom);
-    padding-left: var(--gridItemPaddingLeft);
-
-    margin-top: var(--gridItemMarginTop);
-    margin-right: var(--gridItemMarginRight);
-    margin-bottom: var(--gridItemMarginBottom);
-    margin-left: var(--gridItemMarginLeft);
-
     &.span-1 {
       grid-column: span 1 / span 1;
     }
-
     &.span-2 {
       grid-column: span 2 / span 2;
     }
-
     &.span-3 {
       grid-column: span 3 / span 3;
     }
-
     &.span-4 {
       grid-column: span 4 / span 4;
     }
-
     &.span-5 {
       grid-column: span 5 / span 5;
     }
-
     &.span-6 {
       grid-column: span 6 / span 6;
     }
-
     &.span-7 {
       grid-column: span 7 / span 7;
     }
-
     &.span-8 {
       grid-column: span 8 / span 8;
     }
-
     &.span-9 {
       grid-column: span 9 / span 9;
     }
-
     &.span-10 {
       grid-column: span 10 / span 10;
     }
-
     &.span-11 {
       grid-column: span 11 / span 11;
     }
-
     &.span-12 {
       grid-column: span 12 / span 12;
     }
@@ -121,200 +78,153 @@ const spanValue = typeof span === "number" ? { base: span } : span;
       &.sm-span-1 {
         grid-column: span 1 / span 1;
       }
-
       &.sm-span-2 {
         grid-column: span 2 / span 2;
       }
-
       &.sm-span-3 {
         grid-column: span 3 / span 3;
       }
-
       &.sm-span-4 {
         grid-column: span 4 / span 4;
       }
-
       &.sm-span-5 {
         grid-column: span 5 / span 5;
       }
-
       &.sm-span-6 {
         grid-column: span 6 / span 6;
       }
-
       &.sm-span-7 {
         grid-column: span 7 / span 7;
       }
-
       &.sm-span-8 {
         grid-column: span 8 / span 8;
       }
-
       &.sm-span-9 {
         grid-column: span 9 / span 9;
       }
-
       &.sm-span-10 {
         grid-column: span 10 / span 10;
       }
-
       &.sm-span-11 {
         grid-column: span 11 / span 11;
       }
-
       &.sm-span-12 {
         grid-column: span 12 / span 12;
       }
     }
 
-    /* Tablet */
     @media only screen and (min-width: 818px) and (max-width: 1041px) {
       &.md-span-1 {
         grid-column: span 1 / span 1;
       }
-
       &.md-span-2 {
         grid-column: span 2 / span 2;
       }
-
       &.md-span-3 {
         grid-column: span 3 / span 3;
       }
-
       &.md-span-4 {
         grid-column: span 4 / span 4;
       }
-
       &.md-span-5 {
         grid-column: span 5 / span 5;
       }
-
       &.md-span-6 {
         grid-column: span 6 / span 6;
       }
-
       &.md-span-7 {
         grid-column: span 7 / span 7;
       }
-
       &.md-span-8 {
         grid-column: span 8 / span 8;
       }
-
       &.md-span-9 {
         grid-column: span 9 / span 9;
       }
-
       &.md-span-10 {
         grid-column: span 10 / span 10;
       }
-
       &.md-span-11 {
         grid-column: span 11 / span 11;
       }
-
       &.md-span-12 {
         grid-column: span 12 / span 12;
       }
     }
 
-    /* Desktop */
     @media only screen and (min-width: 1042px) {
       &.lg-span-1 {
         grid-column: span 1 / span 1;
       }
-
       &.lg-span-2 {
         grid-column: span 2 / span 2;
       }
-
       &.lg-span-3 {
         grid-column: span 3 / span 3;
       }
-
       &.lg-span-4 {
         grid-column: span 4 / span 4;
       }
-
       &.lg-span-5 {
         grid-column: span 5 / span 5;
       }
-
       &.lg-span-6 {
         grid-column: span 6 / span 6;
       }
-
       &.lg-span-7 {
         grid-column: span 7 / span 7;
       }
-
       &.lg-span-8 {
         grid-column: span 8 / span 8;
       }
-
       &.lg-span-9 {
         grid-column: span 9 / span 9;
       }
-
       &.lg-span-10 {
         grid-column: span 10 / span 10;
       }
-
       &.lg-span-11 {
         grid-column: span 11 / span 11;
       }
-
       &.lg-span-12 {
         grid-column: span 12 / span 12;
       }
     }
 
-    /* Large Desktop */
     @media only screen and (min-width: 1250px) {
       &.xl-span-1 {
         grid-column: span 1 / span 1;
       }
-
       &.xl-span-2 {
         grid-column: span 2 / span 2;
       }
-
       &.xl-span-3 {
         grid-column: span 3 / span 3;
       }
-
       &.xl-span-4 {
         grid-column: span 4 / span 4;
       }
-
       &.xl-span-5 {
         grid-column: span 5 / span 5;
       }
-
       &.xl-span-6 {
         grid-column: span 6 / span 6;
       }
-
       &.xl-span-7 {
         grid-column: span 7 / span 7;
       }
-
       &.xl-span-8 {
         grid-column: span 8 / span 8;
       }
-
       &.xl-span-9 {
         grid-column: span 9 / span 9;
       }
-
       &.xl-span-10 {
         grid-column: span 10 / span 10;
       }
-
       &.xl-span-11 {
         grid-column: span 11 / span 11;
       }
-
       &.xl-span-12 {
         grid-column: span 12 / span 12;
       }

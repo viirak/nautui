@@ -1,10 +1,9 @@
 ---
-import { createMargin, createPadding } from "../lib/spacing";
-import type { Base, Spacing, SpacingProps } from "../types";
+import type { Base, Spacing } from "../types";
 
 export type GridSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
-export interface GridProps extends Base, SpacingProps {
+export interface GridProps extends Base {
   bordered?: boolean;
   columns?: GridSpan;
   gap?: Spacing;
@@ -15,93 +14,103 @@ const {
   columns = 12,
   gap = "md",
   bordered = false,
-  p,
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
+  ...rest
 } = Astro.props as GridProps;
-
-const padding = createPadding("grid", { p, px, py, pt, pr, pb, pl });
-const margin = createMargin("grid", { m, mx, my, mt, mr, mb, ml });
 ---
 
 <div
   class:list={[
     "naut-grid",
     `gap-${gap}`,
+    `columns-${columns}`,
     bordered && "bordered",
     className
   ]}
+  {...rest}
 >
   <slot />
 </div>
 
-<style define:vars={{ columns, ...padding, ...margin }}>
+<style>
   .naut-grid {
     display: grid;
-    grid-template-columns: repeat(var(--columns), 1fr);
 
-    padding-top: var(--gridPaddingTop);
-    padding-right: var(--gridPaddingRight);
-    padding-bottom: var(--gridPaddingBottom);
-    padding-left: var(--gridPaddingLeft);
-    margin-top: var(--gridMarginTop);
-    margin-right: var(--gridMarginRight);
-    margin-bottom: var(--gridMarginBottom);
-    margin-left: var(--gridMarginLeft);
-
-    &.gap-none:not(.bordered) {
+    &.gap-0 {
       gap: 0;
     }
 
-    &.gap-sm:not(.bordered) {
+    &.gap-xs {
+      gap: var(--naut-spacing-xs);
+    }
+
+    &.gap-sm {
       gap: var(--naut-spacing-sm);
     }
 
-    &.gap-md:not(.bordered) {
+    &.gap-md {
       gap: var(--naut-spacing-md);
     }
 
-    &.gap-lg:not(.bordered) {
+    &.gap-lg {
       gap: var(--naut-spacing-lg);
     }
 
-    &.gap-xl:not(.bordered) {
+    &.gap-xl {
       gap: var(--naut-spacing-xl);
+    }
+
+    &.columns-1 {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    &.columns-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &.columns-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &.columns-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    &.columns-5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    &.columns-6 {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    &.columns-7 {
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    &.columns-8 {
+      grid-template-columns: repeat(8, 1fr);
+    }
+
+    &.columns-9 {
+      grid-template-columns: repeat(9, 1fr);
+    }
+
+    &.columns-10 {
+      grid-template-columns: repeat(10, 1fr);
+    }
+
+    &.columns-11 {
+      grid-template-columns: repeat(11, 1fr);
+    }
+
+    &.columns-12 {
+      grid-template-columns: repeat(12, 1fr);
     }
 
     &.bordered {
       gap: 1px;
       background-color: var(--naut-color-border);
       border: 1px solid var(--naut-color-border);
-    }
-
-    &.responsive-mobile {
-      @media only screen and (max-width: 575px) {
-        grid-template-columns: 1fr; /* Stacked on mobile */
-      }
-    }
-
-    &.responsive-tablet {
-      @media only screen and (max-width: 818px) {
-        grid-template-columns: 1fr; /* Stacked on mobile */
-      }
-    }
-
-    &.responsive-desktop {
-      @media only screen and (max-width: 1042px) {
-        grid-template-columns: 1fr; /* Stacked on mobile */
-      }
     }
   }
 
