@@ -1,9 +1,9 @@
 ---
-import { createMargin, createPadding } from "../lib/spacing";
-import type { Base, Radius, SpacingProps } from "../types";
+import type { Base, Radius, Spacing } from "../types";
 
-export interface CardProps extends Base, SpacingProps {
+export interface CardProps extends Base {
   bordered?: boolean;
+  p?: Extract<Spacing, "sm" | "md" | "lg">;
   radius?: Radius | "none";
   shadow?: "sm" | "md" | "lg" | "xl";
 }
@@ -12,25 +12,9 @@ const {
   class: className,
   bordered,
   shadow,
-  radius = "none",
+  radius,
   p = "md",
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
 } = Astro.props as CardProps;
-
-const padding = createPadding("card", { p, px, py, pt, pr, pb, pl });
-const margin = createMargin("card", { m, mx, my, mt, mr, mb, ml });
 ---
 
 <div
@@ -43,27 +27,28 @@ const margin = createMargin("card", { m, mx, my, mt, mr, mb, ml });
   ]}
 >
   <div class="naut-card--header"><slot name="header" /></div>
-  <div class="naut-card--body"><slot /></div>
+  <div class:list={["naut-card--body", `p-${p}`]}><slot /></div>
   <div class="naut-card--footer"><slot name="footer" /></div>
 </div>
 
-<style define:vars={{ ...padding, ...margin }}>
+<style>
   .naut-card {
     --radius-scale: 1.575;
 
     display: flex;
     flex-direction: column;
-    margin-top: var(--cardMarginTop);
-    margin-right: var(--cardMarginRight);
-    margin-bottom: var(--cardMarginBottom);
-    margin-left: var(--cardMarginLeft);
     overflow: hidden;
 
     .naut-card--body {
-      padding-top: var(--cardPaddingTop);
-      padding-right: var(--cardPaddingRight);
-      padding-bottom: var(--cardPaddingBottom);
-      padding-left: var(--cardPaddingLeft);
+      &.p-sm {
+        padding: var(--naut-spacing-sm);
+      }
+      &.p-md {
+        padding: var(--naut-spacing-md);
+      }
+      &.p-lg {
+        padding: var(--naut-spacing-lg);
+      }
     }
 
     .naut-card--header:empty {
