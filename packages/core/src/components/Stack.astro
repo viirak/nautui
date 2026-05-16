@@ -1,16 +1,27 @@
 ---
-import type { Base, Spacing } from "../types";
+import type { Base, Responsive, Spacing } from "../types";
+
+type Alignment = "inherit" | "start" | "center" | "end" | "stretch";
+type Justify =
+  | "start"
+  | "center"
+  | "end"
+  | "space-between"
+  | "space-around"
+  | "space-evenly";
+
+type AlignResponsive = {
+  [key in Responsive]?: Alignment;
+};
+
+type JustifyResponsive = {
+  [key in Responsive]?: Justify;
+};
 
 export interface StackProps extends Base {
-  align?: "inherit" | "start" | "center" | "end" | "stretch";
+  align?: AlignResponsive | Alignment;
   gap?: Extract<Spacing, "xs" | "sm" | "md" | "lg">;
-  justify?:
-    | "start"
-    | "center"
-    | "end"
-    | "space-between"
-    | "space-around"
-    | "space-evenly";
+  justify?: JustifyResponsive | Justify;
 }
 
 const {
@@ -20,14 +31,25 @@ const {
   gap = "md",
   ...rest
 } = Astro.props as StackProps;
+const alignItem = typeof align === "string" ? { base: align } : align;
+const justifyContent =
+  typeof justify === "string" ? { base: justify } : justify;
 ---
 
 <div
   class:list={[
     "naut-stack",
     `gap-${gap}`,
-    `justify-${justify}`,
-    align && `align-${align}`,
+    alignItem?.base && `items-${alignItem.base}`,
+    alignItem?.sm && `sm-items-${alignItem.sm}`,
+    alignItem?.md && `md-items-${alignItem.md}`,
+    alignItem?.lg && `lg-items-${alignItem.lg}`,
+    alignItem?.xl && `xl-items-${alignItem.xl}`,
+    justifyContent?.base && `content-${justifyContent.base}`,
+    justifyContent?.sm && `sm-content-${justifyContent.sm}`,
+    justifyContent?.md && `md-content-${justifyContent.md}`,
+    justifyContent?.lg && `lg-content-${justifyContent.lg}`,
+    justifyContent?.xl && `xl-content-${justifyContent.xl}`,
     className
   ]}
   {...rest}
@@ -56,44 +78,176 @@ const {
       gap: var(--naut-spacing-lg);
     }
 
-    &.justify-start {
+    &.content-start {
       justify-content: flex-start;
     }
 
-    &.justify-center {
+    &.content-center {
       justify-content: center;
     }
 
-    &.justify-end {
+    &.content-end {
       justify-content: flex-end;
     }
 
-    &.justify-space-between {
+    &.content-space-between {
       justify-content: space-between;
     }
 
-    &.justify-space-around {
+    &.content-space-around {
       justify-content: space-around;
     }
 
-    &.justify-space-evenly {
+    &.content-space-evenly {
       justify-content: space-evenly;
     }
 
-    &.align-start {
+    &.items-start {
       align-items: flex-start;
     }
 
-    &.align-center {
+    &.items-center {
       align-items: center;
     }
 
-    &.align-end {
+    &.items-end {
       align-items: flex-end;
     }
 
-    &.align-stretch {
+    &.items-stretch {
       align-items: stretch;
+    }
+
+    @media only screen and (max-width: 817px) {
+      &.sm-content-start {
+        justify-content: flex-start;
+      }
+      &.sm-content-center {
+        justify-content: center;
+      }
+      &.sm-content-end {
+        justify-content: flex-end;
+      }
+      &.sm-content-space-between {
+        justify-content: space-between;
+      }
+      &.sm-content-space-around {
+        justify-content: space-around;
+      }
+      &.sm-content-space-evenly {
+        justify-content: space-evenly;
+      }
+      &.sm-items-start {
+        align-items: flex-start;
+      }
+      &.sm-items-center {
+        align-items: center;
+      }
+      &.sm-items-end {
+        align-items: flex-end;
+      }
+      &.sm-items-stretch {
+        align-items: stretch;
+      }
+    }
+
+    @media only screen and (min-width: 818px) and (max-width: 1041px) {
+      &.md-content-start {
+        justify-content: flex-start;
+      }
+      &.md-content-center {
+        justify-content: center;
+      }
+      &.md-content-end {
+        justify-content: flex-end;
+      }
+      &.md-content-space-between {
+        justify-content: space-between;
+      }
+      &.md-content-space-around {
+        justify-content: space-around;
+      }
+      &.md-content-space-evenly {
+        justify-content: space-evenly;
+      }
+      &.md-items-start {
+        align-items: flex-start;
+      }
+      &.md-items-center {
+        align-items: center;
+      }
+      &.md-items-end {
+        align-items: flex-end;
+      }
+      &.md-items-stretch {
+        align-items: stretch;
+      }
+    }
+
+    @media only screen and (min-width: 1042px) {
+      &.lg-content-start {
+        justify-content: flex-start;
+      }
+      &.lg-content-center {
+        justify-content: center;
+      }
+      &.lg-content-end {
+        justify-content: flex-end;
+      }
+      &.lg-content-space-between {
+        justify-content: space-between;
+      }
+      &.lg-content-space-around {
+        justify-content: space-around;
+      }
+      &.lg-content-space-evenly {
+        justify-content: space-evenly;
+      }
+      &.lg-items-start {
+        align-items: flex-start;
+      }
+      &.lg-items-center {
+        align-items: center;
+      }
+      &.lg-items-end {
+        align-items: flex-end;
+      }
+      &.lg-items-stretch {
+        align-items: stretch;
+      }
+    }
+
+    @media only screen and (min-width: 1250px) {
+      &.xl-content-start {
+        justify-content: flex-start;
+      }
+      &.xl-content-center {
+        justify-content: center;
+      }
+      &.xl-content-end {
+        justify-content: flex-end;
+      }
+      &.xl-content-space-between {
+        justify-content: space-between;
+      }
+      &.xl-content-space-around {
+        justify-content: space-around;
+      }
+      &.xl-content-space-evenly {
+        justify-content: space-evenly;
+      }
+      &.xl-items-start {
+        align-items: flex-start;
+      }
+      &.xl-items-center {
+        align-items: center;
+      }
+      &.xl-items-end {
+        align-items: flex-end;
+      }
+      &.xl-items-stretch {
+        align-items: stretch;
+      }
     }
   }
 </style>
