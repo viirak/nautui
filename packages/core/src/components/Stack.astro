@@ -1,11 +1,9 @@
 ---
-import { resolveMargin, resolvePadding, spacingToStyle } from "../lib/spacing";
-import type { Base, Spacing, SpacingProps } from "../types";
+import type { Base, Spacing } from "../types";
 
-export interface StackProps extends Base, SpacingProps {
+export interface StackProps extends Base {
   align?: "inherit" | "start" | "center" | "end" | "stretch";
-  display: "flex" | "block";
-  gap?: Spacing;
+  gap?: Extract<Spacing, "xs" | "sm" | "md" | "lg">;
   justify?:
     | "start"
     | "center"
@@ -17,64 +15,85 @@ export interface StackProps extends Base, SpacingProps {
 
 const {
   class: className,
-  display = "flex",
-  align = "inherit",
+  align,
   justify = "start",
   gap = "md",
-  p,
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
   ...rest
 } = Astro.props as StackProps;
-
-const stackGap = `var(--naut-spacing-${gap})`;
-const spacingStyle = [
-  spacingToStyle(resolvePadding({ p, px, py, pt, pr, pb, pl })),
-  spacingToStyle(resolveMargin({ m, mx, my, mt, mr, mb, ml })),
-]
-  .filter(Boolean)
-  .join("; ");
 ---
 
 <div
-  class:list={["naut-stack", className, display]}
-  style={spacingStyle || undefined}
+  class:list={[
+    "naut-stack",
+    `gap-${gap}`,
+    `justify-${justify}`,
+    align && `align-${align}`,
+    className
+  ]}
   {...rest}
 >
   <slot />
 </div>
 
-<style define:vars={{ align, justify, stackGap }}>
+<style>
   .naut-stack {
-    &.flex {
-      display: flex;
-      flex-direction: column;
-      gap: var(--stackGap);
-      align-items: var(--align);
-      justify-content: var(--justify);
+    display: flex;
+    flex-direction: column;
+
+    &.gap-xs {
+      gap: var(--naut-spacing-xs);
     }
 
-    &.block {
-      display: flow-root;
-      text-align: var(--align, inherit);
+    &.gap-sm {
+      gap: var(--naut-spacing-sm);
     }
-  }
 
-  :global(.naut-stack.block > *) {
-    margin-bottom: var(--stackGap);
-    &:last-child {
-      margin-bottom: 0;
+    &.gap-md {
+      gap: var(--naut-spacing-md);
+    }
+
+    &.gap-lg {
+      gap: var(--naut-spacing-lg);
+    }
+
+    &.justify-start {
+      justify-content: flex-start;
+    }
+
+    &.justify-center {
+      justify-content: center;
+    }
+
+    &.justify-end {
+      justify-content: flex-end;
+    }
+
+    &.justify-space-between {
+      justify-content: space-between;
+    }
+
+    &.justify-space-around {
+      justify-content: space-around;
+    }
+
+    &.justify-space-evenly {
+      justify-content: space-evenly;
+    }
+
+    &.align-start {
+      align-items: flex-start;
+    }
+
+    &.align-center {
+      align-items: center;
+    }
+
+    &.align-end {
+      align-items: flex-end;
+    }
+
+    &.align-stretch {
+      align-items: stretch;
     }
   }
 </style>
