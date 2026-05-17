@@ -1,0 +1,150 @@
+---
+import "../styles/spacing/gap.css";
+import { Base, Gap, Responsive } from "../types";
+
+type Direction = "row" | "column";
+type ResponsiveDirection = {
+  [key in Responsive]: Direction;
+};
+
+export interface FlexProps extends Base {
+  align?: "start" | "center" | "end" | "baseline" | "stretch";
+  direction?: Direction | ResponsiveDirection;
+  gap?: Gap;
+  justify?: "start" | "center" | "end" | "between" | "around" | "evenly";
+  wrap?: "nowrap" | "wrap" | "wrap-reverse";
+}
+
+const {
+  class: className,
+  direction = "row",
+  justify = "start",
+  align = "start",
+  wrap,
+  gap,
+} = Astro.props as FlexProps;
+
+const dir =
+  typeof direction === "string"
+    ? ({ base: direction } as ResponsiveDirection)
+    : direction;
+---
+
+<div
+  class:list={[
+    "naut-flex",
+    `justify-${justify}`,
+    `align-${align}`,
+    `gap-${gap}`,
+    dir.base && `dir-${dir}`,
+    dir.sm && `sm-dir-${dir.sm}`,
+    dir.md && `md-dir-${dir.md}`,
+    dir.lg && `lg-dir-${dir.lg}`,
+    dir.xl && `xl-dir-${dir.xl}`,
+    wrap && `wrap-${wrap}`,
+  ]}
+>
+  <slot />
+</div>
+
+<style>
+  .naut-flex {
+    display: flex;
+
+    &.dir-column {
+      flex-direction: column;
+    }
+
+    @media only screen and (max-width: 817px) {
+      &.sm-dir-row {
+        flex-direction: row;
+      }
+      &.sm-dir-column {
+        flex-direction: column;
+      }
+    }
+
+    @media only screen and (min-width: 818px) and (max-width: 1041px) {
+      &.md-dir-row {
+        flex-direction: row;
+      }
+      &.md-dir-column {
+        flex-direction: column;
+      }
+    }
+
+    @media only screen and (min-width: 1042px) {
+      &.lg-dir-row {
+        flex-direction: row;
+      }
+      &.lg-dir-column {
+        flex-direction: column;
+      }
+    }
+
+    @media only screen and (min-width: 1250px) {
+      &.xl-dir-row {
+        flex-direction: row;
+      }
+      &.xl-dir-column {
+        flex-direction: column;
+      }
+    }
+
+    &.justify-start {
+      justify-content: flex-start;
+    }
+
+    &.justify-center {
+      justify-content: center;
+    }
+
+    &.justify-end {
+      justify-content: flex-end;
+    }
+
+    &.justify-between {
+      justify-content: space-between;
+    }
+
+    &.justify-around {
+      justify-content: space-around;
+    }
+
+    &.justify-evenly {
+      justify-content: space-evenly;
+    }
+
+    &.align-start {
+      align-items: flex-start;
+    }
+
+    &.align-center {
+      align-items: center;
+    }
+
+    &.align-end {
+      align-items: flex-end;
+    }
+
+    &.align-baseline {
+      align-items: baseline;
+    }
+
+    &.align-stretch {
+      align-items: stretch;
+    }
+
+    &.wrap-nowrap {
+      flex-wrap: nowrap;
+    }
+
+    &.wrap-wrap {
+      flex-wrap: wrap;
+    }
+
+    &.wrap-wrap-reverse {
+      flex-wrap: wrap-reverse;
+    }
+  }
+</style>
