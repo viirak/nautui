@@ -1,8 +1,13 @@
 ---
+import "../styles/spacing/padding.css";
+import "../styles/spacing/margin.css";
 import { type Border, createBorder } from "../lib/border";
-import { createSpacingClasses, extractSpacingProps } from "../lib/spacing";
-import type { Base, Radius, SpacingProps } from "../types";
-import "../styles/spacing.css";
+import {
+  createSpacingClasses,
+  extractSpacingProps,
+  SpacingProps,
+} from "../lib/spacing";
+import type { Base, Radius } from "../types";
 
 export interface BoxProps extends Base, SpacingProps {
   border?: Border;
