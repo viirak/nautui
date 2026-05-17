@@ -55,7 +55,7 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
       --naut-font-size-xs: 0.785rem;
       --naut-font-size-sm: 0.875rem;
       --naut-font-size-md: 1rem;
-      --naut-font-size-lg: 1.355rem;
+      --naut-font-size-lg: 1.25rem;
       --naut-font-size-xl: 1.565rem;
       --naut-font-size-xxl: 1.875rem;
 
@@ -165,7 +165,9 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
       );
     }
 
-    [data-theme="dark"], section.dark, nav.dark {
+    [data-theme="dark"],
+    section.dark,
+    nav.dark {
       --naut-color-base: color-mix(
         in oklch,
         black,
