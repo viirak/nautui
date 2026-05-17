@@ -1,0 +1,157 @@
+/* margin 0 */
+.m-0 {
+  margin: 0;
+}
+
+.mx-0 {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.my-0 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.ml-0 {
+  margin-left: 0;
+}
+
+.mr-0 {
+  margin-right: 0;
+}
+
+/* margin sm */
+.m-sm {
+  margin: var(--naut-spacing-sm);
+}
+
+.mx-sm {
+  margin-right: var(--naut-spacing-sm);
+  margin-left: var(--naut-spacing-sm);
+}
+
+.my-sm {
+  margin-top: var(--naut-spacing-sm);
+  margin-bottom: var(--naut-spacing-sm);
+}
+
+.mt-sm {
+  margin-top: var(--naut-spacing-sm);
+}
+
+.mb-sm {
+  margin-bottom: var(--naut-spacing-sm);
+}
+
+.ml-sm {
+  margin-left: var(--naut-spacing-sm);
+}
+
+.mr-sm {
+  margin-right: var(--naut-spacing-sm);
+}
+
+/* margin md */
+.m-md {
+  margin: var(--naut-spacing-md);
+}
+
+.mx-md {
+  margin-right: var(--naut-spacing-md);
+  margin-left: var(--naut-spacing-md);
+}
+
+.my-md {
+  margin-top: var(--naut-spacing-md);
+  margin-bottom: var(--naut-spacing-md);
+}
+
+.mt-md {
+  margin-top: var(--naut-spacing-md);
+}
+
+.mb-md {
+  margin-bottom: var(--naut-spacing-md);
+}
+
+.ml-md {
+  margin-right: var(--naut-spacing-md);
+  margin-left: var(--naut-spacing-md);
+}
+
+.mr-md {
+  margin-right: var(--naut-spacing-md);
+}
+
+/* margin lg */
+.m-lg {
+  margin: var(--naut-spacing-lg);
+}
+
+.mx-lg {
+  margin-right: var(--naut-spacing-lg);
+  margin-left: var(--naut-spacing-lg);
+}
+
+.my-lg {
+  margin-top: var(--naut-spacing-lg);
+  margin-bottom: var(--naut-spacing-lg);
+}
+
+.mt-lg {
+  margin-top: var(--naut-spacing-lg);
+}
+
+.mb-lg {
+  margin-bottom: var(--naut-spacing-lg);
+}
+
+.ml-lg {
+  margin-right: var(--naut-spacing-lg);
+  margin-left: var(--naut-spacing-lg);
+}
+
+.mr-lg {
+  margin-right: var(--naut-spacing-lg);
+}
+
+/* margin xl */
+.m-xl {
+  margin: var(--naut-spacing-xl);
+}
+
+.mx-xl {
+  margin-right: var(--naut-spacing-xl);
+  margin-left: var(--naut-spacing-xl);
+}
+
+.my-xl {
+  margin-top: var(--naut-spacing-xl);
+  margin-bottom: var(--naut-spacing-xl);
+}
+
+.mt-xl {
+  margin-top: var(--naut-spacing-xl);
+}
+
+.mb-xl {
+  margin-bottom: var(--naut-spacing-xl);
+}
+
+.ml-xl {
+  margin-right: var(--naut-spacing-xl);
+  margin-left: var(--naut-spacing-xl);
+}
+
+.mr-xl {
+  margin-right: var(--naut-spacing-xl);
+}
