@@ -1,14 +1,14 @@
 ---
-import { Section, Stack } from "@nautui/core";
+import { Section } from "@nautui/core";
+
+interface FigureProps {
+  clip?: "slash" | "backslash";
+  position?: "right" | "bottom";
+}
 
 export interface SectionHeroProps {
   dark?: boolean; // force dark mode
-  figure?:
-    | boolean
-    | {
-        position?: "right" | "bottom";
-        clip?: "slash" | "backslash";
-      };
+  figure?: boolean | FigureProps;
 }
 
 const { figure = false, dark = false } = Astro.props as SectionHeroProps;
@@ -20,7 +20,7 @@ const isFigureRight = position === "right";
 const contentAlign = isFigureRight ? "left" : "center";
 ---
 
-<Section py="display-xl" class:list={["naut-hero-section"]} dark={{ dark }}>
+<Section class:list={["naut-hero-section"]} dark={{ dark }}>
   <Fragment slot="before"> <slot name="background" /> </Fragment>
   <div
     class:list={[
