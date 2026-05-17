@@ -1,35 +1,27 @@
 ---
-import { createMargin, createPadding } from "../lib/spacing";
-import type { Base, SpacingProps } from "../types";
+import "../styles/spacing/spacing.css";
+import {
+  createSpacingClasses,
+  extractSpacingProps,
+  SpacingProps,
+} from "../lib/spacing";
+import type { Base } from "../types";
 
 export interface MasonryItemProps extends Base, SpacingProps {}
 
-const {
-  class: className,
-  p,
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
-  ...rest
-} = Astro.props as MasonryItemProps;
+const { spacing, nonSpacing } = extractSpacingProps(
+  Astro.props as MasonryItemProps
+);
+const spacingClasses = createSpacingClasses(spacing);
 
-const padding = createPadding("masonryItem", { p, px, py, pt, pr, pb, pl });
-const margin = createMargin("masonryItem", { m, mx, my, mt, mr, mb, ml });
+const { class: className, ...rest } = nonSpacing;
 ---
 
-<div class:list={["naut-masonry-item", className]} {...rest}><slot /></div>
+<div class:list={["naut-masonry-item", ...spacingClasses, className]} {...rest}>
+  <slot />
+</div>
 
-<style define:vars={{ ...padding, ...margin }}>
+<style>
   .naut-masonry-item {
     width: 100%;
     padding-top: var(--masonryItemPaddingTop);

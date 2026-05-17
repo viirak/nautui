@@ -1,27 +1,29 @@
 ---
-import { createMargin, createPadding } from "../lib/spacing";
-import type { Base, Spacing, SpacingProps } from "../types";
+import "../styles/spacing/spacing.css";
+import "../styles/spacing/gap.css";
+import {
+  createSpacingClasses,
+  extractSpacingProps,
+  SpacingProps,
+} from "../lib/spacing";
+import type { Base, Gap } from "../types";
 
 export interface MarqueeProps extends Base, SpacingProps {
   duration?: number;
   fadeEdgeColor?: string;
   fadeEdgeSize?: string;
   fadeEdges?: boolean;
-  gap?: Spacing | string;
+  gap?: Gap;
   orientation?: "horizontal" | "vertical";
   pauseOnHover?: boolean;
   repeat?: number;
   reverse?: boolean;
 }
 
-const spacingValues = new Set(["0", "sm", "md", "lg", "xl", "xxl"]);
-
-function resolveGap(gap: Spacing | string): string {
-  if (spacingValues.has(gap)) {
-    return gap === "0" ? "0" : `var(--naut-spacing-${gap})`;
-  }
-  return gap;
-}
+const { spacing, nonSpacing } = extractSpacingProps(
+  Astro.props as MarqueeProps
+);
+const spacingClasses = createSpacingClasses(spacing);
 
 const {
   class: className,
@@ -34,38 +36,23 @@ const {
   fadeEdges = true,
   fadeEdgeColor = "var(--naut-color-base)",
   fadeEdgeSize = "5%",
-  p,
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
   ...rest
-} = Astro.props as MarqueeProps;
+} = nonSpacing;
 
 const safeDuration = Math.max(1, duration);
 const safeRepeat = Math.max(2, Math.floor(repeat));
-const marqueeGap = resolveGap(gap);
-const padding = createPadding("marquee", { p, px, py, pt, pr, pb, pl });
-const margin = createMargin("marquee", { m, mx, my, mt, mr, mb, ml });
 ---
 
 <div
   class:list={[
     "naut-marquee",
     `orientation-${orientation}`,
+    `gap-${gap}`,
     reverse && "reverse",
     pauseOnHover && "pause-on-hover",
     !fadeEdges && "no-fade",
     className,
+    ...spacingClasses
   ]}
   {...rest}
 >
@@ -80,24 +67,13 @@ const margin = createMargin("marquee", { m, mx, my, mt, mr, mb, ml });
   define:vars={{
     safeDuration,
     safeRepeat,
-    marqueeGap,
     fadeEdgeColor,
-    fadeEdgeSize,
-    ...padding,
-    ...margin,
+    fadeEdgeSize
   }}
 >
   .naut-marquee {
     position: relative;
     display: block;
-    padding-top: var(--marqueePaddingTop);
-    padding-right: var(--marqueePaddingRight);
-    padding-bottom: var(--marqueePaddingBottom);
-    padding-left: var(--marqueePaddingLeft);
-    margin-top: var(--marqueeMarginTop);
-    margin-right: var(--marqueeMarginRight);
-    margin-bottom: var(--marqueeMarginBottom);
-    margin-left: var(--marqueeMarginLeft);
     overflow: hidden;
   }
 

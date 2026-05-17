@@ -1,52 +1,33 @@
 ---
-import { createMargin, createPadding } from "../lib/spacing";
-import type { Base, Spacing, SpacingProps } from "../types";
+import "../styles/spacing/spacing.css";
+import "../styles/spacing/gap.css";
+import {
+  createSpacingClasses,
+  extractSpacingProps,
+  SpacingProps,
+} from "../lib/spacing";
+import type { Base, Gap } from "../types";
 
 export interface MasonryProps extends Base, SpacingProps {
   columns?: number;
-  gap?: Spacing;
+  gap?: Gap;
 }
 
-const {
-  class: className,
-  columns = 4,
-  gap = "md",
-  p,
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
-} = Astro.props as MasonryProps;
-
-const padding = createMargin("masonry", { p, px, py, pt, pr, pb, pl });
-const margin = createMargin("masonry", { m, mx, my, mt, mr, mb, ml });
+const { spacing, nonSpacing } = extractSpacingProps(
+  Astro.props as MasonryProps
+);
+const spacingClasses = createSpacingClasses(spacing);
+const { class: className, columns = 4, gap = "md" } = nonSpacing;
 ---
 
-<div class:list={["naut-masonry", `gap-${gap}`, className]}><slot /></div>
+<div class:list={["naut-masonry", `gap-${gap}`, className, ...spacingClasses]}>
+  <slot />
+</div>
 
-<style define:vars={{ columns, ...padding, ...margin }}>
+<style define:vars={{ columns }}>
   .naut-masonry {
     column-count: 1; /* Stacked on mobile */
     column-gap: 0;
-
-    padding-top: var(--masonryPaddintTop);
-    padding-right: var(--masonryPaddintRight);
-    padding-bottom: var(--masonryPaddintBottom);
-    padding-left: var(--masonryPaddintLeft);
-
-    margin-top: var(--masonryMarginTop);
-    margin-right: var(--masonryMarginRight);
-    margin-bottom: var(--masonryMarginBottom);
-    margin-left: var(--masonryMarginLeft);
 
     @media only screen and (min-width: 576px) {
       column-count: 2; /* 2 columns on tablet */
@@ -54,26 +35,6 @@ const margin = createMargin("masonry", { m, mx, my, mt, mr, mb, ml });
 
     @media only screen and (min-width: 1042px) {
       column-count: var(--columns); /* Desktop columns */
-    }
-
-    &.gap-none {
-      column-gap: 0;
-    }
-
-    &.gap-sm {
-      column-gap: var(--naut-spacing-sm);
-    }
-
-    &.gap-md {
-      column-gap: var(--naut-spacing-md);
-    }
-
-    &.gap-lg {
-      column-gap: var(--naut-spacing-lg);
-    }
-
-    &.gap-xl {
-      column-gap: var(--naut-spacing-xl);
     }
   }
 
