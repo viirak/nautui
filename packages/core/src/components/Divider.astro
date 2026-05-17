@@ -24,7 +24,8 @@ const {
   variant = "solid",
 } = nonSpacing;
 
-const marginClasses = createSpacingClasses({ ...margin, my: "md" });
+const my = margin.my || margin.mt || margin.mb ? undefined : "md";
+const marginClasses = createSpacingClasses({ ...margin, my });
 const borderVar = `var(--naut-border-width-${size}) ${variant} var(--naut-color-border)`;
 ---
 
