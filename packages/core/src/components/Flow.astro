@@ -1,38 +1,36 @@
 ---
-import { Base } from "../types";
+import { Base, Responsive, Size } from "../types";
 
 type Direction = "left" | "center" | "right";
-interface ResponsiveDirection {
-  base?: Direction;
-  lg?: Direction;
-  md?: Direction;
-  sm?: Direction;
-  xl?: Direction;
-}
+type ResponsiveDirection = {
+  [key in Responsive]?: Direction;
+};
 
 export interface FlowProps extends Base {
   direction?: Direction | ResponsiveDirection;
+  maxWidth?: Size;
 }
 
 const {
   class: className,
   direction = "left",
+  maxWidth,
   ...rest
 } = Astro.props as FlowProps;
-const directionClass =
-  typeof direction === "string" ? { base: direction } : direction;
+const dir = typeof direction === "string" ? { base: direction } : direction;
 ---
 
 <div
   class:list={[
-  "naut-flow",
-  directionClass.base && `${directionClass.base}`,
-  directionClass.sm && `sm-${directionClass.sm}`,
-  directionClass.md && `md-${directionClass.md}`,
-  directionClass.lg && `lg-${directionClass.lg}`,
-  directionClass.xl && `xl-${directionClass.xl}`,
-  className
-]}
+    "naut-flow",
+    dir.base && `${dir.base}`,
+    dir.sm && `sm-${dir.sm}`,
+    dir.md && `md-${dir.md}`,
+    dir.lg && `lg-${dir.lg}`,
+    dir.xl && `xl-${dir.xl}`,
+    maxWidth && `max-w max-w-${maxWidth}`,
+    className
+  ]}
   {...rest}
 >
   <slot />
@@ -47,6 +45,27 @@ const directionClass =
     }
     &.right {
       text-align: right;
+    }
+
+    &.max-w {
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    &.max-w-sm {
+      max-width: 640px;
+    }
+
+    &.max-w-md {
+      max-width: 768px;
+    }
+
+    &.max-w-lg {
+      max-width: 1024px;
+    }
+
+    &.max-w-xl {
+      max-width: 1280px;
     }
 
     @media only screen and (max-width: 817px) {
