@@ -1,5 +1,11 @@
 ---
-import type { Base, MarginProps } from "../types";
+import "../styles/spacing/margin.css";
+import {
+  createSpacingClasses,
+  extractSpacingProps,
+  MarginProps,
+} from "../lib/spacing";
+import type { Base } from "../types";
 
 export interface TitleProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
@@ -8,38 +14,26 @@ export interface TitleProps extends Base, MarginProps {
   size?: "default" | "display" | "display-lg" | "display-xl" | "display-xxl";
 }
 
+const { spacing, nonSpacing } = extractSpacingProps(Astro.props as TitleProps);
+
 const {
   level = 2,
   class: className,
   size = "default",
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
   gradient,
   align,
   ...rest
-} = Astro.props as TitleProps;
+} = nonSpacing;
 
-// Resolve axis shorthands: specific > axis > all
-const resolvedMt = mt ?? my ?? m;
-const resolvedMb = mb ?? my ?? m;
-const resolvedMl = ml ?? mx ?? m;
-const resolvedMr = mr ?? mx ?? m;
+const spacingClasses = createSpacingClasses(spacing);
 
 const classlist = [
   "naut-title",
   `l-${level}`,
   align && `align-${align}`,
   size && `size-${size}`,
-  resolvedMt && `mt-${resolvedMt}`,
-  resolvedMb && `mb-${resolvedMb}`,
-  resolvedMl && `ml-${resolvedMl}`,
-  resolvedMr && `mr-${resolvedMr}`,
   gradient && "color--gradient",
+  ...spacingClasses,
   className,
 ];
 
@@ -104,85 +98,6 @@ const gradientBg = gradient
     &.l-6 {
       font-size: 1.2rem;
       line-height: calc(1.025rem * var(--naut-line-height-ratio));
-    }
-
-    /* Margins */
-    &.mt-0 {
-      margin-top: 0;
-    }
-    &.mb-0 {
-      margin-bottom: 0;
-    }
-    &.ml-0 {
-      margin-left: 0;
-    }
-    &.mr-0 {
-      margin-right: 0;
-    }
-
-    &.mt-xs {
-      margin-top: var(--naut-spacing-xs);
-    }
-    &.mb-xs {
-      margin-bottom: var(--naut-spacing-xs);
-    }
-    &.ml-xs {
-      margin-left: var(--naut-spacing-xs);
-    }
-    &.mr-xs {
-      margin-right: var(--naut-spacing-xs);
-    }
-
-    &.mt-sm {
-      margin-top: var(--naut-spacing-sm);
-    }
-    &.mb-sm {
-      margin-bottom: var(--naut-spacing-sm);
-    }
-    &.ml-sm {
-      margin-left: var(--naut-spacing-sm);
-    }
-    &.mr-sm {
-      margin-right: var(--naut-spacing-sm);
-    }
-
-    &.mt-md {
-      margin-top: var(--naut-spacing-md);
-    }
-    &.mb-md {
-      margin-bottom: var(--naut-spacing-md);
-    }
-    &.ml-md {
-      margin-left: var(--naut-spacing-md);
-    }
-    &.mr-md {
-      margin-right: var(--naut-spacing-md);
-    }
-
-    &.mt-lg {
-      margin-top: var(--naut-spacing-lg);
-    }
-    &.mb-lg {
-      margin-bottom: var(--naut-spacing-lg);
-    }
-    &.ml-lg {
-      margin-left: var(--naut-spacing-lg);
-    }
-    &.mr-lg {
-      margin-right: var(--naut-spacing-lg);
-    }
-
-    &.mt-xl {
-      margin-top: var(--naut-spacing-xl);
-    }
-    &.mb-xl {
-      margin-bottom: var(--naut-spacing-xl);
-    }
-    &.ml-xl {
-      margin-left: var(--naut-spacing-xl);
-    }
-    &.mr-xl {
-      margin-right: var(--naut-spacing-xl);
     }
 
     /* Size display: ;*/
