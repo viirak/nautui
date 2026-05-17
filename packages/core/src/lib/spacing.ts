@@ -1,29 +1,37 @@
-import type { MarginProps, PaddingProps } from "../types";
+import type { Size } from "../types";
 
-type SpacingProps = MarginProps & PaddingProps;
+export type Spacing = Size | "0";
 
+export interface PaddingProps {
+  p?: Spacing; // all sides
+  pb?: Spacing; // bottom only
+  pl?: Spacing; // left only
+  pr?: Spacing; // right only
+  pt?: Spacing; // top only
+  px?: Spacing; // left + right
+  py?: Spacing; // top + bottom
+}
+
+export interface MarginProps {
+  m?: Spacing; // all sides
+  mb?: Spacing; // bottom only
+  ml?: Spacing; // left only
+  mr?: Spacing; // right only
+  mt?: Spacing; // top only
+  mx?: Spacing; // left + right
+  my?: Spacing; // top + bottom
+}
+
+export interface SpacingProps extends PaddingProps, MarginProps {}
+
+// Extracts spacing props from a component's props
 export function extractSpacingProps<T extends SpacingProps>(props: T) {
-  const {
-    p,
-    px,
-    py,
-    pt,
-    pr,
-    pb,
-    pl,
-    m,
-    mx,
-    my,
-    mt,
-    mr,
-    mb,
-    ml,
-    ...nonSpacingProps
-  } = props;
-  return {
-    spacing: { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
-    nonSpacing: nonSpacingProps as T,
-  };
+  const { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml, ...rest } =
+    props;
+  const padding = { p, px, py, pt, pr, pb, pl };
+  const margin = { m, mx, my, mt, mr, mb, ml };
+  const spacing = { ...padding, ...margin };
+  return { padding, margin, spacing, nonSpacing: rest as T };
 }
 
 // spacing classes
