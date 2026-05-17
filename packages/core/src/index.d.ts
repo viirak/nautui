@@ -21,6 +21,7 @@ import type { MasonryProps } from "./components/Masonry.astro";
 import type { MasonryItemProps } from "./components/MasonryItem.astro";
 import type { NavBarProps } from "./components/NavBar.astro";
 import type { SectionProps } from "./components/Section.astro";
+import type { SpaceProps } from "./components/Space.astro";
 import type { TextProps } from "./components/Text.astro";
 import type { ThemeProps } from "./components/Theme.astro";
 import type { ThemeToggleProps } from "./components/ThemeToggle.astro";
@@ -43,6 +44,7 @@ export declare const Marquee: (props: MarqueeProps) => AstroComponent;
 export declare const Masonry: (props: MasonryProps) => AstroComponent;
 export declare const MasonryItem: (props: MasonryItemProps) => AstroComponent;
 export declare const Flow: (props: FlowProps) => AstroComponent;
+export declare const Space: (props: SpaceProps) => AstroComponent;
 
 // Typography
 export declare const Text: (props: TextProps) => AstroComponent;

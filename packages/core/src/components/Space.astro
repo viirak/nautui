@@ -1,0 +1,113 @@
+---
+import { Base, Size } from "../types";
+
+export interface SpaceProps extends Base {
+  grow?: boolean;
+  orientation?: "horizontal" | "vertical";
+  responsive?: boolean;
+  size?: "auto" | Size | "display" | "display-lg" | "display-xl" | "full";
+}
+
+const {
+  class: className,
+  orientation = "vertical",
+  responsive = false,
+  grow = false,
+  size = "auto",
+} = Astro.props as SpaceProps;
+const measure = orientation === "vertical" ? "height" : "width";
+const classlist = [
+  "naut-space",
+  orientation,
+  `${measure}-${size}`,
+  grow && "grow",
+  responsive && "responsive",
+];
+---
+
+<div class:list={classlist}><slot /></div>
+
+<style>
+  .naut-space {
+    position: relative;
+    box-sizing: border-box;
+
+    &.horizontal {
+      display: inline-block;
+    }
+
+    &.grow {
+      flex-grow: 1;
+    }
+
+    /* heights */
+    &.height-auto {
+      height: auto;
+    }
+
+    &.height-sm {
+      height: var(--naut-spacing-sm);
+    }
+
+    &.height-md {
+      height: var(--naut-spacing-md);
+    }
+
+    &.height-lg {
+      height: var(--naut-spacing-lg);
+    }
+
+    &.height-xl {
+      height: var(--naut-spacing-xl);
+    }
+
+    &.height-display {
+      height: var(--naut-spacing-display);
+    }
+
+    &.height-display-lg {
+      height: var(--naut-spacing-display-lg);
+    }
+
+    &.height-display-xl {
+      height: var(--naut-spacing-display-xl);
+    }
+
+    /* Width */
+    &.width-auto {
+      width: auto;
+    }
+
+    &.width-full {
+      width: 100%;
+    }
+
+    &.width-sm {
+      width: var(--naut-spacing-sm);
+    }
+
+    &.width-md {
+      width: var(--naut-spacing-md);
+    }
+
+    &.width-lg {
+      width: var(--naut-spacing-lg);
+    }
+
+    &.width-xl {
+      width: var(--naut-spacing-xl);
+    }
+
+    &.width-display {
+      width: var(--naut-spacing-display);
+    }
+
+    &.width-display-lg {
+      width: var(--naut-spacing-display-lg);
+    }
+
+    &.width-display-xl {
+      width: var(--naut-spacing-display-xl);
+    }
+  }
+</style>

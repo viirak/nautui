@@ -25,6 +25,7 @@ import Menu from "./components/Menu.astro";
 import MenuItem from "./components/MenuItem.astro";
 import NavBar from "./components/NavBar.astro";
 import Section from "./components/Section.astro";
+import Space from "./components/Space.astro";
 import Stack from "./components/Stack.astro";
 import Text from "./components/Text.astro";
 import Theme from "./components/Theme.astro";
@@ -57,6 +58,7 @@ export {
   MenuItem,
   NavBar,
   Section,
+  Space,
   Stack,
   Text,
   Theme,
