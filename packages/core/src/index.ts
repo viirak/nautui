@@ -9,6 +9,7 @@ import Card from "./components/Card.astro";
 import Container from "./components/Container.astro";
 import Divider from "./components/Divider.astro";
 import Drawer from "./components/Drawer.astro";
+import Flex from "./components/Flex.astro";
 import Flow from "./components/Flow.astro";
 import Grid from "./components/Grid.astro";
 import GridItem from "./components/GridItem.astro";
@@ -42,6 +43,7 @@ export {
   Container,
   Divider,
   Drawer,
+  Flex,
   Flow,
   Grid,
   GridItem,

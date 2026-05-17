@@ -7,6 +7,7 @@ import type { CardProps } from "./components/Card.astro";
 import type { ContainerProps } from "./components/Container.astro";
 import type { DividerProps } from "./components/Divider.astro";
 import type { DrawerProps } from "./components/Drawer.astro";
+import type { FlexProps } from "./components/Flex.astro";
 import type { FlowProps } from "./components/Flow.astro";
 import type { GridProps } from "./components/Grid.astro";
 import type { GridItemProps } from "./components/GridItem.astro";
@@ -45,6 +46,7 @@ export declare const Masonry: (props: MasonryProps) => AstroComponent;
 export declare const MasonryItem: (props: MasonryItemProps) => AstroComponent;
 export declare const Flow: (props: FlowProps) => AstroComponent;
 export declare const Space: (props: SpaceProps) => AstroComponent;
+export declare const Flex: (props: FlexProps) => AstroComponent;
 
 // Typography
 export declare const Text: (props: TextProps) => AstroComponent;
