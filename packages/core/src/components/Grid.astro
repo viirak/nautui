@@ -1,12 +1,12 @@
 ---
-import type { Base, Spacing } from "../types";
+import type { Base, Gap } from "../types";
 
 export type GridSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 export interface GridProps extends Base {
   bordered?: boolean;
   columns?: GridSpan;
-  gap?: Spacing;
+  gap?: Gap;
 }
 
 const {
