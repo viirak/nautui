@@ -15,7 +15,9 @@ export interface BoxProps extends Base, SpacingProps {
   radius?: Radius;
 }
 
-const { spacing, nonSpacing } = extractSpacingProps(Astro.props as BoxProps);
+const { padding, spacing, nonSpacing } = extractSpacingProps(
+  Astro.props as BoxProps
+);
 
 const {
   bordered = false,
@@ -26,7 +28,9 @@ const {
 } = nonSpacing;
 
 const boxBorder = createBorder("box", border);
-const spacingClasses = createSpacingClasses({ ...spacing, p: "md" });
+const noPadding = Object.values(padding).every((v) => v === undefined);
+const p = noPadding ? "md" : undefined;
+const spacingClasses = createSpacingClasses({ ...spacing, p });
 const classlist = [
   "naut-box",
   bordered && "bordered",
