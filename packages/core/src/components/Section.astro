@@ -1,21 +1,24 @@
 ---
+import "../styles/spacing/padding.css";
 import { Border, createBorder } from "../lib/border";
-import type { Base, SpacingProps } from "../types";
-import "../styles/spacing.css";
-import { createSpacingClasses } from "../lib/spacing";
+import {
+  createSpacingClasses,
+  extractSpacingProps,
+  PaddingProps,
+} from "../lib/spacing";
+import type { Base } from "../types";
 
-type SectionSpacing = Pick<
-  SpacingProps,
-  "p" | "px" | "py" | "pt" | "pr" | "pb" | "pl"
->;
-
-export interface SectionProps extends Base, SectionSpacing {
+export interface SectionProps extends Base, PaddingProps {
   as?: "div" | "section" | "article" | "main" | "header" | "footer";
   border?: Border;
   dark?: boolean;
   decoration: "diamond" | "square" | "circle";
   mode?: "default" | "dimmed" | "highlighted" | "inverted";
 }
+
+const { padding, nonSpacing } = extractSpacingProps(
+  Astro.props as SectionProps
+);
 
 const {
   class: className,
@@ -24,18 +27,11 @@ const {
   decoration,
   cross,
   dark = false,
-  p = "md",
-  px,
-  py,
-  pt,
-  pr,
-  pb,
-  pl,
   ...rest
-} = Astro.props as SectionProps;
+} = nonSpacing;
 
+const spacingClasses = createSpacingClasses({ ...padding, p: "md" });
 const sectionBorder = createBorder("section", border);
-const paddingClasses = createSpacingClasses({ p, pl, pr, px, py, pt, pb });
 ---
 
 <section
@@ -53,7 +49,7 @@ const paddingClasses = createSpacingClasses({ p, pl, pr, px, py, pt, pb });
   <div class="naut-section--wrapper">
     <div class="naut-section--left"><slot name="left" /></div>
     <div class="naut-section--center">
-      <div class:list={["naut-section--content", ...paddingClasses]}>
+      <div class:list={["naut-section--content", ...spacingClasses]}>
         <slot />
       </div>
     </div>
@@ -62,11 +58,7 @@ const paddingClasses = createSpacingClasses({ p, pl, pr, px, py, pt, pb });
   <slot name="after" />
 </section>
 
-<style
-  define:vars={{
-    ...sectionBorder
-  }}
->
+<style define:vars={{ ...sectionBorder }}>
   .naut-section {
     position: relative;
     border-top: var(--sectionBorderTop);
