@@ -1,5 +1,5 @@
 ---
-import { Section } from "@nautui/core";
+import { Section, Space } from "@nautui/core";
 
 interface FigureProps {
   clip?: "slash" | "backslash";
@@ -21,7 +21,10 @@ const contentAlign = isFigureRight ? "left" : "center";
 ---
 
 <Section class:list={["naut-hero-section"]} dark={{ dark }}>
-  <Fragment slot="before"> <slot name="background" /> </Fragment>
+  <Fragment slot="before">
+    <slot name="background" />
+  </Fragment>
+  <Space size="display-lg" />
   <div
     class:list={[
       "hero-content",
@@ -31,6 +34,7 @@ const contentAlign = isFigureRight ? "left" : "center";
   >
     <slot />
   </div>
+  <Space size="display" />
   <div
     slot="after"
     class:list={[
@@ -44,7 +48,6 @@ const contentAlign = isFigureRight ? "left" : "center";
 </Section>
 <style>
   .hero-content {
-    text-align: center;
 
     @media only screen and (min-width: 1042px) {
       display: grid;
