@@ -1,7 +1,8 @@
 ---
-import type { Base, Responsive, Spacing } from "../types";
+import "../styles/spacing/gap.css";
+import type { Base, Gap, Responsive } from "../types";
 
-type Alignment = "inherit" | "start" | "center" | "end" | "stretch";
+type Align = "inherit" | "start" | "center" | "end" | "stretch";
 type Justify =
   | "start"
   | "center"
@@ -11,7 +12,7 @@ type Justify =
   | "space-evenly";
 
 type AlignResponsive = {
-  [key in Responsive]?: Alignment;
+  [key in Responsive]?: Align;
 };
 
 type JustifyResponsive = {
@@ -19,8 +20,8 @@ type JustifyResponsive = {
 };
 
 export interface StackProps extends Base {
-  align?: AlignResponsive | Alignment;
-  gap?: Extract<Spacing, "xs" | "sm" | "md" | "lg">;
+  align?: AlignResponsive | Align;
+  gap?: Gap;
   justify?: JustifyResponsive | Justify;
 }
 
@@ -31,25 +32,24 @@ const {
   gap = "md",
   ...rest
 } = Astro.props as StackProps;
-const alignItem = typeof align === "string" ? { base: align } : align;
-const justifyContent =
-  typeof justify === "string" ? { base: justify } : justify;
+const items = typeof align === "string" ? { base: align } : align;
+const content = typeof justify === "string" ? { base: justify } : justify;
 ---
 
 <div
   class:list={[
     "naut-stack",
     `gap-${gap}`,
-    alignItem?.base && `items-${alignItem.base}`,
-    alignItem?.sm && `sm-items-${alignItem.sm}`,
-    alignItem?.md && `md-items-${alignItem.md}`,
-    alignItem?.lg && `lg-items-${alignItem.lg}`,
-    alignItem?.xl && `xl-items-${alignItem.xl}`,
-    justifyContent?.base && `content-${justifyContent.base}`,
-    justifyContent?.sm && `sm-content-${justifyContent.sm}`,
-    justifyContent?.md && `md-content-${justifyContent.md}`,
-    justifyContent?.lg && `lg-content-${justifyContent.lg}`,
-    justifyContent?.xl && `xl-content-${justifyContent.xl}`,
+    items?.base && `items-${items.base}`,
+    items?.sm && `sm-items-${items.sm}`,
+    items?.md && `md-items-${items.md}`,
+    items?.lg && `lg-items-${items.lg}`,
+    items?.xl && `xl-items-${items.xl}`,
+    content?.base && `content-${content.base}`,
+    content?.sm && `sm-content-${content.sm}`,
+    content?.md && `md-content-${content.md}`,
+    content?.lg && `lg-content-${content.lg}`,
+    content?.xl && `xl-content-${content.xl}`,
     className
   ]}
   {...rest}
@@ -61,22 +61,6 @@ const justifyContent =
   .naut-stack {
     display: flex;
     flex-direction: column;
-
-    &.gap-xs {
-      gap: var(--naut-spacing-xs);
-    }
-
-    &.gap-sm {
-      gap: var(--naut-spacing-sm);
-    }
-
-    &.gap-md {
-      gap: var(--naut-spacing-md);
-    }
-
-    &.gap-lg {
-      gap: var(--naut-spacing-lg);
-    }
 
     &.content-start {
       justify-content: flex-start;
