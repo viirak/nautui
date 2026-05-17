@@ -13,3 +13,7 @@
 .gap-lg {
   gap: var(--naut-spacing-lg);
 }
+
+.gap-xl {
+  gap: var(--naut-spacing-xl);
+}
