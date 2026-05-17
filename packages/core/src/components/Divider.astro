@@ -1,24 +1,30 @@
 ---
+import "../styles/spacing/margin.css";
+import {
+  createSpacingClasses,
+  extractSpacingProps,
+  MarginProps,
+} from "../lib/spacing";
 import type { Base } from "../types";
 
-export interface DividerProps extends Base {
+export interface DividerProps extends Base, MarginProps {
   label?: string;
   orientation?: "horizontal" | "vertical";
   size?: "sm" | "md" | "lg" | "xl";
-  spacing?: "sm" | "md" | "lg" | "xl";
   variant?: "solid" | "dotted" | "dashed";
 }
+
+const { margin, nonSpacing } = extractSpacingProps(Astro.props as DividerProps);
 
 const {
   class: className,
   label,
   orientation = "horizontal",
   size = "md",
-  spacing = "md",
   variant = "solid",
-} = Astro.props as DividerProps;
+} = nonSpacing;
 
-const margin = `var(--naut-spacing-${spacing})`;
+const marginClasses = createSpacingClasses({ ...margin, my: "md" });
 const borderVar = `var(--naut-border-width-${size}) ${variant} var(--naut-color-border)`;
 ---
 
@@ -27,9 +33,9 @@ const borderVar = `var(--naut-border-width-${size}) ${variant} var(--naut-color-
     "naut-divider",
     orientation && `${orientation}`,
     size && `size--${size}`,
-    spacing && `spacing--${spacing}`,
     variant && `${variant}`,
     label && "with-label",
+    ...marginClasses,
     className,
   ]}
 >
@@ -64,12 +70,10 @@ const borderVar = `var(--naut-border-width-${size}) ${variant} var(--naut-color-
 
     &.horizontal {
       height: 1px;
-      margin: var(--margin) 0;
     }
 
     &.vertical {
       width: 1px;
-      margin: 0 var(--margin);
     }
 
     .label {
