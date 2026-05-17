@@ -28,9 +28,9 @@ const spacingClasses = createSpacingClasses(spacing);
 const {
   class: className,
   duration = 40_000,
-  gap = "md",
   reverse = false,
   repeat = 4,
+  gap = "md",
   pauseOnHover = false,
   orientation = "horizontal",
   fadeEdges = true,
@@ -47,7 +47,6 @@ const safeRepeat = Math.max(2, Math.floor(repeat));
   class:list={[
     "naut-marquee",
     `orientation-${orientation}`,
-    `gap-${gap}`,
     reverse && "reverse",
     pauseOnHover && "pause-on-hover",
     !fadeEdges && "no-fade",
@@ -58,7 +57,7 @@ const safeRepeat = Math.max(2, Math.floor(repeat));
 >
   <div class="naut-marquee-track">
     {Array.from({ length: safeRepeat }).map(() => (
-        <div class="naut-marquee-group"><slot /></div>
+        <div class:list={["naut-marquee-group", `gap-${gap}`]}><slot /></div>
       ))}
   </div>
 </div>
@@ -87,9 +86,25 @@ const safeRepeat = Math.max(2, Math.floor(repeat));
   .naut-marquee-group {
     display: flex;
     flex-shrink: 0;
-    gap: var(--marqueeGap);
     align-items: center;
     min-width: max-content;
+
+    /* space between connected marquee groups */
+    &.gap-sm {
+      margin-left: var(--naut-spacing-sm);
+    }
+
+    &.gap-md {
+      margin-left: var(--naut-spacing-md);
+    }
+
+    &.gap-lg {
+      margin-left: var(--naut-spacing-lg);
+    }
+
+    &.gap-xl {
+      margin-left: var(--naut-spacing-xl);
+    }
   }
 
   .naut-marquee.orientation-vertical .naut-marquee-track {
