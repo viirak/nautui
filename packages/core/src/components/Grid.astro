@@ -1,11 +1,16 @@
 ---
-import type { Base, Gap } from "../types";
+import "../styles/spacing/gap.css";
+import type { Base, Gap, Responsive } from "../types";
 
-export type GridSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type Columns = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+
+export type ResponsiveColumns = {
+  [key in Responsive]?: Columns;
+};
 
 export interface GridProps extends Base {
   bordered?: boolean;
-  columns?: GridSpan;
+  columns?: Columns | ResponsiveColumns;
   gap?: Gap;
 }
 
@@ -16,13 +21,19 @@ const {
   bordered = false,
   ...rest
 } = Astro.props as GridProps;
+
+const col = typeof columns === "number" ? { base: columns } : columns;
 ---
 
 <div
   class:list={[
     "naut-grid",
     `gap-${gap}`,
-    `columns-${columns}`,
+    col?.base && `columns-${col.base}`,
+    col?.sm && `sm-columns-${col.sm}`,
+    col?.md && `md-columns-${col.md}`,
+    col?.lg && `lg-columns-${col.lg}`,
+    col?.xl && `xl-columns-${col.xl}`,
     bordered && "bordered",
     className
   ]}
@@ -35,29 +46,13 @@ const {
   .naut-grid {
     display: grid;
 
-    &.gap-0 {
-      gap: 0;
+    &.bordered {
+      gap: 1px;
+      background-color: var(--naut-color-border);
+      border: 1px solid var(--naut-color-border);
     }
 
-    &.gap-xs {
-      gap: var(--naut-spacing-xs);
-    }
-
-    &.gap-sm {
-      gap: var(--naut-spacing-sm);
-    }
-
-    &.gap-md {
-      gap: var(--naut-spacing-md);
-    }
-
-    &.gap-lg {
-      gap: var(--naut-spacing-lg);
-    }
-
-    &.gap-xl {
-      gap: var(--naut-spacing-xl);
-    }
+    /* === columns === */
 
     &.columns-1 {
       grid-template-columns: repeat(1, 1fr);
@@ -107,10 +102,204 @@ const {
       grid-template-columns: repeat(12, 1fr);
     }
 
-    &.bordered {
-      gap: 1px;
-      background-color: var(--naut-color-border);
-      border: 1px solid var(--naut-color-border);
+    @media only screen and (max-width: 817px) {
+      &.sm-columns-1 {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      &.sm-columns-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      &.sm-columns-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      &.sm-columns-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      &.sm-columns-5 {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      &.sm-columns-6 {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      &.sm-columns-7 {
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      &.sm-columns-8 {
+        grid-template-columns: repeat(8, 1fr);
+      }
+
+      &.sm-columns-9 {
+        grid-template-columns: repeat(9, 1fr);
+      }
+
+      &.sm-columns-10 {
+        grid-template-columns: repeat(10, 1fr);
+      }
+
+      &.sm-columns-11 {
+        grid-template-columns: repeat(11, 1fr);
+      }
+
+      &.sm-columns-12 {
+        grid-template-columns: repeat(12, 1fr);
+      }
+    }
+
+    @media only screen and (min-width: 818px) and (max-width: 1041px) {
+      &.md-columns-1 {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      &.md-columns-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      &.md-columns-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      &.md-columns-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      &.md-columns-5 {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      &.md-columns-6 {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      &.md-columns-7 {
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      &.md-columns-8 {
+        grid-template-columns: repeat(8, 1fr);
+      }
+
+      &.md-columns-9 {
+        grid-template-columns: repeat(9, 1fr);
+      }
+
+      &.md-columns-10 {
+        grid-template-columns: repeat(10, 1fr);
+      }
+
+      &.md-columns-11 {
+        grid-template-columns: repeat(11, 1fr);
+      }
+
+      &.md-columns-12 {
+        grid-template-columns: repeat(12, 1fr);
+      }
+    }
+
+    @media only screen and (min-width: 1042px) {
+      &.lg-columns-1 {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      &.lg-columns-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      &.lg-columns-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      &.lg-columns-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      &.lg-columns-5 {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      &.lg-columns-6 {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      &.lg-columns-7 {
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      &.lg-columns-8 {
+        grid-template-columns: repeat(8, 1fr);
+      }
+
+      &.lg-columns-9 {
+        grid-template-columns: repeat(9, 1fr);
+      }
+
+      &.lg-columns-10 {
+        grid-template-columns: repeat(10, 1fr);
+      }
+
+      &.lg-columns-11 {
+        grid-template-columns: repeat(11, 1fr);
+      }
+
+      &.lg-columns-12 {
+        grid-template-columns: repeat(12, 1fr);
+      }
+    }
+
+    @media only screen and (min-width: 1250px) {
+      &.xl-columns-1 {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      &.xl-columns-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      &.xl-columns-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      &.xl-columns-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      &.xl-columns-5 {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      &.xl-columns-6 {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      &.xl-columns-7 {
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      &.xl-columns-8 {
+        grid-template-columns: repeat(8, 1fr);
+      }
+
+      &.xl-columns-9 {
+        grid-template-columns: repeat(9, 1fr);
+      }
+
+      &.xl-columns-10 {
+        grid-template-columns: repeat(10, 1fr);
+      }
+
+      &.xl-columns-11 {
+        grid-template-columns: repeat(11, 1fr);
+      }
+
+      &.xl-columns-12 {
+        grid-template-columns: repeat(12, 1fr);
+      }
     }
   }
 

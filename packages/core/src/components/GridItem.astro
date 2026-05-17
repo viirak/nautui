@@ -1,32 +1,24 @@
 ---
 import type { Base } from "../types";
-import { type GridSpan } from "./Grid.astro";
-
-interface SpanObject {
-  base?: GridSpan;
-  lg?: GridSpan;
-  md?: GridSpan;
-  sm?: GridSpan;
-  xl?: GridSpan;
-}
+import { type Columns, ResponsiveColumns } from "./Grid.astro";
 
 export interface GridItemProps extends Base {
-  span?: GridSpan | SpanObject;
+  span?: Columns | ResponsiveColumns;
 }
 
 const { class: className, span, ...rest } = Astro.props as GridItemProps;
 
-const spanValue = typeof span === "number" ? { base: span } : span || {};
+const col = typeof span === "number" ? { base: span } : span || {};
 ---
 
 <div
   class:list={[
     "naut-grid-item",
-    spanValue?.base && `span-${spanValue.base}`,
-    spanValue?.sm && `sm-span-${spanValue.sm}`,
-    spanValue?.md && `md-span-${spanValue.md}`,
-    spanValue?.lg && `lg-span-${spanValue.lg}`,
-    spanValue?.xl && `xl-span-${spanValue.xl}`,
+    col?.base && `span-${col.base}`,
+    col?.sm && `sm-span-${col.sm}`,
+    col?.md && `md-span-${col.md}`,
+    col?.lg && `lg-span-${col.lg}`,
+    col?.xl && `xl-span-${col.xl}`,
     className
   ]}
   {...rest}
