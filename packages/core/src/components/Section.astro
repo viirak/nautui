@@ -30,7 +30,9 @@ const {
   ...rest
 } = nonSpacing;
 
-const spacingClasses = createSpacingClasses({ ...padding, p: "md" });
+const noPadding = Object.values(padding).every((v) => v === undefined);
+const p = noPadding ? "md" : undefined;
+const spacingClasses = createSpacingClasses({ ...padding, p });
 const sectionBorder = createBorder("section", border);
 ---
 
