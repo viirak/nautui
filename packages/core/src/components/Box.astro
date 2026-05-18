@@ -2,6 +2,7 @@
 import "../styles/spacing/padding.css";
 import "../styles/spacing/margin.css";
 import "../styles/border.css";
+import "../styles/radius.css";
 import { type Border, createBorder } from "../lib/border";
 import {
   createSpacingClasses,
@@ -10,8 +11,18 @@ import {
 } from "../lib/spacing";
 import type { Base, Radius } from "../types";
 
+type CornerStyle = "diamond" | "square" | "circle" | "plus" | "x";
+
+export interface Corner {
+  bottomLeft?: CornerStyle;
+  bottomRight?: CornerStyle;
+  topLeft?: CornerStyle;
+  topRight?: CornerStyle;
+}
+
 export interface BoxProps extends Base, SpacingProps {
   border?: Border;
+  corner?: Corner;
   radius?: Radius;
 }
 
@@ -19,7 +30,7 @@ const { padding, spacing, nonSpacing } = extractSpacingProps(
   Astro.props as BoxProps
 );
 
-const { border, radius, class: className, ...rest } = nonSpacing;
+const { border, radius, corner, class: className, ...rest } = nonSpacing;
 
 const borderConfig =
   typeof border === "string" ? { width: border } : border || {};
@@ -38,6 +49,10 @@ const classlist = [
 ---
 
 <div class:list={classlist} {...rest}>
+  {corner?.topLeft && <span class:list={["corner", "top-left", corner.topLeft]} />}
+  {corner?.topRight && <span class:list={["corner", "top-right", corner.topRight]} />}
+  {corner?.bottomRight && <span class:list={["corner", "bottom-right", corner.bottomRight]} />}
+  {corner?.bottomLeft && <span class:list={["corner", "bottom-left", corner.bottomLeft]} />}
   <slot name="background" />
   <slot name="before" />
   <div class:list={["naut-box--wrapper"]}><slot /></div>
@@ -48,23 +63,110 @@ const classlist = [
   .naut-box {
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
-    overflow: hidden; /* Clip background to borders */
-
-    &.radius-sm {
-      border-radius: var(--naut-border-radius-sm);
-    }
-    &.radius-md {
-      border-radius: var(--naut-border-radius-md);
-    }
-    &.radius-lg {
-      border-radius: var(--naut-border-radius-lg);
-    }
-    &.radius-xl {
-      border-radius: var(--naut-border-radius-xl);
-    }
 
     .naut-box--wrapper {
       position: relative;
+    }
+
+    .corner {
+      position: absolute;
+      z-index: 1;
+      width: 9px;
+      height: 9px;
+
+      &.square,
+      &.circle,
+      &.diamond {
+        background-color: var(--naut-color-base);
+        border: 1px solid var(--naut-color-border);
+
+        &.top-left {
+          top: -0.38rem;
+          left: -0.35rem;
+        }
+
+        &.top-right {
+          top: -0.38rem;
+          right: -0.4rem;
+        }
+
+        &.bottom-left {
+          bottom: -0.35rem;
+          left: -0.36rem;
+        }
+
+        &.bottom-right {
+          right: -0.4rem;
+          bottom: -0.35rem;
+        }
+      }
+
+      &.circle {
+        border-radius: 50%;
+      }
+
+      &.diamond {
+        transform: rotate(45deg);
+      }
+
+      &.plus,
+      &.x {
+        &.top-left {
+          top: -0.33rem;
+          left: -0.31rem;
+        }
+
+        &.top-right {
+          top: -0.33rem;
+          right: -0.32rem;
+        }
+
+        &.bottom-left {
+          bottom: -0.32rem;
+          left: -0.31rem;
+        }
+
+        &.bottom-right {
+          right: -0.32rem;
+          bottom: -0.32rem;
+        }
+
+        &::before,
+        &::after {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          content: "";
+          background-color: var(--naut-color-corner);
+        }
+      }
+
+      &.plus {
+        &::before {
+          width: 1px;
+          height: 100%;
+          transform: translate(-50%, -50%);
+        }
+
+        &::after {
+          width: 100%;
+          height: 1px;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      &.x {
+        &::before,
+        &::after {
+          width: 100%;
+          height: 1px;
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        &::after {
+          transform: translate(-50%, -50%) rotate(-45deg);
+        }
+      }
     }
   }
 </style>
