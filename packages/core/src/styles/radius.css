@@ -1,0 +1,15 @@
+.radius-sm {
+  border-radius: var(--naut-border-radius-sm);
+}
+
+.radius-md {
+  border-radius: var(--naut-border-radius-md);
+}
+
+.radius-lg {
+  border-radius: var(--naut-border-radius-lg);
+}
+
+.radius-xl {
+  border-radius: var(--naut-border-radius-xl);
+}
