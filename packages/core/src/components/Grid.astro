@@ -1,6 +1,8 @@
 ---
+import "../styles/border.css";
 import "../styles/spacing/gap.css";
-import type { Base, Gap, Responsive } from "../types";
+import { Border, createBorder } from "../lib/border";
+import type { Base, Gap, Radius, Responsive } from "../types";
 
 export type Columns = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
@@ -9,9 +11,10 @@ export type ResponsiveColumns = {
 };
 
 export interface GridProps extends Base {
-  bordered?: boolean;
+  border?: Border;
   columns?: Columns | ResponsiveColumns;
   gap?: Gap;
+  radius?: Radius;
 }
 
 const {
@@ -19,10 +22,14 @@ const {
   columns = 12,
   gap = "md",
   bordered = false,
+  border,
+  radius,
   ...rest
 } = Astro.props as GridProps;
 
 const col = typeof columns === "number" ? { base: columns } : columns;
+const config = typeof border === "string" ? { width: border } : border || {};
+const { borderClasses, borderColors } = createBorder(config);
 ---
 
 <div
@@ -35,6 +42,8 @@ const col = typeof columns === "number" ? { base: columns } : columns;
     col?.lg && `lg-columns-${col.lg}`,
     col?.xl && `xl-columns-${col.xl}`,
     bordered && "bordered",
+    radius && `radius-${radius}`,
+    ...borderClasses,
     className
   ]}
   {...rest}
@@ -42,14 +51,28 @@ const col = typeof columns === "number" ? { base: columns } : columns;
   <slot />
 </div>
 
-<style>
+<style define:vars={{ ...borderColors }}>
   .naut-grid {
     display: grid;
+    overflow: hidden;
 
-    &.bordered {
+    &.border {
       gap: 1px;
       background-color: var(--naut-color-border);
-      border: 1px solid var(--naut-color-border);
+    }
+
+    /* Radius */
+    &.radius-sm {
+      border-radius: var(--naut-border-radius-sm);
+    }
+    &.radius-md {
+      border-radius: var(--naut-border-radius-md);
+    }
+    &.radius-lg {
+      border-radius: var(--naut-border-radius-lg);
+    }
+    &.radius-xl {
+      border-radius: var(--naut-border-radius-xl);
     }
 
     /* === columns === */
@@ -303,7 +326,7 @@ const col = typeof columns === "number" ? { base: columns } : columns;
     }
   }
 
-  :global(.naut-grid.bordered > .naut-grid-item) {
+  :global(.naut-grid.border > .naut-grid-item) {
     background-color: var(--naut-color-base);
   }
 </style>
