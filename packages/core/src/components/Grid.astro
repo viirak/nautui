@@ -42,7 +42,7 @@ const { borderClasses, borderColors } = createBorder(config);
     col?.lg && `lg-columns-${col.lg}`,
     col?.xl && `xl-columns-${col.xl}`,
     bordered && "bordered",
-    radius && `radius-${radius}`,
+    radius && `radius radius-${radius}`,
     ...borderClasses,
     className
   ]}
@@ -54,7 +54,6 @@ const { borderClasses, borderColors } = createBorder(config);
 <style define:vars={{ ...borderColors }}>
   .naut-grid {
     display: grid;
-    overflow: hidden;
 
     &.border {
       gap: 1px;
@@ -62,6 +61,10 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     /* Radius */
+    &.radius {
+      overflow: hidden;
+    }
+
     &.radius-sm {
       border-radius: var(--naut-border-radius-sm);
     }
