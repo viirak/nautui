@@ -138,6 +138,11 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
         var(--naut-color-base),
         black 10%
       );
+      --naut-color-corner: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        black 25%
+      );
       --naut-color-border-outline: color-mix(
         in oklch,
         var(--naut-color-base),
@@ -193,6 +198,11 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
         in oklch,
         var(--naut-color-base),
         white 40%
+      );
+      --naut-color-corner: color-mix(
+        in oklch,
+        var(--naut-color-base),
+        white 60%
       );
       --naut-color-border-outline: color-mix(
         in oklch,
