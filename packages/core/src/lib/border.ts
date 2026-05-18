@@ -1,48 +1,94 @@
-type BorderStyle = "solid" | "dashed" | "dotted";
-type BorderWidth = "sm" | "md" | "lg" | "xl";
-type BorderRadius = "sm" | "md" | "lg";
+export type BorderStyle = "solid" | "dashed" | "dotted";
+export type BorderWidth = "sm" | "md" | "lg" | "xl";
 
-export interface Border {
-  bottom?: BorderWidth;
-  left?: BorderWidth;
-  radius?: BorderRadius;
-  right?: BorderWidth;
+export interface BorderObject {
+  color?: string;
   style?: BorderStyle;
-  top?: BorderWidth;
-  x?: BorderWidth;
-  y?: BorderWidth;
+  width?: BorderWidth;
 }
 
-export function createBorder(prefix: string, border?: Border) {
-  if (!border) {
-    return null;
+export interface BorderProps {
+  bottom?: BorderWidth | BorderObject;
+  color?: string;
+  left?: BorderWidth | BorderObject;
+  right?: BorderWidth | BorderObject;
+  style?: BorderStyle;
+  top?: BorderWidth | BorderObject;
+  width?: BorderWidth;
+  x?: BorderWidth | BorderObject;
+  y?: BorderWidth | BorderObject;
+}
+
+export type Border = BorderWidth | BorderProps;
+
+/**
+ * Helper to add border classes and color variables for a given prefix.
+ */
+function applyBorderConfig(
+  prefix: string,
+  config: BorderObject,
+  classes: string[],
+  colorVar: Record<string, string>
+) {
+  const { width, style, color } = config;
+  if (width) {
+    classes.push(`${prefix}-${width}`);
   }
-  const style = border?.style || "solid";
-  const color = "var(--naut-color-border)";
-  const borderTop =
-    border?.top || border?.y
-      ? `var(--naut-border-width-${border.top ? border.top : border.y}) ${style} ${color}`
-      : "none";
-  const borderRight =
-    border?.right || border?.x
-      ? `var(--naut-border-width-${border.right ? border.right : border.x}) ${style} ${color}`
-      : "none";
-  const borderBottom =
-    border?.bottom || border?.y
-      ? `var(--naut-border-width-${border.bottom ? border.bottom : border.y}) ${style} ${color}`
-      : "none";
-  const borderLeft =
-    border?.left || border?.x
-      ? `var(--naut-border-width-${border.left ? border.left : border.x}) ${style} ${color}`
-      : "none";
-  const borderRadius = border?.radius
-    ? `var(--naut-border-radius-${border.radius})`
-    : "none";
-  return {
-    [`${prefix}BorderTop`]: borderTop,
-    [`${prefix}BorderRight`]: borderRight,
-    [`${prefix}BorderBottom`]: borderBottom,
-    [`${prefix}BorderLeft`]: borderLeft,
-    [`${prefix}BorderRadius`]: borderRadius,
+  if (style) {
+    classes.push(`${prefix}-${style}`);
+  }
+  if (color) {
+    // colorVars.push(`--naut-color-${prefix}: ${color}`);
+    colorVar[`naut-color-${prefix}`] = color;
+  }
+}
+
+/**
+ * Creates border classes and CSS variables from border props.
+ * Supports global and side-specific configurations.
+ */
+export function createBorder(props: BorderProps) {
+  const borderClasses: string[] = [];
+  const borderColors = {};
+
+  if (Object.keys(props).length > 0) {
+    borderClasses.push("border");
+  }
+
+  const { width, style, color, x, y, top, right, bottom, left } = props;
+
+  // 1. Global Props
+  applyBorderConfig(
+    "border",
+    { width, style, color },
+    borderClasses,
+    borderColors
+  );
+
+  // 2. Side-specific Processing
+  const sideSpecs: Record<string, BorderObject> = {};
+
+  const collect = (side: string, value?: BorderWidth | BorderObject) => {
+    if (value) {
+      const obj = typeof value === "string" ? { width: value } : value;
+      sideSpecs[side] = { ...sideSpecs[side], ...obj };
+    }
   };
+
+  collect("left", x);
+  collect("right", x);
+  collect("top", y);
+  collect("bottom", y);
+  collect("top", top);
+  collect("right", right);
+  collect("bottom", bottom);
+  collect("left", left);
+
+  for (const [side, spec] of Object.entries(sideSpecs)) {
+    applyBorderConfig(`border-${side}`, spec, borderClasses, borderColors);
+  }
+
+  console.log("colors", borderColors);
+
+  return { borderClasses, borderColors };
 }
