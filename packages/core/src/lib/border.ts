@@ -88,7 +88,5 @@ export function createBorder(props: BorderProps) {
     applyBorderConfig(`border-${side}`, spec, borderClasses, borderColors);
   }
 
-  console.log("colors", borderColors);
-
   return { borderClasses, borderColors };
 }
