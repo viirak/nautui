@@ -1,20 +1,23 @@
 ---
-import type { Base, Radius, Spacing } from "../types";
+import "../styles/spacing/padding.css";
+import {
+  extractSpacingProps,
+  getSpacingClasses,
+  PaddingProps,
+} from "../lib/spacing";
+import type { Base, Radius } from "../types";
 
-export interface CardProps extends Base {
+export interface CardProps extends Base, PaddingProps {
   bordered?: boolean;
-  p?: Extract<Spacing, "sm" | "md" | "lg">;
   radius?: Radius | "none";
   shadow?: "sm" | "md" | "lg" | "xl";
 }
 
-const {
-  class: className,
-  bordered,
-  shadow,
-  radius,
-  p = "md",
-} = Astro.props as CardProps;
+const { padding, nonSpacing } = extractSpacingProps(Astro.props as CardProps);
+
+const { class: className, bordered, shadow, radius } = nonSpacing;
+const p = Object.keys(padding).length === 0 ? "md" : padding.p;
+const paddingClasses = getSpacingClasses({ ...padding, p });
 ---
 
 <div
@@ -27,28 +30,21 @@ const {
   ]}
 >
   <div class="naut-card--header"><slot name="header" /></div>
-  <div class:list={["naut-card--body", `p-${p}`]}><slot /></div>
+  <div class:list={["naut-card--body", ...paddingClasses]}><slot /></div>
   <div class="naut-card--footer"><slot name="footer" /></div>
 </div>
 
 <style>
   .naut-card {
     --radius-scale: 1.575;
+    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
     overflow: hidden;
 
     .naut-card--body {
-      &.p-sm {
-        padding: var(--naut-spacing-sm);
-      }
-      &.p-md {
-        padding: var(--naut-spacing-md);
-      }
-      &.p-lg {
-        padding: var(--naut-spacing-lg);
-      }
+      position: relative;
     }
 
     .naut-card--header:empty {
