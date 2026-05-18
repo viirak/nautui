@@ -1,5 +1,7 @@
 ---
 import "../styles/spacing/padding.css";
+import "../styles/border.css";
+import { type Border, createBorder } from "../lib/border";
 import {
   extractSpacingProps,
   getSpacingClasses,
@@ -8,24 +10,26 @@ import {
 import type { Base, Radius } from "../types";
 
 export interface CardProps extends Base, PaddingProps {
-  bordered?: boolean;
+  border?: Border;
   radius?: Radius | "none";
   shadow?: "sm" | "md" | "lg" | "xl";
 }
 
 const { padding, nonSpacing } = extractSpacingProps(Astro.props as CardProps);
 
-const { class: className, bordered, shadow, radius } = nonSpacing;
+const { class: className, border, shadow, radius } = nonSpacing;
 const p = Object.keys(padding).length === 0 ? "md" : padding.p;
 const paddingClasses = getSpacingClasses({ ...padding, p });
+const config = typeof border === "string" ? { width: border } : border || {};
+const { borderClasses, borderColors } = createBorder(config);
 ---
 
 <div
   class:list={[
     "naut-card",
-    bordered && "bordered",
     radius && `radius-${radius}`,
     shadow && `shadow-${shadow}`,
+    ...borderClasses,
     className
   ]}
 >
@@ -34,7 +38,7 @@ const paddingClasses = getSpacingClasses({ ...padding, p });
   <div class="naut-card--footer"><slot name="footer" /></div>
 </div>
 
-<style>
+<style define:vars={{ ...borderColors }}>
   .naut-card {
     --radius-scale: 1.575;
     box-sizing: border-box;
@@ -53,10 +57,6 @@ const paddingClasses = getSpacingClasses({ ...padding, p });
 
     .naut-card--footer:empty {
       display: none;
-    }
-
-    &.bordered {
-      border: 1px solid var(--naut-color-border);
     }
 
     &.radius-none {
