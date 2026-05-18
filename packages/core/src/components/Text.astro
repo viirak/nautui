@@ -1,8 +1,8 @@
 ---
 import "../styles/spacing/margin.css";
 import {
-  createSpacingClasses,
   extractSpacingProps,
+  getSpacingClasses,
   MarginProps,
 } from "../lib/spacing";
 import type { Base, Size } from "../types";
@@ -35,7 +35,7 @@ const {
   ...rest
 } = nonSpacing;
 
-const marginClasses = createSpacingClasses(margin);
+const marginClasses = getSpacingClasses(margin);
 
 const maxWidthStyle =
   maxWidth === undefined

@@ -3,8 +3,8 @@ import "../styles/spacing/padding.css";
 import "../styles/border.css";
 import { Border, createBorder } from "../lib/border";
 import {
-  createSpacingClasses,
   extractSpacingProps,
+  getSpacingClasses,
   PaddingProps,
 } from "../lib/spacing";
 import type { Base } from "../types";
@@ -20,10 +20,8 @@ const { padding, nonSpacing } = extractSpacingProps(
 );
 
 const { class: className, border, cross, dark = false, ...rest } = nonSpacing;
-
-const noPadding = Object.values(padding).every((v) => v === undefined);
-const p = noPadding ? "md" : undefined;
-const spacingClasses = createSpacingClasses({ ...padding, p });
+const p = Object.keys(padding).length === 0 ? "md" : padding.p;
+const paddingClasses = getSpacingClasses({ ...padding, p });
 
 const borderConfig =
   typeof border === "string" ? { width: border } : border || {};
@@ -44,7 +42,7 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
   <div class="naut-section--wrapper">
     <div class="naut-section--left"><slot name="left" /></div>
     <div class="naut-section--center">
-      <div class:list={["naut-section--content", ...spacingClasses]}>
+      <div class:list={["naut-section--content", ...paddingClasses]}>
         <slot />
       </div>
     </div>

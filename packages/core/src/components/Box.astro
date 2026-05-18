@@ -5,8 +5,8 @@ import "../styles/border.css";
 import "../styles/radius.css";
 import { type Border, createBorder } from "../lib/border";
 import {
-  createSpacingClasses,
   extractSpacingProps,
+  getSpacingClasses,
   SpacingProps,
 } from "../lib/spacing";
 import type { Base, Radius } from "../types";
@@ -36,9 +36,8 @@ const borderConfig =
   typeof border === "string" ? { width: border } : border || {};
 const { borderClasses, borderColors } = createBorder(borderConfig);
 
-const noPadding = Object.values(padding).every((v) => v === undefined);
-const p = noPadding ? "md" : undefined;
-const spacingClasses = createSpacingClasses({ ...spacing, p });
+const p = Object.keys(padding).length === 0 ? "md" : padding.p;
+const spacingClasses = getSpacingClasses({ ...spacing, p });
 const classlist = [
   "naut-box",
   radius && `radius-${radius}`,

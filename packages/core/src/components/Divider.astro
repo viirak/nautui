@@ -1,8 +1,8 @@
 ---
 import "../styles/spacing/margin.css";
 import {
-  createSpacingClasses,
   extractSpacingProps,
+  getSpacingClasses,
   MarginProps,
 } from "../lib/spacing";
 import type { Base } from "../types";
@@ -25,7 +25,7 @@ const {
 } = nonSpacing;
 
 const my = margin.my || margin.mt || margin.mb ? undefined : "md";
-const marginClasses = createSpacingClasses({ ...margin, my });
+const marginClasses = getSpacingClasses({ ...margin, my });
 const borderVar = `var(--naut-border-width-${size}) ${variant} var(--naut-color-border)`;
 ---
 
