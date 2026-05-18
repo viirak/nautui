@@ -1,6 +1,7 @@
 ---
 import "../styles/spacing/padding.css";
 import "../styles/spacing/margin.css";
+import "../styles/border.css";
 import { type Border, createBorder } from "../lib/border";
 import {
   createSpacingClasses,
@@ -11,7 +12,6 @@ import type { Base, Radius } from "../types";
 
 export interface BoxProps extends Base, SpacingProps {
   border?: Border;
-  bordered?: boolean;
   radius?: Radius;
 }
 
@@ -19,22 +19,20 @@ const { padding, spacing, nonSpacing } = extractSpacingProps(
   Astro.props as BoxProps
 );
 
-const {
-  bordered = false,
-  border,
-  radius,
-  class: className,
-  ...rest
-} = nonSpacing;
+const { border, radius, class: className, ...rest } = nonSpacing;
 
-const boxBorder = createBorder("box", border);
+const borderConfig =
+  typeof border === "string" ? { width: border } : border || {};
+const { borderClasses, borderColors } = createBorder(borderConfig);
+
 const noPadding = Object.values(padding).every((v) => v === undefined);
 const p = noPadding ? "md" : undefined;
 const spacingClasses = createSpacingClasses({ ...spacing, p });
 const classlist = [
   "naut-box",
-  bordered && "bordered",
+  radius && `radius-${radius}`,
   className,
+  ...borderClasses,
   ...spacingClasses,
 ];
 ---
@@ -46,20 +44,23 @@ const classlist = [
   <slot name="after" />
 </div>
 
-<style define:vars={{ ...boxBorder }}>
+<style define:vars={{ ...borderColors }}>
   .naut-box {
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
     overflow: hidden; /* Clip background to borders */
 
-    border-top: var(--boxBorderTop);
-    border-right: var(--boxBorderRight);
-    border-bottom: var(--boxBorderBottom);
-    border-left: var(--boxBorderLeft);
-    border-radius: var(--boxBorderRadius);
-
-    &.bordered {
-      border: 1px solid var(--naut-color-border);
+    &.radius-sm {
+      border-radius: var(--naut-border-radius-sm);
+    }
+    &.radius-md {
+      border-radius: var(--naut-border-radius-md);
+    }
+    &.radius-lg {
+      border-radius: var(--naut-border-radius-lg);
+    }
+    &.radius-xl {
+      border-radius: var(--naut-border-radius-xl);
     }
 
     .naut-box--wrapper {

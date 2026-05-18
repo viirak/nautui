@@ -1,5 +1,6 @@
 ---
 import "../styles/spacing/padding.css";
+import "../styles/border.css";
 import { Border, createBorder } from "../lib/border";
 import {
   createSpacingClasses,
@@ -33,7 +34,10 @@ const {
 const noPadding = Object.values(padding).every((v) => v === undefined);
 const p = noPadding ? "md" : undefined;
 const spacingClasses = createSpacingClasses({ ...padding, p });
-const sectionBorder = createBorder("section", border);
+
+const borderConfig =
+  typeof border === "string" ? { width: border } : border || {};
+const { borderClasses, borderColors } = createBorder(borderConfig);
 ---
 
 <section
@@ -42,6 +46,7 @@ const sectionBorder = createBorder("section", border);
     mode && `${mode}`,
     dark && "dark",
     decoration && `outline-decoration outline-decoration--${decoration}`,
+    ...borderClasses,
     className,
   ]}
   {...rest}
@@ -60,11 +65,9 @@ const sectionBorder = createBorder("section", border);
   <slot name="after" />
 </section>
 
-<style define:vars={{ ...sectionBorder }}>
+<style define:vars={{ ...borderColors }}>
   .naut-section {
     position: relative;
-    border-top: var(--sectionBorderTop);
-    border-bottom: var(--sectionBorderBottom);
 
     .naut-section--wrapper {
       position: relative;
@@ -81,12 +84,10 @@ const sectionBorder = createBorder("section", border);
 
       .naut-section--left {
         padding-right: var(--naut-spacing-md);
-        border-right: var(--sectionBorderRight);
       }
 
       .naut-section--right {
         padding-left: var(--naut-spacing-md);
-        border-left: var(--sectionBorderLeft);
       }
 
       .naut-section--center {
