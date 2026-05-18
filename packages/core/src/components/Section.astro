@@ -13,23 +13,13 @@ export interface SectionProps extends Base, PaddingProps {
   as?: "div" | "section" | "article" | "main" | "header" | "footer";
   border?: Border;
   dark?: boolean;
-  decoration: "diamond" | "square" | "circle";
-  mode?: "default" | "dimmed" | "highlighted" | "inverted";
 }
 
 const { padding, nonSpacing } = extractSpacingProps(
   Astro.props as SectionProps
 );
 
-const {
-  class: className,
-  mode,
-  border,
-  decoration,
-  cross,
-  dark = false,
-  ...rest
-} = nonSpacing;
+const { class: className, border, cross, dark = false, ...rest } = nonSpacing;
 
 const noPadding = Object.values(padding).every((v) => v === undefined);
 const p = noPadding ? "md" : undefined;
@@ -43,9 +33,7 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
 <section
   class:list={[
     "naut-section",
-    mode && `${mode}`,
     dark && "dark",
-    decoration && `outline-decoration outline-decoration--${decoration}`,
     ...borderClasses,
     className,
   ]}
@@ -77,17 +65,18 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
       .naut-section--left,
       .naut-section--right {
         position: relative;
+        display: flex;
         @media only screen and (min-width: 576px) {
           flex-grow: 1;
         }
       }
 
       .naut-section--left {
-        padding-right: var(--naut-spacing-md);
+        justify-content: flex-end;
       }
 
       .naut-section--right {
-        padding-left: var(--naut-spacing-md);
+        justify-content: flex-start;
       }
 
       .naut-section--center {
@@ -115,52 +104,6 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
         @media only screen and (min-width: 1250px) {
           max-width: 1200px;
         }
-      }
-    }
-
-    &.outline-decoration {
-      .naut-section--left::after,
-      .naut-section--right::before {
-        position: absolute;
-        top: -5px;
-        z-index: 1;
-        width: 7px;
-        height: 7px;
-        content: "";
-      }
-
-      .naut-section--left::after {
-        right: -5px;
-      }
-
-      .naut-section--right::before {
-        left: -5px;
-      }
-    }
-
-    &.outline-decoration--square {
-      .naut-section--left::after,
-      .naut-section--right::before {
-        background: var(--naut-color-base);
-        border: 1px solid var(--naut-color-border);
-      }
-    }
-
-    &.outline-decoration--circle {
-      .naut-section--left::after,
-      .naut-section--right::before {
-        background: var(--naut-color-base);
-        border: 1px solid var(--naut-color-border);
-        border-radius: 50%;
-      }
-    }
-
-    &.outline-decoration--diamond {
-      .naut-section--left::after,
-      .naut-section--right::before {
-        background: var(--naut-color-base);
-        border: 1px solid var(--naut-color-border);
-        transform: rotate(45deg);
       }
     }
   }
