@@ -6,24 +6,18 @@
 
 /* Global Border Widths */
 .border-sm {
-  border-color: var(--naut-color-border);
-  border-style: solid;
   border-width: var(--naut-border-width-sm);
 }
 
 .border-md {
-  border-color: var(--naut-color-border);
   border-width: var(--naut-border-width-md);
 }
 
 .border-lg {
-  border-color: var(--naut-color-border);
   border-width: var(--naut-border-width-lg);
 }
 
 .border-xl {
-  border-color: var(--naut-color-border);
-  border-style: solid;
   border-width: var(--naut-border-width-xl);
 }
 
