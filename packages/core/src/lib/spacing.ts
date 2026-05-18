@@ -28,14 +28,20 @@ export interface SpacingProps extends PaddingProps, MarginProps {}
 export function extractSpacingProps<T extends SpacingProps>(props: T) {
   const { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml, ...rest } =
     props;
-  const padding = { p, px, py, pt, pr, pb, pl };
-  const margin = { m, mx, my, mt, mr, mb, ml };
+
+  const filterUndefined = (obj: Record<string, Spacing | undefined>) =>
+    Object.fromEntries(
+      Object.entries(obj).filter(([, v]) => v !== undefined)
+    ) as Partial<SpacingProps>;
+
+  const padding = filterUndefined({ p, px, py, pt, pr, pb, pl });
+  const margin = filterUndefined({ m, mx, my, mt, mr, mb, ml });
   const spacing = { ...padding, ...margin };
   return { padding, margin, spacing, nonSpacing: rest as T };
 }
 
 // spacing classes
-export function createSpacingClasses(props: SpacingProps): string[] {
+export function getSpacingClasses(props: SpacingProps): string[] {
   return Object.entries(props)
     .filter(([, value]) => value !== undefined)
     .map(([key, value]) => `${key}-${value}`);
