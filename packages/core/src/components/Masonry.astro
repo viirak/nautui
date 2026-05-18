@@ -1,6 +1,5 @@
 ---
 import "../styles/spacing/spacing.css";
-import "../styles/spacing/gap.css";
 import {
   extractSpacingProps,
   getSpacingClasses,
@@ -35,6 +34,22 @@ const { class: className, columns = 4, gap = "md" } = nonSpacing;
 
     @media only screen and (min-width: 1042px) {
       column-count: var(--columns); /* Desktop columns */
+    }
+
+    &.gap-sm {
+      column-gap: var(--naut-spacing-sm);
+    }
+
+    &.gap-md {
+      column-gap: var(--naut-spacing-md);
+    }
+
+    &.gap-lg {
+      column-gap: var(--naut-spacing-lg);
+    }
+
+    &.gap-xl {
+      column-gap: var(--naut-spacing-xl);
     }
   }
 
