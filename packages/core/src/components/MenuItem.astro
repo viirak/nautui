@@ -3,14 +3,14 @@ import type { Base } from "../types";
 
 export interface MenuItemProps extends Base {
   active?: boolean;
-  dimmed?: boolean;
+  color?: "text" | "link" | "dimmed";
   href: string;
 }
 
 const {
   class: className,
   active = false,
-  dimmed = false,
+  color = "text",
   href,
   ...rest
 } = Astro.props as MenuItemProps;
@@ -18,7 +18,7 @@ const {
 const classList = [
   "naut-menu-item",
   active && "active",
-  dimmed && "dimmed",
+  color !== "text" && `color-${color}`,
   className,
 ];
 ---
@@ -37,24 +37,33 @@ const classList = [
     align-items: center;
     padding: 0.5rem;
     font-size: var(--naut-font-size-md);
+    color: var(--naut-color-text);
     text-wrap: nowrap;
     text-decoration: none;
     cursor: pointer;
 
-    &.dimmed {
-      opacity: 0.5;
-    }
-
     &:hover {
+      color: var(--naut-color-primary);
       background-color: rgb(from var(--naut-color-primary) r g b / 0.06);
-      &.dimmed {
-        opacity: 1;
-      }
+      opacity: 1;
     }
 
     &.active {
       color: var(--naut-color-primary);
       background-color: rgb(from var(--naut-color-primary) r g b / 0.1);
+    }
+
+    &.color-dimmed {
+      color: var(--naut-color-dimmed);
+      opacity: 0.8;
+
+      &:hover {
+        color: var(--naut-color-text);
+      }
+    }
+
+    &.color-link {
+      color: var(--naut-color-link);
     }
 
     .naut-menu-item--main {
