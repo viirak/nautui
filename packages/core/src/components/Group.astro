@@ -1,10 +1,11 @@
 ---
-import type { Base, Spacing } from "../types";
+import "../styles/spacing/gap.css";
+import type { Base, Gap } from "../types";
 
 type ScreenSize = "sm" | "md" | "lg" | "xl";
 
 export interface GroupProps extends Base {
-  gap?: Spacing;
+  gap?: Gap;
   grow?: boolean;
   justify?:
     | "start"
@@ -25,7 +26,6 @@ const {
   wrap = false,
   not,
 } = Astro.props as GroupProps;
-const gapValue = `var(--naut-spacing-${gap})`;
 const notScreens = typeof not === "string" ? [not] : not;
 ---
 
@@ -34,18 +34,18 @@ const notScreens = typeof not === "string" ? [not] : not;
   "naut-group",
   grow && "grow",
   wrap && "wrap",
+  gap && `gap-${gap}`,
+  justify && `justify-${justify}`,
   notScreens?.map((s) => `not-${s}`).join(" "),
   className]}
 >
   <slot />
 </div>
 
-<style define:vars={{ justify, gap: gapValue }}>
+<style>
   .naut-group {
     display: inline-flex;
-    gap: var(--gap);
     align-items: center;
-    justify-content: var(--justify);
 
     &.not-sm {
       @media only screen and (max-width: 817px) {
@@ -69,6 +69,30 @@ const notScreens = typeof not === "string" ? [not] : not;
       @media only screen and (min-width: 1250px) {
         flex-direction: column;
       }
+    }
+
+    &.justify-start {
+      justify-content: flex-start;
+    }
+
+    &.justify-center {
+      justify-content: center;
+    }
+
+    &.justify-end {
+      justify-content: flex-end;
+    }
+
+    &.justify-space-between {
+      justify-content: space-between;
+    }
+
+    &.justify-space-around {
+      justify-content: space-around;
+    }
+
+    &.justify-space-evenly {
+      justify-content: space-evenly;
     }
 
     &.grow {
