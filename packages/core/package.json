@@ -11,6 +11,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
+    "lint": "biome check src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
