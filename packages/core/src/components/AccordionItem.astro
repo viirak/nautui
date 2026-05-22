@@ -1,0 +1,176 @@
+---
+import type { Base } from "../types";
+import Button from "./Button.astro";
+import Text from "./Text.astro";
+
+export interface AccordionItemProps extends Base {
+  open?: boolean;
+  title: string;
+}
+
+const {
+  title,
+  open = false,
+  class: className,
+  ...rest
+} = Astro.props as AccordionItemProps;
+
+// Generate unique IDs for accessibility connections
+const uniqueId = Math.random().toString(36).slice(2, 9);
+const headerId = `naut-acc-header-${uniqueId}`;
+const panelId = `naut-acc-panel-${uniqueId}`;
+---
+
+<div
+  class:list={[
+    "naut-accordion-item",
+    open && "active",
+    className
+  ]}
+  {...rest}
+>
+  <Button
+    variant="ghost"
+    id={headerId}
+    class="naut-accordion-trigger"
+    aria-expanded={open ? "true" : "false"}
+    aria-controls={panelId}
+  >
+    <Text inline size="lg" weight="bold" class="naut-accordion-title"
+      >{title}</Text
+    >
+    <span class="naut-accordion-chevron-wrapper">
+      <slot name="chevron">
+        <svg
+          class="naut-accordion-chevron"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <title>Chevron</title>
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </slot>
+    </span>
+  </Button>
+  <div
+    id={panelId}
+    class="naut-accordion-content-wrapper"
+    role="region"
+    aria-labelledby={headerId}
+  >
+    <div class="naut-accordion-content"><slot /></div>
+  </div>
+</div>
+
+<style>
+  .naut-accordion-item {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--accordion-item-gap, 0);
+    background-color: var(--accordion-item-bg, transparent);
+    border-top: var(--accordion-item-outer-border, none);
+    border-right: var(--accordion-item-outer-border, none);
+
+    /* Base and variant structural inheritance from parent */
+    border-bottom: var(
+      --accordion-item-border,
+      var(--naut-border-width-md) solid var(--naut-color-border)
+    );
+    border-left: var(--accordion-item-outer-border, none);
+    border-radius: var(--accordion-item-radius, 0);
+    transition:
+      border-color var(--transition-duration, 250ms) ease,
+      box-shadow var(--transition-duration, 250ms) ease,
+      background-color var(--transition-duration, 250ms) ease;
+
+    /* Safe sibling override without global declarations */
+    &:last-child {
+      border-bottom: var(
+        --accordion-item-last-border,
+        var(--accordion-item-outer-border, none)
+      );
+    }
+
+    &.active {
+      background-color: var(
+        --accordion-item-active-bg,
+        var(--accordion-item-bg, transparent)
+      );
+      border-color: var(
+        --accordion-item-active-border-color,
+        var(--naut-color-border)
+      );
+    }
+  }
+
+  .naut-accordion-item .naut-accordion-trigger {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    padding: var(--naut-spacing-sm) var(--naut-spacing-md);
+    color: var(--naut-color-text);
+    text-align: left;
+    border-radius: 0;
+    transition: background-color var(--transition-duration, 250ms) ease;
+
+    &:focus-visible {
+      box-shadow: inset 0 0 0 var(--naut-border-width-lg)
+        var(--naut-color-primary);
+    }
+  }
+
+  .naut-accordion-title {
+    flex-grow: 1;
+  }
+
+  .naut-accordion-chevron-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    order: var(--accordion-chevron-order, 1);
+    color: var(--naut-color-dimmed);
+    transition:
+      transform var(--transition-duration, 250ms) cubic-bezier(0.87, 0, 0.13, 1),
+      color var(--transition-duration, 250ms) ease;
+
+    & svg {
+      display: block;
+    }
+  }
+
+  .naut-accordion-item.active .naut-accordion-chevron-wrapper {
+    color: var(--naut-color-primary);
+    transform: rotate(var(--accordion-chevron-rotation, 180deg));
+  }
+
+  /* High performance CSS Grid height transitions */
+  .naut-accordion-content-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows var(--transition-duration, 250ms)
+      cubic-bezier(0.87, 0, 0.13, 1);
+  }
+
+  .naut-accordion-item.active .naut-accordion-content-wrapper {
+    grid-template-rows: 1fr;
+  }
+
+  .naut-accordion-content {
+    min-height: 0;
+    padding: var(--naut-spacing-xs) var(--naut-spacing-md)
+      var(--naut-spacing-md);
+    font-size: var(--naut-font-size-md);
+    line-height: calc(var(--naut-font-size-md) * var(--naut-line-height-ratio));
+    color: var(--naut-color-text);
+  }
+</style>

@@ -1,3 +1,5 @@
+import type { AccordionProps } from "./components/Accordion.astro";
+import type { AccordionItemProps } from "./components/AccordionItem.astro";
 import type { BackgroundProps } from "./components/Background.astro";
 import type { BadgeProps } from "./components/Badge.astro";
 import type { BoxProps } from "./components/Box.astro";
@@ -57,6 +59,10 @@ export declare const List: (props: ListProps) => AstroComponent;
 export declare const ListItem: (props: ListItemProps) => AstroComponent;
 
 // UI
+export declare const Accordion: (props: AccordionProps) => AstroComponent;
+export declare const AccordionItem: (
+  props: AccordionItemProps
+) => AstroComponent;
 export declare const Button: (props: ButtonProps) => AstroComponent;
 export declare const Badge: (props: BadgeProps) => AstroComponent;
 export declare const Card: (props: CardProps) => AstroComponent;

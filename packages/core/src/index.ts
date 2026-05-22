@@ -1,5 +1,7 @@
 // biome-ignore-all lint/style/noExportedImports: DX
 
+import Accordion from "./components/Accordion.astro";
+import AccordionItem from "./components/AccordionItem.astro";
 import Background from "./components/Background.astro";
 import Badge from "./components/Badge.astro";
 import Box from "./components/Box.astro";
@@ -34,6 +36,8 @@ import ThemeToggle from "./components/ThemeToggle.astro";
 import Title from "./components/Title.astro";
 
 export {
+  Accordion,
+  AccordionItem,
   Background,
   Badge,
   Box,
