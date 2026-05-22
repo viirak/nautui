@@ -1,8 +1,9 @@
 ---
-import type { Base, Spacing } from "../types";
+import "../styles/spacing/gap.css";
+import type { Base, Gap } from "../types";
 
 export interface ListProps extends Base {
-  gap?: Spacing;
+  gap?: Gap;
   horizontal?: boolean;
   marker?: "none" | string;
   noMarker?: boolean;
@@ -22,6 +23,7 @@ const classList = [
   "naut-list",
   horizontal && "horizontal",
   marker === "none" && "no-marker",
+  gap && `gap-${gap}`,
   className,
 ];
 const spacing = `var(--naut-spacing-${gap})`;
@@ -35,10 +37,9 @@ const spacing = `var(--naut-spacing-${gap})`;
   <slot />
 </ol>}
 
-<style define:vars={{ marker: markerValue, spacing }}>
+<style define:vars={{ marker: markerValue }}>
   .naut-list {
     display: grid;
-    gap: var(--naut-spacing);
     padding-left: var(--naut-spacing-md);
 
     &.no-marker {
