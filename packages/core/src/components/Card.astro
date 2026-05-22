@@ -12,9 +12,24 @@ import type { Base, Radius } from "../types";
 export interface CardProps extends Base, PaddingProps {
   border?: Border;
   fluid?: boolean;
+  hover?:
+    | "light"
+    | "primary"
+    | "outline"
+    | "outline-primary"
+    | "elevate"
+    | "elevate-lg"
+    | "elevate-xl";
   radius?: Radius | "none";
   shadow?: "sm" | "md" | "lg" | "xl";
   size?: "sm" | "md" | "lg";
+  variant?:
+    | "ghost"
+    | "surface"
+    | "light"
+    | "dark"
+    | "primary"
+    | "outline-primary";
 }
 
 const { padding, nonSpacing } = extractSpacingProps(Astro.props as CardProps);
@@ -26,6 +41,8 @@ const {
   radius,
   size = "sm",
   fluid = false,
+  variant = "ghost",
+  hover,
   ...rest
 } = nonSpacing;
 const p = Object.keys(padding).length === 0 ? "md" : padding.p;
@@ -39,6 +56,8 @@ const { borderClasses, borderColors } = createBorder(config);
     "naut-card",
     size && `size-${size}`,
     fluid && "fluid",
+    variant !== "ghost" && `variant-${variant}`,
+    hover && `hover-${hover}`,
     radius && `radius-${radius}`,
     shadow && `shadow-${shadow}`,
     ...borderClasses,
@@ -54,11 +73,13 @@ const { borderClasses, borderColors } = createBorder(config);
 <style define:vars={{ ...borderColors }}>
   .naut-card {
     --radius-scale: 1.575;
+    position: relative;
     box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    transition: 0.15s ease-in-out;
 
     &.size-sm:not(.fluid) {
       max-width: 20rem;
@@ -119,6 +140,69 @@ const { borderClasses, borderColors } = createBorder(config);
 
     &.shadow-xl {
       box-shadow: var(--naut-shadow-xl);
+    }
+
+    /* variant */
+    &.variant-surface {
+      background-color: var(--naut-color-surface);
+    }
+
+    &.variant-primary {
+      color: var(--naut-color-base);
+      background-color: var(--naut-color-primary);
+    }
+
+    &.variant-light {
+      background-color: var(--naut-color-light);
+    }
+
+    &.variant-dark {
+      color: var(--naut-color-base);
+      background-color: var(--naut-color-dark);
+    }
+
+    &.variant-outline-primary {
+      border-color: var(--naut-color-primary);
+      border-width: var(--naut-border-width-lg);
+    }
+
+    &.variant-outline-dark {
+      border-color: var(--naut-color-text);
+      border-width: var(--naut-border-width-lg);
+    }
+
+    /* --- hover --- */
+
+    &.hover-primary:hover {
+      color: var(--naut-color-base);
+      background-color: var(--naut-color-primary);
+    }
+
+    &.hover-outline:hover {
+      border-color: var(--naut-color-border-outline);
+    }
+
+    &.hover-outline-primary:hover {
+      border-color: var(--naut-color-primary);
+    }
+
+    &.hover-light:hover {
+      background-color: var(--naut-color-light);
+    }
+
+    &.hover-elevate:hover {
+      box-shadow: var(--naut-shadow-md);
+      transform: translateY(-5px);
+    }
+
+    &.hover-elevate-lg:hover {
+      box-shadow: var(--naut-shadow-lg);
+      transform: translateY(-5px);
+    }
+
+    &.hover-elevate-xl:hover {
+      box-shadow: var(--naut-shadow-xl);
+      transform: translateY(-10px);
     }
   }
 </style>
