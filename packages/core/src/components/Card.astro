@@ -13,11 +13,19 @@ export interface CardProps extends Base, PaddingProps {
   border?: Border;
   radius?: Radius | "none";
   shadow?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg";
 }
 
 const { padding, nonSpacing } = extractSpacingProps(Astro.props as CardProps);
 
-const { class: className, border, shadow, radius } = nonSpacing;
+const {
+  class: className,
+  border,
+  shadow,
+  radius,
+  size = "sm",
+  ...rest
+} = nonSpacing;
 const p = Object.keys(padding).length === 0 ? "md" : padding.p;
 const paddingClasses = getSpacingClasses({ ...padding, p });
 const config = typeof border === "string" ? { width: border } : border || {};
@@ -27,11 +35,13 @@ const { borderClasses, borderColors } = createBorder(config);
 <div
   class:list={[
     "naut-card",
+    size && `size-${size}`,
     radius && `radius-${radius}`,
     shadow && `shadow-${shadow}`,
     ...borderClasses,
     className
   ]}
+  {...rest}
 >
   <div class="naut-card--header"><slot name="header" /></div>
   <div class:list={["naut-card--body", ...paddingClasses]}><slot /></div>
@@ -46,6 +56,18 @@ const { borderClasses, borderColors } = createBorder(config);
     display: flex;
     flex-direction: column;
     overflow: hidden;
+
+    &.size-sm {
+      max-width: 20rem;
+    }
+
+    &.size-md {
+      max-width: 30rem;
+    }
+
+    &.size-lg {
+      max-width: 40rem;
+    }
 
     .naut-card--body {
       position: relative;
