@@ -1,44 +1,71 @@
 ---
-import type { Base, Spacing } from "../types";
+import type { Base, Gap } from "../types";
 
 export interface MenuProps extends Base {
-  gap?: Spacing;
-  layout?: "vertical" | "horizontal";
+  divided?: boolean;
+  gap?: Gap;
+  horizontal?: boolean;
 }
 
 const {
   class: className,
-  layout = "vertical",
+  horizontal = false,
+  divided = false,
   gap = "xs",
   ...rest
 } = Astro.props as MenuProps;
-
-const gapValue = `var(--naut-spacing-${gap})`;
+const gapVar = `var(--naut-spacing-${gap})`;
 ---
 
-<nav class:list={["naut-menu", `layout-${layout}`, className]} {...rest}>
-  <ul>
+<nav
+  class:list={[
+    "naut-menu",
+    horizontal && "horizontal",
+    divided && "divided",
+    className
+  ]}
+  {...rest}
+>
+  <ul class:list={["naut-menu__list", gap && `gap-${gap}`]}>
     <slot />
   </ul>
 </nav>
 
-<style define:vars={{ gap: gapValue }}>
+<style define:vars={{ gapVar }}>
   .naut-menu {
-    ul {
+    ul.naut-menu__list {
       display: flex;
-      gap: var(--gap);
+      flex-direction: column;
+      gap: var(--gapVar);
       padding: 0;
       margin: 0;
       list-style: none;
     }
 
-    &.layout-vertical ul {
-      flex-direction: column;
-    }
-
-    &.layout-horizontal ul {
+    &.horizontal ul.naut-menu__list {
+      display: inline-flex;
       flex-direction: row;
-      flex-wrap: wrap;
     }
+  }
+
+  :global(.naut-menu.horizontal ul.naut-menu__list .naut-menu-item) {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  :global(
+      .naut-menu.divided:not(.horizontal)
+      .naut-menu__list-item:not(:last-child)
+    ) {
+    padding-bottom: var(--gapVar);
+    border-bottom: 1px solid var(--naut-color-border);
+  }
+
+  :global(
+      .naut-menu.divided.horizontal
+      .naut-menu__list-item:not(:last-child)
+    ) {
+    padding-right: var(--gapVar);
+    border-right: 1px solid var(--naut-color-border);
   }
 </style>

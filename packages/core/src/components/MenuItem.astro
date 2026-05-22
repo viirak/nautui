@@ -3,70 +3,53 @@ import type { Base } from "../types";
 
 export interface MenuItemProps extends Base {
   active?: boolean;
-  color?: "default" | "primary" | "destructive";
-  href?: string;
-  type?: "button" | "submit" | "reset";
+  dimmed?: boolean;
+  href: string;
 }
 
 const {
   class: className,
   active = false,
+  dimmed = false,
   href,
-  type = "button",
-  color = "default",
   ...rest
 } = Astro.props as MenuItemProps;
 
 const classList = [
   "naut-menu-item",
   active && "active",
-  `color-${color}`,
+  dimmed && "dimmed",
   className,
 ];
 ---
 
-<li>
-  {href ? (
-    <a href={href} class:list={classList} {...rest}>
-      <span class="naut-menu-item--left"><slot name="leftSection" /></span>
-      <span class="naut-menu-item--label"><slot /></span>
-      <span class="naut-menu-item--right"><slot name="rightSection" /></span>
-    </a>
-  ) : (
-    <button class:list={classList} type={type} {...rest}>
-      <span class="naut-menu-item--left"><slot name="leftSection" /></span>
-      <span class="naut-menu-item--label"><slot /></span>
-      <span class="naut-menu-item--right"><slot name="rightSection" /></span>
-    </button>
-  )}
+<li class="naut-menu__list-item">
+  <a href={href} class:list={classList} {...rest}>
+    <span class="naut-menu-item--left"><slot name="before" /></span>
+    <span class="naut-menu-item--main"><slot /></span>
+    <span class="naut-menu-item--right"><slot name="after" /></span>
+  </a>
 </li>
 
 <style>
-  li {
-    width: 100%;
-  }
-
   .naut-menu-item {
     display: flex;
     align-items: center;
-    width: 100%;
-    padding: var(--naut-spacing-xs) var(--naut-spacing-sm);
-    font-family: inherit;
-    font-size: var(--naut-font-size-sm);
-    font-weight: 500;
-    line-height: 1.5;
-    color: var(--naut-color-text);
+    padding: 0.5rem;
+    font-size: var(--naut-font-size-md);
+    text-wrap: nowrap;
     text-decoration: none;
     cursor: pointer;
-    background: transparent;
-    border: none;
-    border-radius: var(--naut-border-radius-sm);
-    transition:
-      background-color 0.15s ease,
-      color 0.15s ease;
+
+    &.dimmed {
+      opacity: 0.5;
+    }
 
     &:hover {
-      background-color: color-mix(in oklch, var(--naut-color-surface), black 5%);
+      background-color: rgb(from var(--naut-color-primary) r g b / 0.06);
+      &.dimmed {
+        opacity: 1;
+      }
     }
 
     &.active {
@@ -74,21 +57,7 @@ const classList = [
       background-color: rgb(from var(--naut-color-primary) r g b / 0.1);
     }
 
-    &.color-destructive {
-      color: var(--naut-color-destructive);
-      &:hover {
-        background-color: rgb(from var(--naut-color-destructive) r g b / 0.1);
-      }
-      &.active {
-        background-color: rgb(from var(--naut-color-destructive) r g b / 0.15);
-      }
-    }
-
-    &.color-primary {
-      color: var(--naut-color-primary);
-    }
-
-    .naut-menu-item--label {
+    .naut-menu-item--main {
       flex: 1;
       text-align: left;
     }
@@ -96,7 +65,7 @@ const classList = [
     .naut-menu-item--left {
       display: flex;
       align-items: center;
-      margin-right: var(--naut-spacing-sm);
+      margin-right: 0.4rem;
     }
 
     .naut-menu-item--left:empty {
@@ -106,19 +75,10 @@ const classList = [
     .naut-menu-item--right {
       display: flex;
       align-items: center;
-      margin-left: var(--naut-spacing-sm);
     }
 
     .naut-menu-item--right:empty {
       display: none;
     }
-  }
-
-  /* Dark theme overrides */
-  :global(
-      [data-theme="dark"]
-      .naut-menu-item:hover:not(.active):not(.color-destructive)
-    ) {
-    background-color: color-mix(in oklch, var(--naut-color-surface), white 10%);
   }
 </style>
