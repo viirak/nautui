@@ -110,6 +110,8 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
       --naut-tint-destructive: 10%;
 
       /* === Opinionated semantic defaults === */
+      --naut-color-light: white;
+      --naut-color-dark: black;
       --naut-color-destructive: #f3164e;
       --naut-color-success: #16a34a;
       --naut-color-warning: #d97706;
@@ -173,6 +175,7 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
     [data-theme="dark"],
     section.dark,
     nav.dark {
+      --naut-color-light: color-mix(in oklch, black, white 0.1%);
       --naut-color-base: color-mix(
         in oklch,
         black,
