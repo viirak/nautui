@@ -11,6 +11,7 @@ import type { Base, Radius } from "../types";
 
 export interface CardProps extends Base, PaddingProps {
   border?: Border;
+  height?: "auto" | "full";
   radius?: Radius | "none";
   shadow?: "sm" | "md" | "lg" | "xl";
   size?: "sm" | "md" | "lg";
@@ -24,6 +25,7 @@ const {
   shadow,
   radius,
   size = "sm",
+  height = "auto",
   ...rest
 } = nonSpacing;
 const p = Object.keys(padding).length === 0 ? "md" : padding.p;
@@ -36,6 +38,7 @@ const { borderClasses, borderColors } = createBorder(config);
   class:list={[
     "naut-card",
     size && `size-${size}`,
+    height === "full" && `height-${height}`,
     radius && `radius-${radius}`,
     shadow && `shadow-${shadow}`,
     ...borderClasses,
@@ -67,6 +70,10 @@ const { borderClasses, borderColors } = createBorder(config);
 
     &.size-lg {
       max-width: 40rem;
+    }
+
+    &.height-full {
+      height: 100%;
     }
 
     .naut-card--body {
