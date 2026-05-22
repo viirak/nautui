@@ -6,18 +6,11 @@
     "jsx": "preserve",
     "jsxImportSource": "astro",
     "paths": {
-      "@nautui/core": [
-        "../core/src/index.ts"
-      ]
+      "@nautui/core": ["../core/src/index.ts"]
     }
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"],
   "references": [
     {
       "path": "../core"
