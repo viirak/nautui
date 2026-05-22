@@ -21,9 +21,7 @@ const contentAlign = isFigureRight ? "left" : "center";
 ---
 
 <Section class:list={["naut-hero-section"]} dark={{ dark }}>
-  <Fragment slot="before">
-    <slot name="background" />
-  </Fragment>
+  <Fragment slot="before"> <slot name="background" /> </Fragment>
   <Space size="display-lg" />
   <div
     class:list={[
@@ -48,7 +46,6 @@ const contentAlign = isFigureRight ? "left" : "center";
 </Section>
 <style>
   .hero-content {
-
     @media only screen and (min-width: 1042px) {
       display: grid;
 

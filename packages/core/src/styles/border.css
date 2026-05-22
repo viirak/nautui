@@ -104,22 +104,34 @@
 
 /* Bottom */
 .border-bottom-sm {
-  border-bottom-color: var(--naut-color-border-bottom, var(--naut-color-border));
+  border-bottom-color: var(
+    --naut-color-border-bottom,
+    var(--naut-color-border)
+  );
   border-bottom-width: var(--naut-border-width-sm);
 }
 
 .border-bottom-md {
-  border-bottom-color: var(--naut-color-border-bottom, var(--naut-color-border));
+  border-bottom-color: var(
+    --naut-color-border-bottom,
+    var(--naut-color-border)
+  );
   border-bottom-width: var(--naut-border-width-md);
 }
 
 .border-bottom-lg {
-  border-bottom-color: var(--naut-color-border-bottom, var(--naut-color-border));
+  border-bottom-color: var(
+    --naut-color-border-bottom,
+    var(--naut-color-border)
+  );
   border-bottom-width: var(--naut-border-width-lg);
 }
 
 .border-bottom-xl {
-  border-bottom-color: var(--naut-color-border-bottom, var(--naut-color-border));
+  border-bottom-color: var(
+    --naut-color-border-bottom,
+    var(--naut-color-border)
+  );
   border-bottom-width: var(--naut-border-width-xl);
 }
 

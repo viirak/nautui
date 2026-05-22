@@ -65,12 +65,10 @@
 
 /* Spacing display-lg */
 
-
 /* padding display-lg */
 .p-display-lg {
   padding: var(--naut-spacing-display-lg);
 }
-
 
 .px-display-lg {
   padding-right: var(--naut-spacing-display-lg);
@@ -135,7 +133,6 @@
 .p-display-xl {
   padding: var(--naut-spacing-display-xl);
 }
-
 
 .px-display-xl {
   padding-right: var(--naut-spacing-display-xl);
