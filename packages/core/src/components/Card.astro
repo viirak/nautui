@@ -29,7 +29,8 @@ export interface CardProps extends Base, PaddingProps {
     | "light"
     | "dark"
     | "primary"
-    | "outline-primary";
+    | "outline-primary"
+    | "rainbow";
 }
 
 const { padding, nonSpacing } = extractSpacingProps(Astro.props as CardProps);
@@ -168,6 +169,24 @@ const { borderClasses, borderColors } = createBorder(config);
 
     &.variant-outline-dark {
       border-color: var(--naut-color-text);
+      border-width: var(--naut-border-width-lg);
+    }
+
+    &.variant-rainbow {
+      background:
+        linear-gradient(var(--naut-color-base), var(--naut-color-base))
+        padding-box,
+        conic-gradient(
+          from 0turn,
+          hsl(110 90% 50%),
+          hsl(210 90% 60%),
+          hsl(220 70% 60%),
+          hsl(30 70% 60%),
+          hsl(100 90% 50%)
+        )
+        border-box;
+      border-color: transparent;
+      border-style: solid;
       border-width: var(--naut-border-width-lg);
     }
 
