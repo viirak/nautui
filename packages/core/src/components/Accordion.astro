@@ -1,161 +1,24 @@
 ---
 import type { Base } from "../types";
 
-export interface AccordionProps extends Base {
-  chevronPosition?: "left" | "right";
-  disableChevronRotation?: boolean;
-  multiple?: boolean;
-  transitionDuration?: string;
-  variant?: "default" | "contained" | "filled" | "separated";
-}
+export interface AccordionProps extends Base {}
 
-const {
-  multiple = false,
-  variant = "default",
-  chevronPosition = "right",
-  disableChevronRotation = false,
-  transitionDuration = "250ms",
-  class: className,
-  ...rest
-} = Astro.props as AccordionProps;
+const { class: className, ...rest } = Astro.props as AccordionProps;
 ---
 
 <div
   class:list={[
     "naut-accordion",
-    `variant-${variant}`,
-    `chevron-${chevronPosition}`,
-    disableChevronRotation && "disable-rotation",
     className
   ]}
-  data-multiple={multiple ? "true" : "false"}
-  style={{ "--transition-duration-prop": transitionDuration }}
   {...rest}
 >
   <slot />
 </div>
 
-<script>
-  const handleAccordionClick = (
-    event: Event,
-    accordion: Element,
-    isMultiple: boolean
-  ) => {
-    const trigger = (event.target as HTMLElement).closest(
-      ".naut-accordion-trigger"
-    );
-    if (!trigger) {
-      return;
-    }
-
-    const currentItem = trigger.closest(".naut-accordion-item");
-    if (!currentItem) {
-      return;
-    }
-
-    const isCurrentlyActive = currentItem.classList.contains("active");
-
-    if (!isMultiple) {
-      // Collapse all other items in this accordion
-      const allItems = accordion.querySelectorAll(".naut-accordion-item");
-      for (const item of allItems) {
-        if (item !== currentItem && item.classList.contains("active")) {
-          item.classList.remove("active");
-          const itemTrigger = item.querySelector(".naut-accordion-trigger");
-          if (itemTrigger) {
-            itemTrigger.setAttribute("aria-expanded", "false");
-          }
-        }
-      }
-    }
-
-    // Toggle current item
-    if (isCurrentlyActive) {
-      currentItem.classList.remove("active");
-      trigger.setAttribute("aria-expanded", "false");
-    } else {
-      currentItem.classList.add("active");
-      trigger.setAttribute("aria-expanded", "true");
-    }
-  };
-
-  // Setup accordion interactions via event delegation
-  const initializeAccordions = () => {
-    const accordions = document.querySelectorAll(".naut-accordion");
-    for (const accordion of accordions) {
-      // Prevent duplicate initialization on the same element
-      const initializedAccordion = accordion as HTMLElement & {
-        __naut_initialized?: boolean;
-      };
-      if (initializedAccordion.__naut_initialized) {
-        continue;
-      }
-      initializedAccordion.__naut_initialized = true;
-
-      const isMultiple = accordion.getAttribute("data-multiple") === "true";
-
-      accordion.addEventListener("click", (event) => {
-        handleAccordionClick(event, accordion, isMultiple);
-      });
-    }
-  };
-
-  // Run on initial page load
-  initializeAccordions();
-
-  // Support Astro View Transitions
-  document.addEventListener("astro:after-swap", initializeAccordions);
-</script>
-
 <style>
   .naut-accordion {
-    --transition-duration: var(--transition-duration-prop, 250ms);
     display: flex;
     flex-direction: column;
-    gap: 0;
-    width: 100%;
-
-    /* variant: default is standard line-divider-based list */
-    &.variant-default {
-      /* inherit default divider variables */
-    }
-
-    /* variant: contained wraps inside a bordered box with surface background */
-    &.variant-contained {
-      --accordion-item-border: var(--naut-border-width-md) solid
-        var(--naut-color-border);
-      overflow: hidden;
-      background-color: var(--naut-color-surface);
-      border: var(--naut-border-width-md) solid var(--naut-color-border);
-      border-radius: var(--naut-border-radius-lg);
-    }
-
-    /* variant: filled colors the active accordion item panel background */
-    &.variant-filled {
-      --accordion-item-active-bg: var(--naut-color-surface);
-      --accordion-item-border: var(--naut-border-width-md) solid
-        var(--naut-color-border);
-    }
-
-    /* variant: separated spaces each item as an individual bordered card */
-    &.variant-separated {
-      --accordion-item-outer-border: var(--naut-border-width-md) solid
-        var(--naut-color-border);
-      --accordion-item-border: none;
-      --accordion-item-radius: var(--naut-border-radius-md);
-      --accordion-item-bg: var(--naut-color-base);
-      --accordion-item-active-border-color: var(--naut-color-primary);
-      gap: var(--naut-spacing-xs);
-    }
-
-    /* Chevron alignment position configurations */
-    &.chevron-left {
-      --accordion-chevron-order: -1;
-    }
-
-    /* Rotation configuration overrides */
-    &.disable-rotation {
-      --accordion-chevron-rotation: 0deg;
-    }
   }
 </style>
