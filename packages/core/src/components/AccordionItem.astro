@@ -79,9 +79,10 @@ const uniqueId = Math.random().toString(36).slice(2, 9);
         &.chevron {
           width: 8px;
           height: 8px;
-          border-right: var(--naut-border-width-md) solid var(--naut-color-text);
+          border-right: var(--naut-border-width-md) solid
+            var(--naut-color-content);
           border-bottom: var(--naut-border-width-md) solid
-            var(--naut-color-text);
+            var(--naut-color-content);
           transform: rotate(45deg); /* Points down */
         }
 
@@ -97,7 +98,7 @@ const uniqueId = Math.random().toString(36).slice(2, 9);
             width: 100%;
             height: var(--naut-border-width-md);
             content: "";
-            background-color: var(--naut-color-text);
+            background-color: var(--naut-color-content);
             transform: translateY(-50%);
             transition: transform 0.3s ease-in-out;
           }
@@ -110,7 +111,7 @@ const uniqueId = Math.random().toString(36).slice(2, 9);
             width: var(--naut-border-width-md);
             height: 100%;
             content: "";
-            background-color: var(--naut-color-text);
+            background-color: var(--naut-color-content);
             transform: translateX(-50%);
             transition:
               transform 0.3s ease-in-out,
