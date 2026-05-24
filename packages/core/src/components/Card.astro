@@ -1,6 +1,7 @@
 ---
 import "../styles/spacing/padding.css";
 import "../styles/border.css";
+import "../styles/shadow.css";
 import { type Border, createBorder } from "../lib/border";
 import {
   extractSpacingProps,
@@ -149,7 +150,7 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     &.variant-primary {
-      color: var(--naut-color-base);
+      color: var(--naut-color-primary-content);
       background-color: var(--naut-color-primary);
     }
 
@@ -159,7 +160,7 @@ const { borderClasses, borderColors } = createBorder(config);
 
     &.variant-dark {
       color: var(--naut-color-base);
-      background-color: var(--naut-color-dark);
+      background-color: var(--naut-color-base-content);
     }
 
     &.variant-outline-primary {
