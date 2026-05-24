@@ -64,8 +64,8 @@
     font-family: var(--naut-font-family);
     font-size: var(--naut-font-size-md);
     line-height: calc(var(--naut-font-size-md) * var(--naut-line-height-ratio));
-    color: var(--naut-color-base-content);
-    background-color: var(--naut-color-base-100);
+    color: var(--naut-color-content);
+    background-color: var(--naut-color-base);
   }
 
   /* Links */
