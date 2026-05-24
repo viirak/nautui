@@ -23,38 +23,38 @@
    /* alpha for translucent brand backgrounds */
 
    /* === Neutral surface scale (derived from primary + tint) === */
-   --naut-color-base-100: color-mix(in oklch,
+   --naut-color-base: color-mix(in oklch,
        white,
        var(--naut-color-primary) var(--naut-tint-base));
    /* page background */
-   --naut-color-base-200: color-mix(in oklch,
-       var(--naut-color-base-100),
+   --naut-color-base-100: color-mix(in oklch,
+       var(--naut-color-base),
        black 2%);
    /* subtle patterns */
-   --naut-color-base-300: color-mix(in oklch,
-       var(--naut-color-base-100),
+   --naut-color-base-200: color-mix(in oklch,
+       var(--naut-color-base),
        black 5%);
    /* surface: cards, inputs, hover overlays */
-   --naut-color-base-400: color-mix(in oklch,
-       var(--naut-color-base-100),
+   --naut-color-base-300: color-mix(in oklch,
+       var(--naut-color-base),
        black 10%);
    /* borders, dividers */
-   --naut-color-base-500: color-mix(in oklch,
-       var(--naut-color-base-100),
+   --naut-color-base-400: color-mix(in oklch,
+       var(--naut-color-base),
        black 50%);
    /* outline borders, strong dividers */
 
    /* === Text on neutrals === */
-   --naut-color-base-content: color-mix(in oklch,
+   --naut-color-content: color-mix(in oklch,
        black,
        var(--naut-color-primary) var(--naut-tint-base));
-   --naut-color-base-content-soft: color-mix(in oklch,
+   --naut-color-content-soft: color-mix(in oklch,
        var(--naut-color-base-content),
        white 60%);
 
    /* === Border aliases (separately themeable) === */
-   --naut-color-border: var(--naut-color-base-400);
-   --naut-color-border-strong: var(--naut-color-base-500);
+   --naut-color-border: var(--naut-color-base-300);
+   --naut-color-border-strong: var(--naut-color-base-400);
 
    /* === Specialty === */
    --naut-color-selection: color-mix(in oklch,
@@ -67,7 +67,6 @@
     * components keep working during migration. Remove each alias once
     * all consumers have been updated to the new token name.
     */
-   --naut-color-base: var(--naut-color-base-100);
    /* → base-100 */
    --naut-color-base-softer: var(--naut-color-base-200);
    /* → base-200 */
