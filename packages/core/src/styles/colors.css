@@ -149,9 +149,9 @@
 
    /* === Specialty === */
    --naut-color-link: color-mix(in oklch, blue, white 80%);
+   --naut-color-base: var(--naut-color-base-100);
 
    /* === TEMPORARY back-compat aliases (dark overrides) === */
-   --naut-color-base: var(--naut-color-base-100);
    --naut-color-base-softer: var(--naut-color-base-200);
    --naut-color-base-soft: var(--naut-color-base-300);
    --naut-color-base-strong: var(--naut-color-base-400);
