@@ -41,13 +41,13 @@ const gradientBg = gradient
     display: inline-block;
     padding-right: 1rem;
     padding-left: 1rem;
-    color: var(--naut-color-text);
-    -moz-text-fill-color: var(--naut-color-text);
-    -webkit-text-fill-color: var(--naut-color-text);
+    color: var(--naut-color-content);
+    -moz-text-fill-color: var(--naut-color-content);
+    -webkit-text-fill-color: var(--naut-color-content);
     background-color: var(--naut-color-highlight);
 
     &::selection {
-      color: var(--naut-color-text);
+      color: var(--naut-color-content);
     }
 
     &.rotate--sm {
@@ -152,7 +152,7 @@ const gradientBg = gradient
       background-clip: text;
 
       &::selection {
-        color: var(--naut-color-text);
+        color: var(--naut-color-content);
         background-color: var(--naut-color-selection);
         background-image: none;
       }
