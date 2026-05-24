@@ -7,7 +7,7 @@ export interface PatternProps {
 }
 
 export function getGradientPattern(props?: PatternProps) {
-  const color = props?.color || "var(--naut-color-pattern)";
+  const color = props?.color || "var(--naut-color-base-400)";
   const size = props?.size || 1;
 
   switch (props?.type) {
@@ -28,7 +28,7 @@ export function getGradientPattern(props?: PatternProps) {
       const deg = props.deg || 130;
       const gap = props.gap || 10;
       const size = props.size || 5;
-      const color = props.color || "var(--naut-color-pattern-stripe)";
+      const color = props.color || "var(--naut-color-base-200)";
       return `repeating-linear-gradient(${deg}deg, ${color} 0, ${color} ${size}px,transparent ${size}px,transparent ${gap}px)`;
     }
     default:
