@@ -14,7 +14,7 @@ export interface CardProps extends Base, PaddingProps {
   border?: Border;
   fluid?: boolean;
   hover?:
-    | "light"
+    | "surface"
     | "primary"
     | "outline"
     | "outline-primary"
@@ -206,8 +206,8 @@ const { borderClasses, borderColors } = createBorder(config);
       border-color: var(--naut-color-primary);
     }
 
-    &.hover-light:hover {
-      background-color: var(--naut-color-light);
+    &.hover-surface:hover {
+      background-color: var(--naut-color-base-100);
     }
 
     &.hover-elevate:hover {
