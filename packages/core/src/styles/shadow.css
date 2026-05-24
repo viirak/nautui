@@ -1,0 +1,11 @@
+:root {
+  --naut-shadow-scale: 1;
+  --naut-shadow-s: calc(1rem * var(--naut-shadow-scale));
+  --naut-shadow-x: calc(0.0625 * var(--naut-shadow-s));
+  --naut-shadow-c: #0000001a;
+
+  --naut-shadow-sm: var(--naut-shadow-x) calc(0.125 * var(--naut-shadow-s)) calc(0.25 * var(--naut-shadow-s)) var(--naut-shadow-c);
+  --naut-shadow-md: var(--naut-shadow-x) calc(0.25 * var(--naut-shadow-s)) calc(0.5 * var(--naut-shadow-s)) var(--naut-shadow-c);
+  --naut-shadow-lg: var(--naut-shadow-x) calc(0.5 * var(--naut-shadow-s)) calc(1 * var(--naut-shadow-s)) var(--naut-shadow-c);
+  --naut-shadow-xl: var(--naut-shadow-x) calc(1 * var(--naut-shadow-s)) calc(2 * var(--naut-shadow-s)) var(--naut-shadow-c);
+}

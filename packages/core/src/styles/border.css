@@ -1,3 +1,10 @@
+:root {
+  --naut-border-width-sm: 0.031rem;
+  --naut-border-width-md: 0.063rem;
+  --naut-border-width-lg: 0.125rem;
+  --naut-border-width-xl: 0.195rem;
+}
+
 .border {
   border-color: var(--naut-color-border);
   border-style: solid;
@@ -104,34 +111,26 @@
 
 /* Bottom */
 .border-bottom-sm {
-  border-bottom-color: var(
-    --naut-color-border-bottom,
-    var(--naut-color-border)
-  );
+  border-bottom-color: var(--naut-color-border-bottom,
+      var(--naut-color-border));
   border-bottom-width: var(--naut-border-width-sm);
 }
 
 .border-bottom-md {
-  border-bottom-color: var(
-    --naut-color-border-bottom,
-    var(--naut-color-border)
-  );
+  border-bottom-color: var(--naut-color-border-bottom,
+      var(--naut-color-border));
   border-bottom-width: var(--naut-border-width-md);
 }
 
 .border-bottom-lg {
-  border-bottom-color: var(
-    --naut-color-border-bottom,
-    var(--naut-color-border)
-  );
+  border-bottom-color: var(--naut-color-border-bottom,
+      var(--naut-color-border));
   border-bottom-width: var(--naut-border-width-lg);
 }
 
 .border-bottom-xl {
-  border-bottom-color: var(
-    --naut-color-border-bottom,
-    var(--naut-color-border)
-  );
+  border-bottom-color: var(--naut-color-border-bottom,
+      var(--naut-color-border));
   border-bottom-width: var(--naut-border-width-xl);
 }
 

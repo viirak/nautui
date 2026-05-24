@@ -1,5 +1,11 @@
 /* Spacing Display */
 
+:root {
+  --naut-spacing-display: clamp(4rem, 6vw + 1rem, 6rem);
+  --naut-spacing-display-lg: clamp(6rem, 8vw + 1rem, 8rem);
+  --naut-spacing-display-xl: clamp(8rem, 10vw + 1rem, 10rem);
+}
+
 /* padding display */
 .p-display {
   padding: var(--naut-spacing-display);
