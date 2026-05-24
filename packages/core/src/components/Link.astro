@@ -61,6 +61,7 @@ const {
     gap: 0.5rem;
     align-items: center;
     padding: 0.2rem 0.8rem;
+    color: var(--naut-color-link);
     text-decoration: none;
 
     .link--wrapper {
@@ -85,7 +86,7 @@ const {
     }
 
     &.dimmed {
-      color: var(--naut-color-link-dimmed);
+      opacity: 0.5;
     }
 
     &.external {
@@ -98,7 +99,7 @@ const {
 
     &:hover {
       &.dimmed {
-        color: var(--naut-color-link);
+        opacity: 1;
       }
 
       &.hover--underline {
@@ -106,11 +107,11 @@ const {
       }
 
       &.hover--dimmed {
-        color: var(--naut-color-link-dimmed);
+        opacity: 0.5;
       }
 
       &.hover--surface {
-        background-color: var(--naut-color-surface);
+        background-color: var(--naut-color-base-100);
       }
     }
   }
