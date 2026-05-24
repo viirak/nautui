@@ -68,18 +68,18 @@ const classlist = [
     );
     --naut-color-button: linear-gradient(
       var(--naut-color-base),
-      var(--naut-color-surface) 30%
+      var(--naut-color-base-100) 30%
     );
     --naut-color-button-hover: linear-gradient(
       var(--naut-color-base),
-      var(--naut-color-surface-hover) 30%
+      var(--naut-color-base-200) 30%
     );
     --naut-color-button-border: color-mix(
       in oklch,
       var(--naut-color-border),
       black 5%
     );
-    --naut-color-button-border-outline: color-mix(
+    --naut-color-button-border-strong: color-mix(
       in oklch,
       var(--naut-color-border),
       black 20%
@@ -101,11 +101,11 @@ const classlist = [
       hsl(100 90% 50%)
     );
     --naut-color-rainbow:
-      linear-gradient(var(--naut-color-base), var(--naut-color-surface))
+      linear-gradient(var(--naut-color-base), var(--naut-color-base-100))
       padding-box,
       var(--naut-rainbow-conic-gradient) border-box;
     --naut-color-rainbow-hover:
-      linear-gradient(var(--naut-color-surface), var(--naut-color-base))
+      linear-gradient(var(--naut-color-base-100), var(--naut-color-base))
       padding-box,
       var(--naut-rainbow-conic-gradient) border-box;
 
@@ -124,7 +124,7 @@ const classlist = [
     line-height: 1.5rem;
 
     /* Variant default */
-    color: var(--naut-color-text);
+    color: var(--naut-color-content);
     white-space: nowrap;
     text-decoration: none;
     cursor: pointer;
@@ -147,7 +147,7 @@ const classlist = [
     }
 
     &.variant-primary {
-      color: white;
+      color: var(--naut-color-primary-content);
       background: var(--naut-color-primary);
       border-color: var(--naut-color-primary);
 
@@ -157,7 +157,7 @@ const classlist = [
     }
 
     &.variant-secondary {
-      color: var(--naut-color-base);
+      color: var(--naut-color-secondary-content);
       background: var(--naut-color-secondary);
       border-color: var(--naut-color-secondary);
 
@@ -167,7 +167,7 @@ const classlist = [
     }
 
     &.variant-destructive {
-      color: white;
+      color: var(--naut-color-destructive-content);
       background: var(--naut-color-destructive);
       border-color: var(--naut-color-destructive);
 
@@ -179,13 +179,13 @@ const classlist = [
     &.variant-outline,
     &.variant-outline-primary,
     &.variant-outline-secondary {
-      color: var(--naut-color);
+      color: var(--naut-color-content);
       background: transparent;
-      border-color: var(--naut-color-button-border-outline);
+      border-color: var(--naut-color-border-strong);
     }
 
     &.variant-outline:hover:not(:disabled) {
-      background: var(--naut-color-surface-hover);
+      background: var(--naut-color-base-200);
     }
 
     &.variant-outline-primary {
@@ -205,12 +205,12 @@ const classlist = [
     }
 
     &.variant-flat {
-      background: var(--naut-color-surface);
+      background: var(--naut-color-base-100);
       border-color: transparent;
       box-shadow: none;
 
       &:hover:not(:disabled) {
-        background: var(--naut-color-surface-hover);
+        background: var(--naut-color-base-200);
       }
     }
 
@@ -220,7 +220,7 @@ const classlist = [
       box-shadow: none;
 
       &:hover:not(:disabled) {
-        background: var(--naut-color-surface-hover);
+        background: var(--naut-color-base-200);
       }
     }
 
@@ -245,9 +245,9 @@ const classlist = [
     }
 
     &:disabled {
-      color: rgb(from var(--naut-color) r g b / 0.3);
+      color: rgb(from var(--naut-color-content-soft) r g b / 0.3);
       pointer-events: none;
-      background: rgb(from var(--naut-color-surface) r g b / 0.7);
+      background: rgb(from var(--naut-color-base-100) r g b / 0.7);
       border-color: rgb(from var(--naut-color-border) r g b / 0.1);
       box-shadow: none;
     }
@@ -332,8 +332,8 @@ const classlist = [
       var(--naut-color-base),
       white 40%
     );
-    --naut-color-button: var(--naut-color-surface);
-    --naut-color-button-hover: var(--naut-color-surface-hover);
+    --naut-color-button: var(--naut-color-base-100);
+    --naut-color-button-hover: var(--naut-color-base-200);
     --naut-color-button-border: color-mix(
       in oklch,
       var(--naut-color-border),
@@ -350,11 +350,11 @@ const classlist = [
     );
     --naut-color-secondary-hover: color-mix(
       in oklch,
-      var(--naut-color-text),
+      var(--naut-color-content),
       black 10%
     );
     --naut-color-outline-secondary-hover: rgb(
-      from var(--naut-color-text) r g b /
+      from var(--naut-color-content) r g b /
       0.4
     );
     --naut-color-rainbow:
