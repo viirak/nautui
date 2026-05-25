@@ -45,70 +45,6 @@ const classlist = [
 
 <style>
   .naut-button {
-    --naut-font-size: 0.875rem;
-    --naut-color-surface-hover: color-mix(
-      in oklch,
-      var(--naut-color-base),
-      black 7%
-    );
-    --naut-color-primary-hover: color-mix(
-      in oklch,
-      var(--naut-color-primary),
-      black var(--naut-tint-primary)
-    );
-    --naut-color-secondary-hover: color-mix(
-      in oklch,
-      var(--naut-color-secondary),
-      white var(--naut-tint-secondary)
-    );
-    --naut-color-destructive-hover: color-mix(
-      in oklch,
-      var(--naut-color-destructive),
-      black var(--naut-tint-destructive)
-    );
-    --naut-color-button: linear-gradient(
-      var(--naut-color-base),
-      var(--naut-color-base-100) 30%
-    );
-    --naut-color-button-hover: linear-gradient(
-      var(--naut-color-base),
-      var(--naut-color-base-200) 30%
-    );
-    --naut-color-button-border: color-mix(
-      in oklch,
-      var(--naut-color-border),
-      black 5%
-    );
-    --naut-color-button-border-strong: color-mix(
-      in oklch,
-      var(--naut-color-border),
-      black 20%
-    );
-    --naut-color-outline-primary-hover: rgb(
-      from var(--naut-color-primary) r g b /
-      0.15
-    );
-    --naut-color-outline-secondary-hover: rgb(
-      from var(--naut-color-secondary) r g b /
-      0.1
-    );
-    --naut-rainbow-conic-gradient: conic-gradient(
-      from 0turn,
-      hsl(110 90% 50%),
-      hsl(210 90% 60%),
-      hsl(220 70% 60%),
-      hsl(30 70% 60%),
-      hsl(100 90% 50%)
-    );
-    --naut-color-rainbow:
-      linear-gradient(var(--naut-color-base), var(--naut-color-base-100))
-      padding-box,
-      var(--naut-rainbow-conic-gradient) border-box;
-    --naut-color-rainbow-hover:
-      linear-gradient(var(--naut-color-base-100), var(--naut-color-base))
-      padding-box,
-      var(--naut-rainbow-conic-gradient) border-box;
-
     position: relative;
     display: inline-flex;
     gap: 0.5rem;
@@ -119,7 +55,7 @@ const classlist = [
     height: 2.5rem;
     padding: 0 1rem;
     font-family: inherit;
-    font-size: var(--naut-font-size);
+    font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5rem;
 
@@ -129,8 +65,8 @@ const classlist = [
     text-decoration: none;
     cursor: pointer;
     outline: none;
-    background: var(--naut-color-button);
-    border-color: var(--naut-color-button-border);
+    background: var(--naut-color-base-100);
+    border-color: var(--naut-color-base-300);
     border-style: solid;
     border-width: 0.063rem;
     border-radius: 0.5rem;
@@ -138,7 +74,7 @@ const classlist = [
     transition-duration: 0.1s;
 
     &:hover:not(:disabled) {
-      background: var(--naut-color-button-hover);
+      background: var(--naut-color-base-200);
     }
 
     &:active:not(:disabled) {
@@ -152,7 +88,7 @@ const classlist = [
       border-color: var(--naut-color-primary);
 
       &:hover:not(:disabled) {
-        background: var(--naut-color-primary-hover);
+        background: color-mix(in oklch, var(--naut-color-primary), white 35%);
       }
     }
 
@@ -162,7 +98,7 @@ const classlist = [
       border-color: var(--naut-color-secondary);
 
       &:hover:not(:disabled) {
-        background: var(--naut-color-secondary-hover);
+        background: color-mix(in oklch, var(--naut-color-secondary), white 35%);
       }
     }
 
@@ -172,7 +108,11 @@ const classlist = [
       border-color: var(--naut-color-destructive);
 
       &:hover:not(:disabled) {
-        background: var(--naut-color-destructive-hover);
+        background: color-mix(
+          in oklch,
+          var(--naut-color-destructive),
+          white 25%
+        );
       }
     }
 
@@ -184,15 +124,15 @@ const classlist = [
       border-color: var(--naut-color-border-strong);
     }
 
-    &.variant-outline:hover:not(:disabled) {
+    /*&.variant-outline:hover:not(:disabled) {
       background: var(--naut-color-base-200);
-    }
+    }*/
 
     &.variant-outline-primary {
       border-color: var(--naut-color-primary);
 
       &:hover:not(:disabled) {
-        background: var(--naut-color-outline-primary-hover);
+        background: rgb(from var(--naut-color-primary) r g b / 0.15);
       }
     }
 
@@ -200,7 +140,7 @@ const classlist = [
       border-color: var(--naut-color-secondary);
 
       &:hover:not(:disabled) {
-        background: var(--naut-color-outline-secondary-hover);
+        background: rgb(from var(--naut-color-secondary) r g b / 0.15);
       }
     }
 
@@ -208,20 +148,12 @@ const classlist = [
       background: var(--naut-color-base-100);
       border-color: transparent;
       box-shadow: none;
-
-      &:hover:not(:disabled) {
-        background: var(--naut-color-base-200);
-      }
     }
 
     &.variant-ghost {
       background: transparent;
       border: none;
       box-shadow: none;
-
-      &:hover:not(:disabled) {
-        background: var(--naut-color-base-200);
-      }
     }
 
     &.variant-link {
@@ -237,10 +169,24 @@ const classlist = [
     }
 
     &.variant-rainbow {
-      background: var(--naut-color-rainbow);
+      --naut-rainbow-conic-gradient: conic-gradient(
+        from 0turn,
+        hsl(110 90% 50%),
+        hsl(210 90% 60%),
+        hsl(220 70% 60%),
+        hsl(30 70% 60%),
+        hsl(100 90% 50%)
+      );
+      background:
+        linear-gradient(var(--naut-color-base), var(--naut-color-base-100))
+        padding-box,
+        var(--naut-rainbow-conic-gradient) border-box;
       border-color: transparent;
       &:hover:not(:disabled) {
-        background: var(--naut-color-rainbow-hover);
+        background:
+          linear-gradient(var(--naut-color-base), var(--naut-color-base-200))
+          padding-box,
+          var(--naut-rainbow-conic-gradient) border-box;
       }
     }
 
@@ -305,7 +251,7 @@ const classlist = [
     &.size-sm {
       height: 2rem;
       padding: 0 0.85rem;
-      font-size: calc(var(--naut-font-size) * 0.875);
+      font-size: 0.8rem;
 
       /* square */
       &:has(> :only-child):has(> svg:first-child) {
@@ -323,45 +269,5 @@ const classlist = [
         padding: 0 0.562rem;
       }
     }
-  }
-
-  /* Dark theme overrides */
-  :global([data-theme="dark"] .naut-button) {
-    --naut-color-surface-hover: color-mix(
-      in oklch,
-      var(--naut-color-base),
-      white 40%
-    );
-    --naut-color-button: var(--naut-color-base-100);
-    --naut-color-button-hover: var(--naut-color-base-200);
-    --naut-color-button-border: color-mix(
-      in oklch,
-      var(--naut-color-border),
-      white 25%
-    );
-    --naut-color-button-border-outline: color-mix(
-      in oklch,
-      var(--naut-color-border),
-      white 50%
-    );
-    --naut-color-outline-primary-hover: rgb(
-      from var(--naut-color-primary) r g b /
-      0.5
-    );
-    --naut-color-secondary-hover: color-mix(
-      in oklch,
-      var(--naut-color-content),
-      black 10%
-    );
-    --naut-color-outline-secondary-hover: rgb(
-      from var(--naut-color-content) r g b /
-      0.4
-    );
-    --naut-color-rainbow:
-      linear-gradient(hsl(199 61% 17%), hsl(199 61% 17%)) padding-box,
-      var(--naut-rainbow-conic-gradient) border-box;
-    --naut-color-rainbow-hover:
-      linear-gradient(hsl(210 40% 35%), hsl(180 60% 20%)) padding-box,
-      var(--naut-rainbow-conic-gradient) border-box;
   }
 </style>
