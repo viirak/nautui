@@ -1,7 +1,19 @@
 {
   "name": "@nautui/blocks",
-  "version": "0.0.1",
   "description": "Composite components built from @nautui/core for NautUI",
+  "version": "0.0.1",
+  "author": "Virak Hor",
+  "license": "MIT",
+  "homepage": "https://github.com/viirak/nautui",
+  "repository": "https://github.com/viirak/nautui",
+  "bugs": "https://github.com/viirak/nautui/issues",
+  "keywords": [
+    "Astro",
+    "UI",
+    "Components",
+    "library",
+    "NautUI"
+  ],
   "main": "./src/index.ts",
   "types": "./src/index.d.ts",
   "files": [
@@ -11,18 +23,15 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@nautui/core": "workspace:*"
+    "@nautui/core": "^0.0.1"
+  },
+  "peerDependencies": {
+    "astro": "^4.0.0 || ^5.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "Astro",
-    "UI",
-    "Components",
-    "library",
-    "NautUI"
-  ],
-  "author": "",
-  "license": "ISC"
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -6,6 +6,12 @@
     "ultracite": "7.6.2"
   },
   "name": "nautui",
+  "description": "A clean, minimalist UI component library for Astro — built for marketing websites, not apps.",
+  "version": "0.0.1",
+  "author": "Virak Hor",
+  "bugs": "https://github.com/viirak/nautui/issues",
+  "repository": "https://github.com/viirak/nautui/core",
+  "license": "MIT",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -14,7 +20,7 @@
     "check": "ultracite check",
     "fix": "ultracite fix"
   },
-  "private": true,
+  "private": false,
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
