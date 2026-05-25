@@ -11,10 +11,10 @@ const {
   class: className,
   horizontal = false,
   divided = false,
-  gap = "xs",
+  gap,
   ...rest
 } = Astro.props as MenuProps;
-const gapVar = `var(--naut-spacing-${gap})`;
+const gapVar = gap ? `var(--naut-spacing-${gap})` : "1px";
 ---
 
 <nav
