@@ -1,14 +1,11 @@
 {
-  "devDependencies": {
-    "@biomejs/biome": "2.4.12",
-    "turbo": "^2.9.8",
-    "typescript": "5.9.2",
-    "ultracite": "7.6.2"
-  },
   "name": "nautui",
   "description": "A clean, minimalist UI component library for Astro — built for marketing websites, not apps.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Virak Hor",
+  "private": false,
+  "packageManager": "pnpm@9.0.0",
+  "homepage": "https://github.com/viirak/nautui",
   "bugs": "https://github.com/viirak/nautui/issues",
   "repository": "https://github.com/viirak/nautui/core",
   "license": "MIT",
@@ -20,9 +17,13 @@
     "check": "ultracite check",
     "fix": "ultracite fix"
   },
-  "private": false,
-  "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.12",
+    "turbo": "^2.9.8",
+    "typescript": "5.9.2",
+    "ultracite": "7.6.2"
   }
 }
