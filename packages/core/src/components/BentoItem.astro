@@ -14,9 +14,9 @@ const {
 } = Astro.props as BentoItemProps;
 ---
 
-<div class:list={["bento-item", className]} {...rest}><slot /></div>
+<div class:list={["naut-bento-item", className]} {...rest}><slot /></div>
 <style define:vars={{ bentoItemRows: row, bentoItemColumns: col }}>
-  .bento-item {
+  .naut-bento-item {
     position: relative;
     grid-row: span var(--bentoItemRows);
     grid-column: span var(--bentoItemColumns);
