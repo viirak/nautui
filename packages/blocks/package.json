@@ -1,7 +1,7 @@
 {
   "name": "@nautui/blocks",
   "description": "Composite components built from @nautui/core for NautUI",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Virak Hor",
   "license": "MIT",
   "homepage": "https://github.com/viirak/nautui",
@@ -23,10 +23,10 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@nautui/core": "^0.1.0"
+    "@nautui/core": "^0.1.1"
   },
   "peerDependencies": {
-    "astro": "^4.0.0 || ^5.0.0"
+    "astro": "^6.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

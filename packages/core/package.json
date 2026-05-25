@@ -1,7 +1,7 @@
 {
   "name": "@nautui/core",
   "description": "Core components for NautUI",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Virak Hor",
   "homepage": "https://github.com/viirak/nautui",
   "repository": "https://github.com/viirak/nautui",
@@ -30,6 +30,6 @@
     "access": "public"
   },
   "peerDependencies": {
-    "astro": "^4.0.0 || ^5.0.0"
+    "astro": "^6.0.0"
   }
 }
