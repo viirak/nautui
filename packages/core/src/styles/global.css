@@ -12,7 +12,6 @@
 
   :root {
     --naut-font-family: "Inter", sans-serif;
-
     --naut-line-height-ratio: 1.55;
 
     --naut-font-size-xs: 0.785rem;
@@ -30,32 +29,6 @@
     --naut-spacing-lg: 2rem;
     --naut-spacing-xl: 2.5rem;
     --naut-spacing-xxl: 3rem;
-
-    /* Spacing display */
-    /*--naut-spacing-display: clamp(4rem, 6vw + 1rem, 6rem);
-    --naut-spacing-display-lg: clamp(6rem, 8vw + 1rem, 8rem);
-    --naut-spacing-display-xl: clamp(8rem, 10vw + 1rem, 10rem);*/
-
-    /*--naut-border-radius-sm: 0.35rem;
-    --naut-border-radius-md: 0.5rem;
-    --naut-border-radius-lg: 0.75rem;
-    --naut-border-radius-full: 9999px;*/
-
-    /*--naut-border-width-sm: 0.031rem;
-    --naut-border-width-md: 0.063rem;
-    --naut-border-width-lg: 0.125rem;
-    --naut-border-width-xl: 0.195rem;*/
-
-    /* Shadows */
-    /*--naut-shadow-scale: 1;
-    --naut-shadow-s: calc(1rem * var(--naut-shadow-scale));
-    --naut-shadow-x: calc(0.0625 * var(--naut-shadow-s));
-    --naut-shadow-c: #0000001a;
-
-    --naut-shadow-sm: var(--naut-shadow-x) calc(0.125 * var(--naut-shadow-s)) calc(0.25 * var(--naut-shadow-s)) var(--naut-shadow-c);
-    --naut-shadow-md: var(--naut-shadow-x) calc(0.25 * var(--naut-shadow-s)) calc(0.5 * var(--naut-shadow-s)) var(--naut-shadow-c);
-    --naut-shadow-lg: var(--naut-shadow-x) calc(0.5 * var(--naut-shadow-s)) calc(1 * var(--naut-shadow-s)) var(--naut-shadow-c);
-    --naut-shadow-xl: var(--naut-shadow-x) calc(1 * var(--naut-shadow-s)) calc(2 * var(--naut-shadow-s)) var(--naut-shadow-c);*/
   }
 
   /* Global styles */
