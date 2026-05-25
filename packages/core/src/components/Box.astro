@@ -22,6 +22,7 @@ export interface Corner {
 
 export interface BoxProps extends Base, SpacingProps {
   border?: Border;
+  centered?: boolean;
   corner?: Corner;
   radius?: Radius;
 }
@@ -30,7 +31,14 @@ const { padding, margin, nonSpacing } = extractSpacingProps(
   Astro.props as BoxProps
 );
 
-const { border, radius, corner, class: className, ...rest } = nonSpacing;
+const {
+  border,
+  radius,
+  corner,
+  centered = false,
+  class: className,
+  ...rest
+} = nonSpacing;
 
 const borderConfig =
   typeof border === "string" ? { width: border } : border || {};
@@ -42,6 +50,7 @@ const paddingClasses = getSpacingClasses({ ...padding, p });
 const classlist = [
   "naut-box",
   radius && `radius-${radius}`,
+  centered && "centered",
   className,
   ...borderClasses,
   ...marginClasses,
@@ -63,6 +72,13 @@ const classlist = [
   .naut-box {
     position: relative;
     display: flow-root; /* Prevents margin collapsing */
+
+    &.centered {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
 
     .naut-box--wrapper {
       position: relative;
