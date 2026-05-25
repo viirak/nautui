@@ -209,11 +209,6 @@ Your .astro files should stay clean. We encapsulate styles and scripts within ou
 
 Customization without conflict. Using CSS Cascade Layers (@layer) and CSS Variables, we ensure that branding is as simple as redefining a token. No specificity wars, no !important.
 
-## Inspirations
-
-- [Mantine UI](https://mantine.dev)
-- [Tailwind Plus](https://tailwindcss.com/plus)
-
 ## License
 
 MIT
