@@ -8,6 +8,8 @@ Astro provides the rocket; **nautui** provides the gear. Built for speed and des
 
 **Status:** In development.
 
+![Naut UI](./assets/naut-ui-screenshot-1.jpg)
+
 ## Installation
 
 ```bash
@@ -140,15 +142,23 @@ Theming relies on `color-mix()`, `oklch()`, and relative color syntax (`rgb(from
 
 ### Layouts
 - [x] Container — center content with padding and a max-width
-- [x] Box — low-level layout component for spacing, borders, and background colors
-- [x] Section — full-width page section with variants (dimmed, highlight, inverted) and optional background patterns
+- [x] Section — full-width page section with variants
+- [x] Box — low-level layout component for spacing, borders, and background
 - [x] Group — flex container helper with gap and alignment shortcuts
-- [x] Grid — responsive 1–6 column grid with configurable gap
+- [x] Stack - row container helper with configurable gap
+- [x] Flow - container helper with configurable text alignment
+- [x] Grid — responsive 12 columns grid with configurable gap
+- [x] GridItem — grid item with column and offset props
+- [x] Bento - Bento grid layout with configurable rows and columns
+- [x] BentoItem - Bento grid item with configurable row and column spans
+- [x] Masonry — responsive masonry grid with configurable gap
+- [x] MasonryItem — masonry grid item with column span prop
+- [x] Marquee — horizontal scroll container with pause on hover
 
 ### Elements
-- [x] Button — link or button with 11 variants (primary, secondary, outline, ghost, destructive, rainbow, …)
+- [x] Button — link or button with 11 variants
 - [x] Badge — small pill label for status, counts, or tags
-- [x] Card — surface container with default, bordered, and flat variants; optional link
+- [x] Card — surface container with default, bordered, and flat variants;
 - [x] Divider — horizontal rule styled with theme tokens
 - [x] Image — responsive image with optional caption and themed border
 
@@ -159,34 +169,25 @@ Theming relies on `color-mix()`, `oklch()`, and relative color syntax (`rgb(from
 - [x] Link — themed anchor with hover and focus states
 - [x] List — styled ordered and unordered lists
 - [x] ListItem — list item with optional leading icon and themed marker
-- [ ] Quote — blockquote with themed border and text colors
 
 ## Navigation
 - [x] Navbar — horizontal site navigation with dropdown support
 - [x] Drawer — off-canvas sidebar for mobile navigation
 - [x] Breadcrumbs — hierarchical page links
-- [ ] Tabs — tabbed content switcher
+- [x] Accordion — collapsible content panels
+- [x] Menu — List of links with hover and focus states
+- [x] MenuItem — Link with optional leading icon
 
 ## Block Components
 - [x] Hero — marketing hero section with headline, subtext, and CTA slots
 - [ ] ToC — table of contents generated from headings
-- [ ] Footer — site footer with columns and legal row
-- [ ] Features — feature grid with icon, title, description cells
-- [ ] CTA — call-to-action band
-- [ ] Newsletter — email signup block
 - [ ] Contact — contact form and info block
-- [ ] Testimonials — customer quotes layout
-- [ ] FAQs — question / answer list
-- [ ] Blog — blog index and post layout
-- [ ] Accordion — collapsible content panels
 - [ ] Error pages — 404 and 500 templates
 - [ ] Pricing — pricing plan comparison
-- [ ] LogoCloud — grid of partner or customer logos
 - [ ] Carousel — horizontal slide carousel
-- [ ] Timeline — vertical chronological list
-- [ ] Marquee — horizontally scrolling content strip
-- [ ] Logo — brand wordmark / symbol component
-- [ ] Paper — renders white or dark background depending on color scheme
+- [ ] Blog — blog post list with pagination
+- [ ] Post — blog post with metadata and author info
+- [ ] Pagination — numbered or arrow pagination
 
 ## Icons
 
