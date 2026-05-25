@@ -1,7 +1,7 @@
 {
   "name": "nautui",
   "description": "A clean, minimalist UI component library for Astro — built for marketing websites, not apps.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Virak Hor",
   "private": true,
   "packageManager": "pnpm@9.0.0",
