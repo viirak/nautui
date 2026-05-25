@@ -2,6 +2,8 @@ import type { AccordionProps } from "./components/Accordion.astro";
 import type { AccordionItemProps } from "./components/AccordionItem.astro";
 import type { BackgroundProps } from "./components/Background.astro";
 import type { BadgeProps } from "./components/Badge.astro";
+import type { BentoProps } from "./components/Bento.astro";
+import type { BentoItemProps } from "./components/BentoItem.astro";
 import type { BoxProps } from "./components/Box.astro";
 import type { BreadcrumbProps } from "./components/Breadcrumb.astro";
 import type { ButtonProps } from "./components/Button.astro";
@@ -49,6 +51,8 @@ export declare const MasonryItem: (props: MasonryItemProps) => AstroComponent;
 export declare const Flow: (props: FlowProps) => AstroComponent;
 export declare const Space: (props: SpaceProps) => AstroComponent;
 export declare const Flex: (props: FlexProps) => AstroComponent;
+export declare const Bento: (props: BentoProps) => AstroComponent;
+export declare const BentoItem: (props: BentoItemProps) => AstroComponent;
 
 // Typography
 export declare const Text: (props: TextProps) => AstroComponent;

@@ -4,6 +4,8 @@ import Accordion from "./components/Accordion.astro";
 import AccordionItem from "./components/AccordionItem.astro";
 import Background from "./components/Background.astro";
 import Badge from "./components/Badge.astro";
+import Bento from "./components/Bento.astro";
+import BentoItem from "./components/BentoItem.astro";
 import Box from "./components/Box.astro";
 import Breadcrumb from "./components/Breadcrumb.astro";
 import Button from "./components/Button.astro";
@@ -40,6 +42,8 @@ export {
   AccordionItem,
   Background,
   Badge,
+  Bento,
+  BentoItem,
   Box,
   Breadcrumb,
   Button,

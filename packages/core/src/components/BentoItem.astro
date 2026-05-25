@@ -1,0 +1,27 @@
+---
+import { Base } from "../types";
+
+export interface BentoItemProps extends Base {
+  col?: number;
+  row?: number;
+}
+
+const {
+  row = 1,
+  col = 1,
+  class: className,
+  ...rest
+} = Astro.props as BentoItemProps;
+---
+
+<div class:list={["bento-item", className]} {...rest}><slot /></div>
+<style define:vars={{ bentoItemRows: row, bentoItemColumns: col }}>
+  .bento-item {
+    position: relative;
+    grid-row: span var(--bentoItemRows);
+    grid-column: span var(--bentoItemColumns);
+    margin: calc(var(--bentoGap) / 2);
+    overflow: hidden;
+    background: var(--naut-color-base-100);
+  }
+</style>
