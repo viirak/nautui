@@ -1,5 +1,6 @@
 ---
 import "../styles/spacing/margin.css";
+import "../styles/spacing/letter.css";
 import {
   extractSpacingProps,
   getSpacingClasses,
@@ -13,6 +14,7 @@ export interface TextProps extends Base, MarginProps {
   dimmed?: boolean;
   inline?: boolean;
   italic?: boolean;
+  ls?: Size; // letter spacing shorthand
   size?: Size;
   transform?: "capitalize" | "uppercase" | "lowercase";
   variant?:
@@ -29,15 +31,16 @@ const { margin, nonSpacing } = extractSpacingProps(Astro.props as TextProps);
 
 const {
   class: className,
+  align,
   weight,
   transform,
   decoration,
+  variant,
   size,
+  ls,
   italic = false,
   inline = false,
   dimmed = false,
-  variant,
-  align,
   ...rest
 } = nonSpacing;
 
@@ -53,6 +56,7 @@ const classList = [
   transform && `transform-${transform}`,
   variant && `variant-${variant}`,
   decoration && `decoration-${decoration}`,
+  ls && `ls-${ls}`,
   ...marginClasses,
   className,
 ];
