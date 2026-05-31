@@ -16,6 +16,13 @@ export interface TextProps extends Base, MarginProps {
   maxWidth?: number | string;
   size?: Size;
   transform?: "capitalize" | "uppercase" | "lowercase";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "destructive"
+    | "link"
+    | "highlight";
   weight?: "light" | "normal" | "medium" | "bold" | "semi-bold" | "extra-bold";
 }
 
@@ -31,6 +38,7 @@ const {
   italic = false,
   inline = false,
   dimmed = false,
+  variant,
   align,
   ...rest
 } = nonSpacing;
@@ -50,6 +58,7 @@ const classList = [
   size && `size-${size}`,
   weight && `weight-${weight}`,
   transform && `transform-${transform}`,
+  variant && `variant-${variant}`,
   decoration && `decoration-${decoration}`,
   ...marginClasses,
   className,
@@ -252,6 +261,19 @@ const classList = [
     }
     &.mr-xl {
       margin-right: var(--naut-spacing-xl);
+    }
+
+    /* Variants */
+    &.variant-primary {
+      color: var(--naut-color-primary);
+    }
+
+    &.variant-secondary {
+      color: var(--naut-color-secondary);
+    }
+
+    &.variant-destructive {
+      color: var(--naut-color-destructive);
     }
   }
 
