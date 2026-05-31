@@ -19,6 +19,7 @@
    --naut-tint-soft: 0.1;
 
    /* === Neutral surface scale (derived from primary + tint) === */
+   --naut-color-base-0: white;
    --naut-color-base: color-mix(in oklch, white, var(--naut-color-primary) var(--naut-tint-base));
    --naut-color-base-100: color-mix(in oklch, var(--naut-color-base), black 2%);
    --naut-color-base-200: color-mix(in oklch, var(--naut-color-base), black 5%);
@@ -41,6 +42,7 @@
  section.dark,
  nav.dark {
    /* === Neutral surface scale (flipped: mix toward white instead of black) === */
+   --naut-color-base-0: black;
    --naut-color-base: color-mix(in oklch, black, var(--naut-color-primary) var(--naut-tint-base));
    --naut-color-base-100: color-mix(in oklch, var(--naut-color-base), white 35%);
    --naut-color-base-200: color-mix(in oklch, var(--naut-color-base), white 40%);
