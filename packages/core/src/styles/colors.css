@@ -13,14 +13,10 @@
 
    /* === Tint controls (overridable) ===
     * Convention constants for component-side color-mix.
-    * Brand-soft/strong are NOT promoted to tokens; components derive them
-    * inline using these knobs to keep the public API minimal. */
+    */
    --naut-tint-base: 3%;
-   /* primary bleed into neutrals */
    --naut-tint-strong: 25%;
-   /* darken amount for "stronger" brand mixes */
    --naut-tint-soft: 0.1;
-   /* alpha for translucent brand backgrounds */
 
    /* === Neutral surface scale (derived from primary + tint) === */
    --naut-color-base: color-mix(in oklch, white, var(--naut-color-primary) var(--naut-tint-base));
