@@ -49,7 +49,7 @@
        black,
        var(--naut-color-primary) var(--naut-tint-base));
    --naut-color-content-soft: color-mix(in oklch,
-       var(--naut-color-base-content),
+       var(--naut-color-content),
        white 60%);
 
    /* === Border aliases (separately themeable) === */
