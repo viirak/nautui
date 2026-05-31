@@ -11,6 +11,7 @@ import {
 import type { Base, Radius } from "../types";
 
 export interface CardProps extends Base, PaddingProps {
+  badged?: boolean;
   border?: Border;
   fluid?: boolean;
   hover?:
@@ -39,6 +40,7 @@ const { padding, nonSpacing } = extractSpacingProps(Astro.props as CardProps);
 
 const {
   class: className,
+  badged = false,
   border,
   shadow,
   radius,
@@ -59,6 +61,7 @@ const { borderClasses, borderColors } = createBorder(config);
     "naut-card",
     size && `size-${size}`,
     fluid && "fluid",
+    badged && "badged",
     variant !== "ghost" && `variant-${variant}`,
     hover && `hover-${hover}`,
     radius && `radius-${radius}`,
@@ -68,6 +71,7 @@ const { borderClasses, borderColors } = createBorder(config);
   ]}
   {...rest}
 >
+  {badged && <div class="naut-card--badge"><slot name="badge" /></div>}
   <div class="naut-card--header"><slot name="header" /></div>
   <div class:list={["naut-card--body", ...paddingClasses]}><slot /></div>
   <div class="naut-card--footer"><slot name="footer" /></div>
@@ -81,7 +85,6 @@ const { borderClasses, borderColors } = createBorder(config);
 
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     transition: 0.15s ease-in-out;
 
     &.size-sm:not(.fluid) {
@@ -103,6 +106,7 @@ const { borderClasses, borderColors } = createBorder(config);
 
     .naut-card--body {
       position: relative;
+      overflow: hidden;
     }
 
     .naut-card--header:empty {
@@ -228,6 +232,16 @@ const { borderClasses, borderColors } = createBorder(config);
     &.hover-elevate-xl:hover {
       box-shadow: var(--naut-shadow-xl);
       transform: translateY(-10px);
+    }
+
+    &.badged .naut-card--body {
+      margin-top: 1rem;
+    }
+
+    .naut-card--badge {
+      position: absolute;
+      top: -0.9rem;
+      right: 1.25rem;
     }
   }
 </style>
