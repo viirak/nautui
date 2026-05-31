@@ -9,6 +9,7 @@ import {
 import type { Base, Size } from "../types";
 
 type TextDecoration = "underline" | "strikethrough";
+type TextTranform = "capitalize" | "uppercase" | "lowercase";
 
 export interface TextProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
@@ -19,7 +20,8 @@ export interface TextProps extends Base, MarginProps {
   ls?: Size; // letter spacing shorthand
   size?: Size;
   td?: TextDecoration; // text decoration shorthand
-  transform?: "capitalize" | "uppercase" | "lowercase";
+  transform?: TextTranform;
+  tt?: TextTranform; // text transform shorthand
   variant?:
     | "primary"
     | "secondary"
@@ -38,6 +40,7 @@ const {
   weight,
   transform,
   decoration,
+  tt,
   td,
   variant,
   size,
@@ -49,6 +52,8 @@ const {
 } = nonSpacing;
 
 const marginClasses = getSpacingClasses(margin);
+const textTransform = transform || tt;
+const textDecoration = decoration || td;
 
 const classList = [
   "text",
@@ -57,9 +62,9 @@ const classList = [
   align && `align-${align}`,
   size && `size-${size}`,
   weight && `weight-${weight}`,
-  transform && `transform-${transform}`,
+  textTransform && `tt-${textTransform}`,
   variant && `variant-${variant}`,
-  decoration || (td && `td-${decoration || td}`),
+  textDecoration && `td-${textDecoration}`,
   ls && `ls-${ls}`,
   ...marginClasses,
   className,
@@ -168,13 +173,13 @@ const classList = [
       font-weight: 800;
     }
 
-    &.transform-capitalize {
+    &.tt-capitalize {
       text-transform: capitalize;
     }
-    &.transform-uppercase {
+    &.tt-uppercase {
       text-transform: uppercase;
     }
-    &.transform-lowercase {
+    &.tt-lowercase {
       text-transform: lowercase;
     }
 
