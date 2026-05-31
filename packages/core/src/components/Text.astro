@@ -8,14 +8,17 @@ import {
 } from "../lib/spacing";
 import type { Base, Size } from "../types";
 
+type TextDecoration = "underline" | "strikethrough";
+
 export interface TextProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
-  decoration?: "underline" | "strikethrough";
+  decoration?: TextDecoration;
   dimmed?: boolean;
   inline?: boolean;
   italic?: boolean;
   ls?: Size; // letter spacing shorthand
   size?: Size;
+  td?: TextDecoration; // text decoration shorthand
   transform?: "capitalize" | "uppercase" | "lowercase";
   variant?:
     | "primary"
@@ -35,6 +38,7 @@ const {
   weight,
   transform,
   decoration,
+  td,
   variant,
   size,
   ls,
@@ -55,7 +59,7 @@ const classList = [
   weight && `weight-${weight}`,
   transform && `transform-${transform}`,
   variant && `variant-${variant}`,
-  decoration && `decoration-${decoration}`,
+  decoration || (td && `td-${decoration || td}`),
   ls && `ls-${ls}`,
   ...marginClasses,
   className,
@@ -174,10 +178,10 @@ const classList = [
       text-transform: lowercase;
     }
 
-    &.decoration-underline {
+    &.td-underline {
       text-decoration: underline;
     }
-    &.decoration-strikethrough {
+    &.td-strikethrough {
       text-decoration: line-through;
     }
 
