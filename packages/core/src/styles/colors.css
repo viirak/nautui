@@ -23,76 +23,41 @@
    /* alpha for translucent brand backgrounds */
 
    /* === Neutral surface scale (derived from primary + tint) === */
-   --naut-color-base: color-mix(in oklch,
-       white,
-       var(--naut-color-primary) var(--naut-tint-base));
-   /* page background */
-   --naut-color-base-100: color-mix(in oklch,
-       var(--naut-color-base),
-       black 2%);
-   /* subtle patterns */
-   --naut-color-base-200: color-mix(in oklch,
-       var(--naut-color-base),
-       black 5%);
-   /* surface: cards, inputs, hover overlays */
-   --naut-color-base-300: color-mix(in oklch,
-       var(--naut-color-base),
-       black 10%);
-   /* borders, dividers */
-   --naut-color-base-400: color-mix(in oklch,
-       var(--naut-color-base),
-       black 50%);
-   /* outline borders, strong dividers */
+   --naut-color-base: color-mix(in oklch, white, var(--naut-color-primary) var(--naut-tint-base));
+   --naut-color-base-100: color-mix(in oklch, var(--naut-color-base), black 2%);
+   --naut-color-base-200: color-mix(in oklch, var(--naut-color-base), black 5%);
+   --naut-color-base-300: color-mix(in oklch, var(--naut-color-base), black 10%);
+   --naut-color-base-400: color-mix(in oklch, var(--naut-color-base), black 50%);
 
    /* === Text on neutrals === */
-   --naut-color-content: color-mix(in oklch,
-       black,
-       var(--naut-color-primary) var(--naut-tint-base));
-   --naut-color-content-soft: color-mix(in oklch,
-       var(--naut-color-content),
-       white 60%);
+   --naut-color-content: color-mix(in oklch, black, var(--naut-color-primary) var(--naut-tint-base));
+   --naut-color-content-soft: color-mix(in oklch, var(--naut-color-content), white 60%);
 
    /* === Border aliases (separately themeable) === */
    --naut-color-border: var(--naut-color-base-300);
    --naut-color-border-strong: var(--naut-color-base-400);
 
    /* === Specialty === */
-   --naut-color-selection: color-mix(in oklch,
-       var(--naut-color-primary),
-       white 75%);
+   --naut-color-selection: color-mix(in oklch, var(--naut-color-primary), white 75%);
  }
 
  [data-theme="dark"],
  section.dark,
  nav.dark {
    /* === Neutral surface scale (flipped: mix toward white instead of black) === */
-   --naut-color-base: color-mix(in oklch,
-       black,
-       var(--naut-color-primary) var(--naut-tint-base));
-   --naut-color-base-100: color-mix(in oklch,
-       var(--naut-color-base),
-       white 35%);
-   --naut-color-base-200: color-mix(in oklch,
-       var(--naut-color-base),
-       white 40%);
-   --naut-color-base-300: color-mix(in oklch,
-       var(--naut-color-base),
-       white 45%);
-   --naut-color-base-400: color-mix(in oklch,
-       var(--naut-color-base),
-       white 50%);
+   --naut-color-base: color-mix(in oklch, black, var(--naut-color-primary) var(--naut-tint-base));
+   --naut-color-base-100: color-mix(in oklch, var(--naut-color-base), white 35%);
+   --naut-color-base-200: color-mix(in oklch, var(--naut-color-base), white 40%);
+   --naut-color-base-300: color-mix(in oklch, var(--naut-color-base), white 45%);
+   --naut-color-base-400: color-mix(in oklch, var(--naut-color-base), white 50%);
 
    /* === Border (re-aliased onto the dark neutral scale) === */
    --naut-color-border: var(--naut-color-base-300);
    --naut-color-border-strong: var(--naut-color-base-400);
 
    /* === Text on neutrals === */
-   --naut-color-content: color-mix(in oklch,
-       white,
-       var(--naut-color-primary) var(--naut-tint-base));
-   --naut-color-content-soft: color-mix(in oklch,
-       var(--naut-color-content),
-       black 30%);
+   --naut-color-content: color-mix(in oklch, white, var(--naut-color-primary) var(--naut-tint-base));
+   --naut-color-content-soft: color-mix(in oklch, var(--naut-color-content), black 30%);
 
    /* === Specialty === */
    --naut-color-link: color-mix(in oklch, blue, white 80%);
