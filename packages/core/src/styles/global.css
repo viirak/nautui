@@ -12,6 +12,7 @@
 
   :root {
     --naut-font-family: "Inter", sans-serif;
+    --naut-font-family-title: var(--naut-font-family);
     --naut-line-height-ratio: 1.55;
 
     --naut-font-size-xs: 0.785rem;
