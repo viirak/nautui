@@ -6,6 +6,9 @@ export interface MarkProps extends Base {
   rotate?: "sm" | "md" | "lg";
   variant?:
     | "default"
+    | "primary"
+    | "secondary"
+    | "destructive"
     | "underline"
     | "halflight"
     | "parallelogram"
@@ -42,8 +45,6 @@ const gradientBg = gradient
     padding-right: 1rem;
     padding-left: 1rem;
     color: var(--naut-color-content);
-    -moz-text-fill-color: var(--naut-color-content);
-    -webkit-text-fill-color: var(--naut-color-content);
     background-color: var(--naut-color-highlight);
 
     &::selection {
@@ -60,6 +61,21 @@ const gradientBg = gradient
 
     &.rotate--lg {
       transform: rotate(-1.95deg);
+    }
+
+    &.variant--primary {
+      color: var(--naut-color-primary);
+      background: none;
+    }
+
+    &.variant--secondary {
+      color: var(--naut-color-secondary);
+      background: none;
+    }
+
+    &.variant--destructive {
+      color: var(--naut-color-destructive);
+      background: none;
     }
 
     &.variant--underline {
