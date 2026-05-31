@@ -34,7 +34,6 @@ const {
   transform,
   decoration,
   size,
-  maxWidth,
   italic = false,
   inline = false,
   dimmed = false,
@@ -44,11 +43,6 @@ const {
 } = nonSpacing;
 
 const marginClasses = getSpacingClasses(margin);
-
-const maxWidthStyle =
-  maxWidth === undefined
-    ? undefined
-    : `max-width: ${typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth}`;
 
 const classList = [
   "text",
@@ -65,8 +59,8 @@ const classList = [
 ];
 ---
 
-{inline && <span class:list={classList} style={maxWidthStyle} {...rest}><slot /></span>}
-{!inline && <p class:list={classList} style={maxWidthStyle} {...rest}><slot /></p>}
+{inline && <span class:list={classList} {...rest}><slot /></span>}
+{!inline && <p class:list={classList} {...rest}><slot /></p>}
 
 <style>
   .text {
