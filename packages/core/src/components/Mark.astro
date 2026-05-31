@@ -2,6 +2,7 @@
 import type { Base } from "../types";
 
 export interface MarkProps extends Base {
+  ff?: string; // font family
   gradient?: { colors: string[]; deg?: number };
   rotate?: "sm" | "md" | "lg";
   variant?:
@@ -20,11 +21,13 @@ const {
   variant,
   rotate,
   gradient,
+  ff,
   ...rest
 } = Astro.props as MarkProps;
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : undefined;
+const nautMarkFontFamily = ff ? "inherit" : undefined;
 ---
 
 <mark
@@ -39,11 +42,12 @@ const gradientBg = gradient
   <slot />
 </mark>
 
-<style define:vars={{ gradientBg }}>
+<style define:vars={{ gradientBg, nautMarkFontFamily }}>
   .naut-mark {
     display: inline-block;
     padding-right: 1rem;
     padding-left: 1rem;
+    font-family: var(--nautMarkFontFamily);
     color: var(--naut-color-content);
     background-color: var(--naut-color-highlight);
 
