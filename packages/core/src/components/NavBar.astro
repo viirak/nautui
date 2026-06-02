@@ -54,9 +54,10 @@ const hiddenOffset = `${height + offset}px`;
 >
   <div class="naut-space naut-space--left"></div>
   <div class="naut-space naut-space--center">
-    <Container fluid={fluid}>
-      <div class="naut-navbar--content"><slot /></div>
-    </Container>
+    {!fluid && <Container>
+      <div class="naut-navbar--content contained"><slot /></div>
+    </Container>}
+    {fluid && <div class="naut-navbar--content"><slot /></div>}
   </div>
   <div class="naut-space naut-space--right"></div>
 </nav>
@@ -174,6 +175,10 @@ const hiddenOffset = `${height + offset}px`;
       align-items: center;
       justify-content: space-between;
       height: var(--barHeight);
+
+      &:not(.contained) {
+        margin: 0 var(--naut-spacing-md);
+      }
     }
   }
 </style>
