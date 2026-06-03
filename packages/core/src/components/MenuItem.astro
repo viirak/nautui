@@ -1,16 +1,19 @@
 ---
-import type { Base } from "../types";
+import type { Base, Radius } from "../types";
+import "../styles/radius.css";
 
 export interface MenuItemProps extends Base {
   active?: boolean;
   color?: "text" | "link" | "dimmed";
   href: string;
+  radius?: Radius;
 }
 
 const {
   class: className,
   active = false,
   color = "text",
+  radius = "sm",
   href,
   ...rest
 } = Astro.props as MenuItemProps;
@@ -19,6 +22,7 @@ const classList = [
   "naut-menu-item",
   active && "active",
   color !== "text" && `color-${color}`,
+  radius && `radius-${radius}`,
   className,
 ];
 ---
