@@ -1,0 +1,10 @@
+---
+import "../styles/article.css"
+import { Base } from "../types";
+
+export interface ArticleProps extends Base {}
+const { class: className, ...rest} = Astro.props as ArticleProps;
+---
+<article class:list={["naut-article", className]} {...rest}>
+  <slot />
+</article>

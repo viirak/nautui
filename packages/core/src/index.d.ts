@@ -31,6 +31,7 @@ import type { TextProps } from "./components/Text.astro";
 import type { ThemeProps } from "./components/Theme.astro";
 import type { ThemeToggleProps } from "./components/ThemeToggle.astro";
 import type { TitleProps } from "./components/Title.astro";
+import type { ArticleProps } from "./components/Article.astro";
 
 export type AstroComponent = () => Promise<{ Content: unknown }>;
 
@@ -61,6 +62,7 @@ export declare const Link: (props: LinkProps) => AstroComponent;
 export declare const Mark: (props: MarkProps) => AstroComponent;
 export declare const List: (props: ListProps) => AstroComponent;
 export declare const ListItem: (props: ListItemProps) => AstroComponent;
+export declare const Article: (props: ArticleProps) => AstroComponent;
 
 // UI
 export declare const Accordion: (props: AccordionProps) => AstroComponent;

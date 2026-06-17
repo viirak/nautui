@@ -36,8 +36,10 @@ import Text from "./components/Text.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
 import Title from "./components/Title.astro";
+import Article from "./components/Article.astro";
 
 export {
+  Article,
   Accordion,
   AccordionItem,
   Background,
