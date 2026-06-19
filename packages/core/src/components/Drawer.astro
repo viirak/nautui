@@ -32,6 +32,7 @@ const drawerId = `naut-drawer-${Math.random().toString(36).slice(2, 9)}`;
   onclick={`toggleMenu('${drawerId}')`}
   class:list={[hidden && `hidden--${hidden}`]}
   {...button}
+  square
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +60,7 @@ const drawerId = `naut-drawer-${Math.random().toString(36).slice(2, 9)}`;
     variant="ghost"
     class:list={["naut-drawer-close", position === "center" && "panel-centered"]}
     onclick={`toggleMenu('${drawerId}')`}
+    square
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
