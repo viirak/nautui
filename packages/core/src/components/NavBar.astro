@@ -57,7 +57,7 @@ const hiddenOffset = `${height + offset}px`;
     {!fluid && <Container>
       <div class="naut-navbar--content contained"><slot /></div>
     </Container>}
-    {fluid && <div class="naut-navbar--content"><slot /></div>}
+    {fluid && <div class:list={["naut-navbar--content"]}><slot /></div>}
   </div>
   <div class="naut-space naut-space--right"></div>
 </nav>
@@ -87,10 +87,9 @@ const hiddenOffset = `${height + offset}px`;
     }
 
     &.sticky {
-      position: fixed;
+      position: sticky;
       top: var(--offsetValue);
       z-index: var(--zindex);
-      width: 100%;
 
       &.scrolled {
         background-color: rgb(from var(--naut-color-base) r g b / 0.75);
