@@ -1,17 +1,21 @@
 ---
 import type { Base } from "../types";
+import type { ButtonProps } from "./Button.astro";
 import Button from "./Button.astro";
 
+type ToggleButtonProps = Omit<ButtonProps, "onclick">;
+
 export interface DrawerProps extends Base {
+  button?: ToggleButtonProps;
   hidden?: "mobile" | "tablet" | "desktop" | "large-desktop";
   zIndex?: number;
 }
 
-const { hidden = "desktop", zIndex = 999 } = Astro.props as DrawerProps;
+const { hidden = "desktop", zIndex = 999, button } = Astro.props as DrawerProps;
 ---
 
 <div class:list={["naut-drawer-toggle", `hidden--${hidden}`]}>
-  <Button variant="ghost" onclick="toggleMenu()">
+  <Button variant="ghost" onclick="toggleMenu()" {...button}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
