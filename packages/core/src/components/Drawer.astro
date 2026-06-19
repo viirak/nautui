@@ -5,13 +5,24 @@ import Button from "./Button.astro";
 
 type ToggleButtonProps = Omit<ButtonProps, "onclick">;
 
+type DrawerPosition = "center" | "top" | "right" | "bottom" | "left";
+
 export interface DrawerProps extends Base {
   button?: ToggleButtonProps;
   hidden?: "mobile" | "tablet" | "desktop" | "large-desktop";
+  position?: DrawerPosition;
+  size?: string;
   zIndex?: number;
 }
 
-const { hidden = "desktop", zIndex = 999, button } = Astro.props as DrawerProps;
+const {
+  hidden = "desktop",
+  position = "center",
+  size = "300px",
+  zIndex = 999,
+  button,
+} = Astro.props as DrawerProps;
+const isSide = position !== "center";
 ---
 
 <div class:list={["naut-drawer-toggle", `hidden--${hidden}`]}>
@@ -37,33 +48,34 @@ const { hidden = "desktop", zIndex = 999, button } = Astro.props as DrawerProps;
     </svg>
   </Button>
 </div>
-<div id="naut-drawer">
-  <header class="naut-drawer-header">
-    <Button variant="ghost" id="close-btn" onclick="toggleMenu()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.7"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="lucide lucide-x"
-      >
-        <title>Close</title>
-        <path d="M18 6 6 18" />
-        <path d="m6 6 12 12" />
-      </svg>
-    </Button>
-  </header>
-  <div class="naut-drawer-content"><slot /></div>
+<div class="naut-drawer">
+  <div class="naut-drawer-backdrop"></div>
+  <Button variant="ghost" class="naut-drawer-close" onclick="toggleMenu()">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-x"
+    >
+      <title>Close</title>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  </Button>
+  <div class:list={["naut-drawer-panel", `position--${position}`]}>
+    <div class="naut-drawer-content"><slot /></div>
+  </div>
 </div>
 
 <script is:inline>
   const toggleMenu = () => {
-    const drawer = document.querySelector("#naut-drawer");
+    const drawer = document.querySelector(".naut-drawer");
     if (drawer) {
       drawer.classList.toggle("active");
       document.body.appendChild(drawer);
@@ -74,7 +86,7 @@ const { hidden = "desktop", zIndex = 999, button } = Astro.props as DrawerProps;
   };
 </script>
 
-<style define:vars={{ zIndex }}>
+<style define:vars={{ zIndex, drawerSize: size }}>
   .naut-drawer-toggle {
     display: inline-block;
 
@@ -103,41 +115,90 @@ const { hidden = "desktop", zIndex = 999, button } = Astro.props as DrawerProps;
     }
   }
 
-  #naut-drawer {
+  .naut-drawer {
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     z-index: var(--zIndex);
     visibility: hidden;
-    overflow: hidden;
     color: var(--naut-color-content);
-    background: rgb(
-      from var(--naut-color-base) r g b /
-      0.7
-    ); /* Semi-transparent color */
-    opacity: 0;
-    -webkit-backdrop-filter: blur(5px); /* Required for Safari support */
-    backdrop-filter: blur(5px); /* Blurs what's behind this box */
-    transition:
-      opacity 0.4s ease-in-out,
-      visibility 0.4s ease-in-out;
 
-    &.active {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    #close-btn {
+    .naut-drawer-close {
       position: absolute;
-      top: 1rem;
-      right: 1.2rem;
+      top: var(--naut-spacing-sm);
+      right: var(--naut-spacing-sm);
       z-index: 12;
     }
 
-    .naut-drawer-content {
-      padding: var(--naut-spacing-md);
+    .naut-drawer-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgb(from var(--naut-color-base) r g b / 0.7);
+      opacity: 0;
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
+      transition: opacity 0.3s ease;
+    }
+
+    .naut-drawer-panel {
+      position: absolute;
+      overflow-y: auto;
+      background: var(--naut-color-base);
+
+      .naut-drawer-content {
+        padding: var(--naut-spacing-md);
+      }
+
+      &.position--center {
+        inset: 0;
+        background: transparent;
+      }
+
+      &.position--left,
+      &.position--right {
+        top: 0;
+        bottom: 0;
+        width: var(--drawerSize);
+        transition: transform 0.3s ease;
+      }
+
+      &.position--left {
+        left: 0;
+        transform: translateX(-100%);
+      }
+
+      &.position--right {
+        right: 0;
+        transform: translateX(100%);
+      }
+
+      &.position--top,
+      &.position--bottom {
+        right: 0;
+        left: 0;
+        height: var(--drawerSize);
+        transition: transform 0.3s ease;
+      }
+
+      &.position--top {
+        top: 0;
+        transform: translateY(-100%);
+      }
+
+      &.position--bottom {
+        bottom: 0;
+        transform: translateY(100%);
+      }
+    }
+
+    &.active {
+      visibility: visible;
+      .naut-drawer-backdrop {
+        opacity: 1;
+      }
+
+      .naut-drawer-panel {
+        transform: translate(0, 0);
+      }
     }
   }
 </style>
