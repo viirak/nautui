@@ -18,6 +18,7 @@ export interface TextProps extends Base, MarginProps {
   inline?: boolean;
   italic?: boolean;
   ls?: Size; // letter spacing shorthand
+  nowrap?: boolean;
   size?: Size;
   td?: TextDecoration; // text decoration shorthand
   transform?: TextTranform;
@@ -48,6 +49,7 @@ const {
   italic = false,
   inline = false,
   dimmed = false,
+  nowrap = false,
   ...rest
 } = nonSpacing;
 
@@ -59,6 +61,7 @@ const classList = [
   "text",
   italic && "italic",
   dimmed && "dimmed",
+  nowrap && "nowrap",
   align && `align-${align}`,
   size && `size-${size}`,
   weight && `weight-${weight}`,
@@ -92,6 +95,10 @@ const classList = [
 
     &.italic {
       font-style: italic;
+    }
+
+    &.nowrap {
+      white-space: nowrap;
     }
 
     &.align-left {
