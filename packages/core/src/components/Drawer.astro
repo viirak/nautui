@@ -12,17 +12,16 @@ export interface DrawerProps extends Base {
   hidden?: "mobile" | "tablet" | "desktop" | "large-desktop";
   position?: DrawerPosition;
   size?: string;
-  zIndex?: number;
+  zi?: number;
 }
 
 const {
   hidden = "desktop",
   position = "center",
   size = "300px",
-  zIndex = 999,
+  zi = 999,
   button,
 } = Astro.props as DrawerProps;
-const isSide = position !== "center";
 ---
 
 <div class:list={["naut-drawer-toggle", `hidden--${hidden}`]}>
@@ -86,7 +85,7 @@ const isSide = position !== "center";
   };
 </script>
 
-<style define:vars={{ zIndex, drawerSize: size }}>
+<style define:vars={{ nautDrawerZIndex: zi, nautDrawerSize: size }}>
   .naut-drawer-toggle {
     display: inline-block;
 
@@ -118,7 +117,7 @@ const isSide = position !== "center";
   .naut-drawer {
     position: fixed;
     inset: 0;
-    z-index: var(--zIndex);
+    z-index: var(--nautDrawerZIndex);
     visibility: hidden;
     color: var(--naut-color-content);
 
@@ -157,7 +156,7 @@ const isSide = position !== "center";
       &.position--right {
         top: 0;
         bottom: 0;
-        width: var(--drawerSize);
+        width: var(--nautDrawerSize);
         transition: transform 0.3s ease;
       }
 
@@ -175,7 +174,7 @@ const isSide = position !== "center";
       &.position--bottom {
         right: 0;
         left: 0;
-        height: var(--drawerSize);
+        height: var(--nautDrawerSize);
         transition: transform 0.3s ease;
       }
 
