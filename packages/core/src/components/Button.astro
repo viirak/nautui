@@ -11,6 +11,7 @@ export interface ButtonProps extends Base {
   href?: string;
   rounded?: Radius;
   size?: ButtonSize;
+  square?: boolean;
   type?: ButtonType;
   variant?: ButtonVariant;
 }
@@ -25,6 +26,7 @@ const {
   border = "md",
   pill = false,
   dark = false,
+  square = false,
   ...rest
 } = Astro.props as ButtonProps;
 
@@ -36,6 +38,7 @@ const classlist = [
   `border-${border}`,
   pill && "pill",
   dark && "dark",
+  square && "square",
   className,
 ];
 ---
@@ -124,9 +127,9 @@ const classlist = [
       border-color: var(--naut-color-border-strong);
     }
 
-    /*&.variant-outline:hover:not(:disabled) {
+    &.variant-outline:hover:not(:disabled) {
       background: var(--naut-color-base-200);
-    }*/
+    }
 
     &.variant-outline-primary {
       border-color: var(--naut-color-primary);
@@ -242,16 +245,15 @@ const classlist = [
       border-radius: 9999px;
     }
 
-    /* Square (icon-only button) */
-    &:has(> :only-child):has(> svg:first-child) {
+    &.square {
       aspect-ratio: 1;
-      padding: 0;
+      padding: 0 !important;
     }
 
     /* SVG icons */
     :global(svg) {
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 1.2815rem;
+      height: 1.2815rem;
     }
 
     /* Sizes */
@@ -261,8 +263,8 @@ const classlist = [
       font-size: 0.8rem;
 
       :global(svg) {
-        width: 1.25rem;
-        height: 1.25rem;
+        width: 1.125rem;
+        height: 1.125rem;
       }
     }
 
