@@ -1,0 +1,23 @@
+.hidden--sm {
+  @media only screen and (min-width: 576px) {
+    display: none !important;
+  }
+}
+
+.hidden--md {
+  @media only screen and (min-width: 818px) {
+    display: none !important;
+  }
+}
+
+.hidden--lg {
+  @media only screen and (min-width: 1042px) {
+    display: none !important;
+  }
+}
+
+.hidden--xl {
+  @media only screen and (min-width: 1250px) {
+    display: none !important;
+  }
+}
