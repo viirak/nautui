@@ -30,6 +30,7 @@ import type { SpaceProps } from "./components/Space.astro";
 import type { TextProps } from "./components/Text.astro";
 import type { ThemeProps } from "./components/Theme.astro";
 import type { ThemeToggleProps } from "./components/ThemeToggle.astro";
+import type { TOCProps } from "./components/TOC.astro";
 import type { TitleProps } from "./components/Title.astro";
 import type { ArticleProps } from "./components/Article.astro";
 
@@ -80,3 +81,4 @@ export declare const Background: (props: BackgroundProps) => AstroComponent;
 export declare const Breadcrumb: (props: BreadcrumbProps) => AstroComponent;
 export declare const Drawer: (props: DrawerProps) => AstroComponent;
 export declare const NavBar: (props: NavBarProps) => AstroComponent;
+export declare const TOC: (props: TOCProps) => AstroComponent;

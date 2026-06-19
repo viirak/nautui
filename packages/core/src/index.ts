@@ -35,6 +35,7 @@ import Stack from "./components/Stack.astro";
 import Text from "./components/Text.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
+import TOC from "./components/TOC.astro";
 import Title from "./components/Title.astro";
 import Article from "./components/Article.astro";
 
@@ -75,5 +76,6 @@ export {
   Text,
   Theme,
   ThemeToggle,
+  TOC,
   Title,
 };

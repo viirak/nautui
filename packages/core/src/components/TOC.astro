@@ -1,0 +1,138 @@
+---
+import type { MarkdownHeading } from "astro";
+import type { Base } from "../types";
+
+export interface TOCProps extends Base {
+  headings: MarkdownHeading[];
+  sticky?: boolean;
+  title?: string;
+  top?: { offset: number; slug: string; label: string };
+}
+
+const {
+  class: className,
+  title = "On this page",
+  headings,
+  sticky = true,
+  top,
+  ...rest
+} = Astro.props as TOCProps;
+const allHeadings = top
+  ? [{ depth: 2 as const, slug: top.slug, text: top.label }, ...headings]
+  : headings;
+const offset = top?.offset ? `${top.offset}px` : "90px";
+const offsetNumber = top?.offset ? top.offset : 90;
+const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div
+  id={tocId}
+  class:list={["naut-toc", sticky && "sticky", className]}
+  {...rest}
+>
+  <h2 class="naut-toc--title">{title}</h2>
+  <ul class="naut-toc--list">
+    {allHeadings.map((heading) => (
+      <li class="naut-toc--list-item"><a class="naut-toc--link" href={`#${heading.slug}`}>{heading.text}</a></li>
+    ))}
+  </ul>
+</div>
+
+<style define:vars={{ nautTocOffset: offset }}>
+  .naut-toc {
+    overflow: hidden;
+
+    &.sticky {
+      position: sticky;
+      top: var(--nautTocOffset);
+    }
+  }
+
+  .naut-toc--title {
+    margin: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .naut-toc--list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .naut-toc--link {
+    display: block;
+    padding: 0 1rem 0 1rem;
+    margin-top: 0.5rem;
+    color: var(--naut-color-text);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    opacity: 0.5;
+  }
+
+  .naut-toc--link:hover {
+    opacity: 1;
+    transition: color 0.2s ease;
+  }
+
+  .naut-toc--link.current {
+    border-left: 2px solid var(--naut-color-text);
+    opacity: 1;
+  }
+</style>
+
+<script is:inline define:vars={{ headings: allHeadings, offsetNumber, tocId }}>
+  function setCurrent(entries) {
+    const allLinks = document.querySelectorAll(`#${tocId} .naut-toc--link`);
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        for (const link of allLinks) {
+          link.classList.remove("current");
+        }
+        const targetLink = document.querySelector(
+          `#${tocId} a[href="#${entry.target.id}"].naut-toc--link`
+        );
+        if (targetLink) targetLink.classList.add("current");
+      }
+    }
+  }
+
+  function initTOC() {
+    const slugs = headings.map((h) => h.slug);
+    if (slugs.length === 0) return;
+
+    const headingElements = document.querySelectorAll(
+      slugs.map((s) => `#${s}`).join(",")
+    );
+    if (headingElements.length === 0) return;
+
+    const observer = new IntersectionObserver(setCurrent, {
+      rootMargin: `-${offsetNumber}px 0px -50% 0px`,
+      threshold: 0,
+    });
+
+    for (const el of headingElements) {
+      el.style.scrollMarginTop = `${offsetNumber}px`;
+      observer.observe(el);
+    }
+  }
+
+  function handleClick(e) {
+    const link = e.target.closest(".naut-toc--link");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (!href?.startsWith("#")) return;
+    e.preventDefault();
+    const target = document.getElementById(href.slice(1));
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  const toc = document.getElementById(tocId);
+  if (toc) toc.addEventListener("click", handleClick);
+
+  initTOC();
+  document.addEventListener("astro:after-swap", initTOC);
+</script>
