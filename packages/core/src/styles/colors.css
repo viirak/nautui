@@ -47,11 +47,11 @@
    --naut-color-base-100: color-mix(in oklch, var(--naut-color-base), white 35%);
    --naut-color-base-200: color-mix(in oklch, var(--naut-color-base), white 40%);
    --naut-color-base-300: color-mix(in oklch, var(--naut-color-base), white 45%);
-   --naut-color-base-400: color-mix(in oklch, var(--naut-color-base), white 50%);
+   --naut-color-base-400: color-mix(in oklch, var(--naut-color-base), white 70%);
 
    /* === Border (re-aliased onto the dark neutral scale) === */
-   --naut-color-border: var(--naut-color-base-300);
-   --naut-color-border-soft: var(--naut-color-base-200);
+   --naut-color-border: var(--naut-color-base-200);
+   --naut-color-border-soft: var(--naut-color-base-100);
    --naut-color-border-strong: var(--naut-color-base-400);
 
    /* === Text on neutrals === */
