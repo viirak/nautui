@@ -27,6 +27,7 @@ import Marquee from "./components/Marquee.astro";
 import Masonry from "./components/Masonry.astro";
 import MasonryItem from "./components/MasonryItem.astro";
 import Menu from "./components/Menu.astro";
+import MenuGroup from "./components/MenuGroup.astro";
 import MenuItem from "./components/MenuItem.astro";
 import NavBar from "./components/NavBar.astro";
 import Section from "./components/Section.astro";
@@ -68,6 +69,7 @@ export {
   Masonry,
   MasonryItem,
   Menu,
+  MenuGroup,
   MenuItem,
   NavBar,
   Section,

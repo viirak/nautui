@@ -24,6 +24,9 @@ import type { MarkProps } from "./components/Mark.astro";
 import type { MarqueeProps } from "./components/Marquee.astro";
 import type { MasonryProps } from "./components/Masonry.astro";
 import type { MasonryItemProps } from "./components/MasonryItem.astro";
+import type { MenuProps } from "./components/Menu.astro";
+import type { MenuItemProps } from "./components/MenuItem.astro";
+import type { MenuGroupProps } from "./components/MenuGroup.astro";
 import type { NavBarProps } from "./components/NavBar.astro";
 import type { SectionProps } from "./components/Section.astro";
 import type { SpaceProps } from "./components/Space.astro";
@@ -80,5 +83,8 @@ export declare const Background: (props: BackgroundProps) => AstroComponent;
 // Navigation
 export declare const Breadcrumb: (props: BreadcrumbProps) => AstroComponent;
 export declare const Drawer: (props: DrawerProps) => AstroComponent;
+export declare const Menu: (props: MenuProps) => AstroComponent;
+export declare const MenuItem: (props: MenuItemProps) => AstroComponent;
+export declare const MenuGroup: (props: MenuGroupProps) => AstroComponent;
 export declare const NavBar: (props: NavBarProps) => AstroComponent;
 export declare const TOC: (props: TOCProps) => AstroComponent;
