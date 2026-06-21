@@ -111,16 +111,30 @@ const {
     }
 
     .naut-menu-group__list {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 1px;
-      padding: 0;
+      padding: 0 0 0 0.5rem;
       margin: 0;
       list-style: none;
-      border-left: 1px solid var(--naut-color-border);
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        pointer-events: none;
+        content: "";
+        background-color: var(--naut-color-border);
+      }
 
       &.no-line {
-        border-left: none;
+        padding-left: 0;
+        &::before {
+          display: none;
+        }
       }
     }
 
