@@ -27,6 +27,10 @@ All `<style>` blocks inside `.astro` components **must** use **CSS nesting** roo
 #naut-drawer.active .naut-drawer-panel { ... }
 ```
 
+## BEM naming convention
+
+Use `__` for child elements (`naut-card__body`), `--` for modifiers (`naut-hide--sm`, `variant--primary`).
+
 ## Key facts
 
 - **Monorepo** — `pnpm` workspaces + Turborepo, two packages: `@nautui/core` (primitive components), `@nautui/blocks` (composite)

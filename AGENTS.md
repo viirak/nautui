@@ -89,6 +89,24 @@ const { class: className, ...rest } = Astro.props as MyCompProps;
 }
 ```
 
+### BEM Naming Convention
+
+All CSS class names follow BEM:
+
+- `__` separates a **block** from its **element** (child): `naut-card__body`, `naut-toc__link`
+- `--` separates a **block/element** from its **modifier** (variant/state): `naut-drawer-panel.position--center`, `naut-hide--sm`
+
+| Pattern | Meaning | Example |
+|---|---|---|
+| `block` | The component itself | `naut-card` |
+| `block__element` | A child part of the block | `naut-card__body` |
+| `block--modifier` | A variation of the block | `naut-hide--sm` |
+| `block__element--modifier` | A variation of the element | `naut-drawer-panel.position--center` |
+
+**Rule of thumb:** If the dashed part is a *child* (left, right, header, body, link, list), use `__`. If it's a *variant* (sm, md, primary, outline, center), use `--`.
+
+Previously 22 classes across 8 components used `--` for child elements (e.g., `naut-card--body`) — these were renamed to `__` (`naut-card__body`).
+
 ### Theme System
 
 - **Theme.astro** is the provider — wraps layout, injects `global.css` and `colors.css`.
