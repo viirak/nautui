@@ -30,12 +30,12 @@ const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
   class:list={["naut-toc", sticky && "sticky", className]}
   {...rest}
 >
-  <h2 class="naut-toc--title">{title}</h2>
-  <div class="naut-toc--list-wrapper">
-    <span class="naut-toc--indicator" aria-hidden="true" />
-    <ul class="naut-toc--list">
+  <h2 class="naut-toc__title">{title}</h2>
+  <div class="naut-toc__list-wrapper">
+    <span class="naut-toc__indicator" aria-hidden="true" />
+    <ul class="naut-toc__list">
       {allHeadings.map((heading) => (
-        <li class="naut-toc--list-item"><a class="naut-toc--link" href={`#${heading.slug}`}>{heading.text}</a></li>
+        <li class="naut-toc__list-item"><a class="naut-toc__link" href={`#${heading.slug}`}>{heading.text}</a></li>
       ))}
     </ul>
   </div>
@@ -49,24 +49,24 @@ const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
     }
   }
 
-  .naut-toc--title {
+  .naut-toc__title {
     margin-bottom: 1rem;
     font-size: 1.125rem;
     font-weight: 600;
     color: var(--naut-color-content);
   }
 
-  .naut-toc--list-wrapper {
+  .naut-toc__list-wrapper {
     position: relative;
   }
 
-  .naut-toc--list {
+  .naut-toc__list {
     padding: 0;
     list-style: none;
     border-left: 1px solid var(--naut-color-border);
   }
 
-  .naut-toc--indicator {
+  .naut-toc__indicator {
     position: absolute;
     top: 0;
     left: -0.75px;
@@ -78,7 +78,7 @@ const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
     will-change: transform;
   }
 
-  .naut-toc--link {
+  .naut-toc__link {
     display: block;
     padding: 0 1rem;
     margin: 0.5rem 0;
@@ -99,8 +99,8 @@ const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
 
 <script is:inline define:vars={{ headings: allHeadings, offsetNumber, tocId }}>
   function updateIndicator(link) {
-    const wrapper = document.querySelector(`#${tocId} .naut-toc--list-wrapper`);
-    const indicator = wrapper?.querySelector(".naut-toc--indicator");
+    const wrapper = document.querySelector(`#${tocId} .naut-toc__list-wrapper`);
+    const indicator = wrapper?.querySelector(".naut-toc__indicator");
     if (!(indicator && link)) return;
 
     const wrapperRect = wrapper.getBoundingClientRect();
@@ -111,14 +111,14 @@ const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
   }
 
   function setCurrent(entries) {
-    const allLinks = document.querySelectorAll(`#${tocId} .naut-toc--link`);
+    const allLinks = document.querySelectorAll(`#${tocId} .naut-toc__link`);
     for (const entry of entries) {
       if (entry.isIntersecting) {
         for (const link of allLinks) {
           link.classList.remove("current");
         }
         const targetLink = document.querySelector(
-          `#${tocId} a[href="#${entry.target.id}"].naut-toc--link`
+          `#${tocId} a[href="#${entry.target.id}"].naut-toc__link`
         );
         if (targetLink) {
           targetLink.classList.add("current");
@@ -148,12 +148,12 @@ const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
     }
 
     // Position indicator at first link before observer fires
-    const firstLink = document.querySelector(`#${tocId} .naut-toc--link`);
+    const firstLink = document.querySelector(`#${tocId} .naut-toc__link`);
     if (firstLink) updateIndicator(firstLink);
   }
 
   function handleClick(e) {
-    const link = e.target.closest(".naut-toc--link");
+    const link = e.target.closest(".naut-toc__link");
     if (!link) return;
     const href = link.getAttribute("href");
     if (!href?.startsWith("#")) return;

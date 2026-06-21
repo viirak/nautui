@@ -71,10 +71,10 @@ const { borderClasses, borderColors } = createBorder(config);
   ]}
   {...rest}
 >
-  {badged && <div class="naut-card--badge"><slot name="badge" /></div>}
-  <div class="naut-card--header"><slot name="header" /></div>
-  <div class:list={["naut-card--body", ...paddingClasses]}><slot /></div>
-  <div class="naut-card--footer"><slot name="footer" /></div>
+  {badged && <div class="naut-card__badge"><slot name="badge" /></div>}
+  <div class="naut-card__header"><slot name="header" /></div>
+  <div class:list={["naut-card__body", ...paddingClasses]}><slot /></div>
+  <div class="naut-card__footer"><slot name="footer" /></div>
 </div>
 
 <style define:vars={{ ...borderColors }}>
@@ -104,16 +104,16 @@ const { borderClasses, borderColors } = createBorder(config);
       height: 100%;
     }
 
-    .naut-card--body {
+    .naut-card__body {
       position: relative;
       overflow: hidden;
     }
 
-    .naut-card--header:empty {
+    .naut-card__header:empty {
       display: none;
     }
 
-    .naut-card--footer:empty {
+    .naut-card__footer:empty {
       display: none;
     }
 
@@ -234,11 +234,11 @@ const { borderClasses, borderColors } = createBorder(config);
       transform: translateY(-10px);
     }
 
-    &.badged .naut-card--body {
+    &.badged .naut-card__body {
       margin-top: 1rem;
     }
 
-    .naut-card--badge {
+    .naut-card__badge {
       position: absolute;
       top: -0.9rem;
       right: 1.25rem;

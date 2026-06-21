@@ -64,7 +64,7 @@ const classlist = [
   {corner?.bottomLeft && <span class:list={["corner", "bottom-left", corner.bottomLeft]} />}
   <slot name="background" />
   <slot name="before" />
-  <div class:list={["naut-box--wrapper", ...paddingClasses]}><slot /></div>
+  <div class:list={["naut-box__wrapper", ...paddingClasses]}><slot /></div>
   <slot name="after" />
 </div>
 
@@ -80,7 +80,7 @@ const classlist = [
       height: 100%;
     }
 
-    .naut-box--wrapper {
+    .naut-box__wrapper {
       position: relative;
       overflow: hidden;
     }

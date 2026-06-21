@@ -55,9 +55,9 @@ const hiddenOffset = `${height + offset}px`;
   <div class="naut-space naut-space--left"></div>
   <div class="naut-space naut-space--center">
     {!fluid && <Container>
-      <div class="naut-navbar--content contained"><slot /></div>
+      <div class="naut-navbar__content contained"><slot /></div>
     </Container>}
-    {fluid && <div class:list={["naut-navbar--content"]}><slot /></div>}
+    {fluid && <div class:list={["naut-navbar__content"]}><slot /></div>}
   </div>
   <div class="naut-space naut-space--right"></div>
 </nav>
@@ -169,7 +169,7 @@ const hiddenOffset = `${height + offset}px`;
       flex: 0 0 100%;
     }
 
-    .naut-navbar--content {
+    .naut-navbar__content {
       display: flex;
       align-items: center;
       justify-content: space-between;

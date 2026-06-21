@@ -36,7 +36,7 @@ const {
   href={to}
   {...rest}
 >
-  <div class="link--wrapper"><slot /></div>
+  <div class="naut-link__wrapper"><slot /></div>
   {external && (
     <svg
       class="lucide lucide-external-link-icon external-link-icon"
@@ -64,7 +64,7 @@ const {
     color: var(--naut-color-link);
     text-decoration: none;
 
-    .link--wrapper {
+    .naut-link__wrapper {
       display: inline-flex;
       flex-wrap: nowrap;
       gap: 0.5rem;
@@ -75,7 +75,7 @@ const {
     &.wrap {
       flex-wrap: wrap;
 
-      .link--wrapper {
+      .naut-link__wrapper {
         flex-wrap: wrap;
         text-wrap: wrap;
       }

@@ -39,14 +39,14 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
 >
   <slot name="background" />
   <slot name="before" />
-  <div class="naut-section--wrapper">
-    <div class="naut-section--left"><slot name="left" /></div>
-    <div class="naut-section--center">
-      <div class:list={["naut-section--content", ...paddingClasses]}>
+  <div class="naut-section__wrapper">
+    <div class="naut-section__left"><slot name="left" /></div>
+    <div class="naut-section__center">
+      <div class:list={["naut-section__content", ...paddingClasses]}>
         <slot />
       </div>
     </div>
-    <div class="naut-section--right"><slot name="right" /></div>
+    <div class="naut-section__right"><slot name="right" /></div>
   </div>
   <slot name="after" />
 </section>
@@ -55,13 +55,13 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
   .naut-section {
     position: relative;
 
-    .naut-section--wrapper {
+    .naut-section__wrapper {
       position: relative;
       z-index: 1;
       display: flex;
 
-      .naut-section--left,
-      .naut-section--right {
+      .naut-section__left,
+      .naut-section__right {
         position: relative;
         display: flex;
         @media only screen and (min-width: 576px) {
@@ -69,15 +69,15 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
         }
       }
 
-      .naut-section--left {
+      .naut-section__left {
         justify-content: flex-end;
       }
 
-      .naut-section--right {
+      .naut-section__right {
         justify-content: flex-start;
       }
 
-      .naut-section--center {
+      .naut-section__center {
         flex: 1;
         overflow: hidden;
 

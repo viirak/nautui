@@ -32,9 +32,9 @@ const classList = [
 
 <li class="naut-menu__list-item">
   <a href={href} class:list={classList} {...rest}>
-    <span class="naut-menu-item--left"><slot name="before" /></span>
-    <span class="naut-menu-item--main"><slot /></span>
-    <span class="naut-menu-item--right"><slot name="after" /></span>
+    <span class="naut-menu-item__left"><slot name="before" /></span>
+    <span class="naut-menu-item__main"><slot /></span>
+    <span class="naut-menu-item__right"><slot name="after" /></span>
   </a>
 </li>
 
@@ -99,27 +99,27 @@ const classList = [
       }
     }
 
-    .naut-menu-item--main {
+    .naut-menu-item__main {
       flex: 1;
       text-align: left;
     }
 
-    .naut-menu-item--left {
+    .naut-menu-item__left {
       display: flex;
       align-items: center;
       margin-right: 0.4rem;
     }
 
-    .naut-menu-item--left:empty {
+    .naut-menu-item__left:empty {
       display: none;
     }
 
-    .naut-menu-item--right {
+    .naut-menu-item__right {
       display: flex;
       align-items: center;
     }
 
-    .naut-menu-item--right:empty {
+    .naut-menu-item__right:empty {
       display: none;
     }
   }
