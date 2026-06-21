@@ -61,3 +61,33 @@
     border-radius: 8px;
   }
 }
+
+.naut-article.anchor-links {
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    position: relative;
+
+    .naut-heading-link {
+      margin-left: 0.5rem;
+      font-weight: normal;
+      color: var(--naut-color-content-soft);
+      text-decoration: none;
+      opacity: 0.5;
+      transition: opacity 0.15s ease;
+
+      &:hover,
+      &:focus-visible {
+        color: var(--naut-color-content);
+        opacity: 1;
+      }
+    }
+
+    &:hover .naut-heading-link {
+      opacity: 1;
+    }
+  }
+}
