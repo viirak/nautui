@@ -18,6 +18,7 @@ import Flow from "./components/Flow.astro";
 import Grid from "./components/Grid.astro";
 import GridItem from "./components/GridItem.astro";
 import Group from "./components/Group.astro";
+import Hide from "./components/Hide.astro";
 import Image from "./components/Image.astro";
 import Link from "./components/Link.astro";
 import List from "./components/List.astro";
@@ -60,6 +61,7 @@ export {
   Grid,
   GridItem,
   Group,
+  Hide,
   Image,
   Link,
   List,
