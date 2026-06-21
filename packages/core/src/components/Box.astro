@@ -9,9 +9,11 @@ import {
   getSpacingClasses,
   SpacingProps,
 } from "../lib/spacing";
-import type { Base, Radius } from "../types";
+import type { Base, Radius, Responsive, Size } from "../types";
 
 type CornerStyle = "diamond" | "square" | "circle" | "plus" | "x";
+type TaDirection = "left" | "center" | "right";
+type TaValue = TaDirection | { [key in Responsive]?: TaDirection };
 
 export interface Corner {
   bottomLeft?: CornerStyle;
@@ -24,7 +26,9 @@ export interface BoxProps extends Base, SpacingProps {
   border?: Border;
   centered?: boolean;
   corner?: Corner;
+  maxWidth?: "xs" | Size;
   radius?: Radius;
+  ta?: TaValue;
 }
 
 const { padding, margin, nonSpacing } = extractSpacingProps(
@@ -36,6 +40,8 @@ const {
   radius,
   corner,
   centered = false,
+  maxWidth,
+  ta,
   class: className,
   ...rest
 } = nonSpacing;
@@ -47,10 +53,17 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
 const p = Object.keys(padding).length === 0 ? "md" : padding.p;
 const marginClasses = getSpacingClasses({ ...margin });
 const paddingClasses = getSpacingClasses({ ...padding, p });
+const taValue = typeof ta === "string" ? { base: ta } : ta;
 const classlist = [
   "naut-box",
   radius && `radius-${radius}`,
   centered && "centered",
+  maxWidth && `max-w-${maxWidth}`,
+  taValue?.base && `ta-${taValue.base}`,
+  taValue?.sm && `sm-ta-${taValue.sm}`,
+  taValue?.md && `md-ta-${taValue.md}`,
+  taValue?.lg && `lg-ta-${taValue.lg}`,
+  taValue?.xl && `xl-ta-${taValue.xl}`,
   className,
   ...borderClasses,
   ...marginClasses,
@@ -79,6 +92,42 @@ const classlist = [
       justify-content: center;
       height: 100%;
     }
+
+    /* text-align */
+    &.ta-left { text-align: left; }
+    &.ta-center { text-align: center; }
+    &.ta-right { text-align: right; }
+
+    @media (max-width: 817px) {
+      &.sm-ta-left { text-align: left; }
+      &.sm-ta-center { text-align: center; }
+      &.sm-ta-right { text-align: right; }
+    }
+
+    @media (min-width: 818px) and (max-width: 1041px) {
+      &.md-ta-left { text-align: left; }
+      &.md-ta-center { text-align: center; }
+      &.md-ta-right { text-align: right; }
+    }
+
+    @media (min-width: 1042px) and (max-width: 1249px) {
+      &.lg-ta-left { text-align: left; }
+      &.lg-ta-center { text-align: center; }
+      &.lg-ta-right { text-align: right; }
+    }
+
+    @media (min-width: 1250px) {
+      &.xl-ta-left { text-align: left; }
+      &.xl-ta-center { text-align: center; }
+      &.xl-ta-right { text-align: right; }
+    }
+
+    /* max-width */
+    &.max-w-xs { max-width: 480px; margin-inline: auto; }
+    &.max-w-sm { max-width: 640px; margin-inline: auto; }
+    &.max-w-md { max-width: 768px; margin-inline: auto; }
+    &.max-w-lg { max-width: 1024px; margin-inline: auto; }
+    &.max-w-xl { max-width: 1280px; margin-inline: auto; }
 
     .naut-box__wrapper {
       position: relative;
