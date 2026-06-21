@@ -4,6 +4,7 @@ import "../styles/radius.css";
 
 export interface MenuItemProps extends Base {
   active?: boolean;
+  activeVariant?: "link" | "primary" | "surface";
   color?: "text" | "link" | "dimmed";
   href: string;
   radius?: Radius;
@@ -12,6 +13,7 @@ export interface MenuItemProps extends Base {
 const {
   class: className,
   active = false,
+  activeVariant,
   color = "text",
   radius = "sm",
   href,
@@ -21,6 +23,7 @@ const {
 const classList = [
   "naut-menu-item",
   active && "active",
+  activeVariant && `active-${activeVariant}`,
   color !== "text" && `color-${color}`,
   radius && `radius-${radius}`,
   className,
@@ -37,6 +40,7 @@ const classList = [
 
 <style>
   .naut-menu-item {
+    position: relative;
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
@@ -46,24 +50,53 @@ const classList = [
     text-decoration: none;
     cursor: pointer;
 
+    &::before {
+      position: absolute;
+      top: 0.5rem;
+      left: -1.5px;
+      width: 2px;
+      height: calc(100% - 1rem);
+      pointer-events: none;
+      content: "";
+      background-color: transparent;
+      border-radius: 0;
+    }
+
     &:hover {
-      color: var(--naut-color-content);
       background-color: var(--naut-color-base-200);
       opacity: 1;
+      &.active-link {
+        color: var(--naut-color-link);
+      }
     }
 
     &.active {
-      color: var(--naut-color-content);
-      background-color: var(--naut-color-base-200);
+      opacity: 1;
+
+      &::before {
+        background-color: transparent;
+      }
+
+      &.active-primary {
+        color: var(--naut-color-primary-content);
+        background-color: var(--naut-color-primary);
+      }
+
+      &.active-surface {
+        background-color: var(--naut-color-base-200);
+      }
+
+      &.active-link {
+        color: var(--naut-color-link);
+        &::before {
+          background-color: var(--naut-color-link);
+        }
+      }
     }
 
     &.color-dimmed {
       color: var(--naut-color-content-soft);
       opacity: 0.8;
-
-      &:hover {
-        color: var(--naut-color-content);
-      }
     }
 
     &.color-link {
