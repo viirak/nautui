@@ -30,7 +30,7 @@ const drawerId = `naut-drawer-${Math.random().toString(36).slice(2, 9)}`;
 <Button
   variant="ghost"
   onclick={`toggleMenu('${drawerId}')`}
-  class:list={[hidden && `hidden--${hidden}`]}
+  class:list={[hidden && `hidden-${hidden}`]}
   {...button}
   square
 >
