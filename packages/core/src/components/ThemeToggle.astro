@@ -1,10 +1,12 @@
 ---
 import type { Base } from "../types";
+import type { ButtonProps } from "./Button.astro";
 import Button from "./Button.astro";
 
-export interface ThemeToggleProps extends Base {}
+type ToggleButtonProps = Omit<ButtonProps, "onclick">;
+export interface ThemeToggleProps extends Base, ToggleButtonProps {}
 
-const { class: className } = Astro.props as ThemeToggleProps;
+const { class: className, ...rest } = Astro.props as ThemeToggleProps;
 ---
 
 <Button
@@ -14,6 +16,7 @@ const { class: className } = Astro.props as ThemeToggleProps;
   class:list={["naut-theme-toggle", className]}
   title="Toggle theme"
   square
+  {...rest}
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
