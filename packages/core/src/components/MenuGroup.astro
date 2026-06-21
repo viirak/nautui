@@ -4,6 +4,7 @@ import type { Base } from "../types";
 export interface MenuGroupProps extends Base {
   collapsible?: boolean;
   label: string;
+  line?: boolean;
   open?: boolean;
 }
 
@@ -11,6 +12,7 @@ const {
   class: className,
   label,
   collapsible = false,
+  line = true,
   open = true,
   ...rest
 } = Astro.props as MenuGroupProps;
@@ -33,7 +35,7 @@ const {
     ) : (
       <span class="naut-menu-group__label">{label}</span>
     )}
-  <ul class="naut-menu-group__list">
+  <ul class:list={["naut-menu-group__list", line === false && "no-line"]}>
     <slot />
   </ul>
 </li>
@@ -56,11 +58,6 @@ const {
 <style>
   .naut-menu-group {
     list-style: none;
-
-    /*&:not(:first-child) {
-          padding-top: var(--naut-spacing-xs);
-          border-top: 1px solid var(--naut-color-border);
-        }*/
 
     .naut-menu-group__label,
     .naut-menu-group__toggle {
@@ -121,11 +118,16 @@ const {
       margin: 0;
       list-style: none;
       border-left: 1px solid var(--naut-color-border);
+
+      &.no-line {
+        border-left: none;
+      }
     }
 
     &.collapsible {
       .naut-menu-group__list {
         max-height: 0;
+        overflow: hidden;
         transition: max-height 0.25s ease;
       }
       &.open {
