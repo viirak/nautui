@@ -35,7 +35,9 @@ const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
     <span class="naut-toc__indicator" aria-hidden="true" />
     <ul class="naut-toc__list">
       {allHeadings.map((heading) => (
-        <li class="naut-toc__list-item"><a class="naut-toc__link" href={`#${heading.slug}`}>{heading.text}</a></li>
+        <li class:list={["naut-toc__list-item"]}>
+          <a class:list={["naut-toc__link", `depth-${heading.depth}`]} href={`#${heading.slug}`}>{heading.text}</a>
+        </li>
       ))}
     </ul>
   </div>
@@ -85,6 +87,13 @@ const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
     color: var(--naut-color-content);
     text-decoration: none;
     opacity: 0.5;
+
+    &.depth-3 {
+      &::before {
+        content: "— ";
+        opacity: 0.5;
+      }
+    }
 
     &:hover {
       opacity: 1;
