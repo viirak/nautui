@@ -1,5 +1,6 @@
 ---
 import "../styles/article.css";
+import { uid } from "../lib/uid";
 import type { Base } from "../types";
 
 export interface ArticleProps extends Base {
@@ -11,7 +12,7 @@ const {
   anchorLinks = false,
   ...rest
 } = Astro.props as ArticleProps;
-const articleId = `naut-article-${Math.random().toString(36).slice(2, 9)}`;
+const articleId = uid("naut-article");
 ---
 
 <article

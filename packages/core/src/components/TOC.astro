@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from "astro";
+import { uid } from "../lib/uid";
 import type { Base } from "../types";
 
 export interface TOCProps extends Base {
@@ -22,7 +23,7 @@ const allHeadings = top
   : headings;
 const offset = top?.offset ? `${top.offset}px` : "90px";
 const offsetNumber = top?.offset ? top.offset : 90;
-const tocId = `naut-toc-${Math.random().toString(36).slice(2, 9)}`;
+const tocId = uid("naut-toc");
 ---
 
 <div

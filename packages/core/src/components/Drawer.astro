@@ -3,6 +3,7 @@ import type { Base } from "../types";
 import type { ButtonProps } from "./Button.astro";
 import Button from "./Button.astro";
 import "../styles/hidden.css";
+import { uid } from "../lib/uid";
 
 type ToggleButtonProps = Omit<ButtonProps, "onclick">;
 
@@ -24,7 +25,7 @@ const {
   button,
 } = Astro.props as DrawerProps;
 
-const drawerId = `naut-drawer-${Math.random().toString(36).slice(2, 9)}`;
+const drawerId = uid("naut-drawer");
 ---
 
 <Button
