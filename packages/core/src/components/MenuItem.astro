@@ -5,7 +5,7 @@ import "../styles/radius.css";
 export interface MenuItemProps extends Base {
   active?: boolean;
   activeVariant?: "link" | "primary" | "surface";
-  color?: "text" | "link" | "dimmed";
+  dimmed?: boolean;
   href: string;
   radius?: Radius;
 }
@@ -14,8 +14,8 @@ const {
   class: className,
   active = false,
   activeVariant,
-  color = "text",
   radius = "sm",
+  dimmed = false,
   href,
   ...rest
 } = Astro.props as MenuItemProps;
@@ -24,7 +24,7 @@ const classList = [
   "naut-menu-item",
   active && "active",
   activeVariant && `active-${activeVariant}`,
-  color !== "text" && `color-${color}`,
+  dimmed && "dimmed",
   radius && `radius-${radius}`,
   className,
 ];
@@ -49,6 +49,7 @@ const classList = [
     text-wrap: nowrap;
     text-decoration: none;
     cursor: pointer;
+    transition: all 0.15s ease-in-out;
 
     &::before {
       position: absolute;
@@ -64,15 +65,12 @@ const classList = [
 
     &:hover {
       background-color: var(--naut-color-base-200);
-      opacity: 1;
       &.active-link {
         color: var(--naut-color-link);
       }
     }
 
     &.active {
-      opacity: 1;
-
       &::before {
         background-color: transparent;
       }
@@ -94,13 +92,11 @@ const classList = [
       }
     }
 
-    &.color-dimmed {
+    &.dimmed {
       color: var(--naut-color-content-soft);
-      opacity: 0.8;
-    }
-
-    &.color-link {
-      color: var(--naut-color-link);
+      &:hover:not(.active) {
+        color: var(--naut-color-content);
+      }
     }
 
     .naut-menu-item--main {
