@@ -33,7 +33,8 @@ Use `__` for child elements (`naut-card__body`), `--` for modifiers (`naut-hide-
 
 ## Key facts
 
-- **Monorepo** — `pnpm` workspaces + Turborepo, two packages: `@nautui/core` (primitive components), `@nautui/blocks` (composite)
+- **Monorepo** — `pnpm` workspaces + Turborepo, two packages: `@nautui/core` (primitive components), `@nautui/blocks` (composite blocks)
+- **Blocks package** uses `workspace:^0.1.1` protocol for `@nautui/core` dependency — installed as symlink to workspace package
 - **No tests exist** — `pnpm test` in each package just errors
 - **TypeScript**: run `pnpm check-types` (`turbo run check-types`)
 - **Lint/format**: `pnpm fix` (`ultracite fix`) — uses Biome with double quotes, space indent
@@ -42,3 +43,4 @@ Use `__` for child elements (`naut-card__body`), `--` for modifiers (`naut-hide-
 - **`index.d.ts` is manually maintained** alongside `index.ts` when adding components
 - **Biome-ignore comments** on barrel exports: `// biome-ignore-all lint/style/noExportedImports: DX`
 - **Peer dep**: `astro: ^6.0.0`
+- **Block components**: `SectionHero`, `DocLayout` (responsive docs grid with nav sidebar + TOC)
