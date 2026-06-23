@@ -1,6 +1,15 @@
 ---
 import { Base, Responsive, Size } from "../types";
 
+/**
+ * @deprecated Use `Box` instead with `ta` and `maxWidth` props.
+ * `Flow` is kept for backwards compatibility but will be removed in v0.3.0.
+ * Migration: `<Flow direction="center" maxWidth="sm">` → `<Box ta="center" maxWidth="sm">`
+ */
+console.warn(
+  "[@nautui/core] Flow is deprecated. Use Box with `ta` and `maxWidth` props instead."
+);
+
 type Direction = "left" | "center" | "right";
 type ResponsiveDirection = {
   [key in Responsive]?: Direction;
