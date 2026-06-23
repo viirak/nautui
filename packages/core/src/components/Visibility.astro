@@ -1,0 +1,70 @@
+---
+export interface VisibilityProps {
+  class?: string;
+  hidden?: boolean;
+  on?: "sm" | "md" | "lg" | "xl";
+}
+
+const {
+  class: className,
+  hidden = true,
+  on,
+  ...rest
+} = Astro.props as VisibilityProps;
+---
+
+<div
+  class:list={[
+    "naut-visibility",
+    on && `naut-visibility--${on}`,
+    !hidden && "visible",
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</div>
+
+<style>
+  .naut-visibility--sm {
+    @media (max-width: 576px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--md {
+    @media (min-width: 818px) and (max-width: 1041px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--lg {
+    @media (min-width: 1042px) and (max-width: 1249px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--xl {
+    @media (min-width: 1250px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--md.visible {
+    @media (max-width: 817px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--lg.visible {
+    @media (max-width: 1041px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--xl.visible {
+    @media (max-width: 1249px) {
+      display: none !important;
+    }
+  }
+</style>

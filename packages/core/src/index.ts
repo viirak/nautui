@@ -2,6 +2,7 @@
 
 import Accordion from "./components/Accordion.astro";
 import AccordionItem from "./components/AccordionItem.astro";
+import Article from "./components/Article.astro";
 import Background from "./components/Background.astro";
 import Badge from "./components/Badge.astro";
 import Bento from "./components/Bento.astro";
@@ -18,7 +19,6 @@ import Flow from "./components/Flow.astro";
 import Grid from "./components/Grid.astro";
 import GridItem from "./components/GridItem.astro";
 import Group from "./components/Group.astro";
-import Hide from "./components/Hide.astro";
 import Image from "./components/Image.astro";
 import Link from "./components/Link.astro";
 import List from "./components/List.astro";
@@ -37,14 +37,14 @@ import Stack from "./components/Stack.astro";
 import Text from "./components/Text.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
-import TOC from "./components/TOC.astro";
 import Title from "./components/Title.astro";
-import Article from "./components/Article.astro";
+import TOC from "./components/TOC.astro";
+import Visibility from "./components/Visibility.astro";
 
 export {
-  Article,
   Accordion,
   AccordionItem,
+  Article,
   Background,
   Badge,
   Bento,
@@ -61,7 +61,6 @@ export {
   Grid,
   GridItem,
   Group,
-  Hide,
   Image,
   Link,
   List,
@@ -80,6 +79,7 @@ export {
   Text,
   Theme,
   ThemeToggle,
-  TOC,
   Title,
+  TOC,
+  Visibility,
 };
