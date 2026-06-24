@@ -14,7 +14,6 @@ import Container from "./components/Container.astro";
 import Divider from "./components/Divider.astro";
 import Drawer from "./components/Drawer.astro";
 import Flex from "./components/Flex.astro";
-import Flow from "./components/Flow.astro";
 import Grid from "./components/Grid.astro";
 import GridItem from "./components/GridItem.astro";
 import Group from "./components/Group.astro";
@@ -54,7 +53,6 @@ export {
   Divider,
   Drawer,
   Flex,
-  Flow,
   Grid,
   GridItem,
   Group,
