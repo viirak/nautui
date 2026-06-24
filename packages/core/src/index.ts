@@ -8,7 +8,6 @@ import Badge from "./components/Badge.astro";
 import Bento from "./components/Bento.astro";
 import BentoItem from "./components/BentoItem.astro";
 import Box from "./components/Box.astro";
-import Breadcrumb from "./components/Breadcrumb.astro";
 import Button from "./components/Button.astro";
 import Card from "./components/Card.astro";
 import Container from "./components/Container.astro";
@@ -38,7 +37,6 @@ import Text from "./components/Text.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
 import Title from "./components/Title.astro";
-import TOC from "./components/TOC.astro";
 import Visibility from "./components/Visibility.astro";
 
 export {
@@ -50,7 +48,6 @@ export {
   Bento,
   BentoItem,
   Box,
-  Breadcrumb,
   Button,
   Card,
   Container,
@@ -80,6 +77,5 @@ export {
   Theme,
   ThemeToggle,
   Title,
-  TOC,
   Visibility,
 };

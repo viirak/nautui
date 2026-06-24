@@ -1,11 +1,11 @@
 import type { AccordionProps } from "./components/Accordion.astro";
 import type { AccordionItemProps } from "./components/AccordionItem.astro";
+import type { ArticleProps } from "./components/Article.astro";
 import type { BackgroundProps } from "./components/Background.astro";
 import type { BadgeProps } from "./components/Badge.astro";
 import type { BentoProps } from "./components/Bento.astro";
 import type { BentoItemProps } from "./components/BentoItem.astro";
 import type { BoxProps } from "./components/Box.astro";
-import type { BreadcrumbProps } from "./components/Breadcrumb.astro";
 import type { ButtonProps } from "./components/Button.astro";
 import type { CardProps } from "./components/Card.astro";
 import type { ContainerProps } from "./components/Container.astro";
@@ -25,18 +25,16 @@ import type { MarqueeProps } from "./components/Marquee.astro";
 import type { MasonryProps } from "./components/Masonry.astro";
 import type { MasonryItemProps } from "./components/MasonryItem.astro";
 import type { MenuProps } from "./components/Menu.astro";
-import type { MenuItemProps } from "./components/MenuItem.astro";
 import type { MenuGroupProps } from "./components/MenuGroup.astro";
+import type { MenuItemProps } from "./components/MenuItem.astro";
 import type { NavBarProps } from "./components/NavBar.astro";
 import type { SectionProps } from "./components/Section.astro";
 import type { SpaceProps } from "./components/Space.astro";
 import type { TextProps } from "./components/Text.astro";
 import type { ThemeProps } from "./components/Theme.astro";
 import type { ThemeToggleProps } from "./components/ThemeToggle.astro";
-import type { TOCProps } from "./components/TOC.astro";
 import type { TitleProps } from "./components/Title.astro";
 import type { VisibilityProps } from "./components/Visibility.astro";
-import type { ArticleProps } from "./components/Article.astro";
 
 export type AstroComponent = () => Promise<{ Content: unknown }>;
 
@@ -83,10 +81,8 @@ export declare const Image: (props: ImageProps) => AstroComponent;
 export declare const Background: (props: BackgroundProps) => AstroComponent;
 
 // Navigation
-export declare const Breadcrumb: (props: BreadcrumbProps) => AstroComponent;
 export declare const Drawer: (props: DrawerProps) => AstroComponent;
 export declare const Menu: (props: MenuProps) => AstroComponent;
 export declare const MenuItem: (props: MenuItemProps) => AstroComponent;
 export declare const MenuGroup: (props: MenuGroupProps) => AstroComponent;
 export declare const NavBar: (props: NavBarProps) => AstroComponent;
-export declare const TOC: (props: TOCProps) => AstroComponent;
