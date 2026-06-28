@@ -29,11 +29,14 @@ const {
 >
   {collapsible ? (
       <button aria-expanded={open} class="naut-menu-group__toggle" type="button">
+        <slot name="icon" />
         {label}
         <span aria-hidden="true" class="naut-menu-group__chevron" />
       </button>
     ) : (
-      <span class="naut-menu-group__label">{label}</span>
+      <span class="naut-menu-group__label">
+        <slot name="icon" />
+        {label}</span>
     )}
   <ul class:list={["naut-menu-group__list", line === false && "no-line"]}>
     <slot />
@@ -62,6 +65,7 @@ const {
     .naut-menu-group__label,
     .naut-menu-group__toggle {
       display: flex;
+      gap: 0.4rem;
       align-items: center;
       width: 100%;
       padding: 0.5rem 0;
