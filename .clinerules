@@ -1,0 +1,15 @@
+<!-- panda-rules-start -->
+## PandaFilter Token Optimization Rules
+
+When running shell commands, prefix the following commands with `/usr/local/bin/panda run` to enable
+automatic output compression and token savings:
+
+- `git` operations: `/usr/local/bin/panda run git status`, `/usr/local/bin/panda run git diff`, etc.
+- `cargo` builds: `/usr/local/bin/panda run cargo build`, `/usr/local/bin/panda run cargo test`
+- `docker` / `kubectl` / `terraform` commands
+- Test runners: `/usr/local/bin/panda run npm test`, `/usr/local/bin/panda run pytest`, `/usr/local/bin/panda run go test ./...`
+- Linters: `/usr/local/bin/panda run eslint .`, `/usr/local/bin/panda run mypy .`
+
+When you see output containing `[N matching lines collapsed — panda expand ID]`, you can
+retrieve the original lines with `/usr/local/bin/panda expand ID`.
+<!-- panda-rules-end -->
