@@ -37,3 +37,11 @@ yarn-error.log*
 .DS_Store
 *.pem
 tsconfig.tsbuildinfo
+
+# Tools
+.planr
+.zed
+.opencode
+.crush
+.bitloops
+.agents
