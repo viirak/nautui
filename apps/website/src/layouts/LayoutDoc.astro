@@ -16,7 +16,7 @@ import {
   ThemeToggle,
 } from "@nautui/core";
 import type { MarkdownHeading } from "astro";
-import Nav from "./Nav.astro";
+import NavDoc from "../components/NavDoc.astro";
 
 interface LayoutProps {
   description: string;
@@ -79,7 +79,7 @@ const { title, description, headings } = Astro.props as LayoutProps;
         </Group>
       </NavBar>
       <DocLayout title={title} headings={headings}>
-        <Nav slot="nav" />
+        <NavDoc slot="nav" />
         <slot />
       </DocLayout>
       <footer class="page-footer">
