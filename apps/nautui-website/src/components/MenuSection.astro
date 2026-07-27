@@ -1,0 +1,111 @@
+---
+import { Box, Card, Menu, MenuItem, Section, Text, Title } from "@nautui/core";
+---
+
+<Section border={{ top: { width: "md" } }}>
+  <Title>Menu</Title>
+  <Text>Menu Vertical (default)</Text>
+  <Card size="sm" border="md">
+    <Menu>
+      <MenuItem href="#">
+        <svg
+          slot="before"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-atom-icon lucide-atom"
+        >
+          <title>atom</title>
+          <circle cx="12" cy="12" r="1" />
+          <path
+            d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"
+          />
+          <path
+            d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"
+          />
+        </svg>
+        <span>Product One</span>
+        <svg
+          slot="after"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-arrow-right-icon lucide-arrow-right"
+        >
+          <title>arrow right</title>
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </MenuItem>
+      <MenuItem href="#">Product Two</MenuItem>
+      <MenuItem dimmed href="#">Product Three</MenuItem>
+      <MenuItem href="#">Product Four</MenuItem>
+      <MenuItem active href="#">Active Item</MenuItem>
+      <MenuItem href="#">Product Six</MenuItem>
+    </Menu>
+  </Card>
+  <Text>Menu in Horizontal orientation</Text>
+  <Box border="md">
+    <Menu horizontal divided>
+      <MenuItem href="#">
+        <svg
+          slot="before"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-atom-icon lucide-atom"
+        >
+          <title>atom</title>
+          <circle cx="12" cy="12" r="1" />
+          <path
+            d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"
+          />
+          <path
+            d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"
+          />
+        </svg>
+        <span>Product One</span>
+        <svg
+          slot="after"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-arrow-right-icon lucide-arrow-right"
+        >
+          <title>arrow right</title>
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </MenuItem>
+      <MenuItem href="#">Product Two</MenuItem>
+      <MenuItem dimmed href="#">Product Three</MenuItem>
+      <MenuItem href="#">Product Four</MenuItem>
+      <MenuItem active href="#">Active Item</MenuItem>
+      <MenuItem href="#">Product Six</MenuItem>
+    </Menu>
+  </Box>
+</Section>

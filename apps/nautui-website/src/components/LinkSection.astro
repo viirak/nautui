@@ -1,0 +1,83 @@
+---
+import { Box, Group, Link, Section, Title } from "@nautui/core";
+---
+
+<Section border={{ top: "md" }}>
+  <Title>Links</Title>
+  <Box border="md">
+    <Group wrap>
+      <Link to="http://mermind.ai">Default Link</Link>
+      <Link underline to="http://mermind.ai">Underlined Link</Link>
+      <Link dimmed to="http://mermind.ai">Dimmed Link</Link>
+      <Link hover="dimmed" to="http://mermind.ai">Link Hover Dimmed</Link>
+      <Link hover="surface" to="http://mermind.ai">Link Hover Surface</Link>
+      <Link external target="_blank" to="http://mermind.ai">External Link</Link>
+      <Link to="http://mermind.ai">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-cloud-sun-rain-icon lucide-cloud-sun-rain"
+        >
+          <title>Weather</title>
+          <path d="M12 2v2" />
+          <path d="m4.93 4.93 1.41 1.41" />
+          <path d="M20 12h2" />
+          <path d="m19.07 4.93-1.41 1.41" />
+          <path d="M15.947 12.65a4 4 0 0 0-5.925-4.128" />
+          <path d="M3 20a5 5 0 1 1 8.9-4H13a3 3 0 0 1 2 5.24" />
+          <path d="M11 20v2" />
+          <path d="M7 19v2" />
+        </svg>
+        Weather
+      </Link>
+      <Link dimmed to="http://mermind.ai">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-bell-ring-icon lucide-bell-ring"
+        >
+          <title>Bell Ring</title>
+          <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+          <path d="M22 8c0-2.3-.8-4.3-2-6" />
+          <path
+            d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"
+          />
+          <path d="M4 2C2.8 3.7 2 5.7 2 8" />
+        </svg>
+      </Link>
+      <Link to="http://mermind.ai">
+        Learn More
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-move-right-icon lucide-move-right"
+        >
+          <title>Arrow Right</title>
+          <path d="M18 8L22 12L18 16" />
+          <path d="M2 12H22" />
+        </svg>
+      </Link>
+    </Group>
+  </Box>
+</Section>

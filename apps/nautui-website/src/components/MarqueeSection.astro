@@ -1,0 +1,23 @@
+---
+import { Badge, Box, Button, Marquee, Section, Title } from "@nautui/core";
+---
+
+<Section border={{ top: "md" }}>
+  <Title>Marquee</Title>
+  <Box border="md">
+    <Marquee duration={18000}>
+      <Badge variant="outline">NautUI</Badge>
+      <Badge variant="flat">Astro</Badge>
+      <Badge variant="outline-primary">TypeScript</Badge>
+      <Badge variant="outline-secondary">Design System</Badge>
+      <Badge variant="dot">Components</Badge>
+      <Badge variant="flat" mr="md">Developer Experience</Badge>
+    </Marquee>
+    <Marquee reverse pauseOnHover duration={22000} fadeEdgeSize="10%">
+      <Button variant="ghost">Pause on hover</Button>
+      <Button variant="outline">Reverse direction</Button>
+      <Button variant="flat">Smooth scrolling</Button>
+      <Button variant="primary">Reusable API</Button>
+    </Marquee>
+  </Box>
+</Section>

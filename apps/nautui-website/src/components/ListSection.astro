@@ -1,0 +1,81 @@
+---
+import {
+  Box,
+  Card,
+  Grid,
+  GridItem,
+  List,
+  ListItem,
+  Section,
+  Text,
+  Title,
+} from "@nautui/core";
+---
+
+<Section border={{ top: "md" }}>
+  <Title>List</Title>
+  <Box border="md">
+    <Grid columns={3} border="md">
+      <GridItem>
+        <Card>
+          <Text>Default List</Text>
+          <List>
+            <ListItem>Item One</ListItem>
+            <ListItem>Item Two</ListItem>
+            <ListItem>Item Three</ListItem>
+          </List>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card>
+          <Text>List with custom Marker</Text>
+          <List marker="→">
+            <ListItem>Item One</ListItem>
+            <ListItem>Item Two</ListItem>
+            <ListItem>Item Three</ListItem>
+          </List>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card>
+          <Text>Ordered List</Text>
+          <List ordered>
+            <ListItem>Item One</ListItem>
+            <ListItem>Item Two</ListItem>
+            <ListItem>Item Three</ListItem>
+          </List>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card>
+          <Text>Horizontal List</Text>
+          <List horizontal>
+            <ListItem marker="none">No Marker</ListItem>
+            <ListItem>Item Two</ListItem>
+            <ListItem>Item Three</ListItem>
+          </List>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card>
+          <Text>No Marker List</Text>
+          <List marker="none">
+            <ListItem>Item One</ListItem>
+            <ListItem>Item Two</ListItem>
+            <ListItem>Item Three</ListItem>
+          </List>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card>
+          <Text>Item Marker List</Text>
+          <List marker="🚀">
+            <ListItem marker="none">Item with no marker</ListItem>
+            <ListItem marker="🔥">Hot Item</ListItem>
+            <ListItem>Parent marker Item</ListItem>
+          </List>
+        </Card>
+      </GridItem>
+    </Grid>
+  </Box>
+</Section>

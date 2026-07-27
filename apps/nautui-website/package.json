@@ -1,0 +1,33 @@
+{
+  "name": "naut-ui-website",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "biome lint --write .",
+    "lint:fix": "biome check --write .",
+    "check": "ultracite check",
+    "fix": "ultracite fix"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/mdx": "7.0.3",
+    "@lucide/astro": "^1.21.0",
+    "@nautui/blocks": "workspace:^0.1.1",
+    "@nautui/core": "workspace:^0.1.1",
+    "astro": "7.1.0",
+    "lightningcss": "^1.32.0",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.9",
+    "@types/node": "^22.0.0",
+    "ultracite": "7.4.2"
+  }
+}

@@ -1,0 +1,101 @@
+---
+import { GitPullRequestArrow, Search } from "@lucide/astro";
+import { DocLayout } from "@nautui/blocks";
+import {
+  Button,
+  Container,
+  Drawer,
+  Flex,
+  Group,
+  Link,
+  Menu,
+  MenuItem,
+  NavBar,
+  Text,
+  Theme,
+  ThemeToggle,
+} from "@nautui/core";
+import type { MarkdownHeading } from "astro";
+import Nav from "./Nav.astro";
+
+interface LayoutProps {
+  description: string;
+  headings?: MarkdownHeading[];
+  title: string;
+}
+
+const { title, description, headings } = Astro.props as LayoutProps;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="generator" content={Astro.generator}>
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <meta property="og:title" content={title}>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nautui.com/">
+    <meta property="og:image" content="/og-image.png">
+    <meta property="og:description" content={description}>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@nautui">
+    <meta name="twitter:creator" content="@nautui">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    >
+  </head>
+  <body>
+    <Theme>
+      <NavBar class="navbar" variant="default" bordered sticky height={70}>
+        <Group gap="xs">
+          <Drawer position="center" hidden="md">
+            Drawer content here...
+            <Menu> <MenuItem>Home</MenuItem> </Menu>
+          </Drawer>
+          <Text inline size="xl" weight="bold" nowrap>Naut UI</Text>
+          <Group gap="xs" hidden="mobile">
+            <Link to="/docs">Docs</Link>
+            <Link to="/docs/components">Comp</Link>
+          </Group>
+        </Group>
+        <Group gap="0">
+          <Button variant="ghost">
+            <Search />
+            Search
+          </Button>
+          <Button variant="ghost">
+            <GitPullRequestArrow />
+            Github</Button
+          >
+          <ThemeToggle size="sm" />
+        </Group>
+      </NavBar>
+      <DocLayout title={title} headings={headings}>
+        <Nav slot="nav" />
+        <slot />
+      </DocLayout>
+      <footer class="page-footer">
+        <Container>
+          <Flex justify="between">
+            <Text>NautUI</Text>
+            <Text>Terms & Privacy</Text>
+          </Flex>
+        </Container>
+      </footer>
+    </Theme>
+  </body>
+</html>
+
+<style>
+  .page-footer {
+    height: 20rem;
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import { Box, Section, Text, Title } from "@nautui/core";
+---
+
+<Section border={{ top: "md" }}>
+  <Title>Texts</Title>
+  <Text>
+    Typography is the art of arranging text to enhance readability and
+    aesthetics.
+  </Text>
+  <Box border="md">
+    <Text weight="lighter">Light (300)</Text>
+    <Text weight="normal" size="md">Default text (400)</Text>
+    <Text weight="medium">Medium Bold (500)</Text>
+    <Text weight="semi-bold">Semi Bold (600)</Text>
+    <Text weight="bold">Bold (700)</Text>
+    <Text weight="extra-bold">Extra Bold (800)</Text>
+    <Text dimmed italic
+      >Note: the font you're using need to the above weights.</Text
+    >
+    <Text decoration="underline">Underlined</Text>
+    <Text decoration="strikethrough">Strikethrough</Text>
+    <Text transform="uppercase">Uppercase</Text>
+    <Text transform="capitalize">capitalized text</Text>
+    <Text transform="lowercase">Lowercase Text</Text>
+    <Text italic>Italic</Text>
+    <Text dimmed>Dimmed text</Text>
+    <Text variant="primary">Primary text</Text>
+    <Text variant="secondary">Secondary text</Text>
+    <Text variant="destructive">Destructive text</Text>
+    <Text>
+      <Text inline>Text can have different sizes:</Text>
+      <Text inline size="xs">Extra small text</Text>
+      <Text inline size="sm">Small text</Text>
+      <Text inline size="md">Medium (Normal) text</Text>
+      <Text inline size="lg">Large text</Text>
+      <Text inline size="xl">Extra large text</Text>
+    </Text>
+    <Text
+      >Text can be <Text inline weight="bold">styled inline (as span)</Text> or
+      default as paragraph (p).</Text
+    >
+    <Text m="lg"
+      >Text spacing can be controlled with <Text weight="bold" inline mx="lg"
+        >margin mx lg</Text
+      >
+      properties. margin properties are: top, right, bottom, left. Each one can
+      be set to 0, xs, sm, md, lg, xl.</Text
+    >
+    <Text align="left">Text can be aligned <code>left</code> default</Text>
+    <Text align="right">Text can be aligned <code>right</code></Text>
+    <Text align="center">Text can be aligned <code>center</code></Text>
+    <Text
+      ><code>Code</code>
+      block inside text display like <code>This</code></Text
+    >
+    <Text ls="sm">Text with <code>sm</code> letter spacing</Text>
+    <Text ls="md">Text with <code>md</code> letter spacing</Text>
+    <Text ls="lg">Text with <code>lg</code> letter spacing</Text>
+    <Text ls="xl">Text with <code>xl</code> letter spacing</Text>
+  </Box>
+</Section>

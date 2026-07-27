@@ -1,0 +1,45 @@
+---
+import { Badge, Box, Flex, Title } from "@nautui/core";
+---
+
+<Box border="md">
+  <Flex gap="sm" align="center" wrap="wrap">
+    <Badge>Badge Default</Badge>
+    <Badge variant="flat">Badge Flat</Badge>
+    <Badge variant="dot">Badge Dot</Badge>
+    <Badge variant="outline">Badge Outline</Badge>
+    <Badge
+      gradient={{ colors: ["darkorchid", "orchid", "red"], textColor: "white" }}
+      >Badge Gradient</Badge
+    >
+    <Badge variant="outline" radius="full">Badge Pill</Badge>
+    <Badge variant="solid" color={{ text: "white", background: "darkorchid" }}
+      >Badge Solid</Badge
+    >
+    <Badge variant="outline" size="sm">Small</Badge>
+    <Badge variant="outline" size="md">Normal</Badge>
+    <Badge variant="outline" size="lg">Large</Badge>
+    <Badge variant="outline" outlineColor="green">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <title>Cloud Sun</title>
+        <path d="M12 2v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="M20 12h2" />
+        <path d="m19.07 4.93-1.41 1.41" />
+        <path d="M15.947 12.65a4 4 0 0 0-5.925-4.128" />
+        <path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" />
+      </svg>
+      Weather</Badge
+    >
+  </Flex>
+</Box>

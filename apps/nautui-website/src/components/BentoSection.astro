@@ -1,0 +1,19 @@
+---
+import { Bento, BentoItem, Box, Section, Title } from "@nautui/core";
+---
+
+<Section border={{ top: "md" }}>
+  <Title>Bento</Title>
+  <Bento rows={4} columns={4}>
+    <BentoItem col={2} row={2}> <Box centered>1</Box> </BentoItem>
+    <BentoItem><Box centered>2</Box></BentoItem>
+    <BentoItem><Box centered>3</Box></BentoItem>
+    <BentoItem col={2}><Box centered>4</Box></BentoItem>
+    <BentoItem col={2}><Box centered>5</Box></BentoItem>
+    <BentoItem row={2}><Box centered>6</Box></BentoItem>
+    <BentoItem><Box centered>7</Box></BentoItem>
+    <BentoItem><Box centered>8</Box></BentoItem>
+    <BentoItem><Box centered>9</Box></BentoItem>
+    <BentoItem><Box centered>10</Box></BentoItem>
+  </Bento>
+</Section>
