@@ -13,17 +13,20 @@
     "lint": "biome lint --write .",
     "lint:fix": "biome check --write .",
     "check": "ultracite check",
-    "fix": "ultracite fix"
+    "fix": "ultracite fix",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
+    "@astrojs/cloudflare": "^14.1.4",
     "@astrojs/mdx": "7.0.3",
     "@lucide/astro": "^1.21.0",
     "@nautui/blocks": "workspace:^0.1.1",
     "@nautui/core": "workspace:^0.1.1",
     "astro": "7.1.0",
     "lightningcss": "^1.32.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.114.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.9",
