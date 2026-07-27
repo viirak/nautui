@@ -10,10 +10,10 @@
   "repository": "https://github.com/viirak/nautui/core",
   "license": "MIT",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "check-types": "turbo run check-types",
+    "build": "pnpm -r build",
+    "dev": "pnpm -r --parallel dev",
+    "lint": "pnpm -r lint",
+    "check-types": "pnpm -r check-types",
     "check": "ultracite check",
     "fix": "ultracite fix"
   },
@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.12",
-    "turbo": "^2.9.8",
     "typescript": "5.9.2",
     "ultracite": "7.6.2"
   }
