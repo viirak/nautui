@@ -39,9 +39,11 @@ yarn-error.log*
 tsconfig.tsbuildinfo
 
 # Tools
+.rtk
 .planr
 .zed
 .opencode
 .crush
 .bitloops
 .agents
+.poolside
