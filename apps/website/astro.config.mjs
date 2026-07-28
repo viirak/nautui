@@ -14,4 +14,12 @@ export default defineConfig({
   },
 
   adapter: cloudflare(),
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'catppuccin-latte',
+        dark: 'github-dark'
+      }
+    }
+  }
 });
