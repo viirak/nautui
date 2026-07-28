@@ -1,4 +1,5 @@
 ---
+import { Article } from "@nautui/core";
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/LayoutDoc.astro";
 
@@ -23,5 +24,7 @@ const { title, description } = entry.data;
 ---
 
 <Layout title={title} description={description} headings={headings}>
-  <Content />
+  <Article>
+    <Content />
+  </Article>
 </Layout>
