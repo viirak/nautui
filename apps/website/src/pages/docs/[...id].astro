@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/LayoutDoc.astro";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("article");
+  return articles
+    .filter((entry) => entry.id.startsWith("docs/"))
+    .map((entry) => ({
+      params: { id: entry.id.replace("docs/", "") },
+    }));
+}
+
+const { id } = Astro.params;
+
+const articles = await getCollection("article");
+const entry = articles.find((a) => a.id === `docs/${id}`);
+
+if (!entry) return Astro.redirect("/404", 404);
+
+const { Content, headings } = await render(entry);
+const { title, description } = entry.data;
+---
+
+<Layout title={title} description={description} headings={headings}>
+  <Content />
+</Layout>
