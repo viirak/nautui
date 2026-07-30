@@ -8,6 +8,7 @@ export interface BadgeProps extends Base {
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
   solid?: { background: string; color: string };
+  dotted?: boolean;
   variant?: "default" | "solid" | "outline" | "dot" | "flat";
 }
 
@@ -19,6 +20,7 @@ const {
   variant = "default",
   outlineColor,
   iconOnly = false,
+  dotted = false,
   ...rest
 } = Astro.props as BadgeProps;
 
@@ -33,6 +35,7 @@ const gradientBg = gradient
     `variant--${variant}`,
     `radius--${radius}`,
     `size--${size}`,
+    dotted && "dotted",
     gradient && "color--gradient",
     iconOnly && "icon-only"]}
   {...rest}
@@ -81,7 +84,7 @@ const gradientBg = gradient
       border: none;
     }
 
-    &.variant--dot {
+    &.dotted {
       &::before {
         display: inline-block;
         width: 0.5rem;
