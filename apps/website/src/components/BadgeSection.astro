@@ -6,17 +6,18 @@ import { Badge, Box, Flex, Title } from "@nautui/core";
   <Flex gap="sm" align="center" wrap="wrap">
     <Badge>Badge Default</Badge>
     <Badge dotted>Default Dotted</Badge>
-    <Badge variant="flat">Badge Flat</Badge>
-    <Badge variant="dot">Badge Dot</Badge>
+    <Badge variant="text">Text</Badge>
+    <Badge variant="text" dotted>Dotted Text</Badge>
+    <Badge variant="surface">Badge Surface</Badge>
     <Badge variant="outline">Badge Outline</Badge>
+    <Badge variant="primary">Primary</Badge>
+    <Badge variant="secondary">Secondary</Badge>
+    <Badge variant="destructive">Destructive</Badge>
     <Badge
       gradient={{ colors: ["darkorchid", "orchid", "red"], textColor: "white" }}
       >Badge Gradient</Badge
     >
     <Badge variant="outline" radius="full">Badge Pill</Badge>
-    <Badge variant="solid" color={{ text: "white", background: "darkorchid" }}
-      >Badge Solid</Badge
-    >
     <Badge variant="outline" size="sm">Small</Badge>
     <Badge variant="outline" size="md">Normal</Badge>
     <Badge variant="outline" size="lg">Large</Badge>

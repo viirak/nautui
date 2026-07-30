@@ -4,12 +4,10 @@ import type { Base, Radius } from "../types";
 export interface BadgeProps extends Base {
   gradient?: { colors: string[]; textColor: string; deg?: number };
   iconOnly?: boolean;
-  outlineColor?: string;
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
-  solid?: { background: string; color: string };
   dotted?: boolean;
-  variant?: "default" | "solid" | "outline" | "dot" | "flat";
+  variant?: "default" | "text" | "surface" | "outline" | "primary" | "secondary" | "destructive"
 }
 
 const {
@@ -18,7 +16,6 @@ const {
   gradient,
   radius = "sm",
   variant = "default",
-  outlineColor,
   iconOnly = false,
   dotted = false,
   ...rest
@@ -44,12 +41,8 @@ const gradientBg = gradient
 </div>
 <style
   define:vars={{
-  solidBackground: solid.background,
-  solidColor: solid.color,
   gradientBg,
-  gradientColor: gradient?.textColor,
-  outlineColor: outlineColor ?? "var(--naut-color-content)",
-  outlineBg: outlineColor ? `rgb(from ${outlineColor} r g b / 0.15)` : "transparent",
+  gradientColor: gradient?.textColor
 }}
 >
   .naut-badge {
@@ -60,27 +53,47 @@ const gradientBg = gradient
     justify-content: center;
     text-transform: uppercase;
     text-wrap: nowrap;
-    border: 1px solid var(--naut-color-border);
-
-    &.variant--solid {
-      color: var(--solidColor);
-      background-color: var(--solidBackground);
-      border-color: var(--solidBackground);
-    }
 
     &.color--gradient {
       color: var(--gradientColor);
       background: var(--gradientBg);
     }
 
-    &.variant--outline {
-      color: var(--outline-color);
-      background-color: var(--outlineBg);
-      border: 1px solid var(--outline-color);
+    &.variant--default {
+      border: 1px solid var(--naut-color-border);
     }
 
-    &.variant--flat {
+    &.variant--text {
+      color: var(--naut-color-content);
+      border: none;
+    }
+
+    &.variant--surface {
+      color: var(--naut-color-content);
       background-color: var(--naut-color-base-200);
+      border: none;
+    }
+
+    &.variant--outline {
+      color: var(--outline-color);
+      border: 1px solid var(--naut-color-border-strong);
+    }
+
+    &.variant--primary {
+      color: var(--naut-color-primary-content);
+      background-color: var(--naut-color-primary);
+      border: none;
+    }
+
+    &.variant--secondary {
+      color: var(--naut-color-secondary-content);
+      background-color: var(--naut-color-secondary);
+      border: none;
+    }
+
+    &.variant--destructive {
+      color: var(--naut-color-destructive-content);
+      background-color: var(--naut-color-destructive);
       border: none;
     }
 
