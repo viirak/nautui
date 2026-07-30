@@ -61,6 +61,8 @@ const gradientBg = gradient
     justify-content: center;
     text-transform: uppercase;
     text-wrap: nowrap;
+    border: 1px solid var(--naut-color-border);
+    color: var(--naut-color-content);
 
     &.ls--sm {
       letter-spacing: 0.05rem;
@@ -77,11 +79,6 @@ const gradientBg = gradient
     &.color--gradient {
       color: var(--gradientColor);
       background: var(--gradientBg);
-    }
-
-    &.variant--default {
-      border: 1px solid var(--naut-color-border);
-      color: var(--naut-color-content);
     }
 
     &.variant--text {
