@@ -1,5 +1,5 @@
 ---
-import { Article, Box, Container, Drawer, Title } from "@nautui/core";
+import { Article, Box, Container, Title } from "@nautui/core";
 import type { MarkdownHeading } from "astro";
 import TOC from "./TOC.astro";
 
@@ -20,16 +20,6 @@ const { title, headings, class: className } = Astro.props as DocLayoutProps;
       </Box>
     </aside>
     <main class="naut-docpage__content">
-      {headings && (
-        <div class="naut-docpage__toc-drawer">
-          <Drawer button={{ variant: "ghost" }} position="right">
-            <TOC
-              headings={headings}
-              top={{ slug: "intro", label: "Introduction" }}
-            />
-          </Drawer>
-        </div>
-      )}
       <Article
         class:list={["naut-docpage__article", headings && "with-toc"]}
         anchorLinks
