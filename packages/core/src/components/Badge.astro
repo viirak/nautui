@@ -7,6 +7,7 @@ export interface BadgeProps extends Base {
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
   dotted?: boolean;
+  letterSpacing?: "sm" | "md" | "lg";
   color?: "primary" | "secondary" | "destructive"
   variant?: "default" | "text" | "surface" | "outline" | "primary" | "secondary" | "destructive"
 }
@@ -16,6 +17,7 @@ const {
   solid = { background: "darkorchid", color: "white" },
   gradient,
   radius = "sm",
+  letterSpacing = "md",
   variant = "default",
   iconOnly = false,
   dotted = false,
@@ -38,6 +40,7 @@ const gradientBg = gradient
     color && `color--${color}`,
     dotted && "dotted",
     gradient && "color--gradient",
+    letterSpacing && `ls--${letterSpacing}`,
     iconOnly && "icon-only"]}
   {...rest}
 >
@@ -57,6 +60,18 @@ const gradientBg = gradient
     justify-content: center;
     text-transform: uppercase;
     text-wrap: nowrap;
+
+    &.ls--sm {
+      letter-spacing: 0.05rem;
+    }
+
+    &.ls--md {
+      letter-spacing: 0.1rem;
+    }
+
+    &.ls--lg {
+      letter-spacing: 0.185rem;
+    }
 
     &.color--gradient {
       color: var(--gradientColor);
