@@ -17,20 +17,20 @@
     "generate-types": "wrangler types"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@astrojs/cloudflare": "^14.1.4",
-    "@astrojs/mdx": "7.0.3",
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/cloudflare": "^14.1.7",
+    "@astrojs/mdx": "7.0.5",
     "@lucide/astro": "^1.21.0",
     "@nautui/blocks": "workspace:^0.1.1",
     "@nautui/core": "workspace:^0.1.1",
-    "astro": "7.1.0",
+    "astro": "7.1.6",
     "lightningcss": "^1.32.0",
-    "typescript": "^6.0.3",
     "wrangler": "^4.114.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.9",
     "@types/node": "^22.0.0",
+    "typescript": "^7.0.2",
     "ultracite": "7.4.2"
   }
 }
