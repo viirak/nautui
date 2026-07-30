@@ -41,7 +41,8 @@ const gradientBg = gradient
     dotted && "dotted",
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
-    iconOnly && "icon-only"]}
+    iconOnly && "icon-only"
+  ]}
   {...rest}
 >
   <slot />
@@ -80,6 +81,7 @@ const gradientBg = gradient
 
     &.variant--default {
       border: 1px solid var(--naut-color-border);
+      color: var(--naut-color-content);
     }
 
     &.variant--text {
