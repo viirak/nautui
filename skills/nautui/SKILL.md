@@ -51,6 +51,18 @@ Override tokens on `:root` (or anywhere) — they update at runtime, no rebuild:
 
 **Brand inputs:** `--naut-color-primary` and `--naut-color-secondary` must be ≥4.5:1 contrast vs white.
 
+**Real-world mapping (Nuppun, `nuppun-website/src/layouts/Layout.astro`):**
+
+```css
+:root {
+  --naut-color-primary: #1c2f58; /* Navy */
+  --naut-color-secondary: #00f2fe; /* Digital Cyan */
+}
+[data-theme="dark"] {
+  --naut-color-primary: #009ead; /* Light Teal as dark-primary when needed */
+}
+```
+
 Everything else derives from these via `color-mix()`:
 
 | Token | Derivation |
@@ -70,6 +82,40 @@ CSS layer order: `@layer naut-base, naut-theme, naut-component;`.
 - **BEM naming:** `__` separates block from child element (`naut-card__body`), `--` marks variants (`naut-button.variant-primary`). Passed-in `class` merges onto the root.
 - **Props interfaces** are exported from each component file and follow `Base` (`class?` + arbitrary passthrough attributes).
 - **All components** accept arbitrary extra attributes that pass through to the underlying element.
+
+## Example Component File
+
+Every component is a single `.astro` file. Structure to follow when contributing or debugging:
+
+```astro
+---
+import type { Base, Size } from "../types";
+
+type MyCompVariant = "default" | "primary";
+
+export interface MyCompProps extends Base {
+  variant?: MyCompVariant;
+  size?: Size;
+}
+
+const { class: className, variant = "default", size = "md", ...rest } =
+  Astro.props as MyCompProps;
+---
+
+<div class:list={["naut-mycomp", `variant-${variant}`, className]} {...rest}>
+  <slot />
+</div>
+
+<style>
+  .naut-mycomp {
+    &.variant-primary {
+      /* nested selectors only — never bare elements */
+    }
+  }
+</style>
+```
+
+Rules: `class` is destructured as `class: className` (reserved word), CSS is scoped with nesting inside the root class, variants use `--` modifiers, and `Base` (from `src/types.ts`) provides `class?` plus arbitrary passthrough.
 
 ## Core Components — Quick API
 
@@ -207,3 +253,7 @@ import { SectionHero } from "@nautui/blocks";
 5. **Components with client JS:** `NavBar` (scroll listener), `ThemeToggle` (theme switch), `Drawer`, `Menu`, `Marquee`, `Accordion`, `BackToTop`, `TOC` (scrollspy). The rest are render-only.
 6. **Contrast:** brand colors are checked against white — keep them dark enough.
 7. **Docs:** per-component reference lives at `docs/components/*.md` in the [GitHub repo](https://github.com/viirak/nautui).
+
+## Cross-Repo Coordination (Nuppun)
+
+When this session references the **Nuppun** contract, see `nuppun-website/docs/nautui-contract.md` (repo: `~/codes/nuppun/nuppun-website`) — it is the frozen API surface Nuppun builds against and the single source of truth for how the nuppun.com site consumes NautUI. For maintainer conventions, contribution rules, and this library's own structure, see this repo's `AGENTS.md`.
