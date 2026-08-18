@@ -19,7 +19,7 @@ const { padding, nonSpacing } = extractSpacingProps(
   Astro.props as SectionProps
 );
 
-const { class: className, border, cross, dark = false, ...rest } = nonSpacing;
+const { class: className, border, dark = false, ...rest } = nonSpacing;
 const p = Object.keys(padding).length === 0 ? "md" : padding.p;
 const paddingClasses = getSpacingClasses({ ...padding, p });
 
