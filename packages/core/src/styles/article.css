@@ -58,6 +58,30 @@
     border-radius: 8px;
   }
 
+  table {
+    width: 100%;
+    margin: 1.5rem 0;
+    font-size: 0.925rem;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--naut-color-border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-weight: 600;
+      background: var(--naut-color-base-200);
+    }
+
+    tr:nth-child(even) td {
+      background: var(--naut-color-base-100);
+    }
+  }
+
   &.anchor-links {
     h2,
     h3,
