@@ -21,13 +21,13 @@ const { title, headings, class: className } = Astro.props as DocLayoutProps;
     </aside>
     <main class="naut-docpage__content">
       <Box p="lg">
-      <Article
-        class:list={["naut-docpage__article", headings && "with-toc"]}
-        anchorLinks
-      >
-        <Title id="intro" level={1} mt="0">Hello {title}</Title>
-        <slot />
-      </Article>
+        <Article
+          class:list={["naut-docpage__article", headings && "with-toc"]}
+          anchorLinks
+        >
+          <Title id="intro" level={1} mt="0">{title}</Title>
+          <slot />
+        </Article>
       </Box>
     </main>
     {headings && (
