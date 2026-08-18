@@ -68,54 +68,54 @@ Dark mode is enabled by default when `<Theme>` wraps your layout. Switch it with
 
 ### @nautui/core
 
-| Component | Description |
-| --- | --- |
-| `Accordion` | Expandable content sections |
-| `AccordionItem` | A single accordion section |
-| `Article` | Long-form content container with typographic defaults |
-| `Background` | Pattern/color background layer |
-| `Badge` | Small status/label chip |
-| `Bento` | Bento-style grid layout |
-| `BentoItem` | A single bento cell |
-| `Box` | Generic bordered container |
-| `Button` | Button / link-button. [Docs →](components/Button.md) |
-| `Card` | Elevated content container |
-| `Container` | Max-width content wrapper |
-| `Divider` | Horizontal rule |
-| `Drawer` | Slide-in overlay panel |
-| `Flex` | Flexbox layout helper |
-| `Grid` | CSS Grid layout helper |
-| `GridItem` | A grid cell |
-| `Group` | Inline row of related elements |
-| `Image` | Optimized responsive image |
-| `Link` | Text link |
-| `List` | List container |
-| `ListItem` | List item |
-| `Mark` | Highlighted text |
-| `Marquee` | Scrolling ticker |
-| `Masonry` | Masonry layout |
-| `MasonryItem` | A masonry cell |
-| `Menu` | Dropdown menu |
-| `MenuGroup` | Grouped menu items |
-| `MenuItem` | A single menu item |
-| `NavBar` | Top navigation bar |
-| `Section` | Vertical section with spacing |
-| `Space` | Spacer element |
-| `Stack` | Vertical stack layout |
-| `Text` | Paragraph text |
-| `Theme` | Theme provider — loads styles + dark mode |
-| `ThemeToggle` | Light/dark switcher |
-| `Title` | Heading |
-| `Visibility` | Reveal-on-scroll wrapper |
+| Component | Description | Docs |
+| --- | --- | --- |
+| `Accordion` | Expandable content sections | [→](components/Accordion.md) |
+| `AccordionItem` | A single accordion section | [→](components/Accordion.md) |
+| `Article` | Long-form content container with typographic defaults | [→](components/Article.md) |
+| `Background` | Pattern/color background layer | [→](components/Background.md) |
+| `Badge` | Small status/label chip | [→](components/Badge.md) |
+| `Bento` | Bento-style grid layout | [→](components/Bento.md) |
+| `BentoItem` | A single bento cell | [→](components/Bento.md) |
+| `Box` | Generic bordered container | [→](components/Box.md) |
+| `Button` | Button / link-button | [→](components/Button.md) |
+| `Card` | Elevated content container | [→](components/Card.md) |
+| `Container` | Max-width content wrapper | [→](components/Container.md) |
+| `Divider` | Horizontal rule | [→](components/Divider.md) |
+| `Drawer` | Slide-in overlay panel | [→](components/Drawer.md) |
+| `Flex` | Flexbox layout helper | [→](components/Flex.md) |
+| `Grid` | CSS Grid layout helper | [→](components/Grid.md) |
+| `GridItem` | A grid cell | [→](components/Grid.md) |
+| `Group` | Inline row of related elements | [→](components/Group.md) |
+| `Image` | Optimized responsive image | [→](components/Image.md) |
+| `Link` | Text link | [→](components/Link.md) |
+| `List` | List container | [→](components/List.md) |
+| `ListItem` | List item | [→](components/List.md) |
+| `Mark` | Highlighted text | [→](components/Mark.md) |
+| `Marquee` | Scrolling ticker | [→](components/Marquee.md) |
+| `Masonry` | Masonry layout | [→](components/Masonry.md) |
+| `MasonryItem` | A masonry cell | [→](components/Masonry.md) |
+| `Menu` | Dropdown menu | [→](components/Menu.md) |
+| `MenuGroup` | Grouped menu items | [→](components/Menu.md) |
+| `MenuItem` | A single menu item | [→](components/Menu.md) |
+| `NavBar` | Top navigation bar | [→](components/NavBar.md) |
+| `Section` | Vertical section with spacing | [→](components/Section.md) |
+| `Space` | Spacer element | [→](components/Space.md) |
+| `Stack` | Vertical stack layout | [→](components/Stack.md) |
+| `Text` | Paragraph text | [→](components/Text.md) |
+| `Theme` | Theme provider — loads styles + dark mode | [→](components/Theme.md) |
+| `ThemeToggle` | Light/dark switcher | [→](components/Theme.md) |
+| `Title` | Heading | [→](components/Title.md) |
+| `Visibility` | Show/hide content at breakpoints | [→](components/Visibility.md) |
 
 ### @nautui/blocks
 
-| Component | Description |
-| --- | --- |
-| `Breadcrumb` | Navigation trail with separators |
-| `DocLayout` | Three-column docs page shell (nav / content / TOC) |
-| `SectionHero` | Full-width marketing hero section |
-| `TOC` | Table of contents from `MarkdownHeading[]` |
+| Component | Description | Docs |
+| --- | --- | --- |
+| `Breadcrumb` | Navigation trail with separators | [→](components/Breadcrumb.md) |
+| `DocLayout` | Three-column docs page shell (nav / content / TOC) | [→](components/DocLayout.md) |
+| `SectionHero` | Full-width marketing hero section | [→](components/SectionHero.md) |
+| `TOC` | Table of contents from `MarkdownHeading[]` | [→](components/TOC.md) |
 
 ## Theming
 
