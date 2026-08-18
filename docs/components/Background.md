@@ -58,7 +58,7 @@ mask-image: radial-gradient(70% 60% at 50% 0, rgb(0 0 0 / 1) 30%, transparent 75
 | Prop    | Type                                              | Default                           | Description                         |
 | ------- | ------------------------------------------------- | --------------------------------- | ----------------------------------- |
 | `type`  | `"dots" \| "dots-x" \| "grid" \| "stripes"`    | *(required)*                      | Pattern kind.                       |
-| `color` | `string`                                          | `var(--naut-color-base-300)`      | Pattern stroke color.               |
+| `color` | `string`                                          | `var(--naut-color-base-200)`      | Pattern stroke color.               |
 | `size`  | `number`                                          | `1`                               | Dot/line thickness (px).            |
 | `gap`   | `number`                                          | per-type                          | Spacing between repeats (px).       |
 | `deg`   | `number`                                          | per-type                          | Angle for `grid`/`stripes` (degrees). |

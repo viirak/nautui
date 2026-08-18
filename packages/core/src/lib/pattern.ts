@@ -7,7 +7,7 @@ export interface PatternProps {
 }
 
 export function getGradientPattern(props?: PatternProps) {
-  const color = props?.color || "var(--naut-color-base-300)";
+  const color = props?.color || "var(--naut-color-base-200)";
   const size = props?.size || 1;
 
   switch (props?.type) {
