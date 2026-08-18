@@ -11,7 +11,7 @@ export interface TitleProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
   gradient?: { colors: string[]; deg?: number };
   level?: 1 | 2 | 3 | 4 | 5 | 6;
-  size?: "default" | "display" | "display-lg" | "display-xl" | "display-xxl";
+  size?: "default" | "display" | "display-sm" | "display-lg" | "display-xl" | "display-xxl";
 }
 
 const { spacing, nonSpacing } = extractSpacingProps(Astro.props as TitleProps);
@@ -100,7 +100,6 @@ const gradientBg = gradient
       line-height: clamp(1.3rem, 1vw + 1rem, 1.3rem);
     }
 
-    /* Size display: ;*/
     &.size-display-sm {
       font-size: clamp(2rem, 2.2vw + 1rem, 2.8rem);
       line-height: clamp(2.5rem, 3.2vw + 1rem, 3.5rem);

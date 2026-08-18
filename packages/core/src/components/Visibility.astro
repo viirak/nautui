@@ -50,14 +50,20 @@ const {
     }
   }
 
+  .naut-visibility--sm.visible {
+    @media (min-width: 577px) {
+      display: none !important;
+    }
+  }
+
   .naut-visibility--md.visible {
-    @media (max-width: 817px) {
+    @media (max-width: 817px), (min-width: 1042px) {
       display: none !important;
     }
   }
 
   .naut-visibility--lg.visible {
-    @media (max-width: 1041px) {
+    @media (max-width: 1041px), (min-width: 1250px) {
       display: none !important;
     }
   }

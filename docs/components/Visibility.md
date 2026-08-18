@@ -30,7 +30,7 @@ Two complementary modes — pick whichever is terser for your case:
 - **Hide at a breakpoint** (`hidden` default): `<Visibility on="md">` hides children in the `md` range (818–1041px), visible everywhere else.
 - **Show only at a breakpoint** (`hidden={false}`): `<Visibility on="lg" hidden={false}>` shows children only in the `lg` range (1042–1249px), hidden everywhere else.
 
-Breakpoint ranges: `sm` ≤576px (hide) / ≤817px (show-only), `md` 818–1041px, `lg` 1042–1249px, `xl` ≥1250px.
+Breakpoint ranges (same for hide and show-only): `sm` ≤576px, `md` 818–1041px, `lg` 1042–1249px, `xl` ≥1250px. Show-only (`hidden={false}`) hides everywhere outside that range.
 
 ## Accessibility
 
