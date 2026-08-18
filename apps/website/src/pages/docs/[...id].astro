@@ -1,6 +1,6 @@
 ---
-import { Article } from "@nautui/core";
 import { getCollection, render } from "astro:content";
+import { Article } from "@nautui/core";
 import Layout from "../../layouts/LayoutDoc.astro";
 
 export async function getStaticPaths() {
@@ -24,7 +24,5 @@ const { title, description } = entry.data;
 ---
 
 <Layout title={title} description={description} headings={headings}>
-  <Article>
-    <Content />
-  </Article>
+  <Article> <Content /> </Article>
 </Layout>

@@ -5,7 +5,8 @@ import { Badge, Box, Button, Marquee, Section, Title } from "@nautui/core";
 <Section border={{ top: "md" }}>
   <Title>Marquee</Title>
   <Box border="md">
-    <Marquee duration={18000}>
+    <!-- biome-ignore lint/a11y/noDistractingElements: NautUI Marquee is a custom component; supports pauseOnHover + prefers-reduced-motion -->
+    <Marquee duration={18_000}>
       <Badge variant="outline">NautUI</Badge>
       <Badge variant="flat">Astro</Badge>
       <Badge variant="outline-primary">TypeScript</Badge>
@@ -13,7 +14,8 @@ import { Badge, Box, Button, Marquee, Section, Title } from "@nautui/core";
       <Badge variant="dot">Components</Badge>
       <Badge variant="flat" mr="md">Developer Experience</Badge>
     </Marquee>
-    <Marquee reverse pauseOnHover duration={22000} fadeEdgeSize="10%">
+    <!-- biome-ignore lint/a11y/noDistractingElements: NautUI Marquee is a custom component; supports pauseOnHover + prefers-reduced-motion -->
+    <Marquee reverse pauseOnHover duration={22_000} fadeEdgeSize="10%">
       <Button variant="ghost">Pause on hover</Button>
       <Button variant="outline">Reverse direction</Button>
       <Button variant="flat">Smooth scrolling</Button>
