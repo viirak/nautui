@@ -123,51 +123,51 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Container` | `fluid`, `maxWidth`, `padding` | Centered max-width wrapper |
-| `Section` | `dark`, `id` | Page section; `.dark` forces dark neutral scale |
-| `Box` | — | Generic padding/sizing box |
-| `Flex` | `align`, `justify`, `direction`, `wrap`, `gap` | Flexbox layout |
-| `Grid` / `GridItem` | `columns`, `rows`, `gap`, spans | CSS grid |
-| `Stack` | `gap`, `direction` | Vertical (default) or horizontal stack |
-| `Group` | `gap` | Inline item group |
-| `Space` | `size` (`sm`–`display-xxl`) | Spacer |
-| `Divider` | `orientation`, `label` | Horizontal/vertical rule |
-| `Visibility` | `show`, `hide` (`sm`/`md`/`lg`/`xl`) | Responsive show/hide |
+| `Container` | `fluid` | Centered max-width wrapper |
+| `Section` | `as` (`div\|section\|article\|main\|header\|footer`), `border`, `dark` | Page section; `dark` forces the dark neutral scale |
+| `Box` | `border`, `centered`, `corner`, `maxWidth`, `radius`, `ta` | Generic box with spacing props |
+| `Flex` | `align`, `direction`, `gap`, `justify`, `wrap` | Flexbox layout (use for horizontal stacks) |
+| `Grid` / `GridItem` | `columns` (1–12), `gap`, `border`, `radius` / `span` | CSS grid |
+| `Stack` | `align`, `gap`, `justify` | Vertical stack only — use `Flex` for horizontal |
+| `Group` | `gap`, `grow`, `justify`, `not`, `wrap` | Inline item group |
+| `Space` | `size`, `grow`, `orientation` | Spacer |
+| `Divider` | `orientation`, `label`, `size`, `variant` (`solid\|dotted\|dashed`) | Horizontal/vertical rule |
+| `Visibility` | `hidden`, `on` (`sm\|md\|lg\|xl`) | Responsive show/hide |
 
 ### Content
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Button` | `variant` (`default`, `primary`, `secondary`, `destructive`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `size` (`sm`/`md`/`lg`), `href`, `rounded`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>` |
-| `Link` | `href`, `variant` | Anchor with styles |
-| `Title` | `size` (`sm`–`display-xxl`), `as` | Heading with responsive scale |
-| `Text` | `size`, `color`, `weight`, `align`, `variant` (`link`, `highlight`) | Paragraph |
-| `Mark` | `color` | Inline highlight |
-| `Image` | `src`, `alt` (required), `ratio`, `radius`, `shadow`, `cover`, `fluid`, `responsive`, `hover` (`zoom`, `zoom-out`, `brighten`, `grayscale`, `fade`), `maxWidth`, `maxHeight` | Clipped frame; `hover="zoom"` scales on hover |
-| `List` / `ListItem` | `ordered`, `marker`, `style` | Lists |
-| `Article` | — | Article typography wrapper |
+| `Button` | `variant` (`default`, `primary`, `secondary`, `destructive`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `size` (`sm\/md\/lg`), `href`, `rounded`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>` |
+| `Link` | `to` (required), `dimmed`, `external`, `hover` (`underline\|dimmed\|surface`), `underline`, `wrap` | Anchor — no `variant` prop |
+| `Title` | `size` (`default\|display\|display-sm\|display-lg\|display-xl\|display-xxl`), `level` (1–6), `align`, `gradient` | Heading; `level` sets h1–h6 |
+| `Text` | `size`, `variant` (`primary\|secondary\|tertiary\|destructive\|link\|highlight`), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph — no `color` prop |
+| `Mark` | `variant` (8 incl `primary\|underline\|sketch-circle`), `gradient`, `rotate`, `ff` | Inline highlight |
+| `Image` | `src`, `alt` (required), `ratio`, `radius`, `shadow`, `cover`, `fluid`, `responsive`, `hover` (`zoom\|zoom-out\|brighten\|grayscale\|fade`), `maxWidth`, `maxHeight` | Clipped frame; `hover="zoom"` scales on hover |
+| `List` / `ListItem` | `ordered`, `horizontal`, `marker`, `gap` / `marker` | Lists |
+| `Article` | `anchorLinks` | Article typography wrapper |
 | `Masonry` / `MasonryItem` | `columns`, `gap` | CSS-columns masonry |
-| `Marquee` | `speed`, `direction`, `pauseOnHover` | Infinite scroll strip |
+| `Marquee` | `duration` (ms), `orientation`, `pauseOnHover`, `reverse`, `repeat`, `fadeEdges`, `gap` | Infinite scroll strip — no `speed` prop; `duration` controls pace |
 
 ### Navigation & Overlay
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `NavBar` | `position`, `fixed`, `transparent` | Sticky/fixed nav with scroll listener |
-| `Menu` / `MenuGroup` / `MenuItem` | `trigger`, `open` | Dropdown menu |
-| `Drawer` | `open`, `position` (`left`/`right`/`top`/`bottom`/`center`), `title`, `onClose` | Overlay panel |
+| `NavBar` | `variant` (`default\|outline\|island`), `sticky`, `autohide`, `bordered`, `dark`, `fluid`, `height`, `offset`, `radius`, `shadow`, `zindex` | Sticky/fixed nav; default slot for wordmark + links |
+| `Menu` / `MenuGroup` / `MenuItem` | `divided`, `gap`, `horizontal` / `label` (req), `collapsible`, `open`, `line` / `href` (req), `active`, `activeVariant`, `dimmed`, `radius` | Dropdown menu |
+| `Drawer` | `position` (`center\|top\|right\|bottom\|left`), `button`, `size`, `zi` | Overlay panel |
 | `BackToTop` | `threshold`, `position`, `offset`, `label`, `showLabel` | Floating button; smooth-scrolls to top, respects `prefers-reduced-motion` |
-| `TOC` | `headingSelector`, `activeClass` | Table of contents from headings |
+| `TOC` | `headings` (required), `sticky`, `title`, `top` | Table of contents from headings |
 
 ### Accents
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Badge` | `variant`, `color`, `size` | Pill label |
-| `Accordion` / `AccordionItem` | `open`, `title`, `icon` | Collapsible sections |
+| `Badge` | `variant` (incl `default\|outline\|primary\|secondary\|destructive\|surface\|text`), `color`, `size`, `dotted`, `iconOnly`, `gradient`, `radius`, `outlineColor`, `letterSpacing` | Pill label |
+| `Accordion` / `AccordionItem` | `title` (required), `icon` (`chevron\|plus`), `size` | Collapsible sections |
 | `Background` | `color`, `gradient`, `image`, `pattern`, `opacity`, `mask` | Absolute-positioned layer for hero sections |
-| `Bento` / `BentoItem` | `rows`, `columns`, spans | Bento grid |
-| `Mark`, `Space`, `Card` | — | Card: `padding`, `radius`, `shadow`, `border`, `hover` |
+| `Bento` / `BentoItem` | `rows`, `columns`, `gap` / `col`, `row` | Bento grid |
+| `Card` | `padding`, `radius`, `shadow`, `border`, `hover` (`light\|surface\|primary\|outline\|elevate\|...`), `variant` (`ghost\|surface\|light\|dark\|primary\|...`), `size`, `fluid`, `badged` | Card container |
 
 ### Providers & Controls
 
