@@ -2,6 +2,7 @@ import type { AccordionProps } from "./components/Accordion.astro";
 import type { AccordionItemProps } from "./components/AccordionItem.astro";
 import type { ArticleProps } from "./components/Article.astro";
 import type { BackgroundProps } from "./components/Background.astro";
+import type { BackToTopProps } from "./components/BackToTop.astro";
 import type { BadgeProps } from "./components/Badge.astro";
 import type { BentoProps } from "./components/Bento.astro";
 import type { BentoItemProps } from "./components/BentoItem.astro";
@@ -75,6 +76,7 @@ export declare const AccordionItem: (
 ) => AstroComponent;
 export declare const Button: (props: ButtonProps) => AstroComponent;
 export declare const Badge: (props: BadgeProps) => AstroComponent;
+export declare const BackToTop: (props: BackToTopProps) => AstroComponent;
 export declare const Card: (props: CardProps) => AstroComponent;
 export declare const Divider: (props: DividerProps) => AstroComponent;
 export declare const Image: (props: ImageProps) => AstroComponent;

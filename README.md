@@ -158,6 +158,7 @@ Theming relies on `color-mix()`, `oklch()`, and relative color syntax (`rgb(from
 ### Content
 - [x] Article — long-form content container with typographic defaults and copy-to-clipboard
 - [x] Background — pattern or gradient background layer
+- [x] BackToTop — floating button that scrolls back to top
 - [x] Image — responsive image with ratio, cover, and shadow options
 - [x] Marquee — infinite horizontal/vertical scroll ticker
 

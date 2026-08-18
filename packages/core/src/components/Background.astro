@@ -8,9 +8,9 @@ interface GradientProps {
 }
 
 interface MaskProps {
+  position?: "top" | "bottom" | "center" | "left" | "right";
   shape: "radial";
   visibility?: number;
-  position?: "top" | "bottom" | "center" | "left" | "right";
 }
 
 export interface BackgroundProps {
@@ -31,11 +31,12 @@ const backgroundPosition = image ? "center" : undefined;
 const backgroundRepeat = image ? "no-repeat" : undefined;
 const backgroundOpacity = opacity || 1;
 const backgroundPattern = getGradientPattern(pattern);
-const backgroundGradient = gradient
-  ? gradient.type === "radial"
+const backgroundGradient = (() => {
+  if (!gradient) return;
+  return gradient.type === "radial"
     ? `radial-gradient(circle, ${gradient.colors.join(", ")})`
-    : `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
-  : undefined;
+    : `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`;
+})();
 const maskPosition = {
   top: "50% 0%",
   bottom: "50% 100%",

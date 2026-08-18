@@ -67,9 +67,9 @@
     th,
     td {
       padding: 0.6rem 0.75rem;
-      border: 1px solid var(--naut-color-border);
-      text-align: left;
       vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--naut-color-border);
     }
 
     th {

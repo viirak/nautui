@@ -4,6 +4,7 @@ import Accordion from "./components/Accordion.astro";
 import AccordionItem from "./components/AccordionItem.astro";
 import Article from "./components/Article.astro";
 import Background from "./components/Background.astro";
+import BackToTop from "./components/BackToTop.astro";
 import Badge from "./components/Badge.astro";
 import Bento from "./components/Bento.astro";
 import BentoItem from "./components/BentoItem.astro";
@@ -43,6 +44,7 @@ export {
   AccordionItem,
   Article,
   Background,
+  BackToTop,
   Badge,
   Bento,
   BentoItem,

@@ -11,7 +11,13 @@ export interface TitleProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
   gradient?: { colors: string[]; deg?: number };
   level?: 1 | 2 | 3 | 4 | 5 | 6;
-  size?: "default" | "display" | "display-sm" | "display-lg" | "display-xl" | "display-xxl";
+  size?:
+    | "default"
+    | "display"
+    | "display-sm"
+    | "display-lg"
+    | "display-xl"
+    | "display-xxl";
 }
 
 const { spacing, nonSpacing } = extractSpacingProps(Astro.props as TitleProps);

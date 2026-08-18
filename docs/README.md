@@ -74,6 +74,7 @@ Dark mode is enabled by default when `<Theme>` wraps your layout. Switch it with
 | `AccordionItem` | A single accordion section | [→](components/Accordion.md) |
 | `Article` | Long-form content container with typographic defaults | [→](components/Article.md) |
 | `Background` | Pattern/color background layer | [→](components/Background.md) |
+| `BackToTop` | Floating scroll-to-top button | [→](components/BackToTop.md) |
 | `Badge` | Small status/label chip | [→](components/Badge.md) |
 | `Bento` | Bento-style grid layout | [→](components/Bento.md) |
 | `BentoItem` | A single bento cell | [→](components/Bento.md) |
