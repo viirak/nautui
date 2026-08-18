@@ -54,13 +54,13 @@ const notScreens = typeof not === "string" ? [not] : not;
     }
 
     &.not-md {
-      @media only screen and (min-width: 818px) and (min-width: 1041px) {
+      @media only screen and (min-width: 818px) and (max-width: 1041px) {
         flex-direction: column;
       }
     }
 
     &.not-lg {
-      @media only screen and (min-width: 1042px) and (min-width: 1249px) {
+      @media only screen and (min-width: 1042px) and (max-width: 1249px) {
         flex-direction: column;
       }
     }
