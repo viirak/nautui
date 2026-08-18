@@ -1,14 +1,17 @@
 ---
 import type { Base } from "../types";
 
-export interface ContainerProps extends Base {}
+export interface ContainerProps extends Base {
+  fluid?: boolean;
+}
 
-const { class: className, ...rest } = Astro.props as ContainerProps;
+const { class: className, fluid, ...rest } = Astro.props as ContainerProps;
 ---
 
 <div
   class:list={[
     "naut-container",
+    fluid && "fluid",
     className
   ]}
   {...rest}
