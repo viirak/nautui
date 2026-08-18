@@ -21,7 +21,6 @@ const {
   class: className,
   columns = 12,
   gap = "md",
-  bordered = false,
   border,
   radius,
   ...rest
@@ -41,7 +40,6 @@ const { borderClasses, borderColors } = createBorder(config);
     col?.md && `md-columns-${col.md}`,
     col?.lg && `lg-columns-${col.lg}`,
     col?.xl && `xl-columns-${col.xl}`,
-    bordered && "bordered",
     radius && `radius radius-${radius}`,
     ...borderClasses,
     className

@@ -2,19 +2,25 @@
 import type { Base, Radius } from "../types";
 
 export interface BadgeProps extends Base {
+  color?: "primary" | "secondary" | "destructive";
+  dotted?: boolean;
   gradient?: { colors: string[]; textColor: string; deg?: number };
   iconOnly?: boolean;
+  letterSpacing?: "sm" | "md" | "lg";
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
-  dotted?: boolean;
-  letterSpacing?: "sm" | "md" | "lg";
-  color?: "primary" | "secondary" | "destructive"
-  variant?: "default" | "text" | "surface" | "outline" | "primary" | "secondary" | "destructive"
+  variant?:
+    | "default"
+    | "text"
+    | "surface"
+    | "outline"
+    | "primary"
+    | "secondary"
+    | "destructive";
 }
 
 const {
   size = "md",
-  solid = { background: "darkorchid", color: "white" },
   gradient,
   radius = "sm",
   letterSpacing = "md",
@@ -59,10 +65,10 @@ const gradientBg = gradient
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
+    color: var(--naut-color-content);
     text-transform: uppercase;
     text-wrap: nowrap;
     border: 1px solid var(--naut-color-border);
-    color: var(--naut-color-content);
 
     &.ls--sm {
       letter-spacing: 0.05rem;
@@ -115,6 +121,17 @@ const gradientBg = gradient
       border: none;
     }
 
+    &.dotted {
+      &::before {
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        content: "";
+        background-color: var(--naut-color-content);
+        border-radius: 50%;
+      }
+    }
+
     &.color--primary:not(.filled) {
       color: var(--naut-color-primary);
       &.dotted {
@@ -139,18 +156,6 @@ const gradientBg = gradient
         &::before {
           background-color: var(--naut-color-destructive);
         }
-      }
-    }
-
-
-    &.dotted {
-      &::before {
-        display: inline-block;
-        width: 0.5rem;
-        height: 0.5rem;
-        content: "";
-        background-color: var(--naut-color-content);
-        border-radius: 50%;
       }
     }
 

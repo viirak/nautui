@@ -1,15 +1,26 @@
 ---
 import type { Base, Radius, Size } from "../types";
 
-type ButtonVariant = "default" | "primary" | "secondary" | "destructive";
+type ButtonVariant =
+  | "default"
+  | "primary"
+  | "secondary"
+  | "destructive"
+  | "outline"
+  | "outline-primary"
+  | "outline-secondary"
+  | "flat"
+  | "ghost"
+  | "link"
+  | "rainbow";
 type ButtonSize = Omit<Size, "xl">;
 type ButtonType = "button" | "submit" | "reset";
 
 export interface ButtonProps extends Base {
-  border?: Omit<Size, "xl"> | "none";
+  border?: ButtonSize | "none";
   dark?: boolean;
   href?: string;
-  rounded?: Radius;
+  rounded?: Radius | "none" | "full";
   size?: ButtonSize;
   square?: boolean;
   type?: ButtonType;
@@ -24,7 +35,6 @@ const {
   variant = "default",
   rounded = "md",
   border = "md",
-  pill = false,
   dark = false,
   square = false,
   ...rest
@@ -36,7 +46,6 @@ const classlist = [
   `variant-${variant}`,
   `rounded-${rounded}`,
   `border-${border}`,
-  pill && "pill",
   dark && "dark",
   square && "square",
   className,

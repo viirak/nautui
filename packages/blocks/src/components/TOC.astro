@@ -37,7 +37,7 @@ const tocId = uid("naut-toc");
     <ul class="naut-toc__list">
       {allHeadings.map((heading) => (
         <li class:list={["naut-toc__list-item"]}>
-          <a class:list={["naut-toc__link", `depth-${heading.depth}`]} href={`#${heading.slug}`}>{heading.text}</a>
+          <a href={`#${heading.slug}`} class:list={["naut-toc__link", `depth-${heading.depth}`]}>{heading.text}</a>
         </li>
       ))}
     </ul>
@@ -85,10 +85,10 @@ const tocId = uid("naut-toc");
     display: block;
     padding: 0 1rem;
     margin: 0.5rem 0;
+    font-size: small;
     color: var(--naut-color-content);
     text-decoration: none;
     opacity: 0.5;
-    font-size: small;
 
     &.depth-3 {
       &::before {
