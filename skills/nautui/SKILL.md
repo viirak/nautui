@@ -253,7 +253,3 @@ import { SectionHero } from "@nautui/blocks";
 5. **Components with client JS:** `NavBar` (scroll listener), `ThemeToggle` (theme switch), `Drawer`, `Menu`, `Marquee`, `Accordion`, `BackToTop`, `TOC` (scrollspy). The rest are render-only.
 6. **Contrast:** brand colors are checked against white — keep them dark enough.
 7. **Docs:** per-component reference lives at `docs/components/*.md` in the [GitHub repo](https://github.com/viirak/nautui).
-
-## Cross-Repo Coordination (Nuppun)
-
-When this session references the **Nuppun** contract, see `nuppun-website/docs/nautui-contract.md` (repo: `~/codes/nuppun/nuppun-website`) — it is the frozen API surface Nuppun builds against and the single source of truth for how the nuppun.com site consumes NautUI. For maintainer conventions, contribution rules, and this library's own structure, see this repo's `AGENTS.md`.
