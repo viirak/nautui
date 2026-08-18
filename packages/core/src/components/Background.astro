@@ -25,7 +25,9 @@ const backgroundRepeat = image ? "no-repeat" : undefined;
 const backgroundOpacity = opacity || 1;
 const backgroundPattern = getGradientPattern(pattern);
 const backgroundGradient = gradient
-  ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
+  ? gradient.type === "radial"
+    ? `radial-gradient(circle, ${gradient.colors.join(", ")})`
+    : `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : undefined;
 ---
 
