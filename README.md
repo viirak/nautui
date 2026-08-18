@@ -1,10 +1,10 @@
 # Naut UI
 
-A clean, minimalist UI component library for Astro — built for marketing websites, not apps.
+A lightweight, Astro-native UI component library for marketing websites — not apps.
 
-**The missing UI library for Astro.** 
+**Astro is the rocket; Naut UI is the gear.** Built for speed and designed for the modern web, Naut UI ships the core elements and marketing blocks you need to skip the scaffolding and get to your product.
 
-Astro provides the rocket; **nautui** provides the gear. Built for speed and designed for the modern web, nautui gives you the core elements and marketing blocks you need to stop building setups and start being the astronaut.
+No framework runtime, no build step, no preprocessor. Components are single-file `.astro` files with scoped CSS; design tokens derive at runtime via CSS `color-mix()` and OKLCH.
 
 **Status:** In development.
 
@@ -66,7 +66,7 @@ Dark mode is enabled by default when you wrap your layout with `<Theme>`. Disabl
 <Theme dark={false}><slot /></Theme>
 ```
 
-There's also a theme toggle component for switching between light and dark mode. To use it, you can import and place it into your page.
+There's also a theme toggle component for switching between light and dark mode. To use it, import and place it in your page:
 
 ```astro
 ---
@@ -84,10 +84,10 @@ import { ThemeToggle } from "@nautui/core";
 import { Button, Container, Section, Title, Text } from "@nautui/core";
 ---
 
-<Section variant="dimmed">
+<Section>
   <Container>
     <Title level={1}>Welcome</Title>
-    <Text>Get started with Astro NautUI</Text>
+    <Text>Get started with Naut UI</Text>
     <Button variant="primary">Get Started</Button>
   </Container>
 </Section>
@@ -103,7 +103,7 @@ Naut UI is opinionated: you provide two brand colors, and the rest of the palett
 
 ### Overriding tokens
 
-After wrapping your layout with `<NautTheme>`, override any of the exposed tokens in a global `<style>` block or a CSS file loaded on the page:
+After wrapping your layout with `<Theme>`, override any of the exposed tokens in a global `<style>` block or a CSS file loaded on the page:
 
 ```astro
 <style>
@@ -114,73 +114,82 @@ After wrapping your layout with `<NautTheme>`, override any of the exposed token
 
     /* Opinionated defaults — override only if you must */
     --naut-color-destructive: #ff2222;
+    --naut-color-link: #0000ee;
+    --naut-color-highlight: #ddd522;
 
-    /* Tint strengths (percentages) */
-    --naut-tint: 3%;              /* default tint amount */
-    --naut-tint-base: 3%;         /* primary bleed into the page background */
-    --naut-tint-primary: 25%;     /* primary hover darken */
-    --naut-tint-secondary: 35%;   /* secondary hover lighten */
-    --naut-tint-destructive: 10%; /* destructive hover darken */
+    /* Tint controls (percentages) */
+    --naut-tint-base: 3%;   /* primary bleed into surfaces */
+    --naut-tint-strong: 25%; /* strong color-mix strength (hover/fills) */
 
     /* Typography */
-    --naut-font-family: "Inter", sans-serif;
+    --naut-font-family: "Schibsted Grotesk", sans-serif;
   }
 </style>
 ```
 
-Only the tokens above are intended for override. Everything else (`--naut-color-base`, `--naut-color-text`, `--naut-color-surface`, `--naut-color-border`, `--naut-color-muted`, ...) is derived and updates automatically when the inputs change — including at runtime, so a brand-color picker Just Works.
+Only the tokens above are intended for override. Everything else (`--naut-color-base-*`, `--naut-color-content*`, `--naut-color-border*`, ...) is derived and updates automatically when the inputs change — including at runtime, so a brand-color picker Just Works.
 
 ### Browser support
 
 Theming relies on `color-mix()`, `oklch()`, and relative color syntax (`rgb(from ...)`), all of which are Baseline 2024 (Chrome 119+, Safari 16.4+, Firefox 128+).
 
-## Core Components
+## Core Components (@nautui/core)
 
-### Theme
+### Theming
 - [x] Theme — provider that injects tokens and wires up auto dark mode
 - [x] ThemeToggle — button that switches between light and dark and persists the choice
 
-### Layouts
+### Layout
 - [x] Container — center content with padding and a max-width
-- [x] Section — full-width page section with variants
-- [x] Box — low-level layout component for spacing, borders, and background
-- [x] Group — flex container helper with gap and alignment shortcuts
-- [x] Stack - row container helper with configurable gap
-- [x] Flow - container helper with configurable text alignment
-- [x] Grid — responsive 12 columns grid with configurable gap
-- [x] GridItem — grid item with column and offset props
-- [x] Bento - Bento grid layout with configurable rows and columns
-- [x] BentoItem - Bento grid item with configurable row and column spans
-- [x] Masonry — responsive masonry grid with configurable gap
-- [x] MasonryItem — masonry grid item with column span prop
-- [x] Marquee — horizontal scroll container with pause on hover
+- [x] Section — full-width page section with left/center/right zones and dark forcing
+- [x] Box — low-level container for spacing, borders, corners, and backgrounds
+- [x] Flex — flexbox helper with responsive direction and alignment
+- [x] Stack — vertical stack with responsive align/justify and gap
+- [x] Group — inline-flex row helper with justify, wrap, and responsive stacking
+- [x] Grid — responsive 1–12 column grid with optional hairline dividers
+- [x] GridItem — grid cell with responsive column spans
+- [x] Bento — bento grid with configurable rows and columns
+- [x] BentoItem — bento cell with row/column span
+- [x] Masonry — CSS multi-column masonry grid
+- [x] MasonryItem — masonry cell that avoids breaking across columns
+- [x] Space — responsive spacer on the spacing scale
+- [x] Visibility — show/hide content at breakpoints
+
+### Content
+- [x] Article — long-form content container with typographic defaults and copy-to-clipboard
+- [x] Background — pattern or gradient background layer
+- [x] Image — responsive image with ratio, cover, and shadow options
+- [x] Marquee — infinite horizontal/vertical scroll ticker
 
 ### Elements
 - [x] Button — link or button with 11 variants
-- [x] Badge — small pill label for status, counts, or tags
-- [x] Card — surface container with default, bordered, and flat variants;
-- [x] Divider — horizontal rule styled with theme tokens
-- [x] Image — responsive image with optional caption and themed border
+- [x] Badge — pill label for status, counts, or tags
+- [x] Card — surface container with 8 variants and hover states
+- [x] Divider — horizontal or vertical rule
+- [x] Mark — highlighted text with decorative variants
+- [x] Link — themed anchor with hover states
 
 ### Typography
-- [x] Title — semantic h1–h6 with consistent sizing and a muted variant
-- [x] Text — body text with size variants and a muted variant
-- [x] Mark — `<mark>` styled with the highlight color token
-- [x] Link — themed anchor with hover and focus states
-- [x] List — styled ordered and unordered lists
-- [x] ListItem — list item with optional leading icon and themed marker
+- [x] Title — semantic h1–h6 with a display scale and gradient text
+- [x] Text — body text with size, weight, and variant colors
 
-## Navigation
-- [x] Navbar — horizontal site navigation with dropdown support
-- [x] Drawer — off-canvas sidebar for mobile navigation
-- [x] Breadcrumbs — hierarchical page links
+### Navigation
+- [x] NavBar — sticky/autohide top navigation with auto-dark detection
+- [x] Drawer — slide-in overlay panel with built-in toggle
+- [x] Menu — navigation list with collapsible groups
+- [x] MenuGroup — labeled, collapsible menu group
+- [x] MenuItem — link item with active states
 - [x] Accordion — collapsible content panels
-- [x] Menu — List of links with hover and focus states
-- [x] MenuItem — Link with optional leading icon
+- [x] AccordionItem — a single accordion section
+- [x] List — styled ordered and unordered lists
+- [x] ListItem — list item
 
-## Block Components
-- [x] Hero — marketing hero section with headline, subtext, and CTA slots
-- [ ] ToC — table of contents generated from headings
+## Block Components (@nautui/blocks)
+
+- [x] SectionHero — full-width marketing hero with figure placement
+- [x] Breadcrumb — semantic navigation trail
+- [x] DocLayout — three-column docs page shell (nav / content / TOC)
+- [x] TOC — table of contents with scroll-spy indicator
 - [ ] Contact — contact form and info block
 - [ ] Error pages — 404 and 500 templates
 - [ ] Pricing — pricing plan comparison
@@ -195,7 +204,7 @@ Recommended: [Lucide Icons](https://lucide.dev/guide/astro/).
 
 ## ⚓ Principles
 
-Nautui is built on the spirit of Aśu (Sanskrit for immediate/fast) and the Naut (the sailor navigating the Astro ecosystem). We follow these core pillars:
+Naut UI is built on the spirit of Aśu (Sanskrit for immediate/fast) and the Naut (the sailor navigating the Astro ecosystem). We follow these core pillars:
 
 ### 1. Speed First
 
@@ -203,7 +212,7 @@ Performance isn't an afterthought. By using Native CSS (Nesting & Layers) and Va
 
 ### 2. Import and Forget
 
-Your .astro files should stay clean. We encapsulate styles and scripts within our components so you can focus on content. Provide the props, and we’ll handle the rigging.
+Your .astro files should stay clean. We encapsulate styles and scripts within our components so you can focus on content. Provide the props, and we'll handle the rigging.
 
 ### 3. Polite Theming
 
