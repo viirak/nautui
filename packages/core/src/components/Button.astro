@@ -14,13 +14,14 @@ type ButtonVariant =
   | "link"
   | "rainbow";
 type ButtonSize = Omit<Size, "xl">;
+type ButtonRadius = Omit<Radius, "xl"> | "none" | "full";
 type ButtonType = "button" | "submit" | "reset";
 
 export interface ButtonProps extends Base {
   border?: ButtonSize | "none";
   dark?: boolean;
   href?: string;
-  rounded?: Radius | "none" | "full";
+  rounded?: ButtonRadius;
   size?: ButtonSize;
   square?: boolean;
   type?: ButtonType;
