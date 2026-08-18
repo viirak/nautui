@@ -188,3 +188,7 @@ export interface Base { class?: string; [key: string]: unknown; }
 12. **Peerdep requirement:** All components require `astro: ^6.0.0`. The library won't work with Astro 5.x or earlier.
 13. **CSS uses relative color syntax** (`rgb(from ...)`) and `color-mix()`, requiring Baseline 2024 browsers (Chrome 119+, Safari 16.4+, Firefox 128+).
 14. **`packages/blocks`** depends on `@nautui/core` as a runtime dependency (not peer), but both are published to npm as separate packages.
+
+## Impeccable (design guidance + detector)
+
+**What:** [impeccable](https://github.com/pbakaus/impeccable) is a design-language skill for AI coding agents: **1 skill, 23 commands, live browser iteration, and 59 deterministic detector rules** for AI-generated frontend design. It's installed globally (`~/.agents/skills/impeccable`, `~/.cursor/agents/`).
