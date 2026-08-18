@@ -26,6 +26,7 @@ import { Image } from "@nautui/core";
 | `cover`      | `boolean`                                | `false`  | Fill parent; `object-fit: cover`.               |
 | `fluid`      | `boolean`                                | `false`  | Width `100%`, height auto.                      |
 | `responsive` | `boolean`                                | `false`  | `fluid` behavior below `1041px` (tablet/mobile), natural size above. |
+| `hover`      | `"zoom" \| "zoom-out" \| "brighten" \| "grayscale" \| "fade"` | — | Hover effect on the image. See below. |
 | `maxWidth`   | `string`                                 | —        | Max width (ignored with `cover`).               |
 | `maxHeight`  | `string`                                 | —        | Max height (ignored with `cover`).              |
 | `class`      | `string`                                 | —        | Extra class names merged onto the wrapper.      |
@@ -39,6 +40,22 @@ Any other attributes (e.g. `loading`, `width`, `height`, `srcset`) pass through 
 - **`fluid`** — full-width, height auto (the `<img>` is `width: 100%`).
 - **`responsive`** — natural size on desktop, full-width below `1041px`.
 - **`maxWidth` / `maxHeight`** — constrain the box (dropped in `cover` mode).
+
+## Hover effects
+
+| Effect       | Resting state | On hover            |
+| ------------ | ------------- | ------------------- |
+| `zoom`       | `scale(1)`    | scales to `1.08`    |
+| `zoom-out`   | `scale(1.08)` | settles to `1`      |
+| `brighten`   | normal        | `brightness(1.1)`   |
+| `grayscale`  | grayscale     | full color          |
+| `fade`       | `opacity .85` | fully opaque        |
+
+All transitions are `0.35s ease`; the wrapper clips overflow, so zooming never bleeds outside the frame.
+
+```astro
+<Image src="/img/card.webp" alt="Card" ratio="4:3" hover="zoom" />
+```
 
 ## Accessibility
 
