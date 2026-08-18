@@ -28,6 +28,7 @@ import { Link } from "@nautui/core";
 | `dimmed`    | `boolean`                           | `false`     | Always dimmed at 50% opacity (hover restores).    |
 | `underline` | `boolean`                           | `false`     | Always underlined (not just on hover).            |
 | `external`  | `boolean`                           | `false`     | Adds an external-link icon.                       |
+| `variant`   | `"default" \| "ghost"`              | `"default"` | `ghost` uses the content color instead of the link color. |
 | `wrap`      | `boolean`                           | `false`     | Allow text/icon wrapping (default is nowrap).     |
 | `class`     | `string`                            | —           | Extra class names merged onto the element.        |
 
@@ -38,7 +39,7 @@ Any other attributes (e.g. `title`, `target`, `rel`, `id`, `aria-*`) pass throug
 - Content is wrapped in an inner `.naut-link__wrapper` flex row — icons and text are aligned.
 - Hover styles: `underline` shows an underline, `dimmed` drops opacity to 50%, `surface` adds a `base-100` background.
 - `external` appends a 16px external-link icon (decorative, has a hidden `<title>`); add `target="_blank" rel="noopener"` yourself if you open new tabs.
-
+- `variant="ghost"` renders neutral content-colored links — ideal for nav/footer link lists where the blue link color would be noisy.
 ## Accessibility
 
 - Only link text is announced; the external icon is decorative.

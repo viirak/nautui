@@ -29,8 +29,9 @@ import { Text } from "@nautui/core";
 | `align`      | `"left" \| "center" \| "right" \| "justify"` | — | Text alignment.                          |
 | `decoration` | `"underline" \| "strikethrough"`         | —         | Text decoration. (Alias: `td`.)                |
 | `transform`  | `"capitalize" \| "uppercase" \| "lowercase"` | —     | Text transform. (Alias: `tt`.)                 |
+| `color`      | `"soft" \| "muted"`                       | —         | Softens the text color (`soft` = content-soft, `muted` = content-soft at 65% opacity). |
 | `ls`         | `Size`                                    | —         | Letter-spacing shorthand (`ls-{size}`).         |
-| `dimmed`     | `boolean`                                 | `false`   | `--naut-color-content-soft` color.             |
+| `dimmed`     | `boolean`                                 | `false`   | `--naut-color-content-soft` color.             || `dimmed`     | `boolean`                                 | `false`   | `--naut-color-content-soft` color.             |
 | `italic`     | `boolean`                                 | `false`   | `font-style: italic`.                          |
 | `inline`     | `boolean`                                 | `false`   | Render `<span>` instead of `<p>`.              |
 | `nowrap`     | `boolean`                                 | `false`   | `white-space: nowrap`.                         |

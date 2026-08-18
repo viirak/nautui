@@ -4,7 +4,7 @@ A clean, minimalist Astro UI component library for marketing websites. Design to
 
 ## Packages
 
-- **[@nautui/core](/packages/core)** — 37 primitive components (buttons, cards, layout, navigation, theming).
+- **[@nautui/core](/packages/core)** — 39 primitive components (buttons, cards, layout, navigation, theming).
 - **[@nautui/blocks](/packages/blocks)** — composable page sections built on core (Breadcrumb, DocLayout, SectionHero, TOC).
 
 ## Requirements
@@ -85,7 +85,7 @@ Dark mode is enabled by default when `<Theme>` wraps your layout. Switch it with
 | `Divider` | Horizontal rule | [→](components/Divider.md) |
 | `Drawer` | Slide-in overlay panel | [→](components/Drawer.md) |
 | `Flex` | Flexbox layout helper | [→](components/Flex.md) |
-| `Grid` | CSS Grid layout helper | [→](components/Grid.md) |
+| `Footer` | Page footer with brand, link columns, and bottom bar | [→](components/Footer.md) || `Grid` | CSS Grid layout helper | [→](components/Grid.md) |
 | `GridItem` | A grid cell | [→](components/Grid.md) |
 | `Group` | Inline row of related elements | [→](components/Group.md) |
 | `Image` | Optimized responsive image | [→](components/Image.md) |

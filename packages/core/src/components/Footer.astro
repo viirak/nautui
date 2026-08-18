@@ -1,0 +1,102 @@
+---
+import "../styles/spacing/spacing.css";
+import type { Base } from "../types";
+import Container from "./Container.astro";
+
+export interface FooterProps extends Base {
+  columns?: number; // number of link columns on desktop
+  dark?: boolean;
+  fluid?: boolean; // full width instead of max-width container
+}
+
+const {
+  class: className,
+  columns = 4,
+  dark = false,
+  fluid = false,
+  ...rest
+} = Astro.props as FooterProps;
+---
+
+<footer
+  class:list={["naut-footer", dark && "dark", fluid && "fluid", className]}
+  {...rest}
+>
+  <Container fluid={fluid}>
+    <div class="naut-footer__main">
+      <div class="naut-footer__brand"><slot name="brand" /></div>
+      <div class:list={["naut-footer__links", `columns-${columns}`]}>
+        <slot />
+      </div>
+    </div>
+    <div class="naut-footer__bottom"><slot name="bottom" /></div>
+  </Container>
+</footer>
+
+<style>
+  .naut-footer {
+    padding-top: var(--naut-spacing-xxl);
+    padding-bottom: var(--naut-spacing-lg);
+    color: var(--naut-color-content);
+    background-color: var(--naut-color-base);
+    border-top: 1px solid var(--naut-color-border);
+
+    .naut-footer__main {
+      display: grid;
+      gap: var(--naut-spacing-xl);
+
+      /* Tablet+ */
+      @media only screen and (min-width: 818px) {
+        grid-template-columns: minmax(0, 1fr) 2fr;
+      }
+    }
+
+    .naut-footer__brand {
+      display: flex;
+      flex-direction: column;
+      gap: var(--naut-spacing-md);
+      max-width: 280px;
+    }
+
+    .naut-footer__links {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--naut-spacing-lg);
+
+      @media only screen and (min-width: 818px) {
+        &.columns-2 {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        &.columns-3 {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        &.columns-4 {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        &.columns-5 {
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
+    }
+
+    .naut-footer__bottom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--naut-spacing-sm);
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--naut-spacing-md);
+      margin-top: var(--naut-spacing-xl);
+      font-size: var(--naut-font-size-sm);
+      color: var(--naut-color-content-soft);
+      border-top: 1px solid var(--naut-color-border);
+
+      &:empty {
+        display: none;
+      }
+    }
+  }
+</style>

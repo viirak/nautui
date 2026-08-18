@@ -13,6 +13,7 @@ import type { ContainerProps } from "./components/Container.astro";
 import type { DividerProps } from "./components/Divider.astro";
 import type { DrawerProps } from "./components/Drawer.astro";
 import type { FlexProps } from "./components/Flex.astro";
+import type { FooterProps } from "./components/Footer.astro";
 import type { GridProps } from "./components/Grid.astro";
 import type { GridItemProps } from "./components/GridItem.astro";
 import type { GroupProps } from "./components/Group.astro";
@@ -57,6 +58,7 @@ export declare const MasonryItem: (props: MasonryItemProps) => AstroComponent;
 export declare const Space: (props: SpaceProps) => AstroComponent;
 export declare const Stack: (props: StackProps) => AstroComponent;
 export declare const Flex: (props: FlexProps) => AstroComponent;
+export declare const Footer: (props: FooterProps) => AstroComponent;
 export declare const Bento: (props: BentoProps) => AstroComponent;
 export declare const BentoItem: (props: BentoItemProps) => AstroComponent;
 

@@ -15,6 +15,7 @@ export interface TitleProps extends Base, MarginProps {
     | "default"
     | "display"
     | "display-sm"
+    | "display-md"
     | "display-lg"
     | "display-xl"
     | "display-xxl";
@@ -109,6 +110,11 @@ const gradientBg = gradient
     &.size-display-sm {
       font-size: clamp(2rem, 2.2vw + 1rem, 2.8rem);
       line-height: clamp(2.5rem, 3.2vw + 1rem, 3.5rem);
+    }
+
+    &.size-display-md {
+      font-size: clamp(2.1rem, 2.4vw + 1rem, 3rem);
+      line-height: clamp(2.6rem, 3.2vw + 1rem, 3.6rem);
     }
 
     &.size-display {

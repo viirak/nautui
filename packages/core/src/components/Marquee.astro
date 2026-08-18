@@ -18,6 +18,8 @@ export interface MarqueeProps extends Base, SpacingProps {
   pauseOnHover?: boolean;
   repeat?: number;
   reverse?: boolean;
+  speed?: "slow" | "normal" | "fast";
+  static?: boolean;
 }
 
 const { spacing, nonSpacing } = extractSpacingProps(
@@ -36,11 +38,16 @@ const {
   fadeEdges = true,
   fadeEdgeColor = "var(--naut-color-base)",
   fadeEdgeSize = "5%",
+  speed,
+  static: isStatic = false,
   ...rest
 } = nonSpacing;
 
-const safeDuration = Math.max(1, duration);
-const safeRepeat = Math.max(2, Math.floor(repeat));
+const speedDuration = speed
+  ? { slow: 80_000, normal: 40_000, fast: 20_000 }[speed]
+  : duration;
+const safeDuration = Math.max(1, speedDuration);
+const safeRepeat = isStatic ? 1 : Math.max(2, Math.floor(repeat));
 ---
 
 <div
@@ -49,6 +56,7 @@ const safeRepeat = Math.max(2, Math.floor(repeat));
     `orientation-${orientation}`,
     reverse && "reverse",
     pauseOnHover && "pause-on-hover",
+    isStatic && "static",
     !fadeEdges && "no-fade",
     className,
     ...spacingClasses
@@ -57,8 +65,10 @@ const safeRepeat = Math.max(2, Math.floor(repeat));
 >
   <div class="naut-marquee-track">
     {Array.from({ length: safeRepeat }).map(() => (
-        <div class:list={["naut-marquee-group", `gap-${gap}`]}><slot /></div>
-      ))}
+      <div class:list={["naut-marquee-group", `gap-${gap}`]}>
+        <slot />
+      </div>
+    ))}
   </div>
 </div>
 
@@ -105,6 +115,15 @@ const safeRepeat = Math.max(2, Math.floor(repeat));
     &.gap-xl {
       margin-left: var(--naut-spacing-xl);
     }
+  }
+
+  .naut-marquee.static .naut-marquee-track {
+    width: 100%;
+    animation: none;
+  }
+
+  .naut-marquee.static .naut-marquee-group {
+    margin-left: 0;
   }
 
   .naut-marquee.orientation-vertical .naut-marquee-track {

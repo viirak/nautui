@@ -7,8 +7,7 @@ description: Build marketing-site UI with NautUI, an Astro component library. Us
 
 NautUI is a clean, minimalist component library for marketing websites. Design tokens are derived at runtime via CSS `color-mix()` and OKLCH — no preprocessor, no build step, no JavaScript framework. All components are single-file `.astro` components.
 
-**Packages:** `@nautui/core` (38 primitive components) and `@nautui/blocks` (4 composite components built from core).
-
+**Packages:** `@nautui/core` (39 primitive components) and `@nautui/blocks` (4 composite components built from core).
 ## Install
 
 ```bash
@@ -128,9 +127,9 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 | `Box` | `border`, `centered`, `corner`, `maxWidth`, `radius`, `ta` | Generic box with spacing props |
 | `Flex` | `align`, `direction`, `gap`, `justify`, `wrap` | Flexbox layout (use for horizontal stacks) |
 | `Grid` / `GridItem` | `columns` (1–12), `gap`, `border`, `radius` / `span` | CSS grid |
-| `Stack` | `align`, `gap`, `justify` | Vertical stack only — use `Flex` for horizontal |
+| `Stack` | `align`, `direction` (`vertical\|horizontal`), `gap`, `justify` | Vertical stack by default; `direction="horizontal"` lays children in a row |
 | `Group` | `gap`, `grow`, `justify`, `not`, `wrap` | Inline item group |
-| `Space` | `size`, `grow`, `orientation` | Spacer |
+| `Footer` | `columns`, `dark`, `fluid` | Page footer — `brand` slot, link-column default slot, `bottom` bar slot || `Space` | `size`, `grow`, `orientation` | Spacer |
 | `Divider` | `orientation`, `label`, `size`, `variant` (`solid\|dotted\|dashed`) | Horizontal/vertical rule |
 | `Visibility` | `hidden`, `on` (`sm\|md\|lg\|xl`) | Responsive show/hide |
 
@@ -139,16 +138,15 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 | Component | Key props | Notes |
 | --- | --- | --- |
 | `Button` | `variant` (`default`, `primary`, `secondary`, `destructive`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `size` (`sm\/md\/lg`), `href`, `rounded`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>` |
-| `Link` | `to` (required), `dimmed`, `external`, `hover` (`underline\|dimmed\|surface`), `underline`, `wrap` | Anchor — no `variant` prop |
-| `Title` | `size` (`default\|display\|display-sm\|display-lg\|display-xl\|display-xxl`), `level` (1–6), `align`, `gradient` | Heading; `level` sets h1–h6 |
-| `Text` | `size`, `variant` (`primary\|secondary\|tertiary\|destructive\|link\|highlight`), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph — no `color` prop |
+| `Link` | `to` (required), `dimmed`, `external`, `hover` (`underline\|dimmed\|surface`), `underline`, `variant` (`default\|ghost`), `wrap` | Anchor; `variant="ghost"` = content-colored links for nav/footer lists |
+| `Title` | `size` (`default\|display\|display-sm\|display-md\|display-lg\|display-xl\|display-xxl`), `level` (1–6), `align`, `gradient` | Heading; `level` sets h1–h6 |
+| `Text` | `size`, `variant` (`primary\|secondary\|tertiary\|destructive\|link\|highlight`), `color` (`soft\|muted`), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph; `color="soft"`/`"muted"` soften text |
 | `Mark` | `variant` (8 incl `primary\|underline\|sketch-circle`), `gradient`, `rotate`, `ff` | Inline highlight |
 | `Image` | `src`, `alt` (required), `ratio`, `radius`, `shadow`, `cover`, `fluid`, `responsive`, `hover` (`zoom\|zoom-out\|brighten\|grayscale\|fade`), `maxWidth`, `maxHeight` | Clipped frame; `hover="zoom"` scales on hover |
 | `List` / `ListItem` | `ordered`, `horizontal`, `marker`, `gap` / `marker` | Lists |
 | `Article` | `anchorLinks` | Article typography wrapper |
 | `Masonry` / `MasonryItem` | `columns`, `gap` | CSS-columns masonry |
-| `Marquee` | `duration` (ms), `orientation`, `pauseOnHover`, `reverse`, `repeat`, `fadeEdges`, `gap` | Infinite scroll strip — no `speed` prop; `duration` controls pace |
-
+| `Marquee` | `duration` (ms), `speed` (`slow\|normal\|fast`), `static`, `orientation`, `pauseOnHover`, `reverse`, `repeat`, `fadeEdges`, `gap` | Infinite scroll strip; `speed` presets override `duration`, `static` disables animation (single group) |
 ### Navigation & Overlay
 
 | Component | Key props | Notes |

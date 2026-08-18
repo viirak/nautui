@@ -22,6 +22,7 @@ import { Stack } from "@nautui/core";
 | Prop      | Type                                      | Default   | Description                                       |
 | --------- | ----------------------------------------- | --------- | ------------------------------------------------- |
 | `gap`     | `"xs" \| "sm" \| "md" \| "lg" \| "xl"`    | `"md"`    | Gap between children.                            |
+| `direction` | `"vertical" \| "horizontal"`            | `"vertical"` | Stack axis. `horizontal` lays children in a row. |
 | `align`   | `Align` or responsive object              | —         | `align-items` (cross axis).                      |
 | `justify` | `Justify` or responsive object            | `"start"` | `justify-content` (main axis).                   |
 | `class`   | `string`                                  | —         | Extra class names merged onto the element.       |
@@ -46,8 +47,7 @@ Both accept a plain string **or** a per-breakpoint object `{ base, sm, md, lg, x
 
 ## Notes
 
-- Use `Stack` when content is a vertical column and you need alignment/gap control. For an in-line row, prefer `Flex` (horizontal) or `Group`.
-- `align="stretch"` makes children fill the cross axis (their default anyway in flex column).
+- Use `Stack` when content is a vertical column and you need alignment/gap control. For an in-line row, set `direction="horizontal"` or prefer `Flex`/`Group`.- `align="stretch"` makes children fill the cross axis (their default anyway in flex column).
 
 ## Accessibility
 

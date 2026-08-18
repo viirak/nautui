@@ -13,6 +13,7 @@ type TextTranform = "capitalize" | "uppercase" | "lowercase";
 
 export interface TextProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
+  color?: "soft" | "muted";
   decoration?: TextDecoration;
   dimmed?: boolean;
   inline?: boolean;
@@ -46,6 +47,7 @@ const {
   variant,
   size,
   ls,
+  color,
   italic = false,
   inline = false,
   dimmed = false,
@@ -61,6 +63,7 @@ const classList = [
   "text",
   italic && "italic",
   dimmed && "dimmed",
+  color && `color-${color}`,
   nowrap && "nowrap",
   align && `align-${align}`,
   size && `size-${size}`,
@@ -119,6 +122,15 @@ const classList = [
 
     &.dimmed {
       color: var(--naut-color-content-soft);
+    }
+
+    &.color-soft {
+      color: var(--naut-color-content-soft);
+    }
+
+    &.color-muted {
+      color: var(--naut-color-content-soft);
+      opacity: 0.65;
     }
 
     &.size-xs {

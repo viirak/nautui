@@ -22,6 +22,8 @@ import { Marquee } from "@nautui/core";
 | Prop            | Type                          | Default            | Description                                    |
 | --------------- | ----------------------------- | ------------------ | ---------------------------------------------- |
 | `duration`      | `number`                      | `40_000`           | Full track animation time (ms).                |
+| `speed`         | `"slow" \| "normal" \| "fast"` | —                  | Preset pace — overrides `duration` (slow 80s, normal 40s, fast 20s). |
+| `static`        | `boolean`                     | `false`            | Render a single group, no animation.           |
 | `repeat`        | `number`                      | `4`                | How many times children are duplicated.        |
 | `reverse`       | `boolean`                     | `false`            | Reverse scroll direction.                      |
 | `orientation`   | `"horizontal" \| "vertical"`  | `"horizontal"`     | Scroll axis.                                   |
@@ -37,7 +39,7 @@ Plus all spacing props (`m-*`, `p-*`). Values are clamped: `duration` ≥ 1ms, `
 ## Behavior
 
 - Children are duplicated `repeat` times inside a flex track; the track translates `calc(-100% / repeat)` for a seamless loop.
-- **Vertical** mode stacks groups in a column and scrolls vertically.
+- `static` renders the children once with no animation — stop a marquee on desktop while keeping the markup.- **Vertical** mode stacks groups in a column and scrolls vertically.
 - `prefers-reduced-motion` drops the animation to a single frame — no motion, content fully visible.
 
 ## Accessibility

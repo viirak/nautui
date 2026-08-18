@@ -21,6 +21,7 @@ type JustifyResponsive = {
 
 export interface StackProps extends Base {
   align?: AlignResponsive | Align;
+  direction?: "vertical" | "horizontal";
   gap?: Gap;
   justify?: JustifyResponsive | Justify;
 }
@@ -28,6 +29,7 @@ export interface StackProps extends Base {
 const {
   class: className,
   align,
+  direction = "vertical",
   justify = "start",
   gap = "md",
   ...rest
@@ -40,6 +42,7 @@ const content = typeof justify === "string" ? { base: justify } : justify;
   class:list={[
     "naut-stack",
     `gap-${gap}`,
+    `direction-${direction}`,
     items?.base && `items-${items.base}`,
     items?.sm && `sm-items-${items.sm}`,
     items?.md && `md-items-${items.md}`,
@@ -61,6 +64,10 @@ const content = typeof justify === "string" ? { base: justify } : justify;
   .naut-stack {
     display: flex;
     flex-direction: column;
+
+    &.direction-horizontal {
+      flex-direction: row;
+    }
 
     &.content-start {
       justify-content: flex-start;
