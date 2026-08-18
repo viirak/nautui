@@ -29,6 +29,8 @@
     "astro": "^6.0.0"
   },
   "scripts": {
+    "lint": "biome check src",
+    "check-types": "tsc --noEmit -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {

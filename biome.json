@@ -44,6 +44,7 @@
         "rules": {
           "style": {
             "useConst": "off",
+            "useFilenamingConvention": "off",
             "useImportType": "off",
             "useSelfClosingElements": "off",
             "useBlockStatements": "off"

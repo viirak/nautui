@@ -12,6 +12,7 @@
     "astro": "astro",
     "lint": "biome lint --write .",
     "lint:fix": "biome check --write .",
+    "check-types": "astro check",
     "check": "ultracite check",
     "fix": "ultracite fix",
     "generate-types": "wrangler types"
@@ -30,7 +31,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.9",
     "@types/node": "^22.0.0",
-    "typescript": "^7.0.2",
+    "typescript": "^5.9.2",
     "ultracite": "7.4.2"
   }
 }
