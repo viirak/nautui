@@ -5,6 +5,7 @@ export interface ImageProps extends Base {
   alt: string;
   cover?: boolean;
   fluid?: boolean;
+  hover?: "zoom" | "zoom-out" | "brighten" | "grayscale" | "fade";
   maxHeight?: string;
   maxWidth?: string;
   radius?: Radius;
@@ -24,6 +25,7 @@ const {
   shadow,
   cover = false,
   fluid = false,
+  hover,
   responsive = false,
   maxWidth,
   maxHeight,
@@ -41,6 +43,7 @@ const imageHeight = maxHeight && !cover ? maxHeight : undefined;
     ratioName && `ratio ratio-${ratioName}`,
     radius && `radius-${radius}`,
     shadow && `shadow-${shadow}`,
+    hover && `hover-${hover}`,
     cover && "fit-cover",
     maxHeight && !cover && "fit-height",
     fluid && "fluid",
@@ -65,6 +68,46 @@ const imageHeight = maxHeight && !cover ? maxHeight : undefined;
       display: block;
       width: auto;
       height: auto;
+    }
+
+    &.hover-zoom img,
+    &.hover-zoom-out img,
+    &.hover-brighten img,
+    &.hover-grayscale img,
+    &.hover-fade img {
+      transition:
+        transform 0.35s ease,
+        filter 0.35s ease,
+        opacity 0.35s ease;
+    }
+
+    &.hover-zoom:hover img {
+      transform: scale(1.08);
+    }
+
+    &.hover-zoom-out img {
+      transform: scale(1.08);
+    }
+    &.hover-zoom-out:hover img {
+      transform: scale(1);
+    }
+
+    &.hover-brighten:hover img {
+      filter: brightness(1.1);
+    }
+
+    &.hover-grayscale img {
+      filter: grayscale(1);
+    }
+    &.hover-grayscale:hover img {
+      filter: grayscale(0);
+    }
+
+    &.hover-fade img {
+      opacity: 0.85;
+    }
+    &.hover-fade:hover img {
+      opacity: 1;
     }
 
     &.fit-cover {
