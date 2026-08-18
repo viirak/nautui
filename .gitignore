@@ -42,6 +42,7 @@ tsconfig.tsbuildinfo
 .rtk
 .planr
 .zed
+.fossil
 .opencode
 .crush
 .bitloops
