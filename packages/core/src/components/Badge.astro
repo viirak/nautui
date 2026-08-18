@@ -7,6 +7,7 @@ export interface BadgeProps extends Base {
   gradient?: { colors: string[]; textColor: string; deg?: number };
   iconOnly?: boolean;
   letterSpacing?: "sm" | "md" | "lg";
+  outlineColor?: string;
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
   variant?:
@@ -24,6 +25,7 @@ const {
   gradient,
   radius = "sm",
   letterSpacing = "md",
+  outlineColor,
   variant = "default",
   iconOnly = false,
   dotted = false,
@@ -56,7 +58,8 @@ const gradientBg = gradient
 <style
   define:vars={{
   gradientBg,
-  gradientColor: gradient?.textColor
+  gradientColor: gradient?.textColor,
+  outlineColor
 }}
 >
   .naut-badge {
