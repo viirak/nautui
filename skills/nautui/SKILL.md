@@ -129,10 +129,10 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 | `Grid` / `GridItem` | `columns` (1–12), `gap`, `border`, `radius` / `span` | CSS grid |
 | `Stack` | `align`, `direction` (`vertical\|horizontal`), `gap`, `justify` | Vertical stack by default; `direction="horizontal"` lays children in a row |
 | `Group` | `gap`, `grow`, `justify`, `not`, `wrap` | Inline item group |
-| `Footer` | `columns`, `dark`, `fluid` | Page footer — `brand` slot, link-column default slot, `bottom` bar slot || `Space` | `size`, `grow`, `orientation` | Spacer |
+| `Footer` | `columns`, `dark`, `fluid` | Page footer — `brand` slot, link-column default slot, `bottom` bar slot |
+| `Space` | `size`, `grow`, `orientation` | Spacer |
 | `Divider` | `orientation`, `label`, `size`, `variant` (`solid\|dotted\|dashed`) | Horizontal/vertical rule |
 | `Visibility` | `hidden`, `on` (`sm\|md\|lg\|xl`) | Responsive show/hide |
-
 ### Content
 
 | Component | Key props | Notes |
