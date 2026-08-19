@@ -6,23 +6,21 @@ export interface NavBarProps extends Base {
   autohide?: boolean;
   bordered?: boolean;
   dark?: boolean;
-  fluid?: boolean; // if true, the navbar will take the full width of the viewport
   height?: number;
+  island?: boolean;
   offset?: number; // offset for sticky navbar
   radius?: Radius | "full"; // border-radius for island variant
   shadow?: Shadow;
   sticky?: boolean;
-  variant?: "default" | "outline" | "island";
   zindex?: number; // z-index for sticky navbar
 }
 
 const {
   class: className,
   dark = false,
-  variant = "default",
   bordered = false,
   sticky = false,
-  fluid = false,
+  island = false,
   autohide = false,
   height = 70, // default height in pixels
   shadow,
@@ -31,22 +29,21 @@ const {
   zindex = 99,
   ...rest
 } = Astro.props as NavBarProps;
-const offsetValue = offset ? `${offset}px` : "0";
-const offsetIsland = offset === 0 ? "var(--naut-spacing-md)" : offsetValue;
+const offsetTop = island ? "var(--naut-spacing-md)" : `${offset}px`;
 const borderRadius = radius ? `var(--naut-border-radius-${radius})` : "0";
 const barHeight = height ? `${height}px` : "70px";
 const hiddenOffset = `${height + offset}px`;
+const contentClasses = [
+  bordered && "bordered",
+  shadow && "shadow",
+  radius && `radius--${radius}`,
+];
 ---
 
 <nav
   class:list={[
       "naut-navbar",
-      `variant--${variant}`,
       sticky && "sticky",
-      bordered && "bordered",
-      shadow && "shadow",
-      radius && `radius--${radius}`,
-      fluid && "fluid",
       dark && "dark",
       className
     ]}
@@ -54,10 +51,14 @@ const hiddenOffset = `${height + offset}px`;
 >
   <div class="naut-space naut-space--left"></div>
   <div class="naut-space naut-space--center">
-    {!fluid && <Container>
-      <div class="naut-navbar__content contained"><slot /></div>
+    {island && <Container>
+      <div class:list={["naut-navbar__content", ...contentClasses]}>
+        <div class="naut-navbar__content__inner"><slot /></div>
+      </div>
     </Container>}
-    {fluid && <div class:list={["naut-navbar__content"]}><slot /></div>}
+    {!island && <div class:list={["naut-navbar__content", ...contentClasses]}>
+      <div class="naut-navbar__content__inner"><slot /></div>
+    </div>}
   </div>
   <div class="naut-space naut-space--right"></div>
 </nav>
@@ -67,8 +68,7 @@ const hiddenOffset = `${height + offset}px`;
     zindex,
     barHeight,
     borderRadius,
-    offsetValue,
-    offsetIsland,
+    offsetTop,
     hiddenOffset
   }}
 >
@@ -77,19 +77,39 @@ const hiddenOffset = `${height + offset}px`;
     display: flex;
     align-items: center;
     height: var(--barHeight);
-    overflow: hidden;
     color: var(--naut-color-content);
-    border-radius: var(--borderRadius);
     transition: top 0.3s ease;
 
-    &.bordered:not(.dark) {
-      border-bottom: 1px solid var(--naut-color-border);
+    .naut-navbar__content {
+      border-radius: var(--borderRadius);
+
+      .naut-navbar__content__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: var(--barHeight);
+        padding: 0 var(--naut-spacing-md);
+      }
+
+      &.radius--none {
+        border-radius: 0;
+      }
+
+      &.bordered {
+        border: 1px solid var(--naut-color-border);
+      }
+
+      &.shadow {
+        box-shadow: calc(0.0625 * calc(1rem * 1)) calc(0.5 * calc(1rem * 1))
+          calc(1 * calc(1rem * 1)) #0000001a;
+      }
     }
 
     &.sticky {
-      position: sticky;
-      top: var(--offsetValue);
+      position: fixed;
+      top: var(--offsetTop);
       z-index: var(--zindex);
+      width: 100%;
 
       &.scrolled {
         background-color: rgb(from var(--naut-color-base) r g b / 0.75);
@@ -102,82 +122,8 @@ const hiddenOffset = `${height + offset}px`;
       }
     }
 
-    &.radius--none {
-      border-radius: 0;
-    }
-
-    &.variant--island {
-      margin: 0 var(--naut-spacing-md);
-
-      &.sticky {
-        top: var(--offsetIsland);
-        left: 50%;
-        width: calc(100% - 2 * var(--naut-spacing-md));
-        margin: 0;
-        transform: translateX(-50%);
-      }
-
-      &.bordered {
-        border: 1px solid var(--naut-color-border);
-      }
-
-      &:not(.fluid) {
-        /*Mobile*/
-        @media only screen and (min-width: 576px) {
-          max-width: calc(576px + 2 * var(--naut-spacing-md));
-          margin: 0 auto;
-        }
-
-        /* Tablet */
-        @media only screen and (min-width: 818px) and (max-width: 1041px) {
-          max-width: calc(768px + 2 * var(--naut-spacing-md));
-        }
-
-        /* Desktop */
-        @media only screen and (min-width: 1042px) and (max-width: 1249px) {
-          max-width: calc(992px + 2 * var(--naut-spacing-md));
-        }
-
-        /* Large Desktop */
-        @media only screen and (min-width: 1250px) {
-          max-width: calc(1200px + 2 * var(--naut-spacing-md));
-        }
-      }
-    }
-
-    &.variant--outline {
-      .naut-space {
-        flex-grow: 1;
-        height: 100%;
-      }
-      .naut-space--left {
-        padding-right: var(--naut-spacing-md);
-        border-right: 1px solid var(--naut-color-border);
-      }
-      .naut-space--right {
-        padding-left: var(--naut-spacing-md);
-        border-left: 1px solid var(--naut-color-border);
-      }
-    }
-
-    &.shadow {
-      box-shadow: calc(0.0625 * calc(1rem * 1)) calc(0.5 * calc(1rem * 1))
-        calc(1 * calc(1rem * 1)) #0000001a;
-    }
-
     .naut-space--center {
       flex: 0 0 100%;
-    }
-
-    .naut-navbar__content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: var(--barHeight);
-
-      &:not(.contained) {
-        margin: 0 var(--naut-spacing-md);
-      }
     }
   }
 </style>

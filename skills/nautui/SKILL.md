@@ -151,12 +151,11 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `NavBar` | `variant` (`default\|outline\|island`), `sticky`, `autohide`, `bordered`, `dark`, `fluid`, `height`, `offset`, `radius`, `shadow`, `zindex` | Sticky/fixed nav; default slot for wordmark + links |
+| `NavBar` | `island`, `sticky`, `autohide`, `bordered`, `dark`, `height`, `offset`, `radius`, `shadow`, `zindex` | Sticky/fixed nav; default slot for wordmark + links |
 | `Menu` / `MenuGroup` / `MenuItem` | `divided`, `gap`, `horizontal` / `label` (req), `collapsible`, `open`, `line` / `href` (req), `active`, `activeVariant`, `dimmed`, `radius` | Dropdown menu |
 | `Drawer` | `position` (`center\|top\|right\|bottom\|left`), `button`, `size`, `zi` | Overlay panel |
 | `BackToTop` | `threshold`, `position`, `offset`, `label`, `showLabel` | Floating button; smooth-scrolls to top, respects `prefers-reduced-motion` |
 | `TOC` | `headings` (required), `sticky`, `title`, `top` | Table of contents from headings |
-
 ### Accents
 
 | Component | Key props | Notes |

@@ -23,25 +23,24 @@ import { NavBar } from "@nautui/core";
 | Prop       | Type                                    | Default     | Description                                        |
 | ---------- | --------------------------------------- | ----------- | -------------------------------------------------- |
 | `height`   | `number`                                | `70`        | Bar height in pixels.                              |
-| `variant`  | `"default" \| "outline" \| "island"`    | `"default"` | Layout style. See [variants](#variants).           |
-| `sticky`   | `boolean`                               | `false`     | Pin the bar to the top of the viewport.            |
+| `island`   | `boolean`                               | `false`     | Floating centered bar; wraps content in `Container`. |
+| `sticky`   | `boolean`                               | `false`     | Fix the bar to the top of the viewport.            |
 | `autohide` | `boolean`                               | `false`     | Hide the bar when scrolling down past the bar.     |
-| `bordered` | `boolean`                               | `false`     | Bottom border (default/outline) or 1px border (island). |
+| `bordered` | `boolean`                               | `false`     | 1px border around the content row.                 |
 | `dark`     | `boolean`                               | `false`     | Force dark styling. Also toggled automatically (see below). |
-| `fluid`    | `boolean`                               | `false`     | Full-width; skip the `Container` wrapper.          |
 | `offset`   | `number`                                | `0`         | Gap above a sticky bar (px).                       |
-| `radius`   | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `0`        | Border radius. Only meaningful for `island`.       |
-| `shadow`   | `"sm" \| "md" \| "lg" \| "xl"`          | —           | Box shadow.                                        |
+| `radius`   | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `0`        | Border radius on the content row.                  |
+| `shadow`   | `"sm" \| "md" \| "lg" \| "xl"`          | —           | Box shadow on the content row.                     |
 | `zindex`   | `number`                                | `99`        | `z-index` for sticky bars.                         |
 | `class`    | `string`                                | —           | Extra class names merged onto the element.         |
 
 Any other attributes (e.g. `id`, `aria-*`, `data-*`) pass through to the `<nav>`.
 
-## Variants
+## Layout
 
-- **`default`** — full-width bar with a `Container`-centered content row.
-- **`outline`** — adds left/right spacer columns with vertical dividers, for a flanked logo/content layout.
-- **`island`** — a floating rounded bar inset from the viewport edges; width adapts to breakpoints and centers horizontally.
+By default the bar spans the full viewport width with a padding-centered content row. Set `island` to wrap the content in a `Container` so the bar centers at the container width.
+
+`bordered`, `shadow`, and `radius` style the content row itself — useful for an island/pill look.
 
 ## Dark mode
 
