@@ -18,7 +18,7 @@ pnpm add @nautui/core @nautui/blocks
 
 ## Setup: Theme Provider
 
-Wrap the layout with `<Theme>`. It injects all global CSS and design tokens, and auto-enables dark mode:
+Wrap the layout with `<Theme>`. It injects the CSS reset, global CSS, and design tokens, and auto-enables dark mode:
 
 ```astro
 ---

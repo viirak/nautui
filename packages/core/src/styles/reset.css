@@ -1,0 +1,87 @@
+/* Modern CSS reset — clean-slate baseline for Naut UI.
+ *
+ * normalize.css (v8.0.1) was deliberately not adopted: most of its rules fix
+ * legacy quirks that Baseline 2024 browsers (Chrome 119+, Safari 16.4+,
+ * Firefox 128+) no longer exhibit, and it preserves opinionated typographic
+ * defaults that conflict with token-driven components. This is the compact
+ * replacement. Ordering: imported before global.css so derived styles win.
+ */
+@layer naut-base {
+  /* 1. Box sizing — every element & pseudo-element sizes to its border box. */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* 2. Margins — spacing is owned by components and spacing utilities. */
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd,
+  ul,
+  ol {
+    margin: 0;
+  }
+
+  /* 3. Headings — typography is owned by the Title component, not UA sizes. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  /* 4. Lists — bullets come back via List/ListItem components. */
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  /* 5. Media — fluid width and block-level by default. */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* 6. Forms — controls inherit the theme font and text color. */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* 7. Links — decoration is owned by components; color set in global.css. */
+  a {
+    text-decoration: inherit;
+  }
+
+  /* 8. Buttons — strip UA chrome; Button component restores its own. */
+  button {
+    background: none;
+    border: 0;
+  }
+
+  /* 9. Tables — collapsed borders for deterministic data layouts. */
+  table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+}

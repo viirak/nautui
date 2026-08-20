@@ -1,6 +1,6 @@
 # Theme & ThemeToggle
 
-`Theme` is the provider every NautUI consumer needs. It loads the global and color stylesheets and initializes dark mode. `ThemeToggle` is a ready-made light/dark switcher.
+`Theme` is the provider every NautUI consumer needs. It loads the CSS reset, global styles, and color stylesheets, and initializes dark mode. `ThemeToggle` is a ready-made light/dark switcher.
 
 ## Usage
 
