@@ -32,7 +32,7 @@ const {
   ...rest
 } = nonSpacing;
 
-const spacingClasses = getSpacingClasses(spacing);
+const spacingClasses = getSpacingClasses({ ...spacing, m: "0" });
 
 const classlist = [
   "naut-title",
