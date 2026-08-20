@@ -11,8 +11,8 @@
  */
 
   :root {
-    --naut-font-family: "Schibsted Grotesk", sans-serif;
-    --naut-font-family-title: var(--naut-font-family);
+    --naut-font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --naut-font-display: var(--naut-font-body);
     --naut-line-height-ratio: 1.55;
 
     --naut-font-size-xs: 0.785rem;
@@ -35,7 +35,7 @@
   /* Global styles */
   body {
     margin: 0;
-    font-family: var(--naut-font-family);
+    font-family: var(--naut-font-body);
     font-size: var(--naut-font-size-md);
     line-height: calc(var(--naut-font-size-md) * var(--naut-line-height-ratio));
     color: var(--naut-color-content);

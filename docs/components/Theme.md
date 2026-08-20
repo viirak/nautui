@@ -66,6 +66,19 @@ Define `--naut-color-primary` and `--naut-color-secondary` on `:root` before `Th
 
 Each must meet a **4.5:1 contrast ratio against white**. Dark-mode variants are derived automatically from these inputs.
 
+## Typography
+
+NautUI ships two font tokens, both defaulting to the system stack (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`) — zero download, native rendering:
+
+```css
+:root {
+  --naut-font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --naut-font-display: var(--naut-font-body); /* headings use this */
+}
+```
+
+`--naut-font-body` applies to body text; `--naut-font-display` applies to `Title` headings. Override `--naut-font-display` with a distinctive face (e.g. a self-hosted Geist) for a display/heading pairing without touching body text.
+
 ## ThemeToggle
 
 A ghost, square `Button` that swaps a sun/moon icon and toggles the theme.

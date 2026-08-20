@@ -128,7 +128,8 @@ Provide two brand colors, and the palette is derived at runtime using CSS `color
     --naut-tint-destructive: 10%;
 
     /* Typography */
-    --naut-font-family: "Inter", sans-serif;
+    --naut-font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --naut-font-display: var(--naut-font-body);
   }
 </style>
 ```

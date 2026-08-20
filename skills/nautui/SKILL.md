@@ -71,6 +71,8 @@ Everything else derives from these via `color-mix()`:
 | `--naut-color-border` / `--naut-color-border-strong` | Border aliases |
 | `--naut-tint-base` (3%), `--naut-tint-strong` (25%) | Tint strength constants |
 | `--naut-color-primary-content`, `--naut-color-secondary-content` | Foreground on brand fills |
+| `--naut-font-body` | Body font stack (defaults to system-ui) |
+| `--naut-font-display` | Display/heading font stack (defaults to body) |
 | `--naut-shadow-{sm\|md\|lg\|xl}`, `--naut-border-radius-*`, `--naut-border-width-*` | Effects |
 
 CSS layer order: `@layer naut-base, naut-theme, naut-component;`.
