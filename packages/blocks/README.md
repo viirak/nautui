@@ -31,6 +31,7 @@ import { Hero } from "@nautui/blocks";
 
 ### Marketing
 - [x] `Hero` — marketing hero section with headline, subtext, and CTA slots
+- [x] `NavMenu` — desktop horizontal nav with submenus and overflow limit
 - [x] `Paper` — renders white or dark background depending on color scheme
 - [ ] `Features` — feature grid with icon, title, description cells
 - [ ] `CTA` — call-to-action band
