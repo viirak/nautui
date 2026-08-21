@@ -1,119 +1,107 @@
 ---
 import { Menu, Visibility } from "@nautui/core";
 import type { Base } from "../types";
-import "../styles/radius.css";
-import "../styles/shadow.css";
 
 interface MenuItem {
-  children?: MenuItem[];
-  href: string;
   label: string;
+  href: string;
+  children?: Array<{ label: string; href: string }>;
 }
 
 export interface NavMenuProps extends Base {
-  activePath?: string;
   items: MenuItem[];
+  activePath?: string;
   limit?: number;
 }
 
 const {
+  class: className,
   items = [],
   activePath = "",
   limit,
-  class: className,
   ...rest
 } = Astro.props as NavMenuProps;
 
 const visibleItems = limit ? items.slice(0, limit) : items;
-const overflowItems = limit ? items.slice(limit) : [];
+const overflowItems = limit && items.length > limit ? items.slice(limit) : [];
+
+function isActive(item: MenuItem): boolean {
+  if (!activePath) return false;
+  if (item.href === activePath) return true;
+  if (item.children?.some((child) => child.href === activePath)) return true;
+  return false;
+}
+
+function hasChildren(item: MenuItem): boolean {
+  return !!(item.children && item.children.length > 0);
+}
 ---
 
 <Visibility on="sm" hidden={true}>
   <Menu horizontal gap="lg" class:list={["naut-navmenu", className]} {...rest}>
     {visibleItems.map((item) => (
-      <li class="naut-navmenu__item">
-        {item.children ? (
-          <div class="naut-navmenu__dropdown">
-            <button class="naut-navmenu__toggle" type="button">
-              {item.label}
-              <span aria-hidden="true" class="naut-navmenu__chevron" />
-            </button>
-            <ul class="naut-navmenu__submenu">
-              {item.children.map((child) => (
+      <li class:list={["naut-navmenu__item", { "naut-navmenu__item--has-children": hasChildren(item) }]}>
+        {hasChildren(item) ? (
+          <>
+            <span class="naut-navmenu__label">{item.label}</span>
+            <span class="naut-navmenu__chevron" aria-hidden="true">▼</span>
+            <ul class="naut-navmenu__dropdown">
+              {item.children!.map((child) => (
                 <li>
                   <a
                     href={child.href}
-                    class:list={[
-                      "naut-navmenu__link",
-                      child.href === activePath && "active",
-                    ]}
+                    class:list={["naut-navmenu__link", { "naut-navmenu__link--active": activePath && child.href === activePath }]}
                   >
                     {child.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </>
         ) : (
           <a
             href={item.href}
-            class:list={[
-              "naut-navmenu__link",
-              item.href === activePath && "active",
-            ]}
+            class:list={["naut-navmenu__link", { "naut-navmenu__link--active": isActive(item) }]}
           >
             {item.label}
           </a>
         )}
       </li>
     ))}
-
     {overflowItems.length > 0 && (
-      <li class="naut-navmenu__item naut-navmenu__more">
-        <div class="naut-navmenu__dropdown">
-          <button class="naut-navmenu__toggle" type="button">
-            More
-            <span aria-hidden="true" class="naut-navmenu__chevron" />
-          </button>
-          <ul class="naut-navmenu__submenu">
-            {overflowItems.map((item) => (
-              <li>
-                {item.children ? (
-                  <>
-                    <span class="naut-navmenu__submenu-label">
-                      {item.label}
-                    </span>
-                    <ul class="naut-navmenu__submenu naut-navmenu__submenu--nested">
-                      {item.children.map((child) => (
-                        <li>
-                          <a
-                            href={child.href}
-                            class:list={[
-                              "naut-navmenu__link",
-                              child.href === activePath && "active",
-                            ]}
-                          >
-                            {child.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ) : (
-                  <a
-                    href={item.href}
-                    class:list={[
-                      "naut-navmenu__link",
-                      item.href === activePath && "active",
-                    ]}
-                  >
-                    {item.label}
-                  </a>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
+      <li class="naut-navmenu__item naut-navmenu__item--more">
+        <span class="naut-navmenu__label">More</span>
+        <span class="naut-navmenu__chevron" aria-hidden="true">▼</span>
+        <ul class="naut-navmenu__dropdown">
+          {overflowItems.map((item) => (
+            <li class:list={[{ "naut-navmenu__item--has-children": hasChildren(item) }]}>
+              {hasChildren(item) ? (
+                <>
+                  <span class="naut-navmenu__submenu-label">{item.label}</span>
+                  <ul class="naut-navmenu__submenu naut-navmenu__submenu--nested">
+                    {item.children!.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          class:list={["naut-navmenu__submenu-link", { "naut-navmenu__submenu-link--active": activePath && child.href === activePath }]}
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <a
+                  href={item.href}
+                  class:list={["naut-navmenu__link", { "naut-navmenu__link--active": isActive(item) }]}
+                >
+                  {item.label}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
       </li>
     )}
   </Menu>
@@ -121,127 +109,118 @@ const overflowItems = limit ? items.slice(limit) : [];
 
 <style>
   .naut-navmenu {
-    .naut-navmenu__item {
-      position: relative;
-    }
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 
-    .naut-navmenu__link {
-      display: block;
-      padding: 0.5rem 0;
-      font-size: var(--naut-font-size-md);
-      color: var(--naut-color-content);
-      white-space: nowrap;
-      text-decoration: none;
-      transition: color 0.15s ease;
+  .naut-navmenu__item {
+    position: relative;
+  }
 
-      &:hover {
-        color: var(--naut-color-link);
-      }
+  .naut-navmenu__item--has-children {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
 
-      &.active {
-        font-weight: 600;
-        color: var(--naut-color-link);
-      }
-    }
+  .naut-navmenu__label {
+    cursor: default;
+  }
 
-    .naut-navmenu__toggle {
-      display: flex;
-      gap: 0.25rem;
-      align-items: center;
-      padding: 0.5rem 0;
-      font-family: inherit;
-      font-size: var(--naut-font-size-md);
-      color: var(--naut-color-content);
-      cursor: pointer;
-      background: none;
-      border: none;
+  .naut-navmenu__link {
+    text-decoration: none;
+    color: inherit;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+  }
 
-      &:hover {
-        color: var(--naut-color-link);
-      }
-    }
+  .naut-navmenu__link:hover {
+    background: color-mix(in oklch, var(--naut-color-primary) 10%, transparent);
+  }
 
-    .naut-navmenu__chevron {
-      width: 0.35rem;
-      height: 0.35rem;
-      border-right: 1.5px solid currentColor;
-      border-bottom: 1.5px solid currentColor;
-      transform: rotate(45deg);
-      transition: transform 0.2s ease;
-    }
+  .naut-navmenu__link--active {
+    font-weight: 600;
+    color: var(--naut-color-primary);
+  }
 
-    .naut-navmenu__dropdown:hover .naut-navmenu__chevron {
-      transform: rotate(-135deg);
-    }
+  .naut-navmenu__chevron {
+    font-size: 0.65rem;
+    line-height: 1;
+    opacity: 0.6;
+  }
 
-    .naut-navmenu__submenu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      z-index: 100;
-      visibility: hidden;
-      min-width: 180px;
-      padding: 0.5rem 0;
-      margin: 0;
-      list-style: none;
-      background: var(--naut-color-base);
-      border: 1px solid var(--naut-color-border);
-      border-radius: var(--naut-border-radius-md);
-      box-shadow: var(--naut-shadow-md);
-      opacity: 0;
-      transform: translateY(-4px);
-      transition: all 0.15s ease;
-    }
+  .naut-navmenu__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.25rem 0 0;
+    list-style: none;
+    background: var(--naut-color-background);
+    border: 1px solid color-mix(in oklch, var(--naut-color-foreground) 10%, transparent);
+    border-radius: 0.5rem;
+    box-shadow: var(--naut-shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.25rem);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+    z-index: 50;
+  }
 
-    .naut-navmenu__dropdown:hover .naut-navmenu__submenu {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .naut-navmenu__item:hover .naut-navmenu__dropdown,
+  .naut-navmenu__item--more:hover .naut-navmenu__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
 
-    .naut-navmenu__more .naut-navmenu__submenu {
-      right: 0;
-      left: auto;
-    }
+  .naut-navmenu__dropdown:hover .naut-navmenu__chevron {
+    opacity: 1;
+  }
 
-    .naut-navmenu__submenu--nested {
-      position: static;
-      visibility: visible;
-      padding-left: 0.5rem;
-      background: none;
-      border: none;
-      box-shadow: none;
-      opacity: 1;
-      transform: none;
-    }
+  .naut-navmenu__submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 
-    .naut-navmenu__submenu-link {
-      display: block;
-      padding: 0.4rem 1rem;
-      font-size: var(--naut-font-size-sm);
-      color: var(--naut-color-content);
-      white-space: nowrap;
-      text-decoration: none;
+  .naut-navmenu__item--more .naut-navmenu__submenu {
+    padding-left: 1rem;
+  }
 
-      &:hover {
-        color: var(--naut-color-link);
-        background: var(--naut-color-base-200);
-      }
+  .naut-navmenu__submenu--nested {
+    margin-top: 0.25rem;
+    padding-left: 0.75rem;
+  }
 
-      &.active {
-        font-weight: 600;
-        color: var(--naut-color-link);
-      }
-    }
+  .naut-navmenu__submenu-link {
+    display: block;
+    padding: 0.35rem 1rem;
+    text-decoration: none;
+    color: inherit;
+    font-size: 0.875rem;
+  }
 
-    .naut-navmenu__submenu-label {
-      display: block;
-      padding: 0.4rem 1rem;
-      font-size: var(--naut-font-size-xs);
-      font-weight: 600;
-      color: var(--naut-color-content-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+  .naut-navmenu__submenu-link:hover {
+    background: color-mix(in oklch, var(--naut-color-primary) 10%, transparent);
+  }
+
+  .naut-navmenu__submenu-link--active {
+    font-weight: 600;
+    color: var(--naut-color-primary);
+  }
+
+  .naut-navmenu__submenu-label {
+    padding: 0.35rem 1rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
   }
 </style>
