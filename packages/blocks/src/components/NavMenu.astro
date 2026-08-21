@@ -44,9 +44,9 @@ function hasChildren(item: MenuItem): boolean {
         {hasChildren(item) ? (
           <>
             <span class="naut-navmenu__label">{item.label}</span>
-            <span class="naut-navmenu__chevron" aria-hidden="true">▼</span>
+            <span aria-hidden="true" class="naut-navmenu__chevron">▼</span>
             <ul class="naut-navmenu__dropdown">
-              {item.children!.map((child) => (
+              {item.children?.map((child) => (
                 <li>
                   <a
                     href={child.href}
@@ -71,7 +71,7 @@ function hasChildren(item: MenuItem): boolean {
     {overflowItems.length > 0 && (
       <li class="naut-navmenu__item naut-navmenu__item--more">
         <span class="naut-navmenu__label">More</span>
-        <span class="naut-navmenu__chevron" aria-hidden="true">▼</span>
+        <span aria-hidden="true" class="naut-navmenu__chevron">▼</span>
         <ul class="naut-navmenu__dropdown">
           {overflowItems.map((item) => (
             <li class:list={[{ "naut-navmenu__item--has-children": hasChildren(item) }]}>
@@ -79,7 +79,7 @@ function hasChildren(item: MenuItem): boolean {
                 <>
                   <span class="naut-navmenu__submenu-label">{item.label}</span>
                   <ul class="naut-navmenu__submenu naut-navmenu__submenu--nested">
-                    {item.children!.map((child) => (
+                    {item.children?.map((child) => (
                       <li>
                         <a
                           href={child.href}
