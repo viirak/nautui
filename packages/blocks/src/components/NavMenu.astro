@@ -1,0 +1,247 @@
+---
+import { Menu, Visibility } from "@nautui/core";
+import type { Base } from "../types";
+import "../styles/radius.css";
+import "../styles/shadow.css";
+
+interface MenuItem {
+  children?: MenuItem[];
+  href: string;
+  label: string;
+}
+
+export interface NavMenuProps extends Base {
+  activePath?: string;
+  items: MenuItem[];
+  limit?: number;
+}
+
+const {
+  items = [],
+  activePath = "",
+  limit,
+  class: className,
+  ...rest
+} = Astro.props as NavMenuProps;
+
+const visibleItems = limit ? items.slice(0, limit) : items;
+const overflowItems = limit ? items.slice(limit) : [];
+---
+
+<Visibility on="sm" hidden={true}>
+  <Menu horizontal gap="lg" class:list={["naut-navmenu", className]} {...rest}>
+    {visibleItems.map((item) => (
+      <li class="naut-navmenu__item">
+        {item.children ? (
+          <div class="naut-navmenu__dropdown">
+            <button class="naut-navmenu__toggle" type="button">
+              {item.label}
+              <span aria-hidden="true" class="naut-navmenu__chevron" />
+            </button>
+            <ul class="naut-navmenu__submenu">
+              {item.children.map((child) => (
+                <li>
+                  <a
+                    href={child.href}
+                    class:list={[
+                      "naut-navmenu__link",
+                      child.href === activePath && "active",
+                    ]}
+                  >
+                    {child.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <a
+            href={item.href}
+            class:list={[
+              "naut-navmenu__link",
+              item.href === activePath && "active",
+            ]}
+          >
+            {item.label}
+          </a>
+        )}
+      </li>
+    ))}
+
+    {overflowItems.length > 0 && (
+      <li class="naut-navmenu__item naut-navmenu__more">
+        <div class="naut-navmenu__dropdown">
+          <button class="naut-navmenu__toggle" type="button">
+            More
+            <span aria-hidden="true" class="naut-navmenu__chevron" />
+          </button>
+          <ul class="naut-navmenu__submenu">
+            {overflowItems.map((item) => (
+              <li>
+                {item.children ? (
+                  <>
+                    <span class="naut-navmenu__submenu-label">
+                      {item.label}
+                    </span>
+                    <ul class="naut-navmenu__submenu naut-navmenu__submenu--nested">
+                      {item.children.map((child) => (
+                        <li>
+                          <a
+                            href={child.href}
+                            class:list={[
+                              "naut-navmenu__link",
+                              child.href === activePath && "active",
+                            ]}
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <a
+                    href={item.href}
+                    class:list={[
+                      "naut-navmenu__link",
+                      item.href === activePath && "active",
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </li>
+    )}
+  </Menu>
+</Visibility>
+
+<style>
+  .naut-navmenu {
+    .naut-navmenu__item {
+      position: relative;
+    }
+
+    .naut-navmenu__link {
+      display: block;
+      padding: 0.5rem 0;
+      font-size: var(--naut-font-size-md);
+      color: var(--naut-color-content);
+      white-space: nowrap;
+      text-decoration: none;
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: var(--naut-color-link);
+      }
+
+      &.active {
+        font-weight: 600;
+        color: var(--naut-color-link);
+      }
+    }
+
+    .naut-navmenu__toggle {
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      padding: 0.5rem 0;
+      font-family: inherit;
+      font-size: var(--naut-font-size-md);
+      color: var(--naut-color-content);
+      cursor: pointer;
+      background: none;
+      border: none;
+
+      &:hover {
+        color: var(--naut-color-link);
+      }
+    }
+
+    .naut-navmenu__chevron {
+      width: 0.35rem;
+      height: 0.35rem;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+    }
+
+    .naut-navmenu__dropdown:hover .naut-navmenu__chevron {
+      transform: rotate(-135deg);
+    }
+
+    .naut-navmenu__submenu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 100;
+      visibility: hidden;
+      min-width: 180px;
+      padding: 0.5rem 0;
+      margin: 0;
+      list-style: none;
+      background: var(--naut-color-base);
+      border: 1px solid var(--naut-color-border);
+      border-radius: var(--naut-border-radius-md);
+      box-shadow: var(--naut-shadow-md);
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: all 0.15s ease;
+    }
+
+    .naut-navmenu__dropdown:hover .naut-navmenu__submenu {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .naut-navmenu__more .naut-navmenu__submenu {
+      right: 0;
+      left: auto;
+    }
+
+    .naut-navmenu__submenu--nested {
+      position: static;
+      visibility: visible;
+      padding-left: 0.5rem;
+      background: none;
+      border: none;
+      box-shadow: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .naut-navmenu__submenu-link {
+      display: block;
+      padding: 0.4rem 1rem;
+      font-size: var(--naut-font-size-sm);
+      color: var(--naut-color-content);
+      white-space: nowrap;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--naut-color-link);
+        background: var(--naut-color-base-200);
+      }
+
+      &.active {
+        font-weight: 600;
+        color: var(--naut-color-link);
+      }
+    }
+
+    .naut-navmenu__submenu-label {
+      display: block;
+      padding: 0.4rem 1rem;
+      font-size: var(--naut-font-size-xs);
+      font-weight: 600;
+      color: var(--naut-color-content-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+</style>

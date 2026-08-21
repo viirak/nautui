@@ -44,8 +44,8 @@ const {
 </li>
 
 <script>
-  for (const group of document.querySelectorAll(
-    ".naut-menu-group.collapsible"
+  for (const group of Array.from(
+    document.querySelectorAll(".naut-menu-group.collapsible")
   )) {
     const toggle = group.querySelector(".naut-menu-group__toggle");
     const list = group.querySelector(".naut-menu-group__list");

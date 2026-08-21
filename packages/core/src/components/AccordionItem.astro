@@ -162,7 +162,7 @@ const uniqueId = uid("naut-accordion");
 
 <script>
   const headers = document.querySelectorAll(".accordion-header");
-  for (const header of headers) {
+  for (const header of Array.from(headers) as HTMLElement[]) {
     header.addEventListener("click", (event) => {
       const radio = header.previousElementSibling as HTMLInputElement;
       if (radio?.checked) {

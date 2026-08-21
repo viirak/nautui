@@ -124,7 +124,7 @@ const {
   if (buttons.length) {
     const onScroll = () => {
       const y = window.scrollY;
-      for (const btn of buttons) {
+      for (const btn of Array.from(buttons)) {
         const threshold = Number(btn.dataset.nautThreshold ?? 400);
         btn.classList.toggle("active", y > threshold);
       }
@@ -137,7 +137,7 @@ const {
       window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
     };
 
-    for (const btn of buttons) {
+    for (const btn of Array.from(buttons)) {
       btn.addEventListener("click", onClick);
     }
 

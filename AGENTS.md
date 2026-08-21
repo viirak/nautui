@@ -2,9 +2,9 @@
 
 A clean, minimalist **Astro UI component library** for marketing websites. Design tokens are derived at runtime via CSS `color-mix()` and OKLCH — no preprocessor, no build step.
 
-## Tooling (mandatory)
+## Project Conventions
 
-Read `~/.config/AGENTS.md` first — follow its MCP-first tool priority strictly.
+This file covers NautUI-specific architecture and conventions. Tooling/editor preferences are configured per-developer in `~/.config/AGENTS.md` and are not part of the project contract.
 
 ## Architecture & Conventions
 
@@ -35,7 +35,7 @@ const { class: className, ...rest } = Astro.props as MyCompProps;
 - Props interface exported from the component file itself; `Base` (from `src/types.ts`) provides `class` plus arbitrary passthrough props.
 - Always destructure `class: className` (`class` is reserved in JS).
 - Every class uses the `naut-` prefix; CSS is scoped by Astro except shared utility classes.
-- **CSS nesting required:** selectors nest as children of the root component class — see `Drawer.astro`.
+- **CSS nesting required:** selectors nest as **full class names** inside the root component class — see `Drawer.astro`. The `&__item` shorthand is **not valid** in this repo’s CSS linter; always write the full selector (`.naut-navmenu__item`) as a nested child of the root.
 - **BEM naming:** `__` separates block from child element (`naut-card__body`); `--` marks variants/states (`naut-drawer-panel.position--center`). Child part → `__`; variant → `--`.
 
 ### Theme System
@@ -108,6 +108,9 @@ Config extends `ultracite/biome/core` + `ultracite/biome/astro`. Spaces for inde
 9. `class:list` filters falsy values automatically.
 10. Requires `astro: ^6.0.0` (no Astro 5.x) and Baseline 2024 browsers (Chrome 119+, Safari 16.4+, Firefox 128+) — CSS uses `rgb(from ...)`, `color-mix()`, and nesting.
 11. `@nautui/blocks` depends on `@nautui/core` as a runtime dependency; both publish to npm separately.
+12. Type-check with `astro check`, not `tsc --noEmit` — `tsc` does not validate `.astro` import/export shape (default vs named exports). `astro check` generates Astro component types and catches those errors.
+13. Zed Biome wiring: Biome is only attached to Astro in `~/.config/zed/settings.json`. CSS/JS/TS/JSON need explicit `language_servers: ["biome"]` entries, otherwise Zed’s built-in formatter produces Prettier-style output that `biome check` flags.
+14. `chisel patch_apply` can silently no-op on context mismatch — always verify edits with `git diff`. When patch_apply fails twice, use `chisel_write_file` for a full rewrite.
 
 ## Impeccable
 

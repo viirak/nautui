@@ -48,3 +48,5 @@ tsconfig.tsbuildinfo
 .bitloops
 .agents
 .poolside
+packages/core/.astro/
+packages/blocks/.astro/
