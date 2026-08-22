@@ -1,5 +1,5 @@
 ---
-import { Menu, Visibility } from "@nautui/core";
+import { Dropdown, Menu, Visibility } from "@nautui/core";
 import type { Base } from "../types";
 
 interface MenuItem {
@@ -41,10 +41,10 @@ function hasChildren(item: MenuItem): boolean {
   <Menu horizontal gap="lg" class:list={["naut-navmenu", className]} {...rest}>
     {visibleItems.map((item) => (
       <li class:list={["naut-navmenu__item", { "naut-navmenu__item--has-children": hasChildren(item) }]}>
-        {hasChildren(item) ? (
-          <>
-            <span class="naut-navmenu__label">{item.label}</span>
-            <span aria-hidden="true" class="naut-navmenu__chevron">▼</span>
+{hasChildren(item) ? (
+          <Dropdown align="start" hover side="bottom" zi={50}>
+            <span class="naut-navmenu__label" slot="trigger">{item.label}</span>
+            <span aria-hidden="true" class="naut-navmenu__chevron" slot="trigger">▼</span>
             <ul class="naut-navmenu__dropdown">
               {item.children?.map((child) => (
                 <li>
@@ -57,7 +57,7 @@ function hasChildren(item: MenuItem): boolean {
                 </li>
               ))}
             </ul>
-          </>
+          </Dropdown>
         ) : (
           <a
             href={item.href}
@@ -69,39 +69,42 @@ function hasChildren(item: MenuItem): boolean {
       </li>
     ))}
     {overflowItems.length > 0 && (
-      <li class="naut-navmenu__item naut-navmenu__item--more">
-        <span class="naut-navmenu__label">More</span>
-        <span aria-hidden="true" class="naut-navmenu__chevron">▼</span>
-        <ul class="naut-navmenu__dropdown">
-          {overflowItems.map((item) => (
-            <li class:list={[{ "naut-navmenu__item--has-children": hasChildren(item) }]}>
-              {hasChildren(item) ? (
-                <>
-                  <span class="naut-navmenu__submenu-label">{item.label}</span>
-                  <ul class="naut-navmenu__submenu naut-navmenu__submenu--nested">
-                    {item.children?.map((child) => (
-                      <li>
-                        <a
-                          href={child.href}
-                          class:list={["naut-navmenu__submenu-link", { "naut-navmenu__submenu-link--active": activePath && child.href === activePath }]}
-                        >
-                          {child.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                <a
-                  href={item.href}
-                  class:list={["naut-navmenu__link", { "naut-navmenu__link--active": isActive(item) }]}
-                >
-                  {item.label}
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
+<li class="naut-navmenu__item naut-navmenu__item--more">
+        <Dropdown align="start" hover side="bottom" zi={50}>
+          <span class="naut-navmenu__label" slot="trigger">More</span>
+          <span aria-hidden="true" class="naut-navmenu__chevron" slot="trigger">▼</span>
+          <ul class="naut-navmenu__dropdown">
+            {overflowItems.map((item) => (
+              <li class:list={[{ "naut-navmenu__item--has-children": hasChildren(item) }]}>
+                {hasChildren(item) ? (
+                  <Dropdown align="start" hover side="right" zi={100}>
+                    <span class="naut-navmenu__submenu-label" slot="trigger">{item.label}</span>
+                    <span aria-hidden="true" class="naut-navmenu__chevron" slot="trigger">▼</span>
+                    <ul class="naut-navmenu__submenu naut-navmenu__submenu--nested">
+                      {item.children?.map((child) => (
+                        <li>
+                          <a
+                            href={child.href}
+                            class:list={["naut-navmenu__submenu-link", { "naut-navmenu__submenu-link--active": activePath && child.href === activePath }]}
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </Dropdown>
+                ) : (
+                  <a
+                    href={item.href}
+                    class:list={["naut-navmenu__link", { "naut-navmenu__link--active": isActive(item) }]}
+                  >
+                    {item.label}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </Dropdown>
       </li>
     )}
   </Menu>
@@ -128,7 +131,7 @@ function hasChildren(item: MenuItem): boolean {
   }
 
   .naut-navmenu__label {
-    cursor: default;
+    cursor: pointer;
   }
 
   .naut-navmenu__link {
@@ -154,36 +157,19 @@ function hasChildren(item: MenuItem): boolean {
   }
 
   .naut-navmenu__dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 50;
-    visibility: hidden;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  /* NavMenu-specific Dropdown content overrides */
+  :global(.naut-dropdown__content) {
     min-width: 10rem;
     padding: 0.5rem 0;
-    margin: 0.25rem 0 0;
-    list-style: none;
-    background: var(--naut-color-background);
-    border: 1px solid
-      color-mix(in oklch, var(--naut-color-foreground) 10%, transparent);
-    border-radius: 0.5rem;
     box-shadow: var(--naut-shadow-md);
-    opacity: 0;
-    transform: translateY(-0.25rem);
-    transition:
-      opacity 0.15s ease,
-      transform 0.15s ease,
-      visibility 0.15s;
   }
 
-  .naut-navmenu__item:hover .naut-navmenu__dropdown,
-  .naut-navmenu__item--more:hover .naut-navmenu__dropdown {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .naut-navmenu__dropdown:hover .naut-navmenu__chevron {
+  :global(.naut-dropdown[open]) .naut-navmenu__chevron {
     opacity: 1;
   }
 
