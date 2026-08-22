@@ -1,0 +1,117 @@
+---
+import type { Base } from "../types";
+import "../styles/radius.css";
+import type { ButtonProps } from "./Button.astro";
+import Button from "./Button.astro";
+
+type ToggleButtonProps = Omit<ButtonProps, "onclick">;
+type DropdownAlign = "start" | "center" | "end";
+type DropdownSide = "top" | "bottom" | "left" | "right";
+
+export interface DropdownProps extends Base {
+  align?: DropdownAlign;
+  button?: ToggleButtonProps;
+  hover?: boolean;
+  side?: DropdownSide;
+  zi?: number;
+}
+
+const {
+  class: className,
+  button,
+  align = "start",
+  side = "bottom",
+  hover = false,
+  zi = 100,
+  ...rest
+} = Astro.props as DropdownProps;
+---
+
+<details
+  class:list={[
+    "naut-dropdown",
+    `side--${side}`,
+    `align--${align}`,
+    hover && "hoverable",
+    className,
+  ]}
+  {...rest}
+>
+  <summary class="naut-dropdown__trigger">
+    {button ? (
+      <Button square variant="ghost" {...button} />
+    ) : (
+      <slot name="trigger" />
+    )}
+  </summary>
+  <div class="naut-dropdown__content"><slot /></div>
+</details>
+
+<style define:vars={{ nautDropdownZIndex: zi }}>
+  .naut-dropdown {
+    position: relative;
+    display: inline-block;
+
+    .naut-dropdown__trigger {
+      display: inline-flex;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .naut-dropdown__content {
+      position: absolute;
+      z-index: var(--nautDropdownZIndex);
+      visibility: hidden;
+      padding: var(--naut-spacing-sm);
+      background: var(--naut-color-base);
+      border: 1px solid var(--naut-color-border);
+      border-radius: var(--naut-border-radius-md);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+
+      /* side: which direction the content opens */
+      &.side--top {
+        right: auto;
+        bottom: 100%;
+        left: 0;
+      }
+
+      &.side--bottom {
+        top: 100%;
+        right: auto;
+        left: 0;
+      }
+
+      &.side--left {
+        top: 0;
+        right: 100%;
+        bottom: auto;
+        left: auto;
+      }
+
+      &.side--right {
+        top: 0;
+        right: auto;
+        bottom: auto;
+        left: 100%;
+      }
+
+      /* align: horizontal alignment (for top/bottom) */
+      &.align--center {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &.align--end {
+        right: 0;
+        left: auto;
+      }
+    }
+
+    &[open] .naut-dropdown__content,
+    &.hoverable:hover .naut-dropdown__content {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+</style>

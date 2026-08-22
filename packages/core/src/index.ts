@@ -14,6 +14,7 @@ import Card from "./components/Card.astro";
 import Container from "./components/Container.astro";
 import Divider from "./components/Divider.astro";
 import Drawer from "./components/Drawer.astro";
+import Dropdown from "./components/Dropdown.astro";
 import Flex from "./components/Flex.astro";
 import Footer from "./components/Footer.astro";
 import Grid from "./components/Grid.astro";
@@ -55,6 +56,7 @@ export {
   Container,
   Divider,
   Drawer,
+  Dropdown,
   Flex,
   Footer,
   Grid,

@@ -12,6 +12,7 @@ import type { CardProps } from "./components/Card.astro";
 import type { ContainerProps } from "./components/Container.astro";
 import type { DividerProps } from "./components/Divider.astro";
 import type { DrawerProps } from "./components/Drawer.astro";
+import type { DropdownProps } from "./components/Dropdown.astro";
 import type { FlexProps } from "./components/Flex.astro";
 import type { FooterProps } from "./components/Footer.astro";
 import type { GridProps } from "./components/Grid.astro";
@@ -86,6 +87,7 @@ export declare const Background: (props: BackgroundProps) => AstroComponent;
 
 // Navigation
 export declare const Drawer: (props: DrawerProps) => AstroComponent;
+export declare const Dropdown: (props: DropdownProps) => AstroComponent;
 export declare const Menu: (props: MenuProps) => AstroComponent;
 export declare const MenuItem: (props: MenuItemProps) => AstroComponent;
 export declare const MenuGroup: (props: MenuGroupProps) => AstroComponent;
