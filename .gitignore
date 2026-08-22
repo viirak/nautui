@@ -50,3 +50,4 @@ tsconfig.tsbuildinfo
 .poolside
 packages/core/.astro/
 packages/blocks/.astro/
+.patchloom/
