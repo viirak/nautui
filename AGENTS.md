@@ -110,7 +110,7 @@ Config extends `ultracite/biome/core` + `ultracite/biome/astro`. Spaces for inde
 11. `@nautui/blocks` depends on `@nautui/core` as a runtime dependency; both publish to npm separately.
 12. Type-check with `astro check`, not `tsc --noEmit` — `tsc` does not validate `.astro` import/export shape (default vs named exports). `astro check` generates Astro component types and catches those errors.
 13. Zed Biome wiring: Biome is only attached to Astro in `~/.config/zed/settings.json`. CSS/JS/TS/JSON need explicit `language_servers: ["biome"]` entries, otherwise Zed’s built-in formatter produces Prettier-style output that `biome check` flags.
-14. `chisel patch_apply` can silently no-op on context mismatch — always verify edits with `git diff`. When patch_apply fails twice, use `chisel_write_file` for a full rewrite.
+14. `patchloom patch apply` detects stale diffs and rejects them instead of silently no-op. Always verify edits with `git diff`.
 
 ## Impeccable
 
