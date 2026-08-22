@@ -44,3 +44,7 @@ Use `__` for child elements (`naut-card__body`), `--` for modifiers (`naut-hide-
 - **Biome-ignore comments** on barrel exports: `// biome-ignore-all lint/style/noExportedImports: DX`
 - **Peer dep**: `astro: ^6.0.0`
 - **Block components**: `SectionHero`, `DocLayout` (responsive docs grid with nav sidebar + TOC)
+
+<!-- context-firewall:start -->
+@AGENTS.md
+<!-- context-firewall:end -->
