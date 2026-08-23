@@ -1,6 +1,6 @@
 # NavMenu
 
-A desktop-only horizontal navigation menu with submenu dropdowns, active-path styling, and an overflow "More" menu. Built from `Menu` + `Visibility`; drop it inside `<NavBar>`.
+A desktop-only horizontal navigation menu with submenu dropdowns, active-path styling, and an overflow "More" menu. Built from `Menu`, `MenuItem`, and `Visibility`; drop it inside `<NavBar>`.
 
 ## Usage
 
@@ -54,13 +54,14 @@ Any other attributes (`id`, `aria-*`, `data-*`) pass through to the root element
 
 - **Desktop-only**: wrapped in `<Visibility on="sm" hidden={true}>`, so it hides on mobile (≤576px). Pair with a `Drawer`-based mobile menu for the small-screen experience.
 - **Submenus**: items with `children` render a hover-triggered dropdown. Nested children inside the "More" overflow menu are rendered as an indented submenu list.
+- **MenuItem**: simple (non-dropdown) top-level and submenu items are rendered via the `MenuItem` primitive from core, which provides `active`, `activeVariant`, and `dimmed` props.
 - **Overflow**: when `limit` is set and `items.length > limit`, the extra items go into a right-aligned "More" dropdown.
 - **Active state**: `href === activePath` adds `.active` to the link (bold + brand color).
 
 ## Accessibility
 
-- Submenu toggles are `<button type="button">` with `aria-hidden` chevrons; they don’t navigate on their own.
-- Dropdowns are hover-only (no keyboard trap); the underlying links are keyboard-focusable.
+- Submenu toggles are `<summary>` elements within `<details>` (via `Dropdown`); chevrons are `aria-hidden` and don’t navigate on their own.
+- Dropdowns use the native `<details>`/`<summary>` pattern, so they’re keyboard-accessible (Enter/Space opens the dropdown) with no keyboard trap; the underlying links are keyboard-focusable.
 - The component renders as a `<ul>` inside `<Menu horizontal>` — screen readers see a flat list of links.
 
 ## Notes
