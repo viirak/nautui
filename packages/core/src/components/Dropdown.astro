@@ -48,6 +48,19 @@ const {
     <slot />
   </div>
 </details>
+<script>
+  // Close any open dropdown when clicking outside of it
+  document.addEventListener("pointerdown", (event) => {
+    const target = event.target as Node;
+    for (const dropdown of document.querySelectorAll<HTMLDetailsElement>(
+      "details.naut-dropdown[open]"
+    )) {
+      if (!dropdown.contains(target)) {
+        dropdown.removeAttribute("open");
+      }
+    }
+  });
+</script>
 
 <style define:vars={{ nautDropdownZIndex: zi }}>
   .naut-dropdown {
