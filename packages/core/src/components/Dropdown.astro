@@ -30,8 +30,6 @@ const {
 <details
   class:list={[
     "naut-dropdown",
-    `side--${side}`,
-    `align--${align}`,
     hover && "hoverable",
     className,
   ]}
@@ -44,7 +42,11 @@ const {
       <slot name="trigger" />
     )}
   </summary>
-  <div class="naut-dropdown__content"><slot /></div>
+  <div
+    class:list={["naut-dropdown__content", `side--${side}`, `align--${align}`]}
+  >
+    <slot />
+  </div>
 </details>
 
 <style define:vars={{ nautDropdownZIndex: zi }}>
@@ -62,7 +64,8 @@ const {
       position: absolute;
       z-index: var(--nautDropdownZIndex);
       visibility: hidden;
-      padding: var(--naut-spacing-sm);
+      min-width: 15rem;
+      padding: var(--naut-spacing-xs);
       background: var(--naut-color-base);
       border: 1px solid var(--naut-color-border);
       border-radius: var(--naut-border-radius-md);
@@ -77,7 +80,7 @@ const {
       }
 
       &.side--bottom {
-        top: 100%;
+        top: 160%;
         right: auto;
         left: 0;
       }
