@@ -7,11 +7,13 @@ import Button from "./Button.astro";
 type ToggleButtonProps = Omit<ButtonProps, "onclick">;
 type DropdownAlign = "start" | "center" | "end";
 type DropdownSide = "top" | "bottom" | "left" | "right";
+type DropdownOffset = "xs" | "sm" | "md" | "lg";
 
 export interface DropdownProps extends Base {
   align?: DropdownAlign;
   button?: ToggleButtonProps;
   hover?: boolean;
+  offset?: DropdownOffset;
   side?: DropdownSide;
   zi?: number;
 }
@@ -22,9 +24,12 @@ const {
   align = "start",
   side = "bottom",
   hover = false,
+  offset,
   zi = 100,
   ...rest
 } = Astro.props as DropdownProps;
+
+const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
 ---
 
 <details
@@ -52,8 +57,10 @@ const {
   // Close any open dropdown when clicking outside of it
   document.addEventListener("pointerdown", (event) => {
     const target = event.target as Node;
-    for (const dropdown of document.querySelectorAll<HTMLDetailsElement>(
-      "details.naut-dropdown[open]"
+    for (const dropdown of Array.from(
+      document.querySelectorAll<HTMLDetailsElement>(
+        "details.naut-dropdown[open]"
+      )
     )) {
       if (!dropdown.contains(target)) {
         dropdown.removeAttribute("open");
@@ -62,7 +69,9 @@ const {
   });
 </script>
 
-<style define:vars={{ nautDropdownZIndex: zi }}>
+<style
+  define:vars={{ nautDropdownZIndex: zi, nautDropdownOffset: offsetValue }}
+>
   .naut-dropdown {
     position: relative;
     display: inline-block;
@@ -88,19 +97,19 @@ const {
       /* side: which direction the content opens */
       &.side--top {
         right: auto;
-        bottom: 100%;
+        bottom: calc(100% + var(--nautDropdownOffset));
         left: 0;
       }
 
       &.side--bottom {
-        top: 160%;
+        top: calc(100% + var(--nautDropdownOffset));
         right: auto;
         left: 0;
       }
 
       &.side--left {
         top: 0;
-        right: 100%;
+        right: calc(100% + var(--nautDropdownOffset));
         bottom: auto;
         left: auto;
       }
@@ -109,7 +118,7 @@ const {
         top: 0;
         right: auto;
         bottom: auto;
-        left: 100%;
+        left: calc(100% + var(--nautDropdownOffset));
       }
 
       /* align: horizontal alignment (for top/bottom) */
