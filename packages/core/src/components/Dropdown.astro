@@ -1,6 +1,7 @@
 ---
 import type { Base } from "../types";
 import "../styles/radius.css";
+import "../styles/shadow.css";
 import type { ButtonProps } from "./Button.astro";
 import Button from "./Button.astro";
 
@@ -91,6 +92,7 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
       background: var(--naut-color-base);
       border: 1px solid var(--naut-color-border);
       border-radius: var(--naut-border-radius-md);
+      box-shadow: var(--naut-shadow-md);
       opacity: 0;
       transition: opacity 0.15s ease;
 
