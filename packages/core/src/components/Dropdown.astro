@@ -70,11 +70,6 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
   });
 </script>
 <script>
-  // Fade/scale driven entirely by WAAPI with fill:"forwards". The specified CSS
-  // value is always opacity 0, so no engine quirk (Firefox skips rendering of
-  // closed <details> children and repaints them unpredictably) can flash an
-  // unanimated bright frame. Animations are scheduled via rAF so they exist
-  // before the affected frame paints.
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const KEYFRAME_IN = [
     { opacity: 0, scale: "0.96" },
@@ -86,10 +81,6 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
   ];
 
   function play(content: HTMLElement, keyframes: Keyframe[], duration: number) {
-    // Cancel finished/stale animations FIRST (a completed fade-in holds
-    // opacity:1 via fill:forwards forever; if Firefox repaints the subtree
-    // before this rAF callback runs, that stale value is what flashes).
-    // Cancel + create happen in the same tick, so nothing can leak through.
     for (const animation of content.getAnimations()) {
       animation.cancel();
     }
@@ -100,8 +91,6 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
     });
   }
 
-  // Click mode: toggle via <summary>. Hover triggers are excluded — their
-  // open state is managed by the pointerenter/pointerleave block below.
   for (const summary of Array.from(
     document.querySelectorAll<HTMLElement>(
       "details.naut-dropdown:not(.hoverable) > summary"
@@ -125,11 +114,6 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
     });
   }
 
-  // Hover mode: engines like Firefox do not render children of a CLOSED
-  // <details> at all, so :hover alone can never show anything there. Drive
-  // the [open] attribute on enter/leave instead; the fade still attaches
-  // pre-paint via rAF. Reduced motion keeps the attribute toggle (rendering
-  // requirement) and only skips the animation.
   for (const dropdown of Array.from(
     document.querySelectorAll<HTMLDetailsElement>(
       "details.naut-dropdown.hoverable"
@@ -139,19 +123,11 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
       ".naut-dropdown__content"
     );
     if (!content) continue;
-
-    // Hover-intent grace period: crossing the offset gap between trigger and
-    // content briefly exits the <details> element. Delay the close and cancel
-    // it if the pointer reaches the content (a DOM child, so :hover still
-    // holds while over it).
     let closeTimer = 0;
     let closing = false;
 
     dropdown.addEventListener("pointerenter", () => {
       window.clearTimeout(closeTimer);
-      // Already fully visible (re-entering across the offset gap while the
-      // grace timer is pending)? Leave it alone — replaying the fade-in would
-      // yank a visible dropdown back to opacity 0 and read as a blink.
       if (!closing && dropdown.open) return;
       closing = false;
       requestAnimationFrame(() => {
@@ -203,8 +179,6 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
       visibility: hidden;
       min-width: 15rem;
       padding: var(--naut-spacing-xs);
-      /* Keep the content rendered while <details> is closed (overrides the UA's
-                                           content-visibility: hidden) so transitions can animate on open/close */
       content-visibility: visible;
       background: var(--naut-color-base);
       border: 1px solid var(--naut-color-border);
@@ -248,7 +222,6 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
         transform-origin: left;
       }
 
-      /* align: horizontal alignment (for top/bottom) */
       &.align--center {
         left: 50%;
         transform: translateX(-50%);
@@ -260,7 +233,6 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
       }
     }
 
-    /* Click mode: held at 0; the script drives opacity/scale via WAAPI */
     &[open]:not(.hoverable) .naut-dropdown__content {
       visibility: visible;
       opacity: 0;
@@ -268,9 +240,6 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
       transition: visibility 0.2s;
     }
 
-    /* Hover mode: open == fully visible. JS manages [open] on enter/leave,
-             so crossing the offset gap (where :hover drops) cannot dim the content:
-             [open] alone keeps it opaque until the grace-period close runs. */
     &.hoverable[open] .naut-dropdown__content,
     &.hoverable:hover .naut-dropdown__content {
       visibility: visible;
