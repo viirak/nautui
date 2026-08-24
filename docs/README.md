@@ -5,7 +5,7 @@ A clean, minimalist Astro UI component library for marketing websites. Design to
 ## Packages
 
 - **[@nautui/core](/packages/core)** — 39 primitive components (buttons, cards, layout, navigation, theming).
-- **[@nautui/blocks](/packages/blocks)** — composable page sections built on core (Breadcrumb, DocLayout, NavMenu, SectionHero, TOC).
+- **[@nautui/blocks](/packages/blocks)** — composable page sections built on core (Breadcrumb, DocLayout, SectionHero, TOC).
 
 ## Requirements
 
@@ -115,7 +115,7 @@ Dark mode is enabled by default when `<Theme>` wraps your layout. Switch it with
 | --- | --- | --- |
 | `Breadcrumb` | Navigation trail with separators | [→](components/Breadcrumb.md) |
 | `DocLayout` | Three-column docs page shell (nav / content / TOC) | [→](components/DocLayout.md) |
-| `NavMenu` | Desktop horizontal nav with submenus + overflow limit | [→](components/NavMenu.md) |
+| `NavMenu` | Desktop horizontal nav with submenus + overflow limit | [→ recipe](recipes/nav-menu.md) (removed from `@nautui/blocks`) |
 | `SectionHero` | Full-width marketing hero section | [→](components/SectionHero.md) |
 | `TOC` | Table of contents from `MarkdownHeading[]` | [→](components/TOC.md) |
 

@@ -95,6 +95,10 @@ Config extends `ultracite/biome/core` + `ultracite/biome/astro`. Spaces for inde
 | Deps | — | `@nautui/core` |
 | Published files | `src/` | `src/` |
 
+
+### Blocks admission rule
+
+A component belongs in `@nautui/blocks` only when it carries its own `<style>` and/or `<script>` — bespoke styling, client-side behavior, or non-obvious interaction/a11y logic. Pure compositions of core primitives (no styles, no script) ship as **recipes** under `docs/recipes/` instead of package exports.
 ### Gotchas
 
 1. **`index.d.ts` is manually maintained** — adding a component means updating both `index.ts` and `index.d.ts`.
