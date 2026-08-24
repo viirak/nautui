@@ -11,26 +11,29 @@ Import from `@nautui/core`:
 import { Visibility } from "@nautui/core";
 ---
 
-<Visibility on="sm">Shown everywhere except mobile</Visibility>
-<Visibility on="lg" hidden={false}>Shown only at large desktop</Visibility>
+<Visibility on="sm" mode="hide">Shown everywhere except mobile</Visibility>
+<Visibility on="lg" mode="show">Shown only at large desktop</Visibility>
 ```
 
 ## Props
 
 | Prop     | Type                    | Default  | Description                                       |
 | -------- | ----------------------- | -------- | ------------------------------------------------- |
-| `hidden` | `boolean`               | `true`   | Controls the direction of `on` (see below).       |
-| `on`     | `"sm" \| "md" \| "lg" \| "xl"` | — | Which breakpoint to apply the visibility rule to. |
+| `on`     | `"sm" \| "md" \| "lg" \| "xl"` | — (required) | Which breakpoint to apply the visibility rule to. |
+| `mode`   | `"show" \| "hide"`      | `"hide"` | `hide`: children are hidden inside the `on` range. `show`: children are shown ONLY inside the `on` range. |
+| `hidden` | `boolean`               | —        | @deprecated Legacy toggle; `hidden={false}` ≙ `mode="show"`. Conflicts with `mode` throw at build time. |
 | `class`  | `string`                | —        | Extra class names merged onto the element.        |
 
 ## Behavior
 
-Two complementary modes — pick whichever is terser for your case:
+Two complementary modes via `mode`:
 
-- **Hide at a breakpoint** (`hidden` default): `<Visibility on="md">` hides children in the `md` range (818–1041px), visible everywhere else.
-- **Show only at a breakpoint** (`hidden={false}`): `<Visibility on="lg" hidden={false}>` shows children only in the `lg` range (1042–1249px), hidden everywhere else.
+- **Hide at a breakpoint** (`mode="hide"`, default): `<Visibility on="md">` hides children in the `md` range (818–1041px), visible everywhere else.
+- **Show only at a breakpoint** (`mode="show"`): `<Visibility on="lg" mode="show">` shows children only in the `lg` range (1042–1249px), hidden everywhere else.
 
-Breakpoint ranges (same for hide and show-only): `sm` ≤576px, `md` 818–1041px, `lg` 1042–1249px, `xl` ≥1250px. Show-only (`hidden={false}`) hides everywhere outside that range.
+Breakpoint ranges (same for hide and show-only): `sm` ≤576px, `md` 818–1041px, `lg` 1042–1249px, `xl` ≥1250px. Show-only hides everywhere outside that range.
+
+> The legacy `hidden={false}` spelling still works (≙ `mode="show"`) but is deprecated; mixing both props throws at build time.
 
 ## Accessibility
 

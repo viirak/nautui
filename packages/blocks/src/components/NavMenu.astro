@@ -44,7 +44,7 @@ function hasChildren(item: NavMenuItem): boolean {
 }
 ---
 
-<Visibility on="sm" hidden={true}>
+<Visibility on="sm" mode="hide">
   <Menu horizontal gap="sm" class:list={["naut-navmenu", className]} {...rest}>
     {visibleItems.map((item) =>
       hasChildren(item) ? (

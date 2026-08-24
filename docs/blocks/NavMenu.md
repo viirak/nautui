@@ -52,7 +52,7 @@ Any other attributes (`id`, `aria-*`, `data-*`) pass through to the root element
 
 ## Behavior
 
-- **Desktop-only**: wrapped in `<Visibility on="sm" hidden={true}>`, so it hides on mobile (≤576px). Pair with a `Drawer`-based mobile menu for the small-screen experience.
+- **Desktop-only**: wrapped in `<Visibility on="sm" mode="hide">`, so it hides on mobile (≤576px). Pair with a `Drawer`-based mobile menu for the small-screen experience.
 - **Submenus**: items with `children` render a hover-triggered dropdown. Nested children inside the "More" overflow menu are rendered as an indented submenu list.
 - **MenuItem**: simple (non-dropdown) top-level and submenu items are rendered via the `MenuItem` primitive from core, which provides `active`, `activeVariant`, and `dimmed` props.
 - **Overflow**: when `limit` is set and `items.length > limit`, the extra items go into a right-aligned "More" dropdown.

@@ -1,23 +1,58 @@
 ---
 export interface VisibilityProps {
   class?: string;
+  /**
+   * @deprecated Legacy boolean toggle. `hidden={false}` is equivalent to
+   * `mode: "show"`. Prefer `mode`.
+   */
   hidden?: boolean;
+  /**
+   * - `"hide"` (default): children are hidden inside the `on` range.
+   * - `"show"`: children are shown ONLY inside the `on` range.
+   */
+  mode?: "show" | "hide";
+  /** Breakpoint range the mode applies to. */
   on?: "sm" | "md" | "lg" | "xl";
 }
 
+// Internal view strips the @deprecated flag so reading the legacy prop here
+// doesn't raise ts(6385) in our own build; external users of VisibilityProps
+// still get editor strikethrough.
+type VisibilityPropsInternal = Omit<VisibilityProps, "hidden"> & {
+  hidden?: boolean;
+};
+
 const {
   class: className,
-  hidden = true,
+  hidden,
   on,
+  mode,
   ...rest
-} = Astro.props as VisibilityProps;
+} = Astro.props as VisibilityPropsInternal;
+
+if (!on) {
+  throw new Error(
+    '[Visibility] The `on` prop is required ("sm" | "md" | "lg" | "xl").'
+  );
+}
+
+const resolvedMode = mode ?? (hidden === false ? "show" : "hide");
+
+if (mode && hidden !== undefined) {
+  const legacyMode = hidden === false ? "show" : "hide";
+  if (legacyMode !== mode) {
+    throw new Error(
+      `[Visibility] Conflicting props: mode="${mode}" vs hidden=${hidden}. Pass only \`mode\`.`
+    );
+  }
+}
 ---
 
 <div
   class:list={[
     "naut-visibility",
-    on && `naut-visibility--${on}`,
-    !hidden && "visible",
+    `naut-visibility--${on}`,
+    resolvedMode === "show" && "visible",
     className,
   ]}
   {...rest}
