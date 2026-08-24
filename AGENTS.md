@@ -118,6 +118,7 @@ Config extends `ultracite/biome/core` + `ultracite/biome/astro`. Spaces for inde
 
 <!-- context-firewall:start -->
 ## Context Firewall
+- All non-MCP CLI commands (`rtk`, `jaq`/`jq`, `codedb` CLI, `pkill`, `ls`…) also go through `cfw run --` — raw output stays out of context and on disk. Bare Bash is only for shell semantics cfw lacks (`&&`-chains, pipes between tools, process management).
 
 Use Context Firewall for noisy terminal output.
 
