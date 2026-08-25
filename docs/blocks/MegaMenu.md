@@ -40,9 +40,25 @@ A menu item. Use `drop` to create a dropdown trigger; omit it for a regular link
 |------|------|---------|-------------|
 | `label` | `string` | required | Accessible label for the item |
 | `href` | `string` | — | Link URL (omit for dropdown items) |
-| `drop` | `boolean` | `false` | Enable dropdown behavior |
+| `drop` | `boolean \| { position?: \"start\" \| \"center\" \| \"end\"; offset?: number }` | `false` | Enable dropdown behavior, with optional panel alignment and spacing |
 | `class` | `string` | — | Additional CSS classes |
 | `...rest` | `Base` | — | Arbitrary passthrough attributes |
+
+#### `drop` object
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `position` | `"start" \| "center" \| "end"` | `"center"` | Horizontal alignment of the panel relative to the item |
+| `offset` | `number` | `20` | Vertical offset in pixels from the item's bottom edge |
+
+```astro
+<MegaMenuItem label="Products" drop={{ position: "center", offset: 20 }}>
+  <div class="grid">
+    <a href="/product-a">Product A</a>
+    <a href="/product-b">Product B</a>
+  </div>
+</MegaMenuItem>
+```
 
 ## Behavior
 
