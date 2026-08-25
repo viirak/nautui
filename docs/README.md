@@ -5,7 +5,7 @@ A clean, minimalist Astro UI component library for marketing websites. Design to
 ## Packages
 
 - **[@nautui/core](/packages/core)** — 39 primitive components (buttons, cards, layout, navigation, theming).
-- **[@nautui/blocks](/packages/blocks)** — composable page sections built on core (Breadcrumb, DocLayout, SectionHero, TOC).
+- **[@nautui/blocks](/packages/blocks)** — composable page sections built on core (Breadcrumb, DocLayout, MegaMenu, SectionHero, TOC).
 
 ## Requirements
 

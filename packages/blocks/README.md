@@ -49,6 +49,7 @@ import { Hero } from "@nautui/blocks";
 - [ ] `Contact` — contact form and info block
 
 ### Layout
+- [x] `MegaMenu` — Stripe-style single-panel dropdown navigation with crossfade transitions
 - [ ] `Footer` — site footer with columns and legal row
 - [ ] `Carousel` — horizontal slide carousel
 - [ ] `Marquee` — horizontally scrolling content strip

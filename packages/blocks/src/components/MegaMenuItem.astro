@@ -1,0 +1,115 @@
+---
+import { Button } from "@nautui/core";
+import type { Base } from "../types";
+
+export interface MegaMenuItemProps extends Base {
+  drop?:
+    | boolean
+    | {
+        position?: "start" | "center" | "end";
+        offset?: number;
+      };
+  href?: string;
+  label: string;
+}
+
+const {
+  class: className,
+  drop = false,
+  href,
+  label,
+  ...rest
+} = Astro.props as MegaMenuItemProps;
+---
+
+<li
+  class:list={[
+    "naut-mega-menu__item",
+    drop && "naut-mega-menu__item--drop",
+    className,
+  ]}
+  data-mega-drop={drop ? "" : undefined}
+  data-mega-position={drop && typeof drop === "object" && drop.position ? drop.position : undefined}
+  data-mega-offset={drop && typeof drop === "object" && drop.offset != null ? String(drop.offset) : undefined}
+  {...rest}
+>
+  {href && !drop ? (
+    <Button class="naut-mega-menu__link" href={href} variant="ghost">
+      <span class="naut-mega-menu__label">{label}</span>
+    </Button>
+  ) : (
+    <Button
+      aria-haspopup="true"
+      class="naut-mega-menu__trigger"
+      data-mega-trigger=""
+      type="button"
+      variant="ghost"
+    >
+      <span class="naut-mega-menu__label">{label}</span>
+      <svg
+        fill="none"
+        height="16"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg">
+        <title>Chevron Down</title>
+        <path d="m6 9 6 6 6-6"/>
+      </svg>
+    </Button>
+  )}
+  {drop && (
+    <div class="naut-mega-menu__item-content" data-mega-content hidden>
+      <slot />
+    </div>
+  )}
+</li>
+
+<style>
+  .naut-mega-menu__item {
+    position: relative;
+    display: flex;
+  }
+
+  .naut-mega-menu__item--drop {
+    cursor: pointer;
+  }
+
+  .naut-mega-menu__link,
+  .naut-mega-menu__trigger {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.8rem;
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--naut-border-radius-sm);
+    transition: background-color 0.15s ease-in-out;
+  }
+
+  .naut-mega-menu__trigger {
+    font: inherit;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .naut-mega-menu__link:hover,
+  .naut-mega-menu__trigger:hover {
+    background-color: color-mix(
+      in oklch,
+      var(--naut-color-foreground) 8%,
+      transparent
+    );
+  }
+
+  .naut-mega-menu__label {
+    text-wrap: nowrap;
+  }
+
+  .naut-mega-menu__item .naut-mega-menu__item-content {
+    display: none;
+  }
+</style>
