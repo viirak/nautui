@@ -1,5 +1,5 @@
 ---
-import type { Base, Radius } from "../types";
+import type { Base, Radius, Size } from "../types";
 import "../styles/radius.css";
 
 export interface MenuItemProps extends Base {
@@ -8,6 +8,7 @@ export interface MenuItemProps extends Base {
   dimmed?: boolean;
   href: string;
   radius?: Radius;
+  size?: Size;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   activeVariant,
   radius = "sm",
   dimmed = false,
+  size = "md",
   href,
   ...rest
 } = Astro.props as MenuItemProps;
@@ -26,6 +28,7 @@ const classList = [
   activeVariant && `active-${activeVariant}`,
   dimmed && "dimmed",
   radius && `radius-${radius}`,
+  size && `size-${size}`,
   className,
 ];
 ---
@@ -105,6 +108,18 @@ const classList = [
         &:hover:not(.active) {
           color: var(--naut-color-content);
         }
+      }
+
+      &.size-sm {
+        font-size: var(--naut-font-size-sm);
+      }
+
+      &.size-md {
+        font-size: var(--naut-font-size-md);
+      }
+
+      &.size-lg {
+        font-size: var(--naut-font-size-lg);
       }
 
       .naut-menu-item__main {
