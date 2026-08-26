@@ -12,8 +12,10 @@ import {
 import type { Base, Radius, Responsive, Size } from "../types";
 
 type CornerStyle = "diamond" | "square" | "circle" | "plus" | "x";
-type TaDirection = "left" | "center" | "right";
-type TaValue = TaDirection | { [key in Responsive]?: TaDirection };
+type TextAlignDirection = "left" | "center" | "right";
+type TextAlignValue =
+  | TextAlignDirection
+  | { [key in Responsive]?: TextAlignDirection };
 
 export interface Corner {
   bottomLeft?: CornerStyle;
@@ -28,7 +30,7 @@ export interface BoxProps extends Base, SpacingProps {
   corner?: Corner;
   maxWidth?: "xs" | Size;
   radius?: Radius;
-  ta?: TaValue;
+  textAlign?: TextAlignValue;
 }
 
 const { padding, margin, nonSpacing } = extractSpacingProps(
@@ -41,7 +43,7 @@ const {
   corner,
   centered = false,
   maxWidth,
-  ta,
+  textAlign,
   class: className,
   ...rest
 } = nonSpacing;
@@ -53,17 +55,18 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
 const p = Object.keys(padding).length === 0 ? "md" : padding.p;
 const marginClasses = getSpacingClasses({ ...margin });
 const paddingClasses = getSpacingClasses({ ...padding, p });
-const taValue = typeof ta === "string" ? { base: ta } : ta;
+const textAlignValue =
+  typeof textAlign === "string" ? { base: textAlign } : textAlign;
 const classlist = [
   "naut-box",
   radius && `radius-${radius}`,
   centered && "centered",
   maxWidth && `max-w-${maxWidth}`,
-  taValue?.base && `ta-${taValue.base}`,
-  taValue?.sm && `sm-ta-${taValue.sm}`,
-  taValue?.md && `md-ta-${taValue.md}`,
-  taValue?.lg && `lg-ta-${taValue.lg}`,
-  taValue?.xl && `xl-ta-${taValue.xl}`,
+  textAlignValue?.base && `ta-${textAlignValue.base}`,
+  textAlignValue?.sm && `sm-ta-${textAlignValue.sm}`,
+  textAlignValue?.md && `md-ta-${textAlignValue.md}`,
+  textAlignValue?.lg && `lg-ta-${textAlignValue.lg}`,
+  textAlignValue?.xl && `xl-ta-${textAlignValue.xl}`,
   className,
   ...borderClasses,
   ...marginClasses,

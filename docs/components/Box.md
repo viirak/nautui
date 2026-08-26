@@ -11,7 +11,7 @@ Import from `@nautui/core`:
 import { Box } from "@nautui/core";
 ---
 
-<Box border="sm" radius="lg" p="lg" ta="center">
+<Box border="sm" radius="lg" p="lg" textAlign="center">
   Content
 </Box>
 ```
@@ -26,7 +26,7 @@ import { Box } from "@nautui/core";
 | `radius`   | `"sm" \| "md" \| "lg" \| "xl"`           | —        | Border radius (uses `radius-*` utility class).  |
 | `centered` | `boolean`                                | `false`  | Flex-center content; fills parent height.       |
 | `maxWidth` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"`   | —        | Constrain + center the box (`max-w-*` utility). |
-| `ta`       | `TaValue`                                | —        | Text alignment, optionally per breakpoint.       |
+| `textAlign` | `TextAlignValue` | — | Text alignment, optionally per breakpoint. |
 | `corner`   | `Corner`                                 | —        | Decorative corner marks.                         |
 | `class`    | `string`                                 | —        | Extra class names merged onto the element.       |
 
@@ -34,10 +34,10 @@ import { Box } from "@nautui/core";
 
 Accepts a full spec: `{ width, style, color, top, right, bottom, left, borderStyle, borderRadius }`. A plain string like `border="sm"` sets width only.
 
-### TaValue
+### TextAlignValue
 
 ```ts
-type TaValue =
+type TextAlignValue =
   | "left" | "center" | "right"
   | { base?: "left" | "center" | "right";
       sm?: "left" | "center" | "right";
