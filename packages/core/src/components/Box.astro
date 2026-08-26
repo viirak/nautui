@@ -12,10 +12,8 @@ import {
 import type { Base, Radius, Responsive, Size } from "../types";
 
 type CornerStyle = "diamond" | "square" | "circle" | "plus" | "x";
-type TextAlignDirection = "left" | "center" | "right";
-type TextAlignValue =
-  | TextAlignDirection
-  | { [key in Responsive]?: TextAlignDirection };
+type Direction = "left" | "center" | "right";
+type TextAlign = Direction | { [key in Responsive]?: Direction };
 
 export interface Corner {
   bottomLeft?: CornerStyle;
@@ -30,7 +28,7 @@ export interface BoxProps extends Base, SpacingProps {
   corner?: Corner;
   maxWidth?: "xs" | Size;
   radius?: Radius;
-  textAlign?: TextAlignValue;
+  textAlign?: TextAlign;
 }
 
 const { padding, margin, nonSpacing } = extractSpacingProps(
