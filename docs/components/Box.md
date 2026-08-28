@@ -11,7 +11,7 @@ Import from `@nautui/core`:
 import { Box } from "@nautui/core";
 ---
 
-<Box border="sm" radius="lg" p="lg" textAlign="center">
+<Box border="sm" radius="lg" p="lg" width={{ max: "sm" }} align={{ text: "center" }}>
   Content
 </Box>
 ```
@@ -25,8 +25,8 @@ import { Box } from "@nautui/core";
 | `border`   | `Border \| string`                       | —        | Border spec (see [createBorder](/docs/README.md)). A string sets `width`. |
 | `radius`   | `"sm" \| "md" \| "lg" \| "xl"`           | —        | Border radius (uses `radius-*` utility class).  |
 | `centered` | `boolean`                                | `false`  | Flex-center content; fills parent height.       |
-| `maxWidth` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"`   | —        | Constrain + center the box (`max-w-*` utility). |
-| `textAlign` | `TextAlignValue` | — | Text alignment, optionally per breakpoint. |
+| `align`     | `IAlign`                                     | —        | Text alignment, optionally per breakpoint.       |
+| `width`    | `IWidth`                                    | —        | Min/max width constraint (`min-w-*` / `max-w-*`). |
 | `corner`   | `Corner`                                 | —        | Decorative corner marks.                         |
 | `class`    | `string`                                 | —        | Extra class names merged onto the element.       |
 
@@ -34,19 +34,27 @@ import { Box } from "@nautui/core";
 
 Accepts a full spec: `{ width, style, color, top, right, bottom, left, borderStyle, borderRadius }`. A plain string like `border="sm"` sets width only.
 
-### TextAlignValue
+### IAlign
 
 ```ts
-type TextAlignValue =
-  | "left" | "center" | "right"
-  | { base?: "left" | "center" | "right";
-      sm?: "left" | "center" | "right";
-      md?: "left" | "center" | "right";
-      lg?: "left" | "center" | "right";
-      xl?: "left" | "center" | "right" };
+type Direction = "left" | "center" | "right";
+interface IAlign {
+  text?: Direction | { [key in Responsive]?: Direction };
+}
 ```
 
-Breakpoint keys map to the standard breakpoints (sm ≤817, md ≤1041, lg ≤1249, xl ≥1250).
+Accepts a flat `Direction` or a responsive object. Breakpoint keys map to the standard breakpoints (sm ≤817, md ≤1041, lg ≤1249, xl ≥1250).
+
+### IWidth
+
+```ts
+interface IWidth {
+  min?: Size;
+  max?: Size;
+}
+```
+
+Constrains the box width. `max` also centers the box via `margin-inline: auto`.
 
 ### Corner
 

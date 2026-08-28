@@ -13,7 +13,15 @@ import type { Base, Radius, Responsive, Size } from "../types";
 
 type CornerStyle = "diamond" | "square" | "circle" | "plus" | "x";
 type Direction = "left" | "center" | "right";
-type TextAlign = Direction | { [key in Responsive]?: Direction };
+
+export interface IAlign {
+  text?: Direction | { [key in Responsive]?: Direction };
+}
+
+export interface IWidth {
+  max?: Size;
+  min?: Size;
+}
 
 export interface Corner {
   bottomLeft?: CornerStyle;
@@ -23,12 +31,12 @@ export interface Corner {
 }
 
 export interface BoxProps extends Base, SpacingProps {
+  align?: IAlign;
   border?: Border;
   centered?: boolean;
   corner?: Corner;
-  maxWidth?: "xs" | Size;
   radius?: Radius;
-  textAlign?: TextAlign;
+  width?: IWidth;
 }
 
 const { padding, margin, nonSpacing } = extractSpacingProps(
@@ -40,8 +48,8 @@ const {
   radius,
   corner,
   centered = false,
-  maxWidth,
-  textAlign,
+  align,
+  width,
   class: className,
   ...rest
 } = nonSpacing;
@@ -53,13 +61,29 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
 const p = Object.keys(padding).length === 0 ? "md" : padding.p;
 const marginClasses = getSpacingClasses({ ...margin });
 const paddingClasses = getSpacingClasses({ ...padding, p });
-const textAlignValue =
-  typeof textAlign === "string" ? { base: textAlign } : textAlign;
+let textAlignValue:
+  | {
+      base?: Direction;
+      sm?: Direction;
+      md?: Direction;
+      lg?: Direction;
+      xl?: Direction;
+    }
+  | undefined;
+
+if (align?.text === undefined) {
+  textAlignValue = undefined;
+} else if (typeof align.text === "string") {
+  textAlignValue = { base: align.text };
+} else {
+  textAlignValue = align.text;
+}
 const classlist = [
   "naut-box",
   radius && `radius-${radius}`,
   centered && "centered",
-  maxWidth && `max-w-${maxWidth}`,
+  width?.max && `max-w-${width.max}`,
+  width?.min && `min-w-${width.min}`,
   textAlignValue?.base && `ta-${textAlignValue.base}`,
   textAlignValue?.sm && `sm-ta-${textAlignValue.sm}`,
   textAlignValue?.md && `md-ta-${textAlignValue.md}`,
@@ -173,6 +197,23 @@ const classlist = [
     &.max-w-xl {
       max-width: 1280px;
       margin-inline: auto;
+    }
+
+    /* min-width */
+    &.min-w-xs {
+      min-width: 480px;
+    }
+    &.min-w-sm {
+      min-width: 640px;
+    }
+    &.min-w-md {
+      min-width: 768px;
+    }
+    &.min-w-lg {
+      min-width: 1024px;
+    }
+    &.min-w-xl {
+      min-width: 1280px;
     }
 
     .naut-box__wrapper {
