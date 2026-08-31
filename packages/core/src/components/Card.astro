@@ -11,9 +11,11 @@ import {
 import type { Base, Radius } from "../types";
 
 export interface CardProps extends Base, PaddingProps {
+  badged?: boolean;
   border?: Border;
   fluid?: boolean;
   hover?:
+    | "light"
     | "surface"
     | "primary"
     | "outline"
@@ -31,6 +33,7 @@ export interface CardProps extends Base, PaddingProps {
     | "dark"
     | "primary"
     | "outline-primary"
+    | "outline-dark"
     | "rainbow";
 }
 
@@ -38,6 +41,7 @@ const { padding, nonSpacing } = extractSpacingProps(Astro.props as CardProps);
 
 const {
   class: className,
+  badged = false,
   border,
   shadow,
   radius,
@@ -58,6 +62,7 @@ const { borderClasses, borderColors } = createBorder(config);
     "naut-card",
     size && `size-${size}`,
     fluid && "fluid",
+    badged && "badged",
     variant !== "ghost" && `variant-${variant}`,
     hover && `hover-${hover}`,
     radius && `radius-${radius}`,
@@ -67,9 +72,10 @@ const { borderClasses, borderColors } = createBorder(config);
   ]}
   {...rest}
 >
-  <div class="naut-card--header"><slot name="header" /></div>
-  <div class:list={["naut-card--body", ...paddingClasses]}><slot /></div>
-  <div class="naut-card--footer"><slot name="footer" /></div>
+  {badged && <div class="naut-card__badge"><slot name="badge" /></div>}
+  <div class="naut-card__header"><slot name="header" /></div>
+  <div class:list={["naut-card__body", ...paddingClasses]}><slot /></div>
+  <div class="naut-card__footer"><slot name="footer" /></div>
 </div>
 
 <style define:vars={{ ...borderColors }}>
@@ -80,7 +86,6 @@ const { borderClasses, borderColors } = createBorder(config);
 
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     transition: 0.15s ease-in-out;
 
     &.size-sm:not(.fluid) {
@@ -100,15 +105,16 @@ const { borderClasses, borderColors } = createBorder(config);
       height: 100%;
     }
 
-    .naut-card--body {
+    .naut-card__body {
       position: relative;
+      overflow: hidden;
     }
 
-    .naut-card--header:empty {
+    .naut-card__header:empty {
       display: none;
     }
 
-    .naut-card--footer:empty {
+    .naut-card__footer:empty {
       display: none;
     }
 
@@ -146,7 +152,7 @@ const { borderClasses, borderColors } = createBorder(config);
 
     /* variant */
     &.variant-surface {
-      background-color: var(--naut-color-surface);
+      background-color: var(--naut-color-base-100);
     }
 
     &.variant-primary {
@@ -155,12 +161,12 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     &.variant-light {
-      background-color: var(--naut-color-light);
+      background-color: var(--naut-color-base-0);
     }
 
     &.variant-dark {
       color: var(--naut-color-base);
-      background-color: var(--naut-color-base-content);
+      background-color: var(--naut-color-content);
     }
 
     &.variant-outline-primary {
@@ -199,15 +205,19 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     &.hover-outline:hover {
-      border-color: var(--naut-color-border-outline);
+      border-color: var(--naut-color-border-strong);
     }
 
     &.hover-outline-primary:hover {
       border-color: var(--naut-color-primary);
     }
 
+    &.hover-light:hover {
+      background-color: var(--naut-color-base-0);
+    }
+
     &.hover-surface:hover {
-      background-color: var(--naut-color-base-100);
+      background-color: var(--naut-color-base-200);
     }
 
     &.hover-elevate:hover {
@@ -223,6 +233,16 @@ const { borderClasses, borderColors } = createBorder(config);
     &.hover-elevate-xl:hover {
       box-shadow: var(--naut-shadow-xl);
       transform: translateY(-10px);
+    }
+
+    &.badged .naut-card__body {
+      margin-top: 1rem;
+    }
+
+    .naut-card__badge {
+      position: absolute;
+      top: -0.9rem;
+      right: 1.25rem;
     }
   }
 </style>

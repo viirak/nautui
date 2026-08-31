@@ -1,0 +1,246 @@
+---
+import {
+  Badge,
+  Box,
+  Button,
+  Card,
+  Grid,
+  GridItem,
+  Group,
+  Image,
+  Section,
+  Text,
+  Title,
+} from "@nautui/core";
+---
+
+<Section border={{ top: "md" }}>
+  <Title>Card</Title>
+  <Box mb="md" border="md">
+    <Grid columns={3} border="md">
+      <GridItem>
+        <Card>
+          <Badge variant="flat" iconOnly>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <title>Weather</title>
+              <path d="M12 2v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="M20 12h2" />
+              <path d="m19.07 4.93-1.41 1.41" />
+              <path d="M15.947 12.65a4 4 0 0 0-5.925-4.128" />
+              <path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" />
+            </svg>
+          </Badge>
+          <Title level={3} mt="md">Continuous Observation</Title>
+          <Text>
+            Mermind connects to your store and surrounding tools and monitors
+            your operations without requiring manual checks or dashboard
+            reviews. It works in the background, continuously, so you don't have
+            to.
+          </Text>
+
+          <Group justify="end">
+            <Button href="/about" variant="ghost">
+              <span>Learn More</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-right-icon lucide-arrow-right"
+              >
+                <title>Arrow Right</title>
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </Button>
+          </Group>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card>
+          <Badge variant="flat" iconOnly>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-haze-icon lucide-haze"
+            >
+              <title>Haze</title>
+              <path d="m5.2 6.2 1.4 1.4" />
+              <path d="M2 13h2" />
+              <path d="M20 13h2" />
+              <path d="m17.4 7.6 1.4-1.4" />
+              <path d="M22 17H2" />
+              <path d="M22 21H2" />
+              <path d="M16 13a4 4 0 0 0-8 0" />
+              <path d="M12 5V2.5" />
+            </svg>
+          </Badge>
+          <Title level={3} mt="md">Pattern Understanding</Title>
+          <Text>
+            Over time, Mermind learns what normal looks like for your specific
+            store — your products, your workflows, your integrations. When
+            something deviates from that baseline, it knows — even when no
+            threshold has been crossed.
+          </Text>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card>
+          <Badge variant="flat" iconOnly>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-crown-icon lucide-crown"
+            >
+              <title>Crown</title>
+              <path
+                d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"
+              />
+              <path d="M5 21h14" />
+            </svg>
+          </Badge>
+          <Title level={3} mt="md">Pattern Understanding</Title>
+          <Text>
+            Over time, Mermind learns what normal looks like for your specific
+            store — your products, your workflows, your integrations. When
+            something deviates from that baseline, it knows — even when no
+            threshold has been crossed.
+          </Text>
+        </Card>
+      </GridItem>
+    </Grid>
+  </Box>
+  <Box border="md">
+    <Grid columns={3}>
+      <GridItem>
+        <Card shadow="sm" radius="sm" border="md">
+          <slot slot="header">
+            <Image
+              fluid
+              src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+              alt="Example"
+            />
+          </slot>
+          <Title level={3}>Card with Small Border, Radius, and Shadow</Title>
+          <Text>
+            Over time, Mermind learns what normal looks like for your specific
+            store — your products, your workflows, your integrations. When
+            something deviates from that baseline, it knows — even when no
+            threshold has been crossed.
+          </Text>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card shadow="md" radius="md" border="md">
+          <slot slot="header">
+            <Image
+              fluid
+              src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+              alt="Example"
+            />
+          </slot>
+          <Title level={3}>Card with Medium Border, Radius, and Shadow</Title>
+          <Text>
+            Over time, Mermind learns what normal looks like for your specific
+            store — your products, your workflows, your integrations. When
+            something deviates from that baseline, it knows — even when no
+            threshold has been crossed.
+          </Text>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card shadow="lg" radius="lg" border="md">
+          <slot slot="header">
+            <Image
+              fluid
+              src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+              alt="Example"
+            />
+          </slot>
+          <Title level={3}>Card with Large Shadow and Radius</Title>
+          <Text>
+            Over time, Mermind learns what normal looks like for your specific
+            store — your products, your workflows, your integrations. When
+            something deviates from that baseline, it knows — even when no
+            threshold has been crossed.
+          </Text>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card variant="rainbow">
+          <Title mt="0" level={3}>Card with Rainbow Variant</Title>
+          <Text>
+            Over time, Mermind learns what normal looks like for your specific
+            store — your products, your workflows, your integrations. When
+            something deviates from that baseline, it knows — even when no
+            threshold has been crossed.
+          </Text>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card variant="light">
+          <Title mt="0" level={3}>Card with Light Variant</Title>
+          <Text>
+            Over time, Mermind learns what normal looks like for your specific
+            store — your products, your workflows, your integrations. When
+            something deviates from that baseline, it knows — even when no
+            threshold has been crossed.
+          </Text>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card variant="surface" hover="light">
+          <Title mt="0" level={3}>Card with Surface Variant</Title>
+          <Text>
+            Over time, Mermind learns what normal looks like for your specific
+            store — your products, your workflows, your integrations. When
+            something deviates from that baseline, it knows — even when no
+            threshold has been crossed.
+          </Text>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card variant="surface" hover="light" badged>
+          <Badge slot="badge" variant="solid">Most Popular</Badge>
+          <Title mt="0" level={3}>Card with Badge</Title>
+          <Text>
+            Over time, Mermind learns what normal looks like for your specific
+            store — your products, your workflows, your integrations. When
+            something deviates from that baseline, it knows — even when no
+            threshold has been crossed.
+          </Text>
+        </Card>
+      </GridItem>
+    </Grid>
+  </Box>
+</Section>

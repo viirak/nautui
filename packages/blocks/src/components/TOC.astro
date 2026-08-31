@@ -1,0 +1,183 @@
+---
+import type { MarkdownHeading } from "astro";
+import { uid } from "../lib/uid";
+import type { Base } from "../types";
+
+export interface TOCProps extends Base {
+  headings: MarkdownHeading[];
+  sticky?: boolean;
+  title?: string;
+  top?: { offset: number; slug: string; label: string };
+}
+
+const {
+  class: className,
+  title = "On this page",
+  headings = [],
+  sticky = true,
+  top,
+  ...rest
+} = Astro.props as TOCProps;
+const allHeadings = top
+  ? [{ depth: 2 as const, slug: top.slug, text: top.label }, ...headings]
+  : headings;
+const offset = top?.offset ? `${top.offset}px` : "90px";
+const offsetNumber = top?.offset ? top.offset : 90;
+const tocId = uid("naut-toc");
+---
+
+<div
+  id={tocId}
+  class:list={["naut-toc", sticky && "sticky", className]}
+  {...rest}
+>
+  <h2 class="naut-toc__title">{title}</h2>
+  <div class="naut-toc__list-wrapper">
+    <span class="naut-toc__indicator" aria-hidden="true" />
+    <ul class="naut-toc__list">
+      {allHeadings.map((heading) => (
+        <li class:list={["naut-toc__list-item"]}>
+          <a href={`#${heading.slug}`} class:list={["naut-toc__link", `depth-${heading.depth}`]}>{heading.text}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style define:vars={{ nautTocOffset: offset }}>
+  .naut-toc {
+    &.sticky {
+      position: sticky;
+      top: var(--nautTocOffset);
+    }
+  }
+
+  .naut-toc__title {
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--naut-color-content);
+  }
+
+  .naut-toc__list-wrapper {
+    position: relative;
+  }
+
+  .naut-toc__list {
+    padding: 0;
+    list-style: none;
+    border-left: 1px solid var(--naut-color-border);
+  }
+
+  .naut-toc__indicator {
+    position: absolute;
+    top: 0;
+    left: -0.75px;
+    width: 2px;
+    pointer-events: none;
+    background: var(--naut-color-border-strong);
+    border-radius: 999px;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .naut-toc__link {
+    display: block;
+    padding: 0 1rem;
+    margin: 0.5rem 0;
+    font-size: small;
+    color: var(--naut-color-content);
+    text-decoration: none;
+    opacity: 0.5;
+
+    &.depth-3 {
+      &::before {
+        content: "— ";
+        opacity: 0.5;
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+      transition: color 0.2s ease;
+    }
+
+    &.current {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ headings: allHeadings, offsetNumber, tocId }}>
+  function updateIndicator(link) {
+    const wrapper = document.querySelector(`#${tocId} .naut-toc__list-wrapper`);
+    const indicator = wrapper?.querySelector(".naut-toc__indicator");
+    if (!(indicator && link)) return;
+
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+
+    indicator.style.height = `${link.offsetHeight}px`;
+    indicator.style.transform = `translateY(${linkRect.top - wrapperRect.top}px)`;
+  }
+
+  function setCurrent(entries) {
+    const allLinks = document.querySelectorAll(`#${tocId} .naut-toc__link`);
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        for (const link of allLinks) {
+          link.classList.remove("current");
+        }
+        const targetLink = document.querySelector(
+          `#${tocId} a[href="#${entry.target.id}"].naut-toc__link`
+        );
+        if (targetLink) {
+          targetLink.classList.add("current");
+          updateIndicator(targetLink);
+        }
+      }
+    }
+  }
+
+  function initTOC() {
+    const slugs = headings.map((h) => h.slug);
+    if (slugs.length === 0) return;
+
+    const headingElements = document.querySelectorAll(
+      slugs.map((s) => `#${s}`).join(",")
+    );
+    if (headingElements.length === 0) return;
+
+    const observer = new IntersectionObserver(setCurrent, {
+      rootMargin: `-${offsetNumber}px 0px -50% 0px`,
+      threshold: 0,
+    });
+
+    for (const el of headingElements) {
+      el.style.scrollMarginTop = `${offsetNumber}px`;
+      observer.observe(el);
+    }
+
+    // Position indicator at first link before observer fires
+    const firstLink = document.querySelector(`#${tocId} .naut-toc__link`);
+    if (firstLink) updateIndicator(firstLink);
+  }
+
+  function handleClick(e) {
+    const link = e.target.closest(".naut-toc__link");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (!href?.startsWith("#")) return;
+    e.preventDefault();
+    const target = document.getElementById(href.slice(1));
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  const toc = document.getElementById(tocId);
+  if (toc) toc.addEventListener("click", handleClick);
+
+  initTOC();
+  document.addEventListener("astro:after-swap", initTOC);
+</script>

@@ -1,0 +1,42 @@
+---
+import { Accordion, AccordionItem, Box } from "@nautui/core";
+---
+
+<Box border="md">
+  <Accordion variant="default">
+    <AccordionItem title="Accordion Item 1">
+      You are completely right to question that—a hidden input (hidden or
+      display: none) cannot actually receive a native click event from a user.
+      The trick is that when a user clicks a, the browser automatically
+      replicates and triggers a simulated click event on the associated under
+      the hood. However, because it is a simulated event, tracking it this way
+      can still cause inconsistent timing issues across different browser layout
+      engines. To make the toggle 100% immediate and lag-free while keeping the
+      clean click event on the .accordion-header label, we can store the
+      open/close state using a standard HTML data-state attribute. This bypasses
+      the radio button input processing delay entirely.
+    </AccordionItem>
+    <AccordionItem size="lg" title="Accordion Item 2">
+      WordPress 7.0 improves the accuracy of image loading prioritization,
+      preventing hidden images in navigation overlays or interactive blocks from
+      degrading the loading of critical resources. On-demand block stylesheet
+      loading in classic themes is more reliable, and the ability is added for
+      scripts to depend on script modules to reduce render-blocking.
+    </AccordionItem>
+    <AccordionItem title="WordPress accessibility">
+      WordPress continues to polish accessibility across WordPress Core and
+      Gutenberg, advancing the goals to meet accessibility standards. WordPress
+      7.0 includes fixes across the platform, improving media management,
+      usability for voice control, and improvements to color contrast with the
+      new admin color scheme. The editor ships with new blocks and improvements
+      to editor navigation and interaction.
+    </AccordionItem>
+    <AccordionItem title="Accordion Item 4">
+      WordPress 7.0 improves the accuracy of image loading prioritization,
+      preventing hidden images in navigation overlays or interactive blocks from
+      degrading the loading of critical resources. On-demand block stylesheet
+      loading in classic themes is more reliable, and the ability is added for
+      scripts to depend on script modules to reduce render-blocking.
+    </AccordionItem>
+  </Accordion>
+</Box>

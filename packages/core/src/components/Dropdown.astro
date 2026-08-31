@@ -1,0 +1,257 @@
+---
+import type { Base } from "../types";
+import "../styles/radius.css";
+import "../styles/shadow.css";
+import type { ButtonProps } from "./Button.astro";
+import Button from "./Button.astro";
+
+type ToggleButtonProps = Omit<ButtonProps, "onclick">;
+type DropdownAlign = "start" | "center" | "end";
+type DropdownSide = "top" | "bottom" | "left" | "right";
+type DropdownOffset = "xs" | "sm" | "md" | "lg";
+
+export interface DropdownProps extends Base {
+  align?: DropdownAlign;
+  button?: ToggleButtonProps;
+  hover?: boolean;
+  offset?: DropdownOffset;
+  side?: DropdownSide;
+  zi?: number;
+}
+
+const {
+  class: className,
+  button,
+  align = "start",
+  side = "bottom",
+  hover = false,
+  offset,
+  zi = 100,
+  ...rest
+} = Astro.props as DropdownProps;
+
+const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
+---
+
+<details
+  class:list={[
+    "naut-dropdown",
+    hover && "hoverable",
+    className,
+  ]}
+  {...rest}
+>
+  <summary class="naut-dropdown__trigger">
+    {button ? (
+      <Button square variant="ghost" {...button} />
+    ) : (
+      <slot name="trigger" />
+    )}
+  </summary>
+  <div
+    class:list={["naut-dropdown__content", `side--${side}`, `align--${align}`]}
+  >
+    <slot />
+  </div>
+</details>
+<script>
+  // Close any open dropdown when clicking outside of it
+  document.addEventListener("pointerdown", (event) => {
+    const target = event.target as Node;
+    for (const dropdown of Array.from(
+      document.querySelectorAll<HTMLDetailsElement>(
+        "details.naut-dropdown[open]"
+      )
+    )) {
+      if (!dropdown.contains(target)) {
+        dropdown.removeAttribute("open");
+      }
+    }
+  });
+</script>
+<script>
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const KEYFRAME_IN = [
+    { opacity: 0, scale: "0.96" },
+    { opacity: 1, scale: "1" },
+  ];
+  const KEYFRAME_OUT = [
+    { opacity: 1, scale: "1" },
+    { opacity: 0, scale: "0.96" },
+  ];
+
+  function play(content: HTMLElement, keyframes: Keyframe[], duration: number) {
+    for (const animation of content.getAnimations()) {
+      animation.cancel();
+    }
+    content.animate(keyframes, {
+      duration,
+      easing: "ease",
+      fill: "forwards",
+    });
+  }
+
+  for (const summary of Array.from(
+    document.querySelectorAll<HTMLElement>(
+      "details.naut-dropdown:not(.hoverable) > summary"
+    )
+  )) {
+    const dropdown = summary.parentElement as HTMLDetailsElement;
+    const content = dropdown.querySelector<HTMLElement>(
+      ".naut-dropdown__content"
+    );
+    if (!content || reducedMotion.matches) continue;
+
+    summary.addEventListener("click", () => {
+      const opening = !dropdown.open;
+      requestAnimationFrame(() => {
+        play(
+          content,
+          opening ? KEYFRAME_IN : KEYFRAME_OUT,
+          opening ? 200 : 150
+        );
+      });
+    });
+  }
+
+  for (const dropdown of Array.from(
+    document.querySelectorAll<HTMLDetailsElement>(
+      "details.naut-dropdown.hoverable"
+    )
+  )) {
+    const content = dropdown.querySelector<HTMLElement>(
+      ".naut-dropdown__content"
+    );
+    if (!content) continue;
+    let closeTimer = 0;
+    let closing = false;
+
+    dropdown.addEventListener("pointerenter", () => {
+      window.clearTimeout(closeTimer);
+      if (!closing && dropdown.open) return;
+      closing = false;
+      requestAnimationFrame(() => {
+        if (!dropdown.open) {
+          dropdown.setAttribute("open", "");
+        }
+        if (!reducedMotion.matches) {
+          play(content, KEYFRAME_IN, 200);
+        }
+      });
+    });
+
+    dropdown.addEventListener("pointerleave", () => {
+      window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => {
+        if (dropdown.matches(":hover")) return;
+        closing = true;
+        requestAnimationFrame(() => {
+          if (!reducedMotion.matches) {
+            play(content, KEYFRAME_OUT, 150);
+          }
+          window.setTimeout(() => {
+            if (!dropdown.matches(":hover") && dropdown.open) {
+              dropdown.removeAttribute("open");
+            }
+          }, 160);
+        });
+      }, 150);
+    });
+  }
+</script>
+
+<style
+  define:vars={{ nautDropdownZIndex: zi, nautDropdownOffset: offsetValue }}
+>
+  .naut-dropdown {
+    position: relative;
+    display: inline-block;
+
+    .naut-dropdown__trigger {
+      display: inline-flex;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .naut-dropdown__content {
+      position: absolute;
+      z-index: var(--nautDropdownZIndex);
+      visibility: hidden;
+      min-width: 15rem;
+      padding: var(--naut-spacing-xs);
+      content-visibility: visible;
+      background: var(--naut-color-base);
+      border: 1px solid var(--naut-color-border);
+      border-radius: var(--naut-border-radius-md);
+      box-shadow: var(--naut-shadow-md);
+      opacity: 0;
+      scale: 0.96;
+      transition:
+        opacity 0.2s ease,
+        scale 0.2s ease,
+        visibility 0.2s;
+
+      /* side: which direction the content opens */
+      &.side--top {
+        right: auto;
+        bottom: calc(100% + var(--nautDropdownOffset));
+        left: 0;
+        transform-origin: bottom;
+      }
+
+      &.side--bottom {
+        top: calc(100% + var(--nautDropdownOffset));
+        right: auto;
+        left: 0;
+        transform-origin: top;
+      }
+
+      &.side--left {
+        top: 0;
+        right: calc(100% + var(--nautDropdownOffset));
+        bottom: auto;
+        left: auto;
+        transform-origin: right;
+      }
+
+      &.side--right {
+        top: 0;
+        right: auto;
+        bottom: auto;
+        left: calc(100% + var(--nautDropdownOffset));
+        transform-origin: left;
+      }
+
+      &.align--center {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &.align--end {
+        right: 0;
+        left: auto;
+      }
+    }
+
+    &[open]:not(.hoverable) .naut-dropdown__content {
+      visibility: visible;
+      opacity: 0;
+      scale: 0.96;
+      transition: visibility 0.2s;
+    }
+
+    &.hoverable[open] .naut-dropdown__content,
+    &.hoverable:hover .naut-dropdown__content {
+      visibility: visible;
+      opacity: 1;
+      scale: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &[open] .naut-dropdown__content {
+        opacity: 1;
+        scale: 1;
+      }
+    }
+  }
+</style>

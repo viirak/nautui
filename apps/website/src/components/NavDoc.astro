@@ -1,0 +1,87 @@
+---
+import { Camera } from "@lucide/astro";
+import { Menu, MenuGroup, MenuItem } from "@nautui/core";
+
+const trailingSlash = /\/$/;
+const stripTrailing = (s: string) => s.replace(trailingSlash, "");
+const currentPath = stripTrailing(Astro.url.pathname);
+
+const generalItems = [
+  {
+    title: "Getting Started",
+    href: "/docs",
+  },
+  {
+    title: "Installation",
+    href: "/docs/installation",
+  },
+  {
+    title: "Colors",
+    href: "/docs/colors",
+  },
+  {
+    title: "Agent Introduction",
+    href: "/docs/introduction-to-agent",
+  },
+  {
+    title: "Mastra Memory",
+    href: "/docs/mastra-memory",
+  },
+];
+const componentItems = [
+  {
+    title: "Button",
+    href: "/docs/components/button",
+  },
+  {
+    title: "Badge",
+    href: "/docs/components/badge",
+  },
+  {
+    title: "Accordion",
+    href: "/docs/components/accordion",
+  },
+  {
+    title: "Grid",
+    href: "/docs/components/grid",
+  },
+];
+
+const fundamentalItems = [
+  {
+    title: "Project Structure",
+    href: "/docs/components/button",
+  },
+  {
+    title: "Manual Installation",
+    href: "/docs/components/manual-installation",
+  },
+  {
+    title: "Configure Tools",
+    href: "/docs/components/configure-tools",
+  },
+];
+
+const navItems = {
+  general: { title: "General", items: generalItems },
+  components: { title: "Components", items: componentItems },
+  fundamentals: { title: "Fundamentals", items: fundamentalItems },
+};
+---
+
+<Menu>
+  {Object.entries(navItems).map(([key, { title, items }]) => (
+      <MenuGroup collapsible key={key} label={title} line={false}>
+        <Camera size="20" slot="icon" />
+        {items.map(({ title, href }) => (
+          <MenuItem
+            active={currentPath === stripTrailing(href)}
+            activeVariant="primary"
+            href={href}
+            key={href}>
+            {title}
+          </MenuItem>
+        ))}
+      </MenuGroup>
+    ))}
+</Menu>

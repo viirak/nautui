@@ -9,9 +9,19 @@ import {
   getSpacingClasses,
   SpacingProps,
 } from "../lib/spacing";
-import type { Base, Radius } from "../types";
+import type { Base, Radius, Responsive, Size } from "../types";
 
 type CornerStyle = "diamond" | "square" | "circle" | "plus" | "x";
+type Direction = "left" | "center" | "right";
+
+export interface IAlign {
+  text?: Direction | { [key in Responsive]?: Direction };
+}
+
+export interface IWidth {
+  max?: Size;
+  min?: Size;
+}
 
 export interface Corner {
   bottomLeft?: CornerStyle;
@@ -21,10 +31,12 @@ export interface Corner {
 }
 
 export interface BoxProps extends Base, SpacingProps {
+  align?: IAlign;
   border?: Border;
   centered?: boolean;
   corner?: Corner;
   radius?: Radius;
+  width?: IWidth;
 }
 
 const { padding, margin, nonSpacing } = extractSpacingProps(
@@ -36,6 +48,8 @@ const {
   radius,
   corner,
   centered = false,
+  align,
+  width,
   class: className,
   ...rest
 } = nonSpacing;
@@ -47,10 +61,34 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
 const p = Object.keys(padding).length === 0 ? "md" : padding.p;
 const marginClasses = getSpacingClasses({ ...margin });
 const paddingClasses = getSpacingClasses({ ...padding, p });
+let textAlignValue:
+  | {
+      base?: Direction;
+      sm?: Direction;
+      md?: Direction;
+      lg?: Direction;
+      xl?: Direction;
+    }
+  | undefined;
+
+if (align?.text === undefined) {
+  textAlignValue = undefined;
+} else if (typeof align.text === "string") {
+  textAlignValue = { base: align.text };
+} else {
+  textAlignValue = align.text;
+}
 const classlist = [
   "naut-box",
   radius && `radius-${radius}`,
   centered && "centered",
+  width?.max && `max-w-${width.max}`,
+  width?.min && `min-w-${width.min}`,
+  textAlignValue?.base && `ta-${textAlignValue.base}`,
+  textAlignValue?.sm && `sm-ta-${textAlignValue.sm}`,
+  textAlignValue?.md && `md-ta-${textAlignValue.md}`,
+  textAlignValue?.lg && `lg-ta-${textAlignValue.lg}`,
+  textAlignValue?.xl && `xl-ta-${textAlignValue.xl}`,
   className,
   ...borderClasses,
   ...marginClasses,
@@ -64,7 +102,7 @@ const classlist = [
   {corner?.bottomLeft && <span class:list={["corner", "bottom-left", corner.bottomLeft]} />}
   <slot name="background" />
   <slot name="before" />
-  <div class:list={["naut-box--wrapper", ...paddingClasses]}><slot /></div>
+  <div class:list={["naut-box__wrapper", ...paddingClasses]}><slot /></div>
   <slot name="after" />
 </div>
 
@@ -80,7 +118,100 @@ const classlist = [
       height: 100%;
     }
 
-    .naut-box--wrapper {
+    /* text-align */
+    &.ta-left {
+      text-align: left;
+    }
+    &.ta-center {
+      text-align: center;
+    }
+    &.ta-right {
+      text-align: right;
+    }
+
+    @media (max-width: 817px) {
+      &.sm-ta-left {
+        text-align: left;
+      }
+      &.sm-ta-center {
+        text-align: center;
+      }
+      &.sm-ta-right {
+        text-align: right;
+      }
+    }
+
+    @media (min-width: 818px) and (max-width: 1041px) {
+      &.md-ta-left {
+        text-align: left;
+      }
+      &.md-ta-center {
+        text-align: center;
+      }
+      &.md-ta-right {
+        text-align: right;
+      }
+    }
+
+    @media (min-width: 1042px) and (max-width: 1249px) {
+      &.lg-ta-left {
+        text-align: left;
+      }
+      &.lg-ta-center {
+        text-align: center;
+      }
+      &.lg-ta-right {
+        text-align: right;
+      }
+    }
+
+    @media (min-width: 1250px) {
+      &.xl-ta-left {
+        text-align: left;
+      }
+      &.xl-ta-center {
+        text-align: center;
+      }
+      &.xl-ta-right {
+        text-align: right;
+      }
+    }
+
+    /* max-width */
+    &.max-w-xs {
+      max-width: 480px;
+    }
+    &.max-w-sm {
+      max-width: 640px;
+    }
+    &.max-w-md {
+      max-width: 768px;
+    }
+    &.max-w-lg {
+      max-width: 1024px;
+    }
+    &.max-w-xl {
+      max-width: 1280px;
+    }
+
+    /* min-width */
+    &.min-w-xs {
+      min-width: 480px;
+    }
+    &.min-w-sm {
+      min-width: 640px;
+    }
+    &.min-w-md {
+      min-width: 768px;
+    }
+    &.min-w-lg {
+      min-width: 1024px;
+    }
+    &.min-w-xl {
+      min-width: 1280px;
+    }
+
+    .naut-box__wrapper {
       position: relative;
       overflow: hidden;
     }

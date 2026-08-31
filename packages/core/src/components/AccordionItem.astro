@@ -1,4 +1,5 @@
 ---
+import { uid } from "../lib/uid";
 import type { Base } from "../types";
 import Text from "./Text.astro";
 
@@ -16,7 +17,7 @@ const {
   ...rest
 } = Astro.props as AccordionItemProps;
 
-const uniqueId = Math.random().toString(36).slice(2, 9);
+const uniqueId = uid("naut-accordion");
 ---
 
 <div
@@ -124,6 +125,7 @@ const uniqueId = Math.random().toString(36).slice(2, 9);
     .accordion-content {
       max-height: 0;
       overflow: hidden;
+      color: var(--naut-color-content);
       transition: max-height 0.3s ease-in-out;
 
       .content-inner {
@@ -160,7 +162,7 @@ const uniqueId = Math.random().toString(36).slice(2, 9);
 
 <script>
   const headers = document.querySelectorAll(".accordion-header");
-  for (const header of headers) {
+  for (const header of Array.from(headers) as HTMLElement[]) {
     header.addEventListener("click", (event) => {
       const radio = header.previousElementSibling as HTMLInputElement;
       if (radio?.checked) {

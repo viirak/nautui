@@ -7,15 +7,22 @@ interface GradientProps {
   type: "linear" | "radial";
 }
 
+interface MaskProps {
+  position?: "top" | "bottom" | "center" | "left" | "right";
+  shape: "radial";
+  visibility?: number;
+}
+
 export interface BackgroundProps {
   color?: string;
   gradient?: GradientProps;
   image?: string;
+  mask?: MaskProps;
   opacity?: number;
   pattern?: PatternProps;
 }
 
-const { color, image, pattern, gradient, opacity } =
+const { color, image, mask, pattern, gradient, opacity } =
   Astro.props as BackgroundProps;
 const backgroundColor = color || "transparent";
 const backgroundImage = image ? `url("${image}")` : undefined;
@@ -24,14 +31,27 @@ const backgroundPosition = image ? "center" : undefined;
 const backgroundRepeat = image ? "no-repeat" : undefined;
 const backgroundOpacity = opacity || 1;
 const backgroundPattern = getGradientPattern(pattern);
-const backgroundGradient = gradient
-  ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
+const backgroundGradient = (() => {
+  if (!gradient) return;
+  return gradient.type === "radial"
+    ? `radial-gradient(circle, ${gradient.colors.join(", ")})`
+    : `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`;
+})();
+const maskPosition = {
+  top: "50% 0%",
+  bottom: "50% 100%",
+  center: "50% 50%",
+  left: "0% 50%",
+  right: "100% 50%",
+}[mask?.position ?? "top"];
+const backgroundMask = mask
+  ? `radial-gradient(70% 60% at ${maskPosition}, rgb(0 0 0 / ${mask.visibility ?? 1}) 30%, transparent 75%)`
   : undefined;
 ---
 
-<div class:list={["naut-background"]}>
+<div class:list={["naut-background", mask && "mask"]}>
   {gradient && <div class:list={["naut-background-gradient", gradient.type]}></div>}
-  {pattern && <div class:list={["naut-background-pattern", pattern.type]}></div>}
+  {pattern && <div class:list={["naut-background-pattern", pattern.style]}></div>}
   <slot />
 </div>
 
@@ -44,7 +64,8 @@ const backgroundGradient = gradient
     backgroundRepeat,
     backgroundOpacity,
     backgroundPattern,
-    backgroundGradient
+    backgroundGradient,
+    backgroundMask
   }}
 >
   .naut-background {
@@ -57,6 +78,11 @@ const backgroundGradient = gradient
     background-position: var(--backgroundPosition);
     background-size: var(--backgroundSize);
     opacity: var(--backgroundOpacity);
+
+    &.mask {
+      -webkit-mask-image: var(--backgroundMask);
+      mask-image: var(--backgroundMask);
+    }
   }
 
   .naut-background-pattern {

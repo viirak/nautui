@@ -11,7 +11,14 @@ export interface TitleProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
   gradient?: { colors: string[]; deg?: number };
   level?: 1 | 2 | 3 | 4 | 5 | 6;
-  size?: "default" | "display" | "display-lg" | "display-xl" | "display-xxl";
+  size?:
+    | "default"
+    | "display"
+    | "display-sm"
+    | "display-md"
+    | "display-lg"
+    | "display-xl"
+    | "display-xxl";
 }
 
 const { spacing, nonSpacing } = extractSpacingProps(Astro.props as TitleProps);
@@ -51,7 +58,9 @@ const gradientBg = gradient
 
 <style define:vars={{ gradientBg }}>
   .naut-title {
+    font-family: var(--naut-font-display);
     font-weight: bold;
+    color: var(--naut-color-content);
 
     &.align-left {
       text-align: left;
@@ -70,39 +79,43 @@ const gradientBg = gradient
     }
 
     &.l-1 {
-      font-size: 2.5rem;
-      line-height: calc(2.05rem * var(--naut-line-height-ratio));
+      font-size: clamp(2rem, 2.5vw + 1rem, 2.5rem);
+      line-height: clamp(2.5rem, 3.5vw + 1rem, 3.1rem);
     }
 
     &.l-2 {
-      font-size: 1.8rem;
-      line-height: calc(1.45rem * var(--naut-line-height-ratio));
+      font-size: clamp(1.4rem, 2vw + 1rem, 1.8rem);
+      line-height: clamp(2.15rem, 2.25vw + 1rem, 2.25rem);
     }
 
     &.l-3 {
-      font-size: 1.6rem;
-      line-height: calc(1.3rem * var(--naut-line-height-ratio));
+      font-size: clamp(1.2rem, 1.5vw + 1rem, 1.45rem);
+      line-height: clamp(1.8rem, 1.75vw + 1rem, 1.8rem);
     }
 
     &.l-4 {
-      font-size: 1.5rem;
-      line-height: calc(1.25rem * var(--naut-line-height-ratio));
+      font-size: clamp(1.1rem, 1.25vw + 1rem, 1.35rem);
+      line-height: clamp(1.6rem, 1.5vw + 1rem, 1.6rem);
     }
 
     &.l-5 {
-      font-size: 1.3rem;
-      line-height: calc(1.085rem * var(--naut-line-height-ratio));
+      font-size: clamp(1rem, 1vw + 1rem, 1.25rem);
+      line-height: clamp(1.4rem, 1.25vw + 1rem, 1.4rem);
     }
 
     &.l-6 {
-      font-size: 1.2rem;
-      line-height: calc(1.025rem * var(--naut-line-height-ratio));
+      font-size: clamp(1rem, 0.75vw + 1rem, 1.2rem);
+      line-height: clamp(1.3rem, 1vw + 1rem, 1.3rem);
     }
 
-    /* Size display: ;*/
     &.size-display-sm {
       font-size: clamp(2rem, 2.2vw + 1rem, 2.8rem);
       line-height: clamp(2.5rem, 3.2vw + 1rem, 3.5rem);
+    }
+
+    &.size-display-md {
+      font-size: clamp(2.1rem, 2.4vw + 1rem, 3rem);
+      line-height: clamp(2.6rem, 3.2vw + 1rem, 3.6rem);
     }
 
     &.size-display {

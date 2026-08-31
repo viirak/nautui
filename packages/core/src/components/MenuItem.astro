@@ -1,93 +1,150 @@
 ---
-import type { Base } from "../types";
+import type { Base, Radius, Size } from "../types";
+import "../styles/radius.css";
 
 export interface MenuItemProps extends Base {
   active?: boolean;
-  color?: "text" | "link" | "dimmed";
+  activeVariant?: "link" | "primary" | "surface";
+  dimmed?: boolean;
   href: string;
+  radius?: Radius;
+  size?: Size;
 }
 
 const {
   class: className,
   active = false,
-  color = "text",
+  activeVariant,
+  radius = "sm",
+  dimmed = false,
+  size = "md",
   href,
   ...rest
 } = Astro.props as MenuItemProps;
 
 const classList = [
-  "naut-menu-item",
+  "naut-menu-item__link",
   active && "active",
-  color !== "text" && `color-${color}`,
+  activeVariant && `active-${activeVariant}`,
+  dimmed && "dimmed",
+  radius && `radius-${radius}`,
+  size && `size-${size}`,
   className,
 ];
 ---
 
-<li class="naut-menu__list-item">
-  <a href={href} class:list={classList} {...rest}>
-    <span class="naut-menu-item--left"><slot name="before" /></span>
-    <span class="naut-menu-item--main"><slot /></span>
-    <span class="naut-menu-item--right"><slot name="after" /></span>
-  </a>
+<li class="naut-menu-item">
+  {href && <a href={href} class:list={classList} {...rest}>
+    <span class="naut-menu-item__left"><slot name="before" /></span>
+    <span class="naut-menu-item__main"><slot /></span>
+    <span class="naut-menu-item__right"><slot name="after" /></span>
+  </a>}
+  {!href && <slot />}
+  <slot name="sub" />
 </li>
 
 <style>
   .naut-menu-item {
+    position: relative;
     display: flex;
-    align-items: center;
-    padding: 0.5rem;
-    font-size: var(--naut-font-size-md);
-    color: var(--naut-color-content);
-    text-wrap: nowrap;
-    text-decoration: none;
-    cursor: pointer;
 
-    &:hover {
-      color: var(--naut-color-primary);
-      background-color: var(--naut-color-base-100);
-      opacity: 1;
+    &::before {
+      position: absolute;
+      top: 0.5rem;
+      left: -8px;
+      width: 2px;
+      height: calc(100% - 1rem);
+      pointer-events: none;
+      content: "";
+      background-color: transparent;
+      border-radius: 0;
     }
 
-    &.active {
-      color: var(--naut-color-primary);
-      background-color: var(--naut-color-base-100);
-    }
-
-    &.color-dimmed {
-      color: var(--naut-color-content-soft);
-      opacity: 0.8;
+    .naut-menu-item__link,
+    :global(.menu-item) {
+      position: relative;
+      display: flex;
+      flex: 1;
+      align-items: center;
+      padding: 0.5rem 0.8rem;
+      font-size: var(--naut-font-size-md);
+      color: var(--naut-color-content);
+      text-wrap: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
 
       &:hover {
-        color: var(--naut-color-content);
+        background-color: var(--naut-color-base-200);
+        &.active-link {
+          color: var(--naut-color-link);
+        }
       }
-    }
 
-    &.color-link {
-      color: var(--naut-color-link);
-    }
+      &.active {
+        &::before {
+          background-color: transparent;
+        }
 
-    .naut-menu-item--main {
-      flex: 1;
-      text-align: left;
-    }
+        &.active-primary {
+          color: var(--naut-color-primary-content);
+          background-color: var(--naut-color-primary);
+        }
 
-    .naut-menu-item--left {
-      display: flex;
-      align-items: center;
-      margin-right: 0.4rem;
-    }
+        &.active-surface {
+          background-color: var(--naut-color-base-200);
+        }
 
-    .naut-menu-item--left:empty {
-      display: none;
-    }
+        &.active-link {
+          color: var(--naut-color-link);
+          &::before {
+            background-color: var(--naut-color-link);
+          }
+        }
+      }
 
-    .naut-menu-item--right {
-      display: flex;
-      align-items: center;
-    }
+      &.dimmed {
+        color: var(--naut-color-content-soft);
+        &:hover:not(.active) {
+          color: var(--naut-color-content);
+        }
+      }
 
-    .naut-menu-item--right:empty {
-      display: none;
+      &.size-sm {
+        font-size: var(--naut-font-size-sm);
+      }
+
+      &.size-md {
+        font-size: var(--naut-font-size-md);
+      }
+
+      &.size-lg {
+        font-size: var(--naut-font-size-lg);
+      }
+
+      .naut-menu-item__main {
+        flex: 1;
+        text-align: left;
+      }
+
+      .naut-menu-item__left {
+        display: flex;
+        align-items: center;
+        margin-right: 0.4rem;
+      }
+
+      .naut-menu-item__left:empty {
+        display: none;
+      }
+
+      .naut-menu-item__right {
+        display: flex;
+        align-items: center;
+      }
+
+      .naut-menu-item__right:empty {
+        display: none;
+      }
     }
   }
 </style>

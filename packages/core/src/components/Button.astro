@@ -1,16 +1,29 @@
 ---
 import type { Base, Radius, Size } from "../types";
 
-type ButtonVariant = "default" | "primary" | "secondary" | "destructive";
+type ButtonVariant =
+  | "default"
+  | "primary"
+  | "secondary"
+  | "destructive"
+  | "outline"
+  | "outline-primary"
+  | "outline-secondary"
+  | "flat"
+  | "ghost"
+  | "link"
+  | "rainbow";
 type ButtonSize = Omit<Size, "xl">;
+type ButtonRadius = Omit<Radius, "xl"> | "none" | "full";
 type ButtonType = "button" | "submit" | "reset";
 
 export interface ButtonProps extends Base {
-  border?: Omit<Size, "xl"> | "none";
+  border?: ButtonSize | "none";
   dark?: boolean;
   href?: string;
-  rounded?: Radius;
+  rounded?: ButtonRadius;
   size?: ButtonSize;
+  square?: boolean;
   type?: ButtonType;
   variant?: ButtonVariant;
 }
@@ -23,8 +36,8 @@ const {
   variant = "default",
   rounded = "md",
   border = "md",
-  pill = false,
   dark = false,
+  square = false,
   ...rest
 } = Astro.props as ButtonProps;
 
@@ -34,8 +47,8 @@ const classlist = [
   `variant-${variant}`,
   `rounded-${rounded}`,
   `border-${border}`,
-  pill && "pill",
   dark && "dark",
+  square && "square",
   className,
 ];
 ---
@@ -124,9 +137,9 @@ const classlist = [
       border-color: var(--naut-color-border-strong);
     }
 
-    /*&.variant-outline:hover:not(:disabled) {
+    &.variant-outline:hover:not(:disabled) {
       background: var(--naut-color-base-200);
-    }*/
+    }
 
     &.variant-outline-primary {
       border-color: var(--naut-color-primary);
@@ -242,9 +255,15 @@ const classlist = [
       border-radius: 9999px;
     }
 
-    /* square */
-    &:has(> :only-child):has(> svg:first-child) {
-      padding: 0 0.438rem;
+    &.square {
+      aspect-ratio: 1;
+      padding: 0 !important;
+    }
+
+    /* SVG icons */
+    :global(svg) {
+      width: 1.2815rem;
+      height: 1.2815rem;
     }
 
     /* Sizes */
@@ -253,9 +272,9 @@ const classlist = [
       padding: 0 0.85rem;
       font-size: 0.8rem;
 
-      /* square */
-      &:has(> :only-child):has(> svg:first-child) {
-        padding: 0 0.375rem;
+      :global(svg) {
+        width: 1.125rem;
+        height: 1.125rem;
       }
     }
 
@@ -264,9 +283,9 @@ const classlist = [
       padding: 0 2.5rem;
       font-size: calc(var(--naut-font-size) * 1.125);
 
-      /* square */
-      &:has(> :only-child):has(> svg:first-child) {
-        padding: 0 0.562rem;
+      :global(svg) {
+        width: 1.75rem;
+        height: 1.75rem;
       }
     }
   }

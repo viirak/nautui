@@ -1,5 +1,6 @@
 ---
 import type { Base, Gap } from "../types";
+import "../styles/spacing/gap.css";
 
 export interface MenuProps extends Base {
   divided?: boolean;
@@ -14,58 +15,33 @@ const {
   gap,
   ...rest
 } = Astro.props as MenuProps;
-const gapVar = gap ? `var(--naut-spacing-${gap})` : "1px";
 ---
 
-<nav
+<ul
   class:list={[
-    "naut-menu",
-    horizontal && "horizontal",
-    divided && "divided",
-    className
-  ]}
+      "naut-menu naut-menu__list",
+      horizontal && "horizontal",
+      divided && "divided",
+      className, gap && `gap-${gap}`
+    ]}
   {...rest}
 >
-  <ul class:list={["naut-menu__list", gap && `gap-${gap}`]}>
-    <slot />
-  </ul>
-</nav>
+  <slot />
+</ul>
 
-<style define:vars={{ gapVar }}>
+<style>
   .naut-menu {
-    ul.naut-menu__list {
+    &.naut-menu__list {
       display: flex;
       flex-direction: column;
-      gap: var(--gapVar);
       padding: 0;
       margin: 0;
       list-style: none;
     }
 
-    &.horizontal ul.naut-menu__list {
+    &.horizontal {
       display: inline-flex;
       flex-direction: row;
     }
-  }
-
-  :global(.naut-menu.horizontal ul.naut-menu__list .naut-menu-item) {
-    padding-right: 1rem;
-    padding-left: 1rem;
-  }
-
-  :global(
-      .naut-menu.divided:not(.horizontal)
-      .naut-menu__list-item:not(:last-child)
-    ) {
-    padding-bottom: var(--gapVar);
-    border-bottom: 1px solid var(--naut-color-border);
-  }
-
-  :global(
-      .naut-menu.divided.horizontal
-      .naut-menu__list-item:not(:last-child)
-    ) {
-    padding-right: var(--gapVar);
-    border-right: 1px solid var(--naut-color-border);
   }
 </style>

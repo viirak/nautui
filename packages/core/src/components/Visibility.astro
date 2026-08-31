@@ -1,0 +1,111 @@
+---
+export interface VisibilityProps {
+  class?: string;
+  /**
+   * @deprecated Legacy boolean toggle. `hidden={false}` is equivalent to
+   * `mode: "show"`. Prefer `mode`.
+   */
+  hidden?: boolean;
+  /**
+   * - `"hide"` (default): children are hidden inside the `on` range.
+   * - `"show"`: children are shown ONLY inside the `on` range.
+   */
+  mode?: "show" | "hide";
+  /** Breakpoint range the mode applies to. */
+  on?: "sm" | "md" | "lg" | "xl";
+}
+
+// Internal view strips the @deprecated flag so reading the legacy prop here
+// doesn't raise ts(6385) in our own build; external users of VisibilityProps
+// still get editor strikethrough.
+type VisibilityPropsInternal = Omit<VisibilityProps, "hidden"> & {
+  hidden?: boolean;
+};
+
+const {
+  class: className,
+  hidden,
+  on,
+  mode,
+  ...rest
+} = Astro.props as VisibilityPropsInternal;
+
+if (!on) {
+  throw new Error(
+    '[Visibility] The `on` prop is required ("sm" | "md" | "lg" | "xl").'
+  );
+}
+
+const resolvedMode = mode ?? (hidden === false ? "show" : "hide");
+
+if (mode && hidden !== undefined) {
+  const legacyMode = hidden === false ? "show" : "hide";
+  if (legacyMode !== mode) {
+    throw new Error(
+      `[Visibility] Conflicting props: mode="${mode}" vs hidden=${hidden}. Pass only \`mode\`.`
+    );
+  }
+}
+---
+
+<div
+  class:list={[
+    "naut-visibility",
+    `naut-visibility--${on}`,
+    resolvedMode === "show" && "visible",
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</div>
+
+<style>
+  .naut-visibility--sm {
+    @media (max-width: 576px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--md {
+    @media (min-width: 818px) and (max-width: 1041px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--lg {
+    @media (min-width: 1042px) and (max-width: 1249px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--xl {
+    @media (min-width: 1250px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--sm.visible {
+    @media (min-width: 577px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--md.visible {
+    @media (max-width: 817px), (min-width: 1042px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--lg.visible {
+    @media (max-width: 1041px), (min-width: 1250px) {
+      display: none !important;
+    }
+  }
+
+  .naut-visibility--xl.visible {
+    @media (max-width: 1249px) {
+      display: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,92 @@
+---
+import { Article, Box, Container, Title } from "@nautui/core";
+import type { MarkdownHeading } from "astro";
+import TOC from "./TOC.astro";
+
+export interface DocLayoutProps {
+  class?: string;
+  headings?: MarkdownHeading[];
+  title: string;
+}
+
+const { title, headings, class: className } = Astro.props as DocLayoutProps;
+---
+
+<Container>
+  <div class:list={["naut-docpage", className]}>
+    <aside class="naut-docpage__nav">
+      <Box pt="sm" pr="sm" class="naut-docpage__nav-inner">
+        <slot name="nav" />
+      </Box>
+    </aside>
+    <main class="naut-docpage__content">
+      <Box p="lg">
+        <Article
+          class:list={["naut-docpage__article", headings && "with-toc"]}
+          anchorLinks
+        >
+          <Title id="intro" level={1} mt="0">{title}</Title>
+          <slot />
+        </Article>
+      </Box>
+    </main>
+    {headings && (
+      <aside class="naut-docpage__toc">
+        <TOC
+          headings={headings}
+          top={{ slug: "intro", label: "Introduction" }}
+        />
+      </aside>
+    )}
+  </div>
+</Container>
+
+<style>
+  .naut-docpage {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    .naut-docpage__nav {
+      display: none;
+
+      .naut-docpage__nav-inner {
+        position: sticky;
+        top: 70px;
+        height: calc(100dvh - 70px);
+        overflow-y: auto;
+      }
+    }
+
+    .naut-docpage__toc {
+      display: none;
+    }
+
+    .naut-docpage__toc-drawer {
+      position: fixed;
+      top: 6rem;
+      right: 2rem;
+      display: block;
+
+      @media (min-width: 1450px) {
+        display: none;
+      }
+    }
+
+    @media (min-width: 1049px) {
+      grid-template-columns: 15rem 1fr;
+
+      .naut-docpage__nav {
+        display: block;
+        border-right: 1px solid var(--naut-color-border);
+      }
+    }
+
+    @media (min-width: 1450px) {
+      grid-template-columns: 15rem 1fr 20rem;
+
+      .naut-docpage__toc {
+        display: block;
+      }
+    }
+  }
+</style>

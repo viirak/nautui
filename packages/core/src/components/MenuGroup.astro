@@ -1,0 +1,159 @@
+---
+import type { Base } from "../types";
+
+export interface MenuGroupProps extends Base {
+  collapsible?: boolean;
+  label: string;
+  line?: boolean;
+  open?: boolean;
+}
+
+const {
+  class: className,
+  label,
+  collapsible = false,
+  line = true,
+  open = true,
+  ...rest
+} = Astro.props as MenuGroupProps;
+---
+
+<li
+  class:list={[
+    "naut-menu-group",
+    collapsible && "collapsible",
+    collapsible && open && "open",
+    className,
+  ]}
+  {...rest}
+>
+  {collapsible ? (
+      <button aria-expanded={open} class="naut-menu-group__toggle" type="button">
+        <slot name="icon" />
+        {label}
+        <span aria-hidden="true" class="naut-menu-group__chevron" />
+      </button>
+    ) : (
+      <span class="naut-menu-group__label">
+        <slot name="icon" />
+        {label}</span>
+    )}
+  <ul class:list={["naut-menu-group__list", line === false && "no-line"]}>
+    <slot />
+  </ul>
+</li>
+
+<script>
+  for (const group of Array.from(
+    document.querySelectorAll(".naut-menu-group.collapsible")
+  )) {
+    const toggle = group.querySelector(".naut-menu-group__toggle");
+    const list = group.querySelector(".naut-menu-group__list");
+    if (!(toggle && list)) continue;
+
+    toggle.addEventListener("click", () => {
+      const isOpen = group.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", isOpen.toString());
+    });
+  }
+</script>
+
+<style>
+  .naut-menu-group {
+    list-style: none;
+
+    .naut-menu-group__label,
+    .naut-menu-group__toggle {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      width: 100%;
+      padding: 0.5rem 0;
+      margin-bottom: 0.25rem;
+      font-size: var(--naut-font-size-xs);
+      font-weight: 600;
+      color: var(--naut-color-content-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+
+    .naut-menu-group__toggle {
+      font-family: inherit;
+      line-height: 1.25;
+      text-align: left;
+      cursor: pointer;
+      background: none;
+      border: none;
+
+      &:hover {
+        color: var(--naut-color-content);
+        .naut-menu-group__chevron::after {
+          opacity: 1;
+        }
+      }
+
+      .naut-menu-group__chevron {
+        margin-left: auto;
+        transition: transform 0.2s ease;
+
+        &::after {
+          display: inline-block;
+          width: 0.35rem;
+          height: 0.35rem;
+          content: "";
+          border-right: 1.5px solid currentColor;
+          border-bottom: 1.5px solid currentColor;
+          opacity: 0.6;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+
+    &.open .naut-menu-group__toggle .naut-menu-group__chevron {
+      transform: rotate(90deg);
+    }
+
+    .naut-menu-group__list {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      padding: 0 0 0 0.5rem;
+      margin: 0;
+      list-style: none;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        pointer-events: none;
+        content: "";
+        background-color: var(--naut-color-border);
+      }
+
+      &.no-line {
+        padding-left: 0;
+        &::before {
+          display: none;
+        }
+      }
+    }
+
+    &.collapsible {
+      .naut-menu-group__list {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.25s ease;
+      }
+      &.open {
+        .naut-menu-group__list {
+          max-height: 999px;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+</style>

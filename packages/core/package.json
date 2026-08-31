@@ -24,6 +24,7 @@
   },
   "scripts": {
     "lint": "biome check src",
+    "check-types": "astro check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {

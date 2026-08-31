@@ -1,0 +1,45 @@
+---
+import {
+  Drawer,
+  Group,
+  Link,
+  Menu,
+  MenuItem,
+  NavBar,
+  Text,
+  Theme,
+  ThemeToggle,
+} from "@nautui/core";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="generator" content={Astro.generator}>
+    <title>NautUI</title>
+  </head>
+  <body>
+    <Theme>
+      <NavBar variant="default" bordered sticky height={70} fluid>
+        <Text inline size="xl" weight="bold">Naut UI</Text>
+        <Group gap="xs" hidden="mobile">
+          <Link href="/">Home</Link>
+          <Link href="/docs">Docs</Link>
+          <Link href="/docs/components">Components</Link>
+        </Group>
+        <Group gap="xs">
+          <Drawer hidden="desktop">
+            Drawer content here...
+            <Menu> <MenuItem>Home</MenuItem> </Menu>
+          </Drawer>
+          <ThemeToggle />
+        </Group>
+      </NavBar>
+      <slot />
+    </Theme>
+  </body>
+</html>

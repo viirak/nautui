@@ -23,12 +23,14 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@nautui/core": "^0.1.1"
+    "@nautui/core": "workspace:^0.1.1"
   },
   "peerDependencies": {
     "astro": "^6.0.0"
   },
   "scripts": {
+    "lint": "biome check src",
+    "check-types": "astro check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {

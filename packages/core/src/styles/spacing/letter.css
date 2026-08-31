@@ -1,0 +1,15 @@
+.ls-sm {
+  letter-spacing: -0.025em;
+}
+
+.ls-md {
+  letter-spacing: 0;
+}
+
+.ls-lg {
+  letter-spacing: 0.075em;
+}
+
+.ls-xl {
+  letter-spacing: 0.125em;
+}

@@ -1,5 +1,6 @@
 ---
 import "../styles/spacing/margin.css";
+import "../styles/spacing/letter.css";
 import {
   extractSpacingProps,
   getSpacingClasses,
@@ -7,15 +8,29 @@ import {
 } from "../lib/spacing";
 import type { Base, Size } from "../types";
 
+type TextDecoration = "underline" | "strikethrough";
+type TextTranform = "capitalize" | "uppercase" | "lowercase";
+
 export interface TextProps extends Base, MarginProps {
   align?: "left" | "center" | "right" | "justify";
-  decoration?: "underline" | "strikethrough";
+  color?: "soft" | "muted";
+  decoration?: TextDecoration;
   dimmed?: boolean;
   inline?: boolean;
   italic?: boolean;
-  maxWidth?: number | string;
+  ls?: Size; // letter spacing shorthand
+  nowrap?: boolean;
   size?: Size;
-  transform?: "capitalize" | "uppercase" | "lowercase";
+  td?: TextDecoration; // text decoration shorthand
+  transform?: TextTranform;
+  tt?: TextTranform; // text transform shorthand
+  variant?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "destructive"
+    | "link"
+    | "highlight";
   weight?: "light" | "normal" | "medium" | "bold" | "semi-bold" | "extra-bold";
 }
 
@@ -23,47 +38,54 @@ const { margin, nonSpacing } = extractSpacingProps(Astro.props as TextProps);
 
 const {
   class: className,
+  align,
   weight,
   transform,
   decoration,
+  tt,
+  td,
+  variant,
   size,
-  maxWidth,
+  ls,
+  color,
   italic = false,
   inline = false,
   dimmed = false,
-  align,
+  nowrap = false,
   ...rest
 } = nonSpacing;
 
 const marginClasses = getSpacingClasses(margin);
-
-const maxWidthStyle =
-  maxWidth === undefined
-    ? undefined
-    : `max-width: ${typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth}`;
+const textTransform = transform || tt;
+const textDecoration = decoration || td;
 
 const classList = [
   "text",
   italic && "italic",
   dimmed && "dimmed",
+  color && `color-${color}`,
+  nowrap && "nowrap",
   align && `align-${align}`,
   size && `size-${size}`,
   weight && `weight-${weight}`,
-  transform && `transform-${transform}`,
-  decoration && `decoration-${decoration}`,
+  textTransform && `tt-${textTransform}`,
+  variant && `variant-${variant}`,
+  textDecoration && `td-${textDecoration}`,
+  ls && `ls-${ls}`,
   ...marginClasses,
   className,
 ];
 ---
 
-{inline && <span class:list={classList} style={maxWidthStyle} {...rest}><slot /></span>}
-{!inline && <p class:list={classList} style={maxWidthStyle} {...rest}><slot /></p>}
+{inline && <span class:list={classList} {...rest}><slot /></span>}
+{!inline && <p class:list={classList} {...rest}><slot /></p>}
 
 <style>
   .text {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
+    color: var(--naut-color-content);
 
     &::selection {
       color: var(--naut-color-content);
@@ -77,6 +99,10 @@ const classList = [
 
     &.italic {
       font-style: italic;
+    }
+
+    &.nowrap {
+      white-space: nowrap;
     }
 
     &.align-left {
@@ -97,6 +123,15 @@ const classList = [
 
     &.dimmed {
       color: var(--naut-color-content-soft);
+    }
+
+    &.color-soft {
+      color: var(--naut-color-content-soft);
+    }
+
+    &.color-muted {
+      color: var(--naut-color-content-soft);
+      opacity: 0.65;
     }
 
     &.size-xs {
@@ -158,100 +193,47 @@ const classList = [
       font-weight: 800;
     }
 
-    &.transform-capitalize {
+    &.weight-normal {
+      font-weight: 400;
+    }
+
+    &.tt-capitalize {
       text-transform: capitalize;
     }
-    &.transform-uppercase {
+    &.tt-uppercase {
       text-transform: uppercase;
     }
-    &.transform-lowercase {
+    &.tt-lowercase {
       text-transform: lowercase;
     }
 
-    &.decoration-underline {
+    &.td-underline {
       text-decoration: underline;
     }
-    &.decoration-strikethrough {
+    &.td-strikethrough {
       text-decoration: line-through;
     }
 
-    /* Margins */
-    &.mt-0 {
-      margin-top: 0;
-    }
-    &.mb-0 {
-      margin-bottom: 0;
-    }
-    &.ml-0 {
-      margin-left: 0;
-    }
-    &.mr-0 {
-      margin-right: 0;
+    /* Variants */
+    &.variant-primary {
+      color: var(--naut-color-primary);
     }
 
-    &.mt-xs {
-      margin-top: var(--naut-spacing-xs);
-    }
-    &.mb-xs {
-      margin-bottom: var(--naut-spacing-xs);
-    }
-    &.ml-xs {
-      margin-left: var(--naut-spacing-xs);
-    }
-    &.mr-xs {
-      margin-right: var(--naut-spacing-xs);
+    &.variant-secondary {
+      color: var(--naut-color-secondary);
     }
 
-    &.mt-sm {
-      margin-top: var(--naut-spacing-sm);
-    }
-    &.mb-sm {
-      margin-bottom: var(--naut-spacing-sm);
-    }
-    &.ml-sm {
-      margin-left: var(--naut-spacing-sm);
-    }
-    &.mr-sm {
-      margin-right: var(--naut-spacing-sm);
+    &.variant-destructive {
+      color: var(--naut-color-destructive);
     }
 
-    &.mt-md {
-      margin-top: var(--naut-spacing-md);
-    }
-    &.mb-md {
-      margin-bottom: var(--naut-spacing-md);
-    }
-    &.ml-md {
-      margin-left: var(--naut-spacing-md);
-    }
-    &.mr-md {
-      margin-right: var(--naut-spacing-md);
+    &.variant-link {
+      color: var(--naut-color-link);
     }
 
-    &.mt-lg {
-      margin-top: var(--naut-spacing-lg);
-    }
-    &.mb-lg {
-      margin-bottom: var(--naut-spacing-lg);
-    }
-    &.ml-lg {
-      margin-left: var(--naut-spacing-lg);
-    }
-    &.mr-lg {
-      margin-right: var(--naut-spacing-lg);
-    }
-
-    &.mt-xl {
-      margin-top: var(--naut-spacing-xl);
-    }
-    &.mb-xl {
-      margin-bottom: var(--naut-spacing-xl);
-    }
-    &.ml-xl {
-      margin-left: var(--naut-spacing-xl);
-    }
-    &.mr-xl {
-      margin-right: var(--naut-spacing-xl);
+    &.variant-highlight {
+      color: var(--naut-color-content);
+      background: var(--naut-color-highlight);
     }
   }
 
@@ -262,6 +244,12 @@ const classList = [
     &:last-child {
       margin-bottom: 0;
     }
+  }
+
+  :global(p.text code) {
+    padding: 3px 6px;
+    background: var(--naut-color-base-200);
+    border-radius: 3px;
   }
 
   span.text {

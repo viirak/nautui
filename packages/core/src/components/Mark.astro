@@ -2,10 +2,14 @@
 import type { Base } from "../types";
 
 export interface MarkProps extends Base {
+  ff?: string; // font family
   gradient?: { colors: string[]; deg?: number };
   rotate?: "sm" | "md" | "lg";
   variant?:
     | "default"
+    | "primary"
+    | "secondary"
+    | "destructive"
     | "underline"
     | "halflight"
     | "parallelogram"
@@ -17,11 +21,13 @@ const {
   variant,
   rotate,
   gradient,
+  ff,
   ...rest
 } = Astro.props as MarkProps;
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : undefined;
+const nautMarkFontFamily = ff;
 ---
 
 <mark
@@ -36,14 +42,13 @@ const gradientBg = gradient
   <slot />
 </mark>
 
-<style define:vars={{ gradientBg }}>
+<style define:vars={{ gradientBg, nautMarkFontFamily }}>
   .naut-mark {
     display: inline-block;
     padding-right: 1rem;
     padding-left: 1rem;
+    font-family: var(--nautMarkFontFamily);
     color: var(--naut-color-content);
-    -moz-text-fill-color: var(--naut-color-content);
-    -webkit-text-fill-color: var(--naut-color-content);
     background-color: var(--naut-color-highlight);
 
     &::selection {
@@ -60,6 +65,21 @@ const gradientBg = gradient
 
     &.rotate--lg {
       transform: rotate(-1.95deg);
+    }
+
+    &.variant--primary {
+      color: var(--naut-color-primary);
+      background: none;
+    }
+
+    &.variant--secondary {
+      color: var(--naut-color-secondary);
+      background: none;
+    }
+
+    &.variant--destructive {
+      color: var(--naut-color-destructive);
+      background: none;
     }
 
     &.variant--underline {

@@ -7,14 +7,13 @@ interface BreadcrumbItem {
 }
 
 export interface BreadcrumbProps extends Base {
-  className?: string;
   items: BreadcrumbItem[];
 }
 
 const { items, class: className } = Astro.props as BreadcrumbProps;
 ---
 
-<nav class:list={["naut-breadcrumb", className]}>
+<nav aria-label="Breadcrumb" class:list={["naut-breadcrumb", className]}>
   <ol>
     {items.map((item) => (
       <li>

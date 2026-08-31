@@ -1,0 +1,213 @@
+---
+import type { Base } from "../types";
+
+export interface MegaMenuProps extends Base {
+  class?: string;
+}
+
+const { class: className, ...rest } = Astro.props as MegaMenuProps;
+---
+
+<ul class:list={["naut-mega-menu", className]} {...rest}>
+  <slot />
+</ul>
+
+<div class="naut-mega-menu__panel" id="mega-panel">
+  <div class="naut-mega-menu__panel-content"></div>
+</div>
+
+<script>
+  (() => {
+    const panel = document.getElementById("mega-panel");
+    const panelContent = panel?.querySelector(".naut-mega-menu__panel-content");
+    if (!(panel && panelContent)) return;
+
+    const p = panel as HTMLElement;
+    const c = panelContent as HTMLElement;
+
+    const offset = "20"; // default
+
+    const items = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-mega-drop]")
+    );
+    if (!items.length) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let isOpen = false;
+    let closeTimer: number | undefined;
+    let currentClone: ChildNode | null = null;
+
+    function clearTimers() {
+      window.clearTimeout(closeTimer);
+    }
+
+    function getItemOffset(item: HTMLElement): number {
+      const raw = item.getAttribute("data-mega-offset");
+      return raw == null ? Number(offset) : Number(raw);
+    }
+
+    function positionPanel(item: HTMLElement) {
+      const itemRect = item.getBoundingClientRect();
+      const offsetParent = p.offsetParent as HTMLElement;
+      const parentRect = offsetParent.getBoundingClientRect();
+
+      const position = item.getAttribute("data-mega-position") || "center";
+      const itemOffset = getItemOffset(item);
+
+      let left = itemRect.left - parentRect.left;
+
+      if (position === "center") {
+        left =
+          itemRect.left +
+          itemRect.width / 2 -
+          p.scrollWidth / 2 -
+          parentRect.left;
+      } else if (position === "end") {
+        left = itemRect.right - p.scrollWidth - parentRect.left;
+      }
+
+      p.style.top = `${itemRect.bottom - parentRect.top + itemOffset}px`;
+      p.style.left = `${left}px`;
+    }
+
+    function showPanel(item: HTMLElement) {
+      const source = item.querySelector<HTMLElement>("[data-mega-content]");
+      if (!source) return;
+
+      clearTimers();
+
+      if (currentClone) {
+        c.removeChild(currentClone);
+        currentClone = null;
+      }
+      const clone = source.cloneNode(true) as HTMLElement;
+      clone.removeAttribute("hidden");
+      clone.removeAttribute("data-mega-content");
+      c.appendChild(clone);
+      currentClone = clone;
+
+      p.style.display = "block";
+      positionPanel(item);
+
+      if (isOpen) {
+        return;
+      }
+
+      isOpen = true;
+      if (reducedMotion.matches) {
+        p.style.opacity = "1";
+        p.style.transform = "translateY(0)";
+      } else {
+        p.animate(
+          [
+            { opacity: 0, transform: "translateY(-4px)" },
+            { opacity: 1, transform: "translateY(0)" },
+          ],
+          { duration: 150, easing: "ease", fill: "forwards" }
+        );
+      }
+    }
+
+    function hidePanel() {
+      if (!isOpen) return;
+      closeTimer = window.setTimeout(() => {
+        const panelHover = p.matches(":hover");
+        const anyItemHover = items.some((item) => item.matches(":hover"));
+        if (!(panelHover || anyItemHover)) {
+          isOpen = false;
+          if (reducedMotion.matches) {
+            p.style.opacity = "0";
+            p.style.transform = "translateY(-4px)";
+            p.style.display = "none";
+            p.style.top = "";
+            p.style.left = "";
+          } else {
+            p.animate(
+              [
+                { opacity: 1, transform: "translateY(0)" },
+                { opacity: 0, transform: "translateY(-4px)" },
+              ],
+              { duration: 120, easing: "ease", fill: "forwards" }
+            );
+            setTimeout(() => {
+              p.style.display = "none";
+              p.style.top = "";
+              p.style.left = "";
+              p.style.transform = "";
+              p.style.opacity = "";
+            }, 120);
+          }
+        }
+      }, 80);
+    }
+
+    for (const item of items) {
+      item.addEventListener("pointerenter", () => {
+        clearTimers();
+        showPanel(item);
+      });
+
+      item.addEventListener("pointerleave", (e) => {
+        const toPanel = p.contains(e.relatedTarget as Node);
+        const toAnotherItem = items.some((otherItem) =>
+          otherItem.contains(e.relatedTarget as Node)
+        );
+        if (!(toPanel || toAnotherItem)) {
+          hidePanel();
+        }
+      });
+    }
+
+    p.addEventListener("pointerenter", () => {
+      clearTimers();
+    });
+
+    p.addEventListener("pointerleave", (e) => {
+      const toItem = items.some((item) =>
+        item.contains(e.relatedTarget as Node)
+      );
+      if (!toItem) {
+        hidePanel();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .naut-mega-menu {
+    display: inline-flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .naut-mega-menu__panel {
+    position: absolute;
+    z-index: 100;
+    min-width: 12rem;
+    padding: var(--naut-spacing-md);
+    background: var(--naut-color-base);
+    border: 1px solid var(--naut-color-border);
+    border-radius: var(--naut-border-radius-md);
+    box-shadow: var(--naut-shadow-md);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.15s ease,
+      left 0.15s ease,
+      top 0.15s ease,
+      width 0.15s ease;
+  }
+
+  .naut-mega-menu__panel-content {
+    display: contents;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .naut-mega-menu__panel {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

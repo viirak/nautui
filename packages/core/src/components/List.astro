@@ -6,7 +6,6 @@ export interface ListProps extends Base {
   gap?: Gap;
   horizontal?: boolean;
   marker?: "none" | string;
-  noMarker?: boolean;
   ordered?: boolean;
 }
 
@@ -41,6 +40,7 @@ const spacing = `var(--naut-spacing-${gap})`;
   .naut-list {
     display: grid;
     padding-left: var(--naut-spacing-md);
+    color: var(--naut-color-content);
 
     &.no-marker {
       padding-left: 0;

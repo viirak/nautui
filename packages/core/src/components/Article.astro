@@ -1,0 +1,97 @@
+---
+import "../styles/article.css";
+import { uid } from "../lib/uid";
+import type { Base } from "../types";
+
+export interface ArticleProps extends Base {
+  anchorLinks?: boolean;
+}
+
+const {
+  class: className,
+  anchorLinks = false,
+  ...rest
+} = Astro.props as ArticleProps;
+const articleId = uid("naut-article");
+---
+
+<article
+  id={anchorLinks ? articleId : undefined}
+  class:list={["naut-article", anchorLinks && "anchor-links", className]}
+  {...rest}
+>
+  <slot />
+</article>
+
+<script is:inline define:vars={{ anchorLinks, articleId }}>
+  if (anchorLinks) {
+    const article = document.getElementById(articleId);
+    if (article) {
+      for (const heading of article.querySelectorAll("h2, h3, h4, h5, h6")) {
+        const id = heading.id;
+        if (!id) continue;
+
+        const link = document.createElement("a");
+        link.className = "naut-heading-link";
+        link.href = `#${id}`;
+        link.setAttribute("aria-label", `Link to ${heading.textContent || ""}`);
+        link.textContent = "#";
+        heading.appendChild(link);
+
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const url = `${window.location.origin}${window.location.pathname}#${id}`;
+          navigator.clipboard.writeText(url).catch(() => {
+            const textarea = document.createElement("textarea");
+            textarea.value = url;
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            textarea.remove();
+          });
+          history.pushState(null, "", `#${id}`);
+          heading.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+    }
+  }
+</script>
+
+<script is:inline define:vars={{ articleId }}>
+  const article = document.getElementById(articleId);
+  if (article) {
+    for (const pre of article.querySelectorAll("pre")) {
+      const code = pre.querySelector("code");
+      if (!code || pre.querySelector("[data-copy-btn]")) continue;
+
+      const btn = document.createElement("button");
+      btn.dataset.copyBtn = "";
+      btn.className = "code-copy-btn";
+      btn.innerHTML =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+      btn.setAttribute("aria-label", "Copy code");
+
+      btn.addEventListener("click", async () => {
+        const text = code.textContent ?? "";
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.innerHTML =
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+          btn.setAttribute("aria-label", "Copied");
+          setTimeout(() => {
+            btn.innerHTML =
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+            btn.setAttribute("aria-label", "Copy code");
+          }, 2000);
+        } catch {
+          // clipboard not available
+        }
+      });
+
+      pre.style.position = "relative";
+      pre.appendChild(btn);
+    }
+  }
+</script>

@@ -37,3 +37,17 @@ yarn-error.log*
 .DS_Store
 *.pem
 tsconfig.tsbuildinfo
+
+# Tools
+.rtk
+.planr
+.zed
+.fossil
+.opencode
+.crush
+.bitloops
+.agents
+.poolside
+packages/core/.astro/
+packages/blocks/.astro/
+.patchloom/

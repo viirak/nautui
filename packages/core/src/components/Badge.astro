@@ -2,23 +2,34 @@
 import type { Base, Radius } from "../types";
 
 export interface BadgeProps extends Base {
+  color?: "primary" | "secondary" | "destructive";
+  dotted?: boolean;
   gradient?: { colors: string[]; textColor: string; deg?: number };
   iconOnly?: boolean;
+  letterSpacing?: "sm" | "md" | "lg";
   outlineColor?: string;
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
-  solid?: { background: string; color: string };
-  variant?: "default" | "solid" | "outline" | "dot" | "flat";
+  variant?:
+    | "default"
+    | "text"
+    | "surface"
+    | "outline"
+    | "primary"
+    | "secondary"
+    | "destructive";
 }
 
 const {
   size = "md",
-  solid = { background: "darkorchid", color: "white" },
   gradient,
   radius = "sm",
-  variant = "default",
+  letterSpacing = "md",
   outlineColor,
+  variant = "default",
   iconOnly = false,
+  dotted = false,
+  color,
   ...rest
 } = Astro.props as BadgeProps;
 
@@ -33,20 +44,22 @@ const gradientBg = gradient
     `variant--${variant}`,
     `radius--${radius}`,
     `size--${size}`,
+    (["primary", "secondary", "destructive"].includes(variant) || gradient) && "filled",
+    color && `color--${color}`,
+    dotted && "dotted",
     gradient && "color--gradient",
-    iconOnly && "icon-only"]}
+    letterSpacing && `ls--${letterSpacing}`,
+    iconOnly && "icon-only"
+  ]}
   {...rest}
 >
   <slot />
 </div>
 <style
   define:vars={{
-  solidBackground: solid.background,
-  solidColor: solid.color,
   gradientBg,
   gradientColor: gradient?.textColor,
-  outlineColor: outlineColor ?? "var(--naut-color-content)",
-  outlineBg: outlineColor ? `rgb(from ${outlineColor} r g b / 0.15)` : "transparent",
+  outlineColor
 }}
 >
   .naut-badge {
@@ -55,14 +68,21 @@ const gradientBg = gradient
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
+    color: var(--naut-color-content);
     text-transform: uppercase;
     text-wrap: nowrap;
     border: 1px solid var(--naut-color-border);
 
-    &.variant--solid {
-      color: var(--solidColor);
-      background-color: var(--solidBackground);
-      border-color: var(--solidBackground);
+    &.ls--sm {
+      letter-spacing: 0.05rem;
+    }
+
+    &.ls--md {
+      letter-spacing: 0.1rem;
+    }
+
+    &.ls--lg {
+      letter-spacing: 0.185rem;
     }
 
     &.color--gradient {
@@ -70,18 +90,41 @@ const gradientBg = gradient
       background: var(--gradientBg);
     }
 
-    &.variant--outline {
-      color: var(--outline-color);
-      background-color: var(--outlineBg);
-      border: 1px solid var(--outline-color);
+    &.variant--text {
+      color: var(--naut-color-content);
+      border: none;
     }
 
-    &.variant--flat {
+    &.variant--surface {
+      color: var(--naut-color-content);
       background-color: var(--naut-color-base-200);
       border: none;
     }
 
-    &.variant--dot {
+    &.variant--outline {
+      color: var(--outline-color);
+      border: 1px solid var(--naut-color-border-strong);
+    }
+
+    &.variant--primary {
+      color: var(--naut-color-primary-content);
+      background-color: var(--naut-color-primary);
+      border: none;
+    }
+
+    &.variant--secondary {
+      color: var(--naut-color-secondary-content);
+      background-color: var(--naut-color-secondary);
+      border: none;
+    }
+
+    &.variant--destructive {
+      color: var(--naut-color-destructive-content);
+      background-color: var(--naut-color-destructive);
+      border: none;
+    }
+
+    &.dotted {
       &::before {
         display: inline-block;
         width: 0.5rem;
@@ -89,6 +132,33 @@ const gradientBg = gradient
         content: "";
         background-color: var(--naut-color-content);
         border-radius: 50%;
+      }
+    }
+
+    &.color--primary:not(.filled) {
+      color: var(--naut-color-primary);
+      &.dotted {
+        &::before {
+          background-color: var(--naut-color-primary);
+        }
+      }
+    }
+
+    &.color--secondary:not(.filled) {
+      color: var(--naut-color-secondary);
+      &.dotted {
+        &::before {
+          background-color: var(--naut-color-secondary);
+        }
+      }
+    }
+
+    &.color--destructive:not(.filled) {
+      color: var(--naut-color-destructive);
+      &.dotted {
+        &::before {
+          background-color: var(--naut-color-destructive);
+        }
       }
     }
 

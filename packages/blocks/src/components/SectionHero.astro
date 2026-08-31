@@ -20,13 +20,13 @@ const isFigureRight = position === "right";
 const contentAlign = isFigureRight ? "left" : "center";
 ---
 
-<Section class:list={["naut-hero-section"]} dark={{ dark }}>
+<Section class:list={["naut-hero-section"]} dark={dark}>
   <Fragment slot="before"> <slot name="background" /> </Fragment>
   <Space size="display-lg" />
   <div
     class:list={[
       "hero-content",
-      isFigureRight && "split" ,
+      isFigureRight && "split",
       `align-${contentAlign}`
     ]}
   >

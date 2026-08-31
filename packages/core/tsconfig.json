@@ -4,7 +4,8 @@
     "composite": true,
     "outDir": "./dist",
     "jsx": "preserve",
-    "jsxImportSource": "astro"
+    "jsxImportSource": "astro",
+    "lib": ["ESNext", "dom"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

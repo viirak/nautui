@@ -1,9 +1,6 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": [
-    "ultracite/biome/core",
-    "ultracite/biome/astro"
-  ],
+  "extends": ["ultracite/biome/core", "ultracite/biome/astro"],
   "html": {
     "experimentalFullSupportEnabled": true
   },
@@ -41,14 +38,13 @@
   },
   "overrides": [
     {
-      "includes": [
-        "**/*.astro"
-      ],
+      "includes": ["**/*.astro"],
       "linter": {
         "enabled": true,
         "rules": {
           "style": {
             "useConst": "off",
+            "useFilenamingConvention": "off",
             "useImportType": "off",
             "useSelfClosingElements": "off",
             "useBlockStatements": "off"

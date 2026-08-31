@@ -11,12 +11,13 @@
  */
 
   :root {
-    --naut-font-family: "Inter", sans-serif;
+    --naut-font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --naut-font-display: var(--naut-font-body);
     --naut-line-height-ratio: 1.55;
 
     --naut-font-size-xs: 0.785rem;
     --naut-font-size-sm: 0.875rem;
-    --naut-font-size-md: 1rem;
+    --naut-font-size-md: 0.9375rem;
     --naut-font-size-lg: 1.25rem;
     --naut-font-size-xl: 1.565rem;
     --naut-font-size-xxl: 1.875rem;
@@ -34,7 +35,7 @@
   /* Global styles */
   body {
     margin: 0;
-    font-family: var(--naut-font-family);
+    font-family: var(--naut-font-body);
     font-size: var(--naut-font-size-md);
     line-height: calc(var(--naut-font-size-md) * var(--naut-line-height-ratio));
     color: var(--naut-color-content);

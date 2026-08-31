@@ -1,0 +1,75 @@
+---
+import { Box, Mark, Section, Text, Title } from "@nautui/core";
+---
+
+<Section border={{ top: "md" }}>
+  <Title>Titles</Title>
+  <Box border="md">
+    <Text>The Standards boring 6 levels titles</Text>
+    <Title level={1}>Title Level 1</Title>
+    <Title level={2}>Title Level 2</Title>
+    <Title level={3}>Title Level 3</Title>
+    <Title level={4}>Title Level 4</Title>
+    <Title level={5}>Title Level 5</Title>
+    <Title level={6}>Title Level 6</Title>
+    <Text dimmed
+      >The smallest heading is <Text inline weight="bold"
+        >Title Level 6</Text
+      ></Text
+    >
+    <Title level={1} gradient={{ colors: ["darkorchid", "orchid", "red"] }}
+      >Gradient Title with multiple colors</Title
+    >
+    <Title size="display-xl"
+      >Title can have <Mark rotate="lg">Mark</Mark>, and mark can have different
+      variants such as <Mark>Normal</Mark>,
+      <Mark variant="primary">Primary</Mark>,
+      <Mark variant="secondary">Secondary</Mark>,
+      <Mark variant="destructive">Destructive</Mark>,
+      <Mark variant="parallelogram">Parallelogram</Mark>,
+      <Mark variant="halflight">Halflight</Mark>,
+      <Mark variant="underline">Underline</Mark>, and
+      <Mark gradient={{ colors: ["blue", "orchid", "red"] }}>Rainbow</Mark>. All
+      done
+      <Mark
+        variant="sketch-circle"
+        gradient={{ colors: ["blue", "orchid", "red"] }}
+        >Effortlessly</Mark
+      ></Title
+    >
+    <Title level={1} size="display-xl"
+      >Title Size XL : Big, Bold, <Text weight="light" inline>Light</Text>
+      , Responsive,
+      <Mark variant="underline" rotate="md">Effortlessly</Mark></Title
+    >
+    <Text size="xxl">
+      Hero title like this, usually has description text like this. Stop
+      guessing. Start understanding, what is actually happening across your
+      systems, identifies what is going wrong before damage occurs, and helps
+      your team act on what actually matters.</Text
+    >
+    <Title size="display-lg"
+      >Page Title : Big, Bold, <Text weight="light" inline>Light</Text>
+      , and Responsive, Effortlessly</Title
+    >
+    <Text size="xl">
+      Page title like this, usually has description text like this. Stop
+      guessing. Start understanding, what is actually happening across your
+      systems, identifies what is going wrong before damage occurs, and helps
+      your team act on what actually matters.</Text
+    >
+    <Title size="display"
+      >Section Title : Big, Bold, <Text weight="light" inline>Light</Text>
+      , Responsive, Effortlessly</Title
+    >
+    <Text size="lg" dimmed>
+      Section title like this, usually has description text like this. Stop
+      guessing. Start understanding, what is actually happening across your
+      systems, identifies what is going wrong before damage occurs, and helps
+      your team act on what actually matters.</Text
+    >
+    <Title size="display" gradient={{ colors: ["darkorchid", "orchid", "red"] }}
+      >Section Title with Rainbow Color</Title
+    >
+  </Box>
+</Section>

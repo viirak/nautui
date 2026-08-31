@@ -16,6 +16,9 @@
     },
     {
       "path": "./packages/blocks"
+    },
+    {
+      "path": "./apps/website"
     }
   ],
   "files": []
