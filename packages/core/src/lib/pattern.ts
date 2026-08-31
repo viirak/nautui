@@ -3,14 +3,14 @@ export interface PatternProps {
   deg?: number;
   gap?: number;
   size?: number;
-  type: "dots" | "dots-x" | "grid" | "stripes";
+  style: "dots" | "dots-x" | "grid" | "stripes";
 }
 
 export function getGradientPattern(props?: PatternProps) {
   const color = props?.color || "var(--naut-color-base-200)";
   const size = props?.size || 1;
 
-  switch (props?.type) {
+  switch (props?.style) {
     case "dots": {
       const gap = props.gap || 15;
       return `radial-gradient(circle, ${color} ${size}px, transparent ${size}px) 0 0 / ${gap}px ${gap}px`;
