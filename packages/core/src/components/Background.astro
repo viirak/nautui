@@ -51,7 +51,7 @@ const backgroundMask = mask
 
 <div class:list={["naut-background", mask && "mask"]}>
   {gradient && <div class:list={["naut-background-gradient", gradient.type]}></div>}
-  {pattern && <div class:list={["naut-background-pattern", pattern.type]}></div>}
+  {pattern && <div class:list={["naut-background-pattern", pattern.style]}></div>}
   <slot />
 </div>
 
@@ -78,11 +78,11 @@ const backgroundMask = mask
     background-position: var(--backgroundPosition);
     background-size: var(--backgroundSize);
     opacity: var(--backgroundOpacity);
-  }
 
-  &.mask {
-    -webkit-mask-image: var(--backgroundMask);
-    mask-image: var(--backgroundMask);
+    &.mask {
+      -webkit-mask-image: var(--backgroundMask);
+      mask-image: var(--backgroundMask);
+    }
   }
 
   .naut-background-pattern {
