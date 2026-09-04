@@ -10,6 +10,7 @@ interface GradientProps {
 interface MaskProps {
   position?: "top" | "bottom" | "center" | "left" | "right";
   shape: "radial";
+  size?: number;
   visibility?: number;
 }
 
@@ -46,7 +47,7 @@ const maskPosition = {
   right: "100% 50%",
 }[mask?.position ?? "top"];
 const backgroundMask = mask
-  ? `radial-gradient(70% 60% at ${maskPosition}, rgb(0 0 0 / ${mask.visibility ?? 1}) 30%, transparent 75%)`
+  ? `radial-gradient(${mask.size ?? 70}% 60% at ${maskPosition}, rgb(0 0 0 / ${mask.visibility ?? 1}) 30%, transparent 75%)`
   : undefined;
 ---
 
