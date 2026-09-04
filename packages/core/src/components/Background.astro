@@ -37,6 +37,7 @@ const backgroundGradient = (() => {
     ? `radial-gradient(circle, ${gradient.colors.join(", ")})`
     : `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`;
 })();
+
 const maskPosition = {
   top: "50% 0%",
   bottom: "50% 100%",
@@ -49,9 +50,11 @@ const backgroundMask = mask
   : undefined;
 ---
 
-<div class:list={["naut-background", mask && "mask"]}>
-  {gradient && <div class:list={["naut-background-gradient", gradient.type]}></div>}
-  {pattern && <div class:list={["naut-background-pattern", pattern.style]}></div>}
+<div class:list={["naut-background"]}>
+  <div class:list={["inner", mask && "mask"]}>
+    {gradient && <div class:list={["naut-background-gradient", gradient.type]}></div>}
+    {pattern && <div class:list={["naut-background-pattern", pattern.style]}></div>}
+  </div>
   <slot />
 </div>
 
@@ -79,23 +82,28 @@ const backgroundMask = mask
     background-size: var(--backgroundSize);
     opacity: var(--backgroundOpacity);
 
-    &.mask {
-      -webkit-mask-image: var(--backgroundMask);
-      mask-image: var(--backgroundMask);
+    .inner {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      &.mask {
+        -webkit-mask-image: var(--backgroundMask);
+        mask-image: var(--backgroundMask);
+      }
     }
   }
 
   .naut-background-pattern {
     position: absolute;
     inset: 0;
-    z-index: 2;
+    z-index: 3;
     background: var(--backgroundPattern);
   }
 
   .naut-background-gradient {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 2;
     background: var(--backgroundGradient);
   }
 </style>
