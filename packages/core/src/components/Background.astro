@@ -8,9 +8,9 @@ interface GradientProps {
 }
 
 interface MaskProps {
-  position: { x: number; y: number };
-  shape: "radial";
-  size: { x: number; y: number };
+  position?: { x?: number; y?: number };
+  shape?: "radial";
+  size?: { x?: number; y?: number };
   visibility?: number;
 }
 
@@ -39,8 +39,8 @@ const backgroundGradient = (() => {
     : `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`;
 })();
 
-const maskX = mask?.position.x ?? 50;
-const maskY = mask?.position.y ?? 0;
+const maskX = mask?.position?.x ?? 50;
+const maskY = mask?.position?.y ?? 0;
 const maskSizeX = mask?.size?.x ?? 70;
 const maskSizeY = mask?.size?.y ?? 60;
 const backgroundMask = mask
