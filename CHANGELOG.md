@@ -1,6 +1,44 @@
 # Changelog
 
 ## v0.1.0 — 2026-05-25
+## v0.2.0 — 2026-09-04
+
+### `@nautui/core` — Breaking Changes
+
+**Spacing API refactored** — flat Tailwind-style spacing props replaced with object-based API.
+
+Before (removed):
+```astro
+<Card p="lg" mt="md">
+<Text mx="sm" my="lg">
+```
+
+After:
+```astro
+<Card padding={{ x: "lg", y: "lg" }}>
+<Text margin={{ x: "sm", y: "lg" }}>
+```
+
+Or shorthand (uniform):
+```astro
+<Card padding="lg">
+<Text margin="lg">
+```
+
+**Simplified types** — removed `ResponsiveObject`, `SpacingValue`, `PaddingProps`, `MarginProps`. Now uses `Spacing` (`"sm" | "md" | "lg" | "xl"`) and `SpacingProps` with `margin`/`padding` accepting `Spacing | Margin` or `Spacing | Padding`.
+
+**Fluid spacing** — CSS `clamp()` replaces fixed `rem` values. Spacing now scales fluidly across viewport widths without breakpoint classes.
+
+### Migration
+
+| Old | New |
+|-----|-----|
+| `p="md"` | `padding="md"` |
+| `pt="lg"` | `padding={{ top: "lg" }}` |
+| `px="sm" py="md"` | `padding={{ x: "sm", y: "md" }}` |
+| `mx="lg"` | `margin="lg"` |
+| `mt="md" mb="lg"` | `margin={{ top: "md", bottom: "lg" }}` |
+
 
 Initial release of Naut UI — a clean, minimalist UI component library for Astro, built for marketing websites.
 
