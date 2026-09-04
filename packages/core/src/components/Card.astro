@@ -4,13 +4,13 @@ import "../styles/border.css";
 import "../styles/shadow.css";
 import { type Border, createBorder } from "../lib/border";
 import {
-  extractSpacingProps,
-  getSpacingClasses,
-  PaddingProps,
+  getPaddingClassList,
+  type Padding,
+  type SpacingProps,
 } from "../lib/spacing";
 import type { Base, Radius } from "../types";
 
-export interface CardProps extends Base, PaddingProps {
+export interface CardProps extends Base, SpacingProps {
   badged?: boolean;
   border?: Border;
   fluid?: boolean;
@@ -37,7 +37,7 @@ export interface CardProps extends Base, PaddingProps {
     | "rainbow";
 }
 
-const { padding, nonSpacing } = extractSpacingProps(Astro.props as CardProps);
+const { padding, ...nonSpacing } = Astro.props as CardProps;
 
 const {
   class: className,
@@ -51,8 +51,7 @@ const {
   hover,
   ...rest
 } = nonSpacing;
-const p = Object.keys(padding).length === 0 ? "md" : padding.p;
-const paddingClasses = getSpacingClasses({ ...padding, p });
+const paddingClasses = getPaddingClassList(padding as Padding);
 const config = typeof border === "string" ? { width: border } : border || {};
 const { borderClasses, borderColors } = createBorder(config);
 ---

@@ -1,18 +1,16 @@
 ---
 import "../styles/spacing/spacing.css";
-import {
-  extractSpacingProps,
-  getSpacingClasses,
-  SpacingProps,
-} from "../lib/spacing";
+import type { SpacingProps } from "../lib/spacing";
+import { getMarginClassList, getPaddingClassList } from "../lib/spacing";
 import type { Base } from "../types";
 
 export interface MasonryItemProps extends Base, SpacingProps {}
 
-const { spacing, nonSpacing } = extractSpacingProps(
-  Astro.props as MasonryItemProps
-);
-const spacingClasses = getSpacingClasses(spacing);
+const { padding, margin, ...nonSpacing } = Astro.props as MasonryItemProps;
+const spacingClasses = [
+  ...getPaddingClassList(padding),
+  ...getMarginClassList(margin),
+].join(" ");
 
 const { class: className, ...rest } = nonSpacing;
 ---

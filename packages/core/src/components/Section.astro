@@ -2,26 +2,20 @@
 import "../styles/spacing/padding.css";
 import "../styles/border.css";
 import { Border, createBorder } from "../lib/border";
-import {
-  extractSpacingProps,
-  getSpacingClasses,
-  PaddingProps,
-} from "../lib/spacing";
+import type { SpacingProps } from "../lib/spacing";
+import { getPaddingClassList } from "../lib/spacing";
 import type { Base } from "../types";
 
-export interface SectionProps extends Base, PaddingProps {
+export interface SectionProps extends Base, SpacingProps {
   as?: "div" | "section" | "article" | "main" | "header" | "footer";
   border?: Border;
   dark?: boolean;
 }
 
-const { padding, nonSpacing } = extractSpacingProps(
-  Astro.props as SectionProps
-);
+const { padding, ...nonSpacing } = Astro.props as SectionProps;
 
 const { class: className, border, dark = false, ...rest } = nonSpacing;
-const p = Object.keys(padding).length === 0 ? "md" : padding.p;
-const paddingClasses = getSpacingClasses({ ...padding, p });
+const paddingClasses = getPaddingClassList(padding);
 
 const borderConfig =
   typeof border === "string" ? { width: border } : border || {};

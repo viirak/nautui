@@ -50,8 +50,8 @@
             "useBlockStatements": "off"
           },
           "correctness": {
+            "noUnusedImports": "error",
             "noUnusedVariables": "off",
-            "noUnusedImports": "off",
             "noUndeclaredVariables": "off"
           },
           "a11y": {
