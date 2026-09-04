@@ -41,8 +41,8 @@ const backgroundGradient = (() => {
 
 const maskX = mask?.position.x ?? 50;
 const maskY = mask?.position.y ?? 0;
-const maskSizeX = mask?.size.x ?? 70;
-const maskSizeY = mask?.size.y ?? 60;
+const maskSizeX = mask?.size?.x ?? 70;
+const maskSizeY = mask?.size?.y ?? 60;
 const backgroundMask = mask
   ? `radial-gradient(${maskSizeX}% ${maskSizeY}% at ${maskX}% ${maskY}%, rgb(0 0 0 / ${mask.visibility ?? 1}) 30%, transparent 75%)`
   : undefined;
