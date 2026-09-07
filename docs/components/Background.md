@@ -44,7 +44,8 @@ Any other attributes pass through to the `<div>`.
 | Prop         | Type                                     | Default  | Description                                          |
 | ------------ | ---------------------------------------- | -------- | ---------------------------------------------------- |
 | `shape`      | `"radial"`                              | *(required)* | Mask kind. Only `radial` today.                   |
-| `position`   | `"top" \| "bottom" \| "center" \| "left" \| "right"` | `"top"` | Anchor of the opaque core.                  |
+| `position`   | `{ x: number; y: number }`              | `{ x: 50, y: 0 }` | Horizontal (x) and vertical (y) anchor of the opaque core, as percentages (0–100). |
+| `size`       | `{ x: number; y: number }`              | `{ x: 70, y: 60 }` | Horizontal (x) and vertical (y) size of the opaque core, as percentages (0–100). |
 | `visibility` | `number`                                 | `1`      | Peak opacity of the mask (0–1).                       |
 
 `mask` renders a radial-gradient `mask-image` (with `-webkit-` prefix) that keeps the layer opaque near `position` and fades it to transparent at the edges — the classic hero "fade into the page" effect:
@@ -79,7 +80,7 @@ mask-image: radial-gradient(70% 60% at 50% 0, rgb(0 0 0 / 1) 30%, transparent 75
 ```astro
 <Background
   color="#3b82f6"
-  mask={{ shape: "radial", position: "top", visibility: 0.6 }}
+  mask={{ shape: "radial", position: { x: 50, y: 0 }, visibility: 0.6 }}
 />
 ```
 

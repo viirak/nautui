@@ -2,6 +2,8 @@
 
 A top navigation bar with sticky, autohide, and dark-mode-aware behaviors. Renders a semantic `<nav>` and keeps the bar height consistent with the `height` prop.
 
+> **Note:** Only one `<NavBar>` instance is supported per page. If multiple are detected, a console warning is emitted.
+
 ## Usage
 
 Import from `@nautui/core`:
