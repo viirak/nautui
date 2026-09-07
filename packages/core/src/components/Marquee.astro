@@ -1,11 +1,8 @@
 ---
 import "../styles/spacing/spacing.css";
 import "../styles/spacing/gap.css";
-import {
-  extractSpacingProps,
-  getSpacingClasses,
-  SpacingProps,
-} from "../lib/spacing";
+import type { SpacingProps } from "../lib/spacing";
+import { getMarginClassList, getPaddingClassList } from "../lib/spacing";
 import type { Base, Gap } from "../types";
 
 export interface MarqueeProps extends Base, SpacingProps {
@@ -22,10 +19,11 @@ export interface MarqueeProps extends Base, SpacingProps {
   static?: boolean;
 }
 
-const { spacing, nonSpacing } = extractSpacingProps(
-  Astro.props as MarqueeProps
-);
-const spacingClasses = getSpacingClasses(spacing);
+const { padding, margin, ...nonSpacing } = Astro.props as MarqueeProps;
+const spacingClasses = [
+  ...getPaddingClassList(padding),
+  ...getMarginClassList(margin),
+].join(" ");
 
 const {
   class: className,

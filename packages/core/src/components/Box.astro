@@ -5,9 +5,10 @@ import "../styles/border.css";
 import "../styles/radius.css";
 import { type Border, createBorder } from "../lib/border";
 import {
-  extractSpacingProps,
-  getSpacingClasses,
-  SpacingProps,
+  getMarginClassList,
+  getPaddingClassList,
+  type Padding,
+  type SpacingProps,
 } from "../lib/spacing";
 import type { Base, Radius, Responsive, Size } from "../types";
 
@@ -39,9 +40,10 @@ export interface BoxProps extends Base, SpacingProps {
   width?: IWidth;
 }
 
-const { padding, margin, nonSpacing } = extractSpacingProps(
-  Astro.props as BoxProps
-);
+const { padding, margin, ...nonSpacing } = Astro.props as BoxProps;
+const resolvedPadding: Padding = (
+  padding ? padding : { x: "md", y: "md" }
+) as Padding;
 
 const {
   border,
@@ -58,9 +60,8 @@ const borderConfig =
   typeof border === "string" ? { width: border } : border || {};
 const { borderClasses, borderColors } = createBorder(borderConfig);
 
-const p = Object.keys(padding).length === 0 ? "md" : padding.p;
-const marginClasses = getSpacingClasses({ ...margin });
-const paddingClasses = getSpacingClasses({ ...padding, p });
+const marginClasses = getMarginClassList(margin);
+const paddingClasses = getPaddingClassList(resolvedPadding);
 let textAlignValue:
   | {
       base?: Direction;

@@ -22,14 +22,14 @@
     --naut-font-size-xl: 1.565rem;
     --naut-font-size-xxl: 1.875rem;
 
-    /* Spacing */
+    /* Spacing — fluid clamp() values: (min, ideal fluid, max) */
     --naut-spacing-0: 0;
-    --naut-spacing-xs: 0.5rem;
-    --naut-spacing-sm: 1rem;
-    --naut-spacing-md: 1.5rem;
-    --naut-spacing-lg: 2rem;
-    --naut-spacing-xl: 2.5rem;
-    --naut-spacing-xxl: 3rem;
+    --naut-spacing-xs: clamp(0.25rem, 0.18rem + 0.35vw, 0.5rem);
+    --naut-spacing-sm: clamp(0.5rem, 0.35rem + 0.75vw, 1rem);
+    --naut-spacing-md: clamp(1rem, 0.75rem + 1.25vw, 1.5rem);
+    --naut-spacing-lg: clamp(1.5rem, 1.1rem + 2vw, 2rem);
+    --naut-spacing-xl: clamp(2rem, 1.5rem + 2.5vw, 2.5rem);
+    --naut-spacing-xxl: clamp(2.5rem, 1.8rem + 3.5vw, 3rem);
   }
 
   /* Global styles */

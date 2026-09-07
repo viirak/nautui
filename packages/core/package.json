@@ -23,7 +23,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "lint": "biome check src",
+    "lint": "biome check src --error-on-warnings",
     "check-types": "astro check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,17 +1,14 @@
 ---
 import "../styles/spacing/margin.css";
 import "../styles/spacing/letter.css";
-import {
-  extractSpacingProps,
-  getSpacingClasses,
-  MarginProps,
-} from "../lib/spacing";
+import type { SpacingProps } from "../lib/spacing";
+import { getMarginClassList } from "../lib/spacing";
 import type { Base, Size } from "../types";
 
 type TextDecoration = "underline" | "strikethrough";
 type TextTranform = "capitalize" | "uppercase" | "lowercase";
 
-export interface TextProps extends Base, MarginProps {
+export interface TextProps extends Base, SpacingProps {
   align?: "left" | "center" | "right" | "justify";
   color?: "soft" | "muted";
   decoration?: TextDecoration;
@@ -34,7 +31,7 @@ export interface TextProps extends Base, MarginProps {
   weight?: "light" | "normal" | "medium" | "bold" | "semi-bold" | "extra-bold";
 }
 
-const { margin, nonSpacing } = extractSpacingProps(Astro.props as TextProps);
+const { margin, ...nonSpacing } = Astro.props as TextProps;
 
 const {
   class: className,
@@ -55,7 +52,7 @@ const {
   ...rest
 } = nonSpacing;
 
-const marginClasses = getSpacingClasses(margin);
+const marginClasses = getMarginClassList(margin);
 const textTransform = transform || tt;
 const textDecoration = decoration || td;
 

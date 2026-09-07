@@ -1,20 +1,17 @@
 ---
 import "../styles/spacing/margin.css";
-import {
-  extractSpacingProps,
-  getSpacingClasses,
-  MarginProps,
-} from "../lib/spacing";
+import type { SpacingProps } from "../lib/spacing";
+import { getMarginClassList } from "../lib/spacing";
 import type { Base } from "../types";
 
-export interface DividerProps extends Base, MarginProps {
+export interface DividerProps extends Base, SpacingProps {
   label?: string;
   orientation?: "horizontal" | "vertical";
   size?: "sm" | "md" | "lg" | "xl";
   variant?: "solid" | "dotted" | "dashed";
 }
 
-const { margin, nonSpacing } = extractSpacingProps(Astro.props as DividerProps);
+const { margin, ...nonSpacing } = Astro.props as DividerProps;
 
 const {
   class: className,
@@ -24,8 +21,7 @@ const {
   variant = "solid",
 } = nonSpacing;
 
-const my = margin.my || margin.mt || margin.mb ? undefined : "md";
-const marginClasses = getSpacingClasses({ ...margin, my });
+const marginClasses = getMarginClassList(margin);
 const borderVar = `var(--naut-border-width-${size}) ${variant} var(--naut-color-border)`;
 ---
 

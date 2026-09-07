@@ -1,10 +1,7 @@
 ---
 import "../styles/spacing/spacing.css";
-import {
-  extractSpacingProps,
-  getSpacingClasses,
-  SpacingProps,
-} from "../lib/spacing";
+import type { SpacingProps } from "../lib/spacing";
+import { getMarginClassList, getPaddingClassList } from "../lib/spacing";
 import type { Base, Gap } from "../types";
 
 export interface MasonryProps extends Base, SpacingProps {
@@ -12,10 +9,11 @@ export interface MasonryProps extends Base, SpacingProps {
   gap?: Gap;
 }
 
-const { spacing, nonSpacing } = extractSpacingProps(
-  Astro.props as MasonryProps
-);
-const spacingClasses = getSpacingClasses(spacing);
+const { padding, margin, ...nonSpacing } = Astro.props as MasonryProps;
+const spacingClasses = [
+  ...getPaddingClassList(padding),
+  ...getMarginClassList(margin),
+].join(" ");
 const { class: className, columns = 4, gap = "md" } = nonSpacing;
 ---
 

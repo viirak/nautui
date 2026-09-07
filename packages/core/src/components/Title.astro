@@ -1,13 +1,10 @@
 ---
 import "../styles/spacing/margin.css";
-import {
-  extractSpacingProps,
-  getSpacingClasses,
-  MarginProps,
-} from "../lib/spacing";
+import type { SpacingProps } from "../lib/spacing";
+import { getMarginClassList } from "../lib/spacing";
 import type { Base } from "../types";
 
-export interface TitleProps extends Base, MarginProps {
+export interface TitleProps extends Base, SpacingProps {
   align?: "left" | "center" | "right" | "justify";
   gradient?: { colors: string[]; deg?: number };
   level?: 1 | 2 | 3 | 4 | 5 | 6;
@@ -21,7 +18,7 @@ export interface TitleProps extends Base, MarginProps {
     | "display-xxl";
 }
 
-const { spacing, nonSpacing } = extractSpacingProps(Astro.props as TitleProps);
+const { margin, ...nonSpacing } = Astro.props as TitleProps;
 
 const {
   level = 2,
@@ -32,7 +29,7 @@ const {
   ...rest
 } = nonSpacing;
 
-const spacingClasses = getSpacingClasses(spacing);
+const spacingClasses = getMarginClassList(margin);
 
 const classlist = [
   "naut-title",

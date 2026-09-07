@@ -1,48 +1,134 @@
 import type { Size } from "../types";
 
-export type Spacing = Size | "0";
+export type Spacing = Size;
 
-export interface PaddingProps {
-  p?: Spacing; // all sides
-  pb?: Spacing; // bottom only
-  pl?: Spacing; // left only
-  pr?: Spacing; // right only
-  pt?: Spacing; // top only
-  px?: Spacing; // left + right
-  py?: Spacing; // top + bottom
+export interface Padding {
+  bottom?: Spacing;
+  left?: Spacing;
+  right?: Spacing;
+  top?: Spacing;
+  x?: Spacing;
+  y?: Spacing;
 }
 
-export interface MarginProps {
-  m?: Spacing; // all sides
-  mb?: Spacing; // bottom only
-  ml?: Spacing; // left only
-  mr?: Spacing; // right only
-  mt?: Spacing; // top only
-  mx?: Spacing; // left + right
-  my?: Spacing; // top + bottom
+export interface Margin {
+  bottom?: Spacing;
+  left?: Spacing;
+  right?: Spacing;
+  top?: Spacing;
+  x?: Spacing;
+  y?: Spacing;
 }
 
-export interface SpacingProps extends PaddingProps, MarginProps {}
-
-// Extracts spacing props from a component's props
-export function extractSpacingProps<T extends SpacingProps>(props: T) {
-  const { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml, ...rest } =
-    props;
-
-  const filterUndefined = (obj: Record<string, Spacing | undefined>) =>
-    Object.fromEntries(
-      Object.entries(obj).filter(([, v]) => v !== undefined)
-    ) as Partial<SpacingProps>;
-
-  const padding = filterUndefined({ p, px, py, pt, pr, pb, pl });
-  const margin = filterUndefined({ m, mx, my, mt, mr, mb, ml });
-  const spacing = { ...padding, ...margin };
-  return { padding, margin, spacing, nonSpacing: rest as T };
+export interface SpacingProps {
+  margin?: Spacing | Margin;
+  padding?: Spacing | Padding;
 }
 
-// spacing classes
-export function getSpacingClasses(props: SpacingProps): string[] {
-  return Object.entries(props)
-    .filter(([, value]) => value !== undefined)
-    .map(([key, value]) => `${key}-${value}`);
+function resolveAxis(value: Spacing | undefined, prop: string): string[] {
+  if (value === undefined) {
+    return [];
+  }
+  return [`${prop}-${value}`];
+}
+
+export function resolvePadding(input: Spacing | Padding | undefined): Padding {
+  if (input === undefined) {
+    return {};
+  }
+  if (typeof input === "string") {
+    return { x: input, y: input };
+  }
+  return input as Padding;
+}
+
+export function resolveMargin(input: Spacing | Margin | undefined): Margin {
+  if (input === undefined) {
+    return {};
+  }
+  if (typeof input === "string") {
+    return { x: input, y: input };
+  }
+  return input as Margin;
+}
+
+function isDefined<T>(v: T | undefined): v is T {
+  return v !== undefined;
+}
+
+function addAxis(
+  classes: string[],
+  value: Spacing | undefined,
+  prefix: string
+) {
+  if (isDefined(value)) {
+    classes.push(...resolveAxis(value, prefix));
+  }
+}
+
+export function getPaddingClassList(
+  input: Spacing | Padding | undefined
+): string[] {
+  const padding = resolvePadding(input);
+  const classes: string[] = [];
+  const { x, y, top, bottom, left, right } = padding;
+
+  const allEqual =
+    isDefined(x) &&
+    x === y &&
+    !isDefined(top) &&
+    !isDefined(bottom) &&
+    !isDefined(left) &&
+    !isDefined(right);
+
+  if (allEqual) {
+    addAxis(classes, x, "p");
+  } else {
+    addAxis(classes, x, "px");
+    addAxis(classes, y, "py");
+    addAxis(classes, top, "pt");
+    addAxis(classes, bottom, "pb");
+    addAxis(classes, left, "pl");
+    addAxis(classes, right, "pr");
+  }
+  return classes;
+}
+
+export function getMarginClassList(
+  input: Spacing | Margin | undefined
+): string[] {
+  const margin = resolveMargin(input);
+  const classes: string[] = [];
+  const { x, y, top, bottom, left, right } = margin;
+
+  const allEqual =
+    isDefined(x) &&
+    x === y &&
+    !isDefined(top) &&
+    !isDefined(bottom) &&
+    !isDefined(left) &&
+    !isDefined(right);
+
+  if (allEqual) {
+    addAxis(classes, x, "m");
+  } else {
+    addAxis(classes, x, "mx");
+    addAxis(classes, y, "my");
+    addAxis(classes, top, "mt");
+    addAxis(classes, bottom, "mb");
+    addAxis(classes, left, "ml");
+    addAxis(classes, right, "mr");
+  }
+  return classes;
+}
+
+export function withPaddingDefault(
+  input: Spacing | Padding | undefined,
+  defaultValue: Spacing
+): Padding {
+  const padding = resolvePadding(input);
+  if (Object.keys(padding).length === 0) {
+    return { x: defaultValue, y: defaultValue };
+  }
+  return padding;
 }
