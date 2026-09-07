@@ -68,6 +68,39 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
       }
     }
   });
+
+  // Keyboard navigation for dropdowns
+  document.addEventListener("keydown", (e) => {
+    const open = document.querySelector<HTMLDetailsElement>(
+      "details.naut-dropdown[open]"
+    );
+    if (!open) return;
+
+    if (e.key === "Escape") {
+      open.removeAttribute("open");
+      (open.querySelector("summary") as HTMLElement)?.focus();
+      return;
+    }
+
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      const items = Array.from(
+        open.querySelectorAll<HTMLElement>(
+          "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"
+        )
+      );
+      if (!items.length) return;
+      const focused = document.activeElement as HTMLElement;
+      const idx = items.indexOf(focused);
+      let next: HTMLElement;
+      if (e.key === "ArrowDown") {
+        next = items[idx < items.length - 1 ? idx + 1 : 0];
+      } else {
+        next = items[idx > 0 ? idx - 1 : items.length - 1];
+      }
+      next.focus();
+    }
+  });
 </script>
 <script>
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
