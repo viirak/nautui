@@ -56,3 +56,9 @@
     background: var(--naut-color-selection);
   }
 }
+
+/* Focus visible — keyboard focus indicator */
+:focus-visible {
+  outline: 2px solid var(--naut-color-link, #3b82f6);
+  outline-offset: 2px;
+}
