@@ -132,10 +132,34 @@ const drawerId = uid("naut-drawer");
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-      const openDrawer = document.querySelector(
+      const openDrawerEl = document.querySelector(
         '.naut-drawer[data-state="open"]'
       );
-      if (openDrawer) closeDrawer(openDrawer);
+      if (openDrawerEl) closeDrawer(openDrawerEl);
+    }
+    if (e.key === "Tab") {
+      const openDrawerEl = document.querySelector(
+        '.naut-drawer[data-state="open"]'
+      );
+      if (!openDrawerEl) return;
+      const panel = openDrawerEl.querySelector(".naut-drawer-panel");
+      if (!panel) return;
+      const focusable = panel.querySelectorAll(
+        'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable.at(-1);
+      if (!(first && last)) return;
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 </script>
