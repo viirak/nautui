@@ -23,6 +23,7 @@ export interface CardProps extends Base, SpacingProps {
     | "elevate"
     | "elevate-lg"
     | "elevate-xl";
+  href?: string;
   radius?: Radius | "none";
   shadow?: "sm" | "md" | "lg" | "xl";
   size?: "sm" | "md" | "lg";
@@ -43,6 +44,7 @@ const {
   class: className,
   badged = false,
   border,
+  href,
   shadow,
   radius,
   size = "sm",
@@ -51,12 +53,13 @@ const {
   hover,
   ...rest
 } = nonSpacing;
+const Tag = href ? "a" : "div";
 const paddingClasses = getPaddingClassList(padding as Padding);
 const config = typeof border === "string" ? { width: border } : border || {};
 const { borderClasses, borderColors } = createBorder(config);
 ---
 
-<div
+<Tag
   class:list={[
     "naut-card",
     size && `size-${size}`,
@@ -75,7 +78,7 @@ const { borderClasses, borderColors } = createBorder(config);
   <div class="naut-card__header"><slot name="header" /></div>
   <div class:list={["naut-card__body", ...paddingClasses]}><slot /></div>
   <div class="naut-card__footer"><slot name="footer" /></div>
-</div>
+</Tag>
 
 <style define:vars={{ ...borderColors }}>
   .naut-card {
