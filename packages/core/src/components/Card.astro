@@ -13,6 +13,7 @@ import type { Base, Radius } from "../types";
 export interface CardProps extends Base, SpacingProps {
   badged?: boolean;
   border?: Border;
+  flex?: boolean;
   fluid?: boolean;
   hover?:
     | "light"
@@ -49,6 +50,7 @@ const {
   radius,
   size = "sm",
   fluid = false,
+  flex = false,
   variant = "ghost",
   hover,
   ...rest
@@ -64,6 +66,7 @@ const { borderClasses, borderColors } = createBorder(config);
     "naut-card",
     size && `size-${size}`,
     fluid && "fluid",
+    flex && "flex",
     badged && "badged",
     variant !== "ghost" && `variant-${variant}`,
     hover && `hover-${hover}`,
@@ -110,6 +113,13 @@ const { borderClasses, borderColors } = createBorder(config);
     .naut-card__body {
       position: relative;
       overflow: hidden;
+    }
+
+    &.flex {
+      .naut-card__body {
+        display: flex;
+        flex-direction: column;
+      }
     }
 
     .naut-card__header:empty {

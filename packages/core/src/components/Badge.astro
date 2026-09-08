@@ -30,15 +30,15 @@ export interface BadgeProps extends Base {
 
 const {
   size = "md",
+  variant = "text",
   gradient,
   radius = "sm",
   letterSpacing = "md",
   outlineColor,
-  variant = "text",
-  iconOnly = false,
   dotted = false,
   uppercase = false,
   color,
+  iconOnly = false,
   padding: paddingProp,
   ...rest
 } = Astro.props as BadgeProps;
