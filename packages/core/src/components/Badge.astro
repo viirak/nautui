@@ -17,6 +17,7 @@ export interface BadgeProps extends Base {
   padding?: Spacing | Padding;
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
+  uppercase?: boolean;
   variant?:
     | "text"
     | "border"
@@ -36,6 +37,7 @@ const {
   variant = "text",
   iconOnly = false,
   dotted = false,
+  uppercase = false,
   color,
   padding: paddingProp,
   ...rest
@@ -63,6 +65,7 @@ if (paddingProp) {
     (["primary", "secondary", "destructive"].includes(variant) || gradient) && "filled",
     color && `color--${color}`,
     dotted && "dotted",
+    uppercase && "uppercase",
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
     ...paddingClasses,
@@ -86,8 +89,11 @@ if (paddingProp) {
     align-items: center;
     justify-content: center;
     color: var(--naut-color-content);
-    text-transform: uppercase;
     text-wrap: nowrap;
+
+    &.uppercase {
+      text-transform: uppercase;
+    }
 
     &.ls--sm {
       letter-spacing: 0.05rem;
