@@ -74,11 +74,18 @@ if (variant in shorthandColor) {
 }
 
 const sizeXPadding: Record<string, string> = { sm: "xs", md: "sm", lg: "md" };
-const sizeYPadding: Record<string, string> = { sm: "xs", md: "xs", lg: "sm" };
+const sizeYPadding: Record<string, string> = { sm: "xs", md: "sm", lg: "md" };
 let resolvedPadding: Spacing | Padding;
 if (paddingProp) {
+  const paddingInput: Spacing | Padding =
+    paddingProp && typeof paddingProp === "object"
+      ? ({
+          ...paddingProp,
+          y: paddingProp.y ?? sizeYPadding[size as string] ?? "xs",
+        } as Padding)
+      : paddingProp;
   resolvedPadding = withPaddingDefault(
-    paddingProp,
+    paddingInput,
     (sizeXPadding[size as string] ?? "sm") as Spacing
   );
 } else if (square) {
