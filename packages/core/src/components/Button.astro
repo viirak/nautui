@@ -22,18 +22,17 @@ type ButtonVariant =
   | "ghost"
   | "link"
   | "rainbow";
-type ButtonSize = Omit<Size, "xl">;
 type ButtonRadius = Omit<Radius, "xl"> | "none" | "full";
 type ButtonType = "button" | "submit" | "reset";
 
 export interface ButtonProps extends Base {
-  border?: ButtonSize | "none";
+  border?: Size | "none";
   color?: string;
   dark?: boolean;
   href?: string;
   padding?: Spacing | Padding;
   rounded?: ButtonRadius;
-  size?: ButtonSize;
+  size?: Size;
   square?: boolean;
   type?: ButtonType;
   variant?: ButtonVariant;
@@ -72,36 +71,12 @@ if (variant in shorthandColor) {
   resolvedVariant = variant;
 }
 
-let py = "py-xs";
-const paddingY =
-  paddingProp && typeof paddingProp === "object" ? paddingProp.y : undefined;
-if (!paddingY) {
-  switch (size) {
-    case "sm":
-      py = "py-xs";
-      break;
-    case "md":
-      py = "py-sm";
-      break;
-    case "lg":
-      py = "py-md";
-      break;
-    default:
-      py = "py-xs";
-      break;
-  }
-}
-
-const paddingX =
-  paddingProp && typeof paddingProp === "object" ? paddingProp.x : undefined;
-const px =
-  paddingX === undefined ? "px-md" : `px-${paddingX.replace("px-", "")}`;
-
-const paddingClasses = getPaddingClassList(
-  paddingProp && typeof paddingProp === "object" && !paddingProp.y
-    ? ({ ...paddingProp, y: py.replace("py-", "") } as Padding)
-    : paddingProp
-);
+let paddingClasses: string[] = [];
+if (paddingProp) {
+  paddingClasses = getPaddingClassList(paddingProp);
+} else if (size === "sm") paddingClasses = ["px-xs", "py-xs"];
+else if (size === "md") paddingClasses = ["px-sm", "py-sm"];
+else paddingClasses = ["px-md", "py-md"];
 
 const classlist = [
   "naut-button",
@@ -113,8 +88,6 @@ const classlist = [
   dark && "dark",
   square && "square",
   ...paddingClasses,
-  px,
-  py,
   className,
 ];
 ---

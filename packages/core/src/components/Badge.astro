@@ -2,7 +2,6 @@
 import {
   getPaddingClassList,
   type Padding,
-  resolveButtonPadding,
   type Spacing,
 } from "../lib/spacing";
 import type { Base, Radius } from "../types";
@@ -45,9 +44,12 @@ const {
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : "none";
-const paddingClasses = getPaddingClassList(paddingProp);
-const paddings =
-  variant === "text" ? undefined : resolveButtonPadding(paddingProp, size);
+let paddingClasses: string[] = [];
+if (paddingProp) {
+  paddingClasses = getPaddingClassList(paddingProp);
+} else if (size === "sm") paddingClasses = ["px-xs", "py-xs"];
+else if (size === "md") paddingClasses = ["px-sm", "py-sm"];
+else paddingClasses = ["px-md", "py-md"];
 ---
 
 <div
@@ -62,7 +64,6 @@ const paddings =
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
     ...paddingClasses,
-    paddings?.join(" "),
     iconOnly && "icon-only"
   ]}
   {...rest}
