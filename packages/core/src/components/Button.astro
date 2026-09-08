@@ -72,30 +72,31 @@ if (variant in shorthandColor) {
   resolvedVariant = variant;
 }
 
-const sizeXPadding: Record<string, string> = { sm: "xs", md: "sm", lg: "md" };
-const sizeYPadding: Record<string, string> = { sm: "xs", md: "sm", lg: "md" };
-let resolvedPadding: Spacing | Padding;
-if (paddingProp) {
-  if (typeof paddingProp === "string") {
-    resolvedPadding = paddingProp;
-  } else {
-    resolvedPadding = {
-      ...paddingProp,
-      y: paddingProp.y ?? sizeYPadding[size as string] ?? "xs",
-    } as Padding;
+let py = "py-xs";
+const paddingY =
+  paddingProp && typeof paddingProp === "object" ? paddingProp.y : undefined;
+if (!paddingY) {
+  switch (size) {
+    case "sm":
+      py = "py-xs";
+      break;
+    case "md":
+      py = "py-sm";
+      break;
+    case "lg":
+      py = "py-md";
+      break;
+    default:
+      py = "py-xs";
+      break;
   }
-} else if (square) {
-  resolvedPadding = {
-    x: (sizeXPadding[size as string] ?? "sm") as Size,
-    y: (sizeXPadding[size as string] ?? "sm") as Size,
-  };
-} else {
-  resolvedPadding = {
-    x: (sizeXPadding[size as string] ?? "sm") as Size,
-    y: (sizeYPadding[size as string] ?? "xs") as Size,
-  };
 }
-const paddingClasses = getPaddingClassList(resolvedPadding);
+
+const paddingClasses = getPaddingClassList(
+  paddingProp && typeof paddingProp === "object" && !paddingProp.y
+    ? ({ ...paddingProp, y: py.replace("py-", "") } as Padding)
+    : paddingProp
+);
 
 const classlist = [
   "naut-button",
@@ -107,6 +108,7 @@ const classlist = [
   dark && "dark",
   square && "square",
   ...paddingClasses,
+  py,
   className,
 ];
 ---
