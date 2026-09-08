@@ -42,7 +42,7 @@ Renders a `<div class="naut-accordion">` flex column. Any attributes pass throug
 
 - Each item is a radio-backed disclosure — **only one item is open at a time**, and clicking an open item collapses it.
 - The expand icon rotates (chevron) or animates to a minus (plus) on open.
-- Content is revealed with a `max-height` transition (caps at `400px`).
+- Content is revealed with a `max-height` transition (caps at **`2000px`**).
 - Items are separated by a divider line; the last item has none.
 
 ## Accessibility
