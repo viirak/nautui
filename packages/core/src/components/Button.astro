@@ -1,5 +1,12 @@
 ---
+import {
+  getPaddingClassList,
+  type Padding,
+  type Spacing,
+  withPaddingDefault,
+} from "../lib/spacing";
 import type { Base, Radius, Size } from "../types";
+import "../styles/spacing/padding.css";
 
 type ButtonVariant =
   | "default"
@@ -21,6 +28,7 @@ export interface ButtonProps extends Base {
   border?: ButtonSize | "none";
   dark?: boolean;
   href?: string;
+  padding?: Spacing | Padding;
   rounded?: ButtonRadius;
   size?: ButtonSize;
   square?: boolean;
@@ -38,8 +46,30 @@ const {
   border = "md",
   dark = false,
   square = false,
+  padding: paddingProp,
   ...rest
 } = Astro.props as ButtonProps;
+
+const sizeXPadding: Record<string, string> = { sm: "xs", md: "sm", lg: "md" };
+const sizeYPadding: Record<string, string> = { sm: "xs", md: "xs", lg: "sm" };
+let resolvedPadding: Spacing | Padding;
+if (paddingProp) {
+  resolvedPadding = withPaddingDefault(
+    paddingProp,
+    (sizeXPadding[size as string] ?? "sm") as Spacing
+  );
+} else if (square) {
+  resolvedPadding = {
+    x: (sizeXPadding[size as string] ?? "sm") as Size,
+    y: (sizeXPadding[size as string] ?? "sm") as Size,
+  };
+} else {
+  resolvedPadding = {
+    x: (sizeXPadding[size as string] ?? "sm") as Size,
+    y: (sizeYPadding[size as string] ?? "xs") as Size,
+  };
+}
+const paddingClasses = getPaddingClassList(resolvedPadding);
 
 const classlist = [
   "naut-button",
@@ -49,6 +79,7 @@ const classlist = [
   `border-${border}`,
   dark && "dark",
   square && "square",
+  ...paddingClasses,
   className,
 ];
 ---
@@ -66,7 +97,6 @@ const classlist = [
 
     /* Size */
     height: 2.5rem;
-    padding: 0 1rem;
     font-family: inherit;
     font-size: 0.875rem;
     font-weight: 400;
@@ -266,7 +296,6 @@ const classlist = [
     /* Sizes */
     &.size-sm {
       height: 2rem;
-      padding: 0 0.85rem;
       font-size: 0.8rem;
 
       :global(svg) {
@@ -277,7 +306,6 @@ const classlist = [
 
     &.size-lg {
       height: 3rem;
-      padding: 0 2.5rem;
       font-size: calc(var(--naut-font-size) * 1.125);
 
       :global(svg) {
@@ -288,7 +316,6 @@ const classlist = [
 
     &.square {
       aspect-ratio: 1;
-      padding: 0;
     }
   }
 </style>

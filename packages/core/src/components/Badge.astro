@@ -1,5 +1,7 @@
 ---
+import { getPaddingClassList, type Spacing } from "../lib/spacing";
 import type { Base, Radius } from "../types";
+import "../styles/spacing/padding.css";
 
 export interface BadgeProps extends Base {
   color?: "primary" | "secondary" | "destructive";
@@ -8,6 +10,7 @@ export interface BadgeProps extends Base {
   iconOnly?: boolean;
   letterSpacing?: "sm" | "md" | "lg";
   outlineColor?: string;
+  padding?: Spacing;
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
   variant?:
@@ -30,12 +33,14 @@ const {
   iconOnly = false,
   dotted = false,
   color,
+  padding: paddingProp,
   ...rest
 } = Astro.props as BadgeProps;
 
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : "none";
+const paddingClasses = getPaddingClassList(paddingProp);
 ---
 
 <div
@@ -49,6 +54,7 @@ const gradientBg = gradient
     dotted && "dotted",
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
+    ...paddingClasses,
     iconOnly && "icon-only"
   ]}
   {...rest}
@@ -196,14 +202,6 @@ const gradientBg = gradient
       font-size: 0.875rem;
       &.icon-only {
         padding: 0.85rem;
-      }
-    }
-
-    &.size--lg {
-      padding: 0.35rem 1.15rem;
-      font-size: 1.125rem;
-      &.icon-only {
-        padding: 1.15rem;
       }
     }
   }
