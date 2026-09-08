@@ -7,14 +7,21 @@ import { getPaddingClassList } from "../lib/spacing";
 import type { Base } from "../types";
 
 export interface SectionProps extends Base, SpacingProps {
-  as?: "div" | "section" | "article" | "main" | "header" | "footer";
+  as?: "div" | "header" | "footer";
   border?: Border;
   dark?: boolean;
 }
 
 const { padding, ...nonSpacing } = Astro.props as SectionProps;
 
-const { class: className, border, dark = false, ...rest } = nonSpacing;
+const {
+  class: className,
+  border,
+  dark = false,
+  as: asProp,
+  ...rest
+} = nonSpacing;
+const Tag = asProp ?? "section";
 const paddingClasses = getPaddingClassList(padding);
 
 const borderConfig =
@@ -22,7 +29,7 @@ const borderConfig =
 const { borderClasses, borderColors } = createBorder(borderConfig);
 ---
 
-<section
+<Tag
   class:list={[
     "naut-section",
     dark && "dark",
@@ -43,7 +50,7 @@ const { borderClasses, borderColors } = createBorder(borderConfig);
     <div class="naut-section__right"><slot name="right" /></div>
   </div>
   <slot name="after" />
-</section>
+</Tag>
 
 <style define:vars={{ ...borderColors }}>
   .naut-section {
