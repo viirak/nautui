@@ -92,6 +92,11 @@ if (!paddingY) {
   }
 }
 
+const paddingX =
+  paddingProp && typeof paddingProp === "object" ? paddingProp.x : undefined;
+const px =
+  paddingX === undefined ? "px-md" : `px-${paddingX.replace("px-", "")}`;
+
 const paddingClasses = getPaddingClassList(
   paddingProp && typeof paddingProp === "object" && !paddingProp.y
     ? ({ ...paddingProp, y: py.replace("py-", "") } as Padding)
@@ -108,6 +113,7 @@ const classlist = [
   dark && "dark",
   square && "square",
   ...paddingClasses,
+  px,
   py,
   className,
 ];
