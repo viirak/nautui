@@ -1,5 +1,9 @@
 ---
-import { getPaddingClassList, type Spacing } from "../lib/spacing";
+import {
+  getPaddingClassList,
+  type Padding,
+  type Spacing,
+} from "../lib/spacing";
 import type { Base, Radius } from "../types";
 import "../styles/spacing/padding.css";
 
@@ -10,7 +14,7 @@ export interface BadgeProps extends Base {
   iconOnly?: boolean;
   letterSpacing?: "sm" | "md" | "lg";
   outlineColor?: string;
-  padding?: Spacing;
+  padding?: Spacing | Padding;
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
   variant?:
@@ -41,6 +45,25 @@ const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : "none";
 const paddingClasses = getPaddingClassList(paddingProp);
+let py = "py-xs";
+const paddingY =
+  paddingProp && typeof paddingProp === "object" ? paddingProp.y : undefined;
+if (!paddingY) {
+  switch (size) {
+    case "sm":
+      py = "py-xs";
+      break;
+    case "md":
+      py = "py-sm";
+      break;
+    case "lg":
+      py = "py-md";
+      break;
+    default:
+      py = "py-xs";
+      break;
+  }
+}
 ---
 
 <div
@@ -55,6 +78,7 @@ const paddingClasses = getPaddingClassList(paddingProp);
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
     ...paddingClasses,
+    py,
     iconOnly && "icon-only"
   ]}
   {...rest}
