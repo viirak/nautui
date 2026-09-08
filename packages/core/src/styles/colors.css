@@ -13,6 +13,9 @@
   --naut-color-primary-content: white;
   --naut-color-secondary-content: white;
   --naut-color-destructive-content: white;
+  --naut-color-success-content: white;
+  --naut-color-warning-content: white;
+  --naut-color-info-content: white;
 
   /* === Tint controls (overridable) ===
     * Convention constants for component-side color-mix.

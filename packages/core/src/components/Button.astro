@@ -13,6 +13,9 @@ type ButtonVariant =
   | "primary"
   | "secondary"
   | "destructive"
+  | "success"
+  | "warning"
+  | "info"
   | "outline"
   | "outline-primary"
   | "outline-secondary"
@@ -26,6 +29,7 @@ type ButtonType = "button" | "submit" | "reset";
 
 export interface ButtonProps extends Base {
   border?: ButtonSize | "none";
+  color?: string;
   dark?: boolean;
   href?: string;
   padding?: Spacing | Padding;
@@ -42,6 +46,7 @@ const {
   size = "md",
   type = "button",
   variant = "default",
+  color: colorProp,
   rounded = "md",
   border = "md",
   dark = false,
@@ -49,6 +54,24 @@ const {
   padding: paddingProp,
   ...rest
 } = Astro.props as ButtonProps;
+
+const shorthandColor: Record<string, string> = {
+  primary: "primary",
+  secondary: "secondary",
+  destructive: "destructive",
+  success: "success",
+  warning: "warning",
+  info: "info",
+};
+const resolvedColor = colorProp ?? shorthandColor[variant];
+let resolvedVariant: string;
+if (variant in shorthandColor) {
+  resolvedVariant = "filled";
+} else if (variant.startsWith("outline-")) {
+  resolvedVariant = "outline";
+} else {
+  resolvedVariant = variant;
+}
 
 const sizeXPadding: Record<string, string> = { sm: "xs", md: "sm", lg: "md" };
 const sizeYPadding: Record<string, string> = { sm: "xs", md: "xs", lg: "sm" };
@@ -74,7 +97,8 @@ const paddingClasses = getPaddingClassList(resolvedPadding);
 const classlist = [
   "naut-button",
   `size-${size}`,
-  `variant-${variant}`,
+  `variant-${resolvedVariant}`,
+  resolvedColor ? `color-${resolvedColor}` : "color-primary",
   `rounded-${rounded}`,
   `border-${border}`,
   dark && "dark",
@@ -186,6 +210,60 @@ const classlist = [
 
       &:hover:not(:disabled) {
         background: rgb(from var(--naut-color-secondary) r g b / 0.15);
+      }
+    }
+
+    /* Color overrides via color prop */
+    &.color-primary {
+      color: var(--naut-color-primary-content);
+      background: var(--naut-color-primary);
+      border-color: var(--naut-color-primary);
+      &:hover:not(:disabled) {
+        background: color-mix(in oklch, var(--naut-color-primary), white 35%);
+      }
+    }
+    &.color-secondary {
+      color: var(--naut-color-secondary-content);
+      background: var(--naut-color-secondary);
+      border-color: var(--naut-color-secondary);
+      &:hover:not(:disabled) {
+        background: color-mix(in oklch, var(--naut-color-secondary), white 35%);
+      }
+    }
+    &.color-destructive {
+      color: var(--naut-color-destructive-content);
+      background: var(--naut-color-destructive);
+      border-color: var(--naut-color-destructive);
+      &:hover:not(:disabled) {
+        background: color-mix(
+          in oklch,
+          var(--naut-color-destructive),
+          white 25%
+        );
+      }
+    }
+    &.color-success {
+      color: var(--naut-color-success-content);
+      background: var(--naut-color-success);
+      border-color: var(--naut-color-success);
+      &:hover:not(:disabled) {
+        background: color-mix(in oklch, var(--naut-color-success), white 35%);
+      }
+    }
+    &.color-warning {
+      color: var(--naut-color-warning-content);
+      background: var(--naut-color-warning);
+      border-color: var(--naut-color-warning);
+      &:hover:not(:disabled) {
+        background: color-mix(in oklch, var(--naut-color-warning), white 35%);
+      }
+    }
+    &.color-info {
+      color: var(--naut-color-info-content);
+      background: var(--naut-color-info);
+      border-color: var(--naut-color-info);
+      &:hover:not(:disabled) {
+        background: color-mix(in oklch, var(--naut-color-info), white 35%);
       }
     }
 

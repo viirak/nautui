@@ -10,7 +10,7 @@ type TextTranform = "capitalize" | "uppercase" | "lowercase";
 
 export interface TextProps extends Base, SpacingProps {
   align?: "left" | "center" | "right" | "justify";
-  color?: "soft" | "muted";
+  color?: "soft" | "muted" | string;
   decoration?: TextDecoration;
   dimmed?: boolean;
   inline?: boolean;
@@ -44,7 +44,7 @@ const {
   variant,
   size,
   ls,
-  color,
+  color: colorProp,
   italic = false,
   inline = false,
   dimmed = false,
@@ -60,7 +60,7 @@ const classList = [
   "text",
   italic && "italic",
   dimmed && "dimmed",
-  color && `color-${color}`,
+  colorProp && `color-${colorProp}`,
   nowrap && "nowrap",
   align && `align-${align}`,
   size && `size-${size}`,
@@ -77,7 +77,7 @@ const classList = [
 {inline && <span class:list={classList} {...rest}><slot /></span>}
 {!inline && <p class:list={classList} {...rest}><slot /></p>}
 
-<style>
+<style define:vars={{ textColor: colorProp }}>
   .text {
     font-family: inherit;
     font-size: inherit;
