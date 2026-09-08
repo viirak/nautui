@@ -1,3 +1,34 @@
+/* padding xs */
+.p-xs {
+  padding: var(--naut-spacing-xs);
+}
+
+.px-xs {
+  padding-right: var(--naut-spacing-xs);
+  padding-left: var(--naut-spacing-xs);
+}
+
+.py-xs {
+  padding-top: var(--naut-spacing-xs);
+  padding-bottom: var(--naut-spacing-xs);
+}
+
+.pt-xs {
+  padding-top: var(--naut-spacing-xs);
+}
+
+.pb-xs {
+  padding-bottom: var(--naut-spacing-xs);
+}
+
+.pl-xs {
+  padding-left: var(--naut-spacing-xs);
+}
+
+.pr-xs {
+  padding-right: var(--naut-spacing-xs);
+}
+
 /* padding sm */
 .p-sm {
   padding: var(--naut-spacing-sm);
