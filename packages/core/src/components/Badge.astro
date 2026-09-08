@@ -2,6 +2,7 @@
 import {
   getPaddingClassList,
   type Padding,
+  resolveButtonPadding,
   type Spacing,
 } from "../lib/spacing";
 import type { Base, Radius } from "../types";
@@ -18,8 +19,8 @@ export interface BadgeProps extends Base {
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
   variant?:
-    | "default"
     | "text"
+    | "border"
     | "surface"
     | "outline"
     | "primary"
@@ -33,7 +34,7 @@ const {
   radius = "sm",
   letterSpacing = "md",
   outlineColor,
-  variant = "default",
+  variant = "text",
   iconOnly = false,
   dotted = false,
   color,
@@ -45,25 +46,8 @@ const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : "none";
 const paddingClasses = getPaddingClassList(paddingProp);
-let py = "py-xs";
-const paddingY =
-  paddingProp && typeof paddingProp === "object" ? paddingProp.y : undefined;
-if (!paddingY) {
-  switch (size) {
-    case "sm":
-      py = "py-xs";
-      break;
-    case "md":
-      py = "py-sm";
-      break;
-    case "lg":
-      py = "py-md";
-      break;
-    default:
-      py = "py-xs";
-      break;
-  }
-}
+const paddings =
+  variant === "text" ? undefined : resolveButtonPadding(paddingProp, size);
 ---
 
 <div
@@ -78,7 +62,7 @@ if (!paddingY) {
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
     ...paddingClasses,
-    py,
+    paddings?.join(" "),
     iconOnly && "icon-only"
   ]}
   {...rest}
@@ -101,7 +85,6 @@ if (!paddingY) {
     color: var(--naut-color-content);
     text-transform: uppercase;
     text-wrap: nowrap;
-    border: 1px solid var(--naut-color-border);
 
     &.ls--sm {
       letter-spacing: 0.05rem;
@@ -120,13 +103,15 @@ if (!paddingY) {
       background: var(--gradientBg);
     }
 
+    &.variant--border {
+      border: 1px solid var(--naut-color-border);
+    }
+
     &.variant--text {
-      color: var(--naut-color-content);
       border: none;
     }
 
     &.variant--surface {
-      color: var(--naut-color-content);
       background-color: var(--naut-color-base-200);
       border: none;
     }
