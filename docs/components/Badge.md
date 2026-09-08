@@ -31,6 +31,7 @@ import { Badge } from "@nautui/core";
 | `dotted`        | `boolean`                                  | `false`     | Shows a leading status dot.                       |
 | `iconOnly`      | `boolean`                                  | `false`     | Square aspect for icon-only badges.               |
 | `class`         | `string`                                   | —           | Extra class names merged onto the element.        |
+| `uppercase` | `boolean`                                   | `false`     | Forces all-caps text.                              |
 
 Any other attributes (e.g. `id`, `aria-*`, `data-*`) pass through to the element.
 

@@ -27,6 +27,7 @@ import { Section } from "@nautui/core";
 | `border` | `Border \| string`                              | —       | Border (string = width).                      |
 | `dark`   | `boolean`                                       | `false` | Force dark-mode rendering (`.dark` class).    |
 | `class`  | `string`                                        | —       | Extra class names merged onto the element.    |
+| `fill`   | `boolean`                                      | `false` | Full-viewport min-height (`100vh`).         |
 
 Default content padding is `md` when no padding props are passed.
 

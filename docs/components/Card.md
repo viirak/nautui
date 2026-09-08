@@ -3,21 +3,23 @@
 An elevated, bordered content container with slots for common card anatomy (badge, header, body, footer) and hover states.
 
 ## Usage
-
-Import from `@nautui/core`:
-
 ```astro
 ---
 import { Card } from "@nautui/core";
 ---
 
+<Card slot="badge"><Badge variant="surface">New</Badge></Card>
 <Card>
-  <Card slot="badge"><Badge variant="outline">New</Badge></Card>
   <h3>Card title</h3>
   <p>Card body text.</p>
-  <Card slot="footer"><Button>Learn more</Button></Card>
+  <Card slot="footer">
+     <Button>Dismiss</Button>
+    <Button href="https://example.com" target="_blank" rel="noreferrer">Learn more</Button>
+  </Card>
 </Card>
 ```
+
+When `href` is set, the `<Card>` container renders as an `<a>` element instead of a `<div>`, making the entire card keyboard-focusable and navigable. Pass-through props like `target` and `rel` are forwarded automatically.
 
 ## Props
 
@@ -33,6 +35,8 @@ import { Card } from "@nautui/core";
 | `shadow`   | `"sm" \| "md" \| "lg" \| "xl"`           | —        | Base box shadow.                                 |
 | `size`     | `"sm" \| "md" \| "lg"`                   | `"md"`    | Padding scale.                                   |
 | `fluid`    | `boolean`                                | `false`   | Full-width (no max-width centering).             |
+| `href`     | `string`                                 | —        | Renders as `<a>` tag; element wraps the card.    |
+| `flex`     | `boolean`                                | `false`   | Enables flex-col layout on `.naut-card__body`.   |
 | `class`    | `string`                                 | —        | Extra class names merged onto the element.       |
 
 Any other attributes pass through to the `<div>`.
