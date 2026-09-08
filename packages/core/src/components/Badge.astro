@@ -47,9 +47,11 @@ const gradientBg = gradient
 let paddingClasses: string[] = [];
 if (paddingProp) {
   paddingClasses = getPaddingClassList(paddingProp);
-} else if (size === "sm") paddingClasses = ["px-xs", "py-xs"];
-else if (size === "md") paddingClasses = ["px-sm", "py-sm"];
-else paddingClasses = ["px-md", "py-md"];
+} else if (variant !== "text") {
+  if (size === "sm") paddingClasses = ["px-xs", "py-xs"];
+  else if (size === "md") paddingClasses = ["px-sm", "py-sm"];
+  else paddingClasses = ["px-md", "py-md"];
+}
 ---
 
 <div
