@@ -42,6 +42,35 @@ export function resolvePadding(input: Spacing | Padding | undefined): Padding {
   return input as Padding;
 }
 
+export function resolveButtonPadding(
+  input: Size | Padding | undefined,
+  size: Size
+) {
+  const classes: string[] = [];
+  const paddingX = input && typeof input === "object" ? input.x : undefined;
+  const px = paddingX ? `px-${paddingX}` : "px-sm";
+  const paddingY = input && typeof input === "object" ? input.y : undefined;
+  let py = "py-xs";
+  if (!paddingY && py) {
+    switch (size) {
+      case "sm":
+        py = "py-xs";
+        break;
+      case "md":
+        py = "py-xs";
+        break;
+      case "lg":
+        py = "py-sm";
+        break;
+      default:
+        py = "py-xs";
+        break;
+    }
+  }
+  classes.push(py, px);
+  return classes;
+}
+
 export function resolveMargin(input: Spacing | Margin | undefined): Margin {
   if (input === undefined) {
     return {};
