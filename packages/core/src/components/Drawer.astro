@@ -88,6 +88,9 @@ const drawerId = uid("naut-drawer");
 </div>
 
 <script is:inline>
+  let _nautDrawerOpenCount = 0;
+  let _nautOriginalOverflow: string | undefined;
+
   function closeDrawer(drawer) {
     drawer.dataset.state = "closed";
     drawer.setAttribute("aria-hidden", "true");
@@ -96,18 +99,27 @@ const drawerId = uid("naut-drawer");
       btn.setAttribute("aria-expanded", "false");
       btn.focus();
     }
-    document.body.style.overflow = drawer._nautPrevOverflow ?? "";
+    _nautDrawerOpenCount--;
+    if (_nautDrawerOpenCount === 0) {
+      document.body.style.overflow = _nautOriginalOverflow ?? "";
+      _nautOriginalOverflow = undefined;
+    }
   }
 
   function openDrawer(drawer) {
-    drawer._nautPrevOverflow = document.body.style.overflow;
+    if (_nautDrawerOpenCount === 0) {
+      _nautOriginalOverflow = document.body.style.overflow;
+    }
+    _nautDrawerOpenCount++;
     drawer.dataset.state = "open";
     drawer.setAttribute("aria-hidden", "false");
     const btn = document.querySelector(`[data-drawer-trigger="${drawer.id}"]`);
     if (btn) btn.setAttribute("aria-expanded", "true");
     const closeBtn = drawer.querySelector("[data-drawer-close]");
     if (closeBtn) closeBtn.focus();
-    document.body.style.overflow = "hidden";
+    if (_nautDrawerOpenCount === 1) {
+      document.body.style.overflow = "hidden";
+    }
   }
 
   document.addEventListener("click", (e) => {
