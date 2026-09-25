@@ -18,13 +18,16 @@ import { Mark } from "@nautui/core";
 
 ## Props
 
-| Prop       | Type                                      | Default    | Description                                     |
-| ---------- | ----------------------------------------- | ---------- | ----------------------------------------------- |
-| `variant`  | `"default" \| "primary" \| "secondary" \| "destructive" \| "underline" \| "halflight" \| "parallelogram" \| "sketch-circle"` | `"default"` | Style. |
-| `gradient` | `{ colors: string[]; deg?: number }`      | —          | Gradient text (background-clip: text).          |
-| `ff`       | `string`                                  | —          | Custom font family.                             |
-| `rotate`   | `"sm" \| "md" \| "lg"`                    | —          | Counter-clockwise tilt (−1.25/−1.5/−1.95deg).   |
-| `class`    | `string`                                  | —          | Extra class names merged onto the element.      |
+| Prop          | Type                                      | Default    | Description                                     |
+| ------------- | ----------------------------------------- | ---------- | ----------------------------------------------- |
+| `variant`     | `"default" \| "primary" \| "secondary" \| "destructive" \| "underline" \| "halflight" \| "parallelogram" \| "sketch-circle"` | `"default"` | Style. |
+| `gradient`    | `{ colors: string[]; deg?: number }`      | —          | Gradient text (background-clip: text).          |
+| `fontFamily`  | `string`                                  | —          | Custom CSS font-family value.                  |
+| `ff`          | `string`                                  | —          | Backward-compatible alias for `fontFamily`.    |
+| `rotate`      | `"sm" \| "md" \| "lg"`                    | —          | Counter-clockwise tilt (−1.25/−1.5/−1.95deg).   |
+| `class`       | `string`                                  | —          | Extra class names merged onto the element.      |
+
+Use `fontFamily` for new code; `ff` remains supported for existing consumers.
 
 ## Variants
 
