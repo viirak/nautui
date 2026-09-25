@@ -1,6 +1,6 @@
 # MegaMenu
 
-A Stripe-style single-panel dropdown menu for desktop navigation. One shared floating panel crossfades between dropdown items on hover.
+A Stripe-style single-panel dropdown menu for desktop navigation. `MegaMenu` and `MegaMenuItem` are separate named exports from `@nautui/blocks`; one shared floating panel crossfades between dropdown items on hover.
 
 ## Usage
 
@@ -32,9 +32,9 @@ The container component. Renders a `<ul>` and injects the shared dropdown panel.
 | `class` | `string` | — | Additional CSS classes |
 | `...rest` | `Base` | — | Arbitrary passthrough attributes |
 
-### `<MegaMenu.Item>`
+### `<MegaMenuItem>`
 
-A menu item. Use `drop` to create a dropdown trigger; omit it for a regular link.
+A separately exported menu item. Use `drop` to create a dropdown trigger; omit it for a regular link.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|

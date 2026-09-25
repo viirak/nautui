@@ -132,6 +132,8 @@ Canonical values are `row`/`column`, `start`/`center`/`end`/`between`/`around`/`
 | --- | --- | --- |
 | `Breadcrumb` | Navigation trail with separators | [→](components/Breadcrumb.md) |
 | `DocLayout` | Three-column docs page shell (nav / content / TOC) | [→](components/DocLayout.md) |
+| `MegaMenu` | Stripe-style single-panel dropdown navigation | [→](blocks/MegaMenu.md) |
+| `MegaMenuItem` | MegaMenu link or dropdown item | [→](blocks/MegaMenu.md#megamenuitem) |
 | `NavMenu` | Desktop horizontal nav with submenus + overflow limit | [→ recipe](recipes/nav-menu.md) (removed from `@nautui/blocks`) |
 | `SectionHero` | Full-width marketing hero section | [→](components/SectionHero.md) |
 | `TOC` | Table of contents from `MarkdownHeading[]` | [→](components/TOC.md) |
