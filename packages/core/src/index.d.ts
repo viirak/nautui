@@ -1,6 +1,8 @@
 import type { AccordionProps } from "./components/Accordion.astro";
 import type { AccordionItemProps } from "./components/AccordionItem.astro";
 import type { ArticleProps } from "./components/Article.astro";
+import type { AvatarProps } from "./components/Avatar.astro";
+import type { AvatarGroupProps } from "./components/AvatarGroup.astro";
 import type { BackgroundProps } from "./components/Background.astro";
 import type { BackToTopProps } from "./components/BackToTop.astro";
 import type { BadgeProps } from "./components/Badge.astro";
@@ -90,6 +92,8 @@ export declare const Button: (props: ButtonProps) => AstroComponent;
 export declare const Badge: (props: BadgeProps) => AstroComponent;
 export declare const BackToTop: (props: BackToTopProps) => AstroComponent;
 export declare const Card: (props: CardProps) => AstroComponent;
+export declare const Avatar: (props: AvatarProps) => AstroComponent;
+export declare const AvatarGroup: (props: AvatarGroupProps) => AstroComponent;
 export declare const Divider: (props: DividerProps) => AstroComponent;
 export declare const Image: (props: ImageProps) => AstroComponent;
 export declare const Background: (props: BackgroundProps) => AstroComponent;

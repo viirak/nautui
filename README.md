@@ -169,6 +169,8 @@ Theming relies on `color-mix()`, `oklch()`, and relative color syntax (`rgb(from
 - [x] Divider — horizontal or vertical rule
 - [x] Mark — highlighted text with decorative variants
 - [x] Link — themed anchor with hover states
+- [x] Avatar — profile image or initials with status, shape, and ring options
+- [x] AvatarGroup — overlapping avatar collection with an optional `+N` counter
 
 ### Typography
 - [x] Title — semantic h1–h6 with a display scale and gradient text

@@ -1,0 +1,289 @@
+---
+import "../styles/radius.css";
+import type { Base, Radius, Size } from "../types";
+
+export type AvatarSize = Size | "xs" | "2xl";
+export type AvatarRadius = Radius | "full" | "none";
+export type AvatarMask = "heart" | "squircle" | "hexagon";
+export type AvatarStatus = "online" | "offline";
+export type AvatarRing =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "info";
+
+export interface AvatarProps extends Base {
+  alt?: string;
+  decoding?: "async" | "auto" | "sync";
+  initials?: string;
+  loading?: "eager" | "lazy";
+  mask?: AvatarMask;
+  placeholder?: boolean;
+  radius?: AvatarRadius;
+  ring?: AvatarRing | boolean;
+  size?: AvatarSize | string;
+  src?: string;
+  status?: AvatarStatus;
+  statusLabel?: string;
+}
+
+const {
+  alt,
+  class: className,
+  decoding,
+  initials,
+  loading,
+  mask,
+  placeholder = false,
+  radius = "full",
+  ring,
+  size = "md",
+  src,
+  status,
+  statusLabel,
+  style,
+  ...rest
+} = Astro.props as AvatarProps;
+
+const avatarSizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl", "2xl"];
+const sizeValue = String(size);
+const isStandardSize = avatarSizes.includes(sizeValue as AvatarSize);
+const sizeClass = isStandardSize ? `size-${sizeValue}` : undefined;
+const customSize = isStandardSize ? undefined : sizeValue;
+const ringValue = ring === true ? "primary" : ring;
+const placeholderText = initials || alt?.slice(0, 2).toUpperCase() || "?";
+const resolvedStatusLabel = status
+  ? (statusLabel ?? (status === "online" ? "Online" : "Offline"))
+  : undefined;
+const accessibleLabel = [alt || initials, resolvedStatusLabel]
+  .filter(Boolean)
+  .join(", ");
+let styleValue: string | undefined;
+if (typeof style === "string") {
+  styleValue = style;
+} else if (style && typeof style === "object") {
+  styleValue = Object.entries(style)
+    .map(([key, value]) => `${key}: ${String(value)}`)
+    .join("; ");
+}
+const avatarStyle = [
+  customSize ? `--avatar-size: ${customSize}` : undefined,
+  styleValue,
+]
+  .filter(Boolean)
+  .join("; ");
+---
+
+<div
+  class:list={[
+    "naut-avatar",
+    sizeClass,
+    `radius-${radius}`,
+    mask && `mask-${mask}`,
+    ringValue && `ring-${ringValue}`,
+    ringValue && "has-ring",
+    className
+  ]}
+  {...rest}
+  style={avatarStyle || undefined}
+>
+  <div class="naut-avatar__media">
+    {src && !placeholder ? (
+      <img
+        alt={alt ?? ""}
+        class="naut-avatar__image"
+        decoding={decoding}
+        height="48"
+        loading={loading}
+        src={src}
+        width="48"
+      />
+    ) : (
+      <span
+        aria-label={accessibleLabel || placeholderText}
+        class="naut-avatar__placeholder"
+        role="img"
+      >
+        {placeholderText}
+      </span>
+    )}
+  </div>
+  {status && (
+    <span
+      aria-hidden="true"
+      class:list={["naut-avatar__status", `status--${status}`]}
+    />
+  )}
+  {status && <span class="naut-avatar__status-label">{resolvedStatusLabel}</span>}
+</div>
+
+<style>
+  .naut-avatar {
+    --avatar-size: 3rem;
+    --avatar-radius: 9999px;
+    --avatar-ring-color: var(--naut-color-primary);
+    --avatar-mask-clip-path: none;
+    --avatar-mask-radius: var(--avatar-radius);
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: var(--avatar-radius);
+
+    &.size-xs {
+      --avatar-size: 2rem;
+    }
+
+    &.size-sm {
+      --avatar-size: 2.5rem;
+    }
+
+    &.size-md {
+      --avatar-size: 3rem;
+    }
+
+    &.size-lg {
+      --avatar-size: 4rem;
+    }
+
+    &.size-xl {
+      --avatar-size: 6rem;
+    }
+
+    &.size-2xl {
+      --avatar-size: 8rem;
+    }
+
+    &.radius-none {
+      --avatar-radius: 0;
+    }
+
+    &.radius-sm {
+      --avatar-radius: var(--naut-border-radius-sm);
+    }
+
+    &.radius-md {
+      --avatar-radius: var(--naut-border-radius-md);
+    }
+
+    &.radius-lg {
+      --avatar-radius: var(--naut-border-radius-lg);
+    }
+
+    &.radius-xl {
+      --avatar-radius: var(--naut-border-radius-xl);
+    }
+
+    &:where(.mask-heart) {
+      --avatar-mask-clip-path: polygon(
+        50% 100%,
+        0 48%,
+        0 22%,
+        14% 4%,
+        34% 4%,
+        50% 23%,
+        66% 4%,
+        86% 4%,
+        100% 22%,
+        100% 48%
+      );
+    }
+
+    &:where(.mask-squircle) {
+      --avatar-mask-radius: 42% 42% 42% 42% / 32% 32% 68% 68%;
+    }
+
+    &:where(.mask-hexagon) {
+      --avatar-mask-clip-path: polygon(
+        25% 0,
+        75% 0,
+        100% 50%,
+        75% 100%,
+        25% 100%,
+        0 50%
+      );
+    }
+
+    &.ring-secondary {
+      --avatar-ring-color: var(--naut-color-secondary);
+    }
+
+    &.ring-success {
+      --avatar-ring-color: var(--naut-color-success);
+    }
+
+    &.ring-warning {
+      --avatar-ring-color: var(--naut-color-warning);
+    }
+
+    &.ring-info {
+      --avatar-ring-color: var(--naut-color-info);
+    }
+
+    &.has-ring {
+      box-shadow:
+        0 0 0 2px var(--avatar-ring-color),
+        0 0 0 4px var(--naut-color-base-100);
+    }
+
+    .naut-avatar__media {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--naut-color-base-200);
+      border-radius: var(--avatar-mask-radius);
+      clip-path: var(--avatar-mask-clip-path);
+    }
+
+    .naut-avatar__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .naut-avatar__placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: calc(var(--avatar-size) * 0.35);
+      font-weight: 600;
+      line-height: 1;
+      color: var(--naut-color-secondary-content);
+      background-color: var(--naut-color-secondary);
+    }
+
+    .naut-avatar__status {
+      position: absolute;
+      inset-inline-end: 8%;
+      top: 8%;
+      z-index: 1;
+      width: 15%;
+      height: 15%;
+      background-color: var(--naut-color-base-400);
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px var(--naut-color-base-100);
+
+      &.status--online {
+        background-color: var(--naut-color-success);
+      }
+    }
+
+    .naut-avatar__status-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      white-space: nowrap;
+      border: 0;
+      clip: rect(0, 0, 0, 0);
+    }
+  }
+</style>

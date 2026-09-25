@@ -3,6 +3,8 @@
 import Accordion from "./components/Accordion.astro";
 import AccordionItem from "./components/AccordionItem.astro";
 import Article from "./components/Article.astro";
+import Avatar from "./components/Avatar.astro";
+import AvatarGroup from "./components/AvatarGroup.astro";
 import Background from "./components/Background.astro";
 import BackToTop from "./components/BackToTop.astro";
 import Badge from "./components/Badge.astro";
@@ -54,6 +56,8 @@ export {
   Accordion,
   AccordionItem,
   Article,
+  Avatar,
+  AvatarGroup,
   Background,
   BackToTop,
   Badge,

@@ -1,0 +1,79 @@
+---
+import type { Base } from "../types";
+import Avatar, { type AvatarSize } from "./Avatar.astro";
+
+export interface AvatarGroupProps extends Base {
+  border?: "none" | "sm" | "md" | "lg";
+  more?: number;
+  overlap?: "none" | "sm" | "md" | "lg";
+  size?: AvatarSize | string;
+}
+
+const {
+  border = "md",
+  class: className,
+  more,
+  overlap = "md",
+  size,
+  ...rest
+} = Astro.props as AvatarGroupProps;
+const safeMore = more && more > 0 ? Math.floor(more) : undefined;
+---
+
+<div
+  class:list={[
+    "naut-avatar-group",
+    `border-${border}`,
+    `overlap-${overlap}`,
+    className
+  ]}
+  role="group"
+  {...rest}
+>
+  <slot />
+  {safeMore && (
+    <Avatar initials={`+${safeMore}`} placeholder radius="full" size={size} />
+  )}
+</div>
+
+<style>
+  .naut-avatar-group {
+    --avatar-group-border: 2px;
+    --avatar-group-overlap: -0.75rem;
+    display: inline-flex;
+    align-items: center;
+
+    &.border-none {
+      --avatar-group-border: 0;
+    }
+
+    &.border-sm {
+      --avatar-group-border: 1px;
+    }
+
+    &.border-lg {
+      --avatar-group-border: 3px;
+    }
+
+    &.overlap-none {
+      --avatar-group-overlap: 0;
+    }
+
+    &.overlap-sm {
+      --avatar-group-overlap: -0.5rem;
+    }
+
+    &.overlap-lg {
+      --avatar-group-overlap: -1rem;
+    }
+
+    > :global(.naut-avatar) {
+      margin-inline-start: var(--avatar-group-overlap);
+      border: var(--avatar-group-border) solid var(--naut-color-base-100);
+    }
+
+    > :global(.naut-avatar:first-child) {
+      margin-inline-start: 0;
+    }
+  }
+</style>
