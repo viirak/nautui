@@ -59,7 +59,7 @@ Default content padding is `md` when no padding props are passed.
 
 ## Dark mode
 
-`dark` adds the `.dark` class, which triggers dark-token overrides via `colors.css`. Sections with `dark` are also detected by `NavBar`'s IntersectionObserver, which darkens the nav while a dark section is on screen. Nested `Button`s/NavBars accept a `dark` prop to match.
+`dark` adds the `.dark` class, which triggers dark-token overrides via `colors.css`. Sections with `dark` are also detected by `NavBar`'s IntersectionObserver, which darkens the nav while a dark section is on screen. Nested `Button`, `Badge`, and `NavBar` components accept a `dark` prop to match.
 
 ## Accessibility
 

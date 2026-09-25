@@ -23,17 +23,16 @@ import { Badge } from "@nautui/core";
 | --------------- | ------------------------------------------ | ----------- | ------------------------------------------------- |
 | `variant`       | `"default" \| "text" \| "surface" \| "outline" \| "primary" \| "secondary" \| "destructive"` | `"default"` | Visual style. See [variants](#variants).          |
 | `color`         | `"primary" \| "secondary" \| "destructive"` | —           | Tints text/dot color. Only applies to unfilled variants; with filled variants it tints the dot. |
+| `dark`          | `boolean`                                  | `false`     | Force dark-theme tokens for this badge subtree.   |
 | `size`          | `"sm" \| "md" \| "lg"`                     | `"md"`      | Font size and padding.                            |
 | `radius`        | `"sm" \| "md" \| "lg" \| "xl" \| "full"`   | `"sm"`      | Border radius. `"full"` makes a pill.             |
-| `letterSpacing` | `"sm" \| "md" \| "lg"`                     | `"md"`      | Text letter spacing.                              |
+| `letterSpacing` | `"sm" \| "md" \| "lg"`                     | `"md"`      | Letter spacing.                                   |
 | `outlineColor`  | `string`                                   | —           | Text/border color for the `outline` variant.      |
 | `gradient`      | `{ colors: string[]; textColor: string; deg?: number }` | —    | Gradient background; `deg` defaults to `45`.      |
 | `dotted`        | `boolean`                                  | `false`     | Shows a leading status dot.                       |
 | `iconOnly`      | `boolean`                                  | `false`     | Square aspect for icon-only badges.               |
 | `class`         | `string`                                   | —           | Extra class names merged onto the element.        |
-| `uppercase` | `boolean`                                   | `false`     | Forces all-caps text.                              |
-
-Any other attributes (e.g. `id`, `aria-*`, `data-*`) pass through to the element.
+| `uppercase`     | `boolean`                                  | `false`     | Forces all-caps text.                             |
 
 ## Variants
 
@@ -46,6 +45,13 @@ Any other attributes (e.g. `id`, `aria-*`, `data-*`) pass through to the element
 - **`destructive`** — filled with `--naut-color-destructive`.
 
 ## Examples
+### Dark container
+
+Use `dark` when the badge is placed on a custom dark surface that is not already a `Section dark` or `nav.dark`:
+
+```astro
+<Badge dark variant="outline">Available</Badge>
+```
 
 ### Status dot
 

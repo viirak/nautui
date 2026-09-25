@@ -9,6 +9,7 @@ import "../styles/spacing/padding.css";
 
 export interface BadgeProps extends Base {
   color?: "primary" | "secondary" | "destructive";
+  dark?: boolean;
   dotted?: boolean;
   gradient?: { colors: string[]; textColor: string; deg?: number };
   iconOnly?: boolean;
@@ -38,6 +39,7 @@ const {
   dotted = false,
   uppercase = false,
   color,
+  dark = false,
   iconOnly = false,
   padding: paddingProp,
   ...rest
@@ -64,6 +66,7 @@ if (paddingProp) {
     `size--${size}`,
     (["primary", "secondary", "destructive"].includes(variant) || gradient) && "filled",
     color && `color--${color}`,
+    dark && "dark",
     dotted && "dotted",
     uppercase && "uppercase",
     gradient && "color--gradient",

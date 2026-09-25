@@ -62,8 +62,7 @@
 }
 
 [data-theme="dark"],
-section.dark,
-nav.dark {
+:where(.dark) {
   /* === Neutral surface scale (flipped: mix toward white instead of black) === */
   --naut-color-base-0: black;
   --naut-color-base: color-mix(
