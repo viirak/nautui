@@ -3,7 +3,7 @@
 A clean, minimalist Astro UI component library for marketing websites. Design tokens are derived at runtime via CSS `color-mix()` and OKLCH — no preprocessor, no build step.
 
 ## Packages
-- **[@nautui/core](/packages/core)** — 41 primitive components (buttons, cards, layout, navigation, theming).
+- **[@nautui/core](/packages/core)** — 42 primitive components (buttons, cards, layout, navigation, theming).
 - **[@nautui/blocks](/packages/blocks)** — composable page sections built on core (Breadcrumb, DocLayout, MegaMenu, SectionHero, TOC).
 
 ## Requirements
@@ -110,6 +110,7 @@ Dark mode is enabled by default when `<Theme>` wraps your layout. Switch it with
 | `Visibility` | Show/hide content at breakpoints | [→](components/Visibility.md) |
 | `Avatar` | Profile image or initials with status, shape, and ring options | [→](components/Avatar.md) |
 | `AvatarGroup` | Overlapping avatar collection with optional `+N` counter | [→](components/Avatar.md#avatargroup) |
+| `IconBox` | Sized, themed wrapper for SVG icons | [→](components/IconBox.md) |
 
 ## Responsive layout API
 

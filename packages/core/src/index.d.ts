@@ -20,6 +20,7 @@ import type { FooterProps } from "./components/Footer.astro";
 import type { GridProps } from "./components/Grid.astro";
 import type { GridItemProps } from "./components/GridItem.astro";
 import type { GroupProps } from "./components/Group.astro";
+import type { IconBoxProps } from "./components/IconBox.astro";
 import type { ImageProps } from "./components/Image.astro";
 import type { LinkProps } from "./components/Link.astro";
 import type { ListProps } from "./components/List.astro";
@@ -96,6 +97,7 @@ export declare const Avatar: (props: AvatarProps) => AstroComponent;
 export declare const AvatarGroup: (props: AvatarGroupProps) => AstroComponent;
 export declare const Divider: (props: DividerProps) => AstroComponent;
 export declare const Image: (props: ImageProps) => AstroComponent;
+export declare const IconBox: (props: IconBoxProps) => AstroComponent;
 export declare const Background: (props: BackgroundProps) => AstroComponent;
 
 // Navigation

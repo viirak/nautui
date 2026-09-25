@@ -1,0 +1,229 @@
+---
+import "../styles/radius.css";
+import type { Base, Radius, Size } from "../types";
+
+export type IconBoxColor =
+  | "primary"
+  | "secondary"
+  | "destructive"
+  | "success"
+  | "warning"
+  | "info"
+  | "content"
+  | "muted";
+
+export type IconBoxVariant =
+  | "default"
+  | "surface"
+  | "outline"
+  | "solid"
+  | "primary"
+  | "secondary"
+  | "destructive"
+  | "success"
+  | "warning"
+  | "info";
+
+export interface IconBoxProps extends Base {
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
+  color?: IconBoxColor;
+  label?: string;
+  radius?: Radius | "none" | "full";
+  size?: Size;
+  variant?: IconBoxVariant;
+}
+
+const {
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  class: className,
+  color,
+  label,
+  radius = "md",
+  size = "md",
+  variant = "default",
+  ...rest
+} = Astro.props as IconBoxProps;
+
+const semanticVariant =
+  variant === "primary" ||
+  variant === "secondary" ||
+  variant === "destructive" ||
+  variant === "success" ||
+  variant === "warning" ||
+  variant === "info"
+    ? variant
+    : undefined;
+const resolvedColor = color ?? semanticVariant ?? "content";
+const accessibleLabel = label ?? ariaLabel;
+const hasAccessibleName = Boolean(accessibleLabel ?? ariaLabelledBy);
+---
+
+<span
+  aria-hidden={hasAccessibleName ? undefined : "true"}
+  aria-label={accessibleLabel}
+  class:list={[
+    "naut-icon-box",
+    `size--${size}`,
+    `radius--${radius}`,
+    `variant--${variant}`,
+    `color--${resolvedColor}`,
+    className
+  ]}
+  role="img"
+  {...rest}
+>
+  <slot />
+</span>
+
+<style>
+  .naut-icon-box {
+    --icon-box-size: 2.5rem;
+    --icon-box-radius: var(--naut-border-radius-md);
+    --icon-box-color: var(--naut-color-content);
+    --icon-box-on-color: var(--naut-color-base-0);
+    --icon-box-background: transparent;
+    --icon-box-border-color: transparent;
+    --icon-box-border-width: 0;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-box-size);
+    height: var(--icon-box-size);
+    aspect-ratio: 1 / 1;
+    line-height: 0;
+    vertical-align: middle;
+    color: var(--icon-box-color);
+    background-color: var(--icon-box-background);
+    border: var(--icon-box-border-width) solid var(--icon-box-border-color);
+    border-radius: var(--icon-box-radius);
+
+    &.size--sm {
+      --icon-box-size: 2rem;
+    }
+
+    &.size--md {
+      --icon-box-size: 2.5rem;
+    }
+
+    &.size--lg {
+      --icon-box-size: 3rem;
+    }
+
+    &.size--xl {
+      --icon-box-size: 3.5rem;
+    }
+
+    &.radius--none {
+      --icon-box-radius: 0;
+    }
+
+    &.radius--sm {
+      --icon-box-radius: var(--naut-border-radius-sm);
+    }
+
+    &.radius--md {
+      --icon-box-radius: var(--naut-border-radius-md);
+    }
+
+    &.radius--lg {
+      --icon-box-radius: var(--naut-border-radius-lg);
+    }
+
+    &.radius--xl {
+      --icon-box-radius: var(--naut-border-radius-xl);
+    }
+
+    &.radius--full {
+      --icon-box-radius: 9999px;
+    }
+
+    &.color--primary {
+      --icon-box-color: var(--naut-color-primary);
+      --icon-box-on-color: var(--naut-color-primary-content);
+    }
+
+    &.color--secondary {
+      --icon-box-color: var(--naut-color-secondary);
+      --icon-box-on-color: var(--naut-color-secondary-content);
+    }
+
+    &.color--destructive {
+      --icon-box-color: var(--naut-color-destructive);
+      --icon-box-on-color: var(--naut-color-destructive-content);
+    }
+
+    &.color--success {
+      --icon-box-color: var(--naut-color-success);
+      --icon-box-on-color: oklch(0.18 0.03 145);
+    }
+
+    &.color--warning {
+      --icon-box-color: var(--naut-color-warning);
+      --icon-box-on-color: oklch(0.18 0.03 80);
+    }
+
+    &.color--info {
+      --icon-box-color: var(--naut-color-info);
+      --icon-box-on-color: oklch(0.18 0.03 230);
+    }
+
+    &.color--muted {
+      --icon-box-color: var(--naut-color-content-soft);
+      --icon-box-on-color: oklch(0.18 0.02 270);
+    }
+
+    &.variant--surface {
+      --icon-box-background: var(--naut-color-base-200);
+    }
+
+    &.variant--outline {
+      --icon-box-border-color: var(--naut-color-border);
+      --icon-box-border-width: 1px;
+    }
+
+    &.variant--solid {
+      --icon-box-background: var(--icon-box-color);
+      --icon-box-color: var(--icon-box-on-color);
+    }
+
+    &.variant--primary {
+      --icon-box-background: var(--naut-color-primary);
+      --icon-box-color: var(--icon-box-on-color);
+    }
+
+    &.variant--secondary {
+      --icon-box-background: var(--naut-color-secondary);
+      --icon-box-color: var(--icon-box-on-color);
+    }
+
+    &.variant--destructive {
+      --icon-box-background: var(--naut-color-destructive);
+      --icon-box-color: var(--icon-box-on-color);
+    }
+
+    &.variant--success {
+      --icon-box-background: var(--naut-color-success);
+      --icon-box-color: var(--icon-box-on-color);
+    }
+
+    &.variant--warning {
+      --icon-box-background: var(--naut-color-warning);
+      --icon-box-color: var(--icon-box-on-color);
+    }
+
+    &.variant--info {
+      --icon-box-background: var(--naut-color-info);
+      --icon-box-color: var(--icon-box-on-color);
+    }
+
+    :global(svg) {
+      flex: 0 0 auto;
+      width: 60%;
+      height: 60%;
+    }
+  }
+</style>

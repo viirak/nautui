@@ -22,6 +22,7 @@ import Footer from "./components/Footer.astro";
 import Grid from "./components/Grid.astro";
 import GridItem from "./components/GridItem.astro";
 import Group from "./components/Group.astro";
+import IconBox from "./components/IconBox.astro";
 import Image from "./components/Image.astro";
 import Link from "./components/Link.astro";
 import List from "./components/List.astro";
@@ -75,6 +76,7 @@ export {
   Grid,
   GridItem,
   Group,
+  IconBox,
   Image,
   Link,
   List,

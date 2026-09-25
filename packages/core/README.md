@@ -67,6 +67,7 @@ import { Button, Container, Section, Title, Text } from "@nautui/core";
 - [x] `Divider` — horizontal rule styled with theme tokens
 - [x] `Badge` — small pill label for status, counts, or tags
 - [x] `Image` — responsive image with optional caption
+- [x] `IconBox` — sized, themed wrapper for SVG icons
 
 ### Typography
 - [x] `Title` — semantic h1–h6 with consistent sizing
