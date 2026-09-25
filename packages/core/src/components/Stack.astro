@@ -1,58 +1,58 @@
 ---
+import {
+  getResponsiveClasses,
+  normalizeDirection,
+  normalizeJustify,
+  resolveResponsiveValue,
+} from "../lib/layout";
 import "../styles/spacing/gap.css";
-import type { Base, Gap, Responsive } from "../types";
-
-type Align = "inherit" | "start" | "center" | "end" | "stretch";
-type Justify =
-  | "start"
-  | "center"
-  | "end"
-  | "space-between"
-  | "space-around"
-  | "space-evenly";
-
-type AlignResponsive = {
-  [key in Responsive]?: Align;
-};
-
-type JustifyResponsive = {
-  [key in Responsive]?: Justify;
-};
+import type {
+  Align,
+  Base,
+  Direction,
+  Gap,
+  Justify,
+  ResponsiveProp,
+} from "../types";
 
 export interface StackProps extends Base {
-  align?: AlignResponsive | Align;
-  direction?: "vertical" | "horizontal";
+  align?: ResponsiveProp<Align>;
+  direction?: ResponsiveProp<Direction>;
   gap?: Gap;
-  justify?: JustifyResponsive | Justify;
+  justify?: ResponsiveProp<Justify>;
 }
 
 const {
   class: className,
   align,
-  direction = "vertical",
+  direction = "column",
   justify = "start",
   gap = "md",
   ...rest
 } = Astro.props as StackProps;
-const items = typeof align === "string" ? { base: align } : align;
-const content = typeof justify === "string" ? { base: justify } : justify;
+const directionValue = resolveResponsiveValue(direction, "column");
+const alignValue = resolveResponsiveValue(align, "stretch");
+const justifyValue = resolveResponsiveValue(justify, "start");
+const directionClasses = getResponsiveClasses(
+  directionValue,
+  "dir",
+  normalizeDirection
+);
+const alignClasses = getResponsiveClasses(alignValue, "items");
+const justifyClasses = getResponsiveClasses(
+  justifyValue,
+  "content",
+  normalizeJustify
+);
 ---
 
 <div
   class:list={[
     "naut-stack",
     `gap-${gap}`,
-    `direction-${direction}`,
-    items?.base && `items-${items.base}`,
-    items?.sm && `sm-items-${items.sm}`,
-    items?.md && `md-items-${items.md}`,
-    items?.lg && `lg-items-${items.lg}`,
-    items?.xl && `xl-items-${items.xl}`,
-    content?.base && `content-${content.base}`,
-    content?.sm && `sm-content-${content.sm}`,
-    content?.md && `md-content-${content.md}`,
-    content?.lg && `lg-content-${content.lg}`,
-    content?.xl && `xl-content-${content.xl}`,
+    ...directionClasses,
+    ...alignClasses,
+    ...justifyClasses,
     className
   ]}
   {...rest}
@@ -65,8 +65,12 @@ const content = typeof justify === "string" ? { base: justify } : justify;
     display: flex;
     flex-direction: column;
 
-    &.direction-horizontal {
+    &.dir-row {
       flex-direction: row;
+    }
+
+    &.dir-column {
+      flex-direction: column;
     }
 
     &.content-start {
@@ -81,15 +85,15 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       justify-content: flex-end;
     }
 
-    &.content-space-between {
+    &.content-between {
       justify-content: space-between;
     }
 
-    &.content-space-around {
+    &.content-around {
       justify-content: space-around;
     }
 
-    &.content-space-evenly {
+    &.content-evenly {
       justify-content: space-evenly;
     }
 
@@ -109,7 +113,19 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       align-items: stretch;
     }
 
+    &.items-inherit {
+      align-items: inherit;
+    }
+
     @media only screen and (max-width: 817px) {
+      &.sm-dir-row {
+        flex-direction: row;
+      }
+
+      &.sm-dir-column {
+        flex-direction: column;
+      }
+
       &.sm-content-start {
         justify-content: flex-start;
       }
@@ -119,13 +135,13 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       &.sm-content-end {
         justify-content: flex-end;
       }
-      &.sm-content-space-between {
+      &.sm-content-between {
         justify-content: space-between;
       }
-      &.sm-content-space-around {
+      &.sm-content-around {
         justify-content: space-around;
       }
-      &.sm-content-space-evenly {
+      &.sm-content-evenly {
         justify-content: space-evenly;
       }
       &.sm-items-start {
@@ -140,9 +156,21 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       &.sm-items-stretch {
         align-items: stretch;
       }
+
+      &.sm-items-inherit {
+        align-items: inherit;
+      }
     }
 
     @media only screen and (min-width: 818px) and (max-width: 1041px) {
+      &.md-dir-row {
+        flex-direction: row;
+      }
+
+      &.md-dir-column {
+        flex-direction: column;
+      }
+
       &.md-content-start {
         justify-content: flex-start;
       }
@@ -152,13 +180,13 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       &.md-content-end {
         justify-content: flex-end;
       }
-      &.md-content-space-between {
+      &.md-content-between {
         justify-content: space-between;
       }
-      &.md-content-space-around {
+      &.md-content-around {
         justify-content: space-around;
       }
-      &.md-content-space-evenly {
+      &.md-content-evenly {
         justify-content: space-evenly;
       }
       &.md-items-start {
@@ -173,9 +201,21 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       &.md-items-stretch {
         align-items: stretch;
       }
+
+      &.md-items-inherit {
+        align-items: inherit;
+      }
     }
 
     @media only screen and (min-width: 1042px) {
+      &.lg-dir-row {
+        flex-direction: row;
+      }
+
+      &.lg-dir-column {
+        flex-direction: column;
+      }
+
       &.lg-content-start {
         justify-content: flex-start;
       }
@@ -185,13 +225,13 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       &.lg-content-end {
         justify-content: flex-end;
       }
-      &.lg-content-space-between {
+      &.lg-content-between {
         justify-content: space-between;
       }
-      &.lg-content-space-around {
+      &.lg-content-around {
         justify-content: space-around;
       }
-      &.lg-content-space-evenly {
+      &.lg-content-evenly {
         justify-content: space-evenly;
       }
       &.lg-items-start {
@@ -206,9 +246,21 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       &.lg-items-stretch {
         align-items: stretch;
       }
+
+      &.lg-items-inherit {
+        align-items: inherit;
+      }
     }
 
     @media only screen and (min-width: 1250px) {
+      &.xl-dir-row {
+        flex-direction: row;
+      }
+
+      &.xl-dir-column {
+        flex-direction: column;
+      }
+
       &.xl-content-start {
         justify-content: flex-start;
       }
@@ -218,13 +270,13 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       &.xl-content-end {
         justify-content: flex-end;
       }
-      &.xl-content-space-between {
+      &.xl-content-between {
         justify-content: space-between;
       }
-      &.xl-content-space-around {
+      &.xl-content-around {
         justify-content: space-around;
       }
-      &.xl-content-space-evenly {
+      &.xl-content-evenly {
         justify-content: space-evenly;
       }
       &.xl-items-start {
@@ -238,6 +290,10 @@ const content = typeof justify === "string" ? { base: justify } : justify;
       }
       &.xl-items-stretch {
         align-items: stretch;
+      }
+
+      &.xl-items-inherit {
+        align-items: inherit;
       }
     }
   }

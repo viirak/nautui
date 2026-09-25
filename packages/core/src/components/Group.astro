@@ -1,25 +1,38 @@
 ---
+import {
+  getResponsiveClasses,
+  normalizeDirection,
+  normalizeJustify,
+  resolveResponsiveValue,
+} from "../lib/layout";
 import "../styles/spacing/gap.css";
-import type { Base, Gap } from "../types";
+import type {
+  Align,
+  Base,
+  Direction,
+  Gap,
+  Justify,
+  Responsive,
+  ResponsiveProp,
+  ResponsiveValue,
+} from "../types";
 
-type ScreenSize = "sm" | "md" | "lg" | "xl";
+type ScreenSize = Exclude<Responsive, "base">;
 
 export interface GroupProps extends Base {
+  align?: ResponsiveProp<Align>;
+  direction?: ResponsiveProp<Direction>;
   gap?: Gap;
   grow?: boolean;
-  justify?:
-    | "start"
-    | "center"
-    | "end"
-    | "space-between"
-    | "space-around"
-    | "space-evenly";
+  justify?: ResponsiveProp<Justify>;
   not?: ScreenSize | ScreenSize[];
   wrap?: boolean;
 }
 
 const {
   class: className,
+  align = "center",
+  direction,
   justify = "start",
   gap,
   grow = false,
@@ -27,17 +40,44 @@ const {
   not,
 } = Astro.props as GroupProps;
 const notScreens = typeof not === "string" ? [not] : not;
+const notDirection: ResponsiveValue<Direction> | undefined = notScreens
+  ? {}
+  : undefined;
+if (notDirection) {
+  for (const screen of notScreens ?? []) {
+    notDirection[screen] = "column";
+  }
+  if (notScreens?.includes("lg") && !notScreens.includes("xl")) {
+    notDirection.xl = "row";
+  }
+}
+const directionValue = resolveResponsiveValue(direction ?? notDirection, "row");
+const alignValue = resolveResponsiveValue(align, "center");
+const justifyValue = resolveResponsiveValue(justify, "start");
+const directionClasses = getResponsiveClasses(
+  directionValue,
+  "dir",
+  normalizeDirection
+);
+const alignClasses = getResponsiveClasses(alignValue, "align");
+const justifyClasses = getResponsiveClasses(
+  justifyValue,
+  "justify",
+  normalizeJustify
+);
 ---
 
 <div
   class:list={[
-  "naut-group",
-  grow && "grow",
-  wrap && "wrap",
-  gap && `gap-${gap}`,
-  justify && `justify-${justify}`,
-  notScreens?.map((s) => `not-${s}`).join(" "),
-  className]}
+    "naut-group",
+    ...directionClasses,
+    ...alignClasses,
+    ...justifyClasses,
+    grow && "grow",
+    wrap && "wrap",
+    gap && `gap-${gap}`,
+    className,
+  ]}
 >
   <slot />
 </div>
@@ -47,28 +87,36 @@ const notScreens = typeof not === "string" ? [not] : not;
     display: inline-flex;
     align-items: center;
 
-    &.not-sm {
-      @media only screen and (max-width: 817px) {
-        flex-direction: column;
-      }
+    &.dir-row {
+      flex-direction: row;
     }
 
-    &.not-md {
-      @media only screen and (min-width: 818px) and (max-width: 1041px) {
-        flex-direction: column;
-      }
+    &.dir-column {
+      flex-direction: column;
     }
 
-    &.not-lg {
-      @media only screen and (min-width: 1042px) and (max-width: 1249px) {
-        flex-direction: column;
-      }
+    &.align-start {
+      align-items: flex-start;
     }
 
-    &.not-xl {
-      @media only screen and (min-width: 1250px) {
-        flex-direction: column;
-      }
+    &.align-center {
+      align-items: center;
+    }
+
+    &.align-end {
+      align-items: flex-end;
+    }
+
+    &.align-baseline {
+      align-items: baseline;
+    }
+
+    &.align-stretch {
+      align-items: stretch;
+    }
+
+    &.align-inherit {
+      align-items: inherit;
     }
 
     &.justify-start {
@@ -83,15 +131,15 @@ const notScreens = typeof not === "string" ? [not] : not;
       justify-content: flex-end;
     }
 
-    &.justify-space-between {
+    &.justify-between {
       justify-content: space-between;
     }
 
-    &.justify-space-around {
+    &.justify-around {
       justify-content: space-around;
     }
 
-    &.justify-space-evenly {
+    &.justify-evenly {
       justify-content: space-evenly;
     }
 
@@ -101,6 +149,238 @@ const notScreens = typeof not === "string" ? [not] : not;
 
     &.wrap {
       flex-wrap: wrap;
+    }
+
+    @media only screen and (max-width: 817px) {
+      &.sm-dir-row {
+        flex-direction: row;
+      }
+
+      &.sm-dir-column {
+        flex-direction: column;
+      }
+
+      &.sm-align-start {
+        align-items: flex-start;
+      }
+
+      &.sm-align-center {
+        align-items: center;
+      }
+
+      &.sm-align-end {
+        align-items: flex-end;
+      }
+
+      &.sm-align-baseline {
+        align-items: baseline;
+      }
+
+      &.sm-align-stretch {
+        align-items: stretch;
+      }
+
+      &.sm-align-inherit {
+        align-items: inherit;
+      }
+
+      &.sm-justify-start {
+        justify-content: flex-start;
+      }
+
+      &.sm-justify-center {
+        justify-content: center;
+      }
+
+      &.sm-justify-end {
+        justify-content: flex-end;
+      }
+
+      &.sm-justify-between {
+        justify-content: space-between;
+      }
+
+      &.sm-justify-around {
+        justify-content: space-around;
+      }
+
+      &.sm-justify-evenly {
+        justify-content: space-evenly;
+      }
+    }
+
+    @media only screen and (min-width: 818px) and (max-width: 1041px) {
+      &.md-dir-row {
+        flex-direction: row;
+      }
+
+      &.md-dir-column {
+        flex-direction: column;
+      }
+
+      &.md-align-start {
+        align-items: flex-start;
+      }
+
+      &.md-align-center {
+        align-items: center;
+      }
+
+      &.md-align-end {
+        align-items: flex-end;
+      }
+
+      &.md-align-baseline {
+        align-items: baseline;
+      }
+
+      &.md-align-stretch {
+        align-items: stretch;
+      }
+
+      &.md-align-inherit {
+        align-items: inherit;
+      }
+
+      &.md-justify-start {
+        justify-content: flex-start;
+      }
+
+      &.md-justify-center {
+        justify-content: center;
+      }
+
+      &.md-justify-end {
+        justify-content: flex-end;
+      }
+
+      &.md-justify-between {
+        justify-content: space-between;
+      }
+
+      &.md-justify-around {
+        justify-content: space-around;
+      }
+
+      &.md-justify-evenly {
+        justify-content: space-evenly;
+      }
+    }
+
+    @media only screen and (min-width: 1042px) {
+      &.lg-dir-row {
+        flex-direction: row;
+      }
+
+      &.lg-dir-column {
+        flex-direction: column;
+      }
+
+      &.lg-align-start {
+        align-items: flex-start;
+      }
+
+      &.lg-align-center {
+        align-items: center;
+      }
+
+      &.lg-align-end {
+        align-items: flex-end;
+      }
+
+      &.lg-align-baseline {
+        align-items: baseline;
+      }
+
+      &.lg-align-stretch {
+        align-items: stretch;
+      }
+
+      &.lg-align-inherit {
+        align-items: inherit;
+      }
+
+      &.lg-justify-start {
+        justify-content: flex-start;
+      }
+
+      &.lg-justify-center {
+        justify-content: center;
+      }
+
+      &.lg-justify-end {
+        justify-content: flex-end;
+      }
+
+      &.lg-justify-between {
+        justify-content: space-between;
+      }
+
+      &.lg-justify-around {
+        justify-content: space-around;
+      }
+
+      &.lg-justify-evenly {
+        justify-content: space-evenly;
+      }
+    }
+
+    @media only screen and (min-width: 1250px) {
+      &.xl-dir-row {
+        flex-direction: row;
+      }
+
+      &.xl-dir-column {
+        flex-direction: column;
+      }
+
+      &.xl-align-start {
+        align-items: flex-start;
+      }
+
+      &.xl-align-center {
+        align-items: center;
+      }
+
+      &.xl-align-end {
+        align-items: flex-end;
+      }
+
+      &.xl-align-baseline {
+        align-items: baseline;
+      }
+
+      &.xl-align-stretch {
+        align-items: stretch;
+      }
+
+      &.xl-align-inherit {
+        align-items: inherit;
+      }
+
+      &.xl-justify-start {
+        justify-content: flex-start;
+      }
+
+      &.xl-justify-center {
+        justify-content: center;
+      }
+
+      &.xl-justify-end {
+        justify-content: flex-end;
+      }
+
+      &.xl-justify-between {
+        justify-content: space-between;
+      }
+
+      &.xl-justify-around {
+        justify-content: space-around;
+      }
+
+      &.xl-justify-evenly {
+        justify-content: space-evenly;
+      }
     }
   }
 </style>

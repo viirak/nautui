@@ -23,11 +23,16 @@ import { Grid, GridItem } from "@nautui/core";
 | --------- | ----------------------------- | ------- | ------------------------------------------ |
 | `columns` | `Columns` or per-breakpoint object | `12` | Column count.                            |
 | `gap`     | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Gap between cells.               |
+| `direction` | `Direction` or per-breakpoint object | `"row"` | `grid-auto-flow`. |
+| `align`   | `Align` or per-breakpoint object | — | `align-items` for grid items. |
+| `justify` | `Justify` or per-breakpoint object | — | `justify-content` for grid tracks. |
 | `border`  | `Border` or string            | —       | 1px cell divider grid (see below).          |
 | `radius`  | `"sm" \| "md" \| "lg" \| "xl"` | —       | Border radius (clips the border grid).     |
 | `class`   | `string`                      | —       | Extra class names merged onto the element. |
 
 `Columns = 1 | 2 | ... | 12`. Responsive object keys: `base`, `sm`, `md`, `lg`, `xl` (breakpoints: sm ≤817, md ≤1041, lg ≥1042, xl ≥1250).
+
+`direction`, `align`, and `justify` use the same responsive object shape and canonical values as the other layout primitives. For `Grid`, `direction` controls `grid-auto-flow`, `align` controls `align-items`, and `justify` controls `justify-content`.
 
 ### Border grid
 

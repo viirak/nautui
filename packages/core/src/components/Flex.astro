@@ -1,17 +1,25 @@
 ---
+import {
+  getResponsiveClasses,
+  normalizeDirection,
+  normalizeJustify,
+  resolveResponsiveValue,
+} from "../lib/layout";
 import "../styles/spacing/gap.css";
-import { Base, Gap, Responsive } from "../types";
-
-type Direction = "row" | "column";
-type ResponsiveDirection = {
-  [key in Responsive]: Direction;
-};
+import type {
+  Align,
+  Base,
+  Direction,
+  Gap,
+  Justify,
+  ResponsiveProp,
+} from "../types";
 
 export interface FlexProps extends Base {
-  align?: "start" | "center" | "end" | "baseline" | "stretch";
-  direction?: Direction | ResponsiveDirection;
+  align?: ResponsiveProp<Align>;
+  direction?: ResponsiveProp<Direction>;
   gap?: Gap;
-  justify?: "start" | "center" | "end" | "between" | "around" | "evenly";
+  justify?: ResponsiveProp<Justify>;
   wrap?: "nowrap" | "wrap" | "wrap-reverse";
 }
 
@@ -24,24 +32,31 @@ const {
   gap,
 } = Astro.props as FlexProps;
 
-const dir =
-  typeof direction === "string"
-    ? ({ base: direction } as ResponsiveDirection)
-    : direction;
+const directionValue = resolveResponsiveValue<Direction>(direction, "row");
+const alignValue = resolveResponsiveValue<Align>(align, "start");
+const justifyValue = resolveResponsiveValue<Justify>(justify, "start");
+const directionClasses = getResponsiveClasses(
+  directionValue,
+  "dir",
+  normalizeDirection
+);
+const alignClasses = getResponsiveClasses(alignValue, "align");
+const justifyClasses = getResponsiveClasses(
+  justifyValue,
+  "justify",
+  normalizeJustify
+);
 ---
 
 <div
   class:list={[
     "naut-flex",
-    `justify-${justify}`,
-    `align-${align}`,
-    `gap-${gap}`,
-    dir.base && `dir-${dir.base}`,
-    dir.sm && `sm-dir-${dir.sm}`,
-    dir.md && `md-dir-${dir.md}`,
-    dir.lg && `lg-dir-${dir.lg}`,
-    dir.xl && `xl-dir-${dir.xl}`,
+    ...justifyClasses,
+    ...alignClasses,
+    ...directionClasses,
+    gap && `gap-${gap}`,
     wrap && `wrap-${wrap}`,
+    className,
   ]}
 >
   <slot />
@@ -50,6 +65,10 @@ const dir =
 <style>
   .naut-flex {
     display: flex;
+
+    &.dir-row {
+      flex-direction: row;
+    }
 
     &.dir-column {
       flex-direction: column;
@@ -129,6 +148,10 @@ const dir =
 
     &.align-baseline {
       align-items: baseline;
+    }
+
+    &.align-inherit {
+      align-items: inherit;
     }
 
     &.align-stretch {

@@ -84,10 +84,11 @@ Dark mode is enabled by default when `<Theme>` wraps your layout. Switch it with
 | `Container` | Max-width content wrapper | [→](components/Container.md) |
 | `Divider` | Horizontal rule | [→](components/Divider.md) |
 | `Drawer` | Slide-in overlay panel | [→](components/Drawer.md) |
-| `Flex` | Flexbox layout helper | [→](components/Flex.md) |
-| `Footer` | Page footer with brand, link columns, and bottom bar | [→](components/Footer.md) || `Grid` | CSS Grid layout helper | [→](components/Grid.md) |
+| `Flex` | Responsive flexbox layout helper | [→](components/Flex.md) |
+| `Footer` | Page footer with brand, link columns, and bottom bar | [→](components/Footer.md) |
+| `Grid` | Responsive CSS Grid layout helper | [→](components/Grid.md) |
 | `GridItem` | A grid cell | [→](components/Grid.md) |
-| `Group` | Inline row of related elements | [→](components/Group.md) |
+| `Group` | Responsive inline row of related elements | [→](components/Group.md) |
 | `Image` | Optimized responsive image | [→](components/Image.md) |
 | `Link` | Text link | [→](components/Link.md) |
 | `List` | List container | [→](components/List.md) |
@@ -102,12 +103,28 @@ Dark mode is enabled by default when `<Theme>` wraps your layout. Switch it with
 | `NavBar` | Top navigation bar | [→](components/NavBar.md) |
 | `Section` | Vertical section with spacing | [→](components/Section.md) |
 | `Space` | Spacer element | [→](components/Space.md) |
-| `Stack` | Vertical stack layout | [→](components/Stack.md) |
+| `Stack` | Responsive flex stack layout | [→](components/Stack.md) |
 | `Text` | Paragraph text | [→](components/Text.md) |
 | `Theme` | Theme provider — loads styles + dark mode | [→](components/Theme.md) |
 | `ThemeToggle` | Light/dark switcher | [→](components/Theme.md) |
 | `Title` | Heading | [→](components/Title.md) |
 | `Visibility` | Show/hide content at breakpoints | [→](components/Visibility.md) |
+
+## Responsive layout API
+
+`Flex`, `Group`, `Stack`, and `Grid` share the same responsive prop shape for `direction`, `justify`, and `align`:
+
+```ts
+type ResponsiveProp<T> = T | {
+  base?: T;
+  sm?: T;
+  md?: T;
+  lg?: T;
+  xl?: T;
+};
+```
+
+Canonical values are `row`/`column`, `start`/`center`/`end`/`between`/`around`/`evenly`, and `start`/`center`/`end`/`baseline`/`stretch`/`inherit`. Legacy `horizontal`/`vertical` direction values, `space-*` justification values, and Group's `not` prop remain supported. For `Grid`, `direction` maps to `grid-auto-flow`, `align` to `align-items`, and `justify` to `justify-content`.
 
 ### @nautui/blocks
 

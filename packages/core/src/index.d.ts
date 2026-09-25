@@ -39,6 +39,15 @@ import type { ThemeToggleProps } from "./components/ThemeToggle.astro";
 import type { TitleProps } from "./components/Title.astro";
 import type { VisibilityProps } from "./components/Visibility.astro";
 
+export type {
+  Align,
+  Direction,
+  Justify,
+  Responsive,
+  ResponsiveProp,
+  ResponsiveValue,
+} from "./types";
+
 export type AstroComponent = () => Promise<{ Content: unknown }>;
 
 // Theme

@@ -1,6 +1,6 @@
 # Group
 
-An inline-flex row of related items (buttons, links, chips) with optional grow, wrap, justify, and responsive stacking.
+An inline-flex row of related items with responsive direction, alignment, justification, optional grow, and wrap.
 
 ## Usage
 
@@ -24,25 +24,33 @@ import { Group, Button } from "@nautui/core";
 | `gap`     | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | — | Gap between items.                              |
 | `grow`    | `boolean`                           | `false`   | `flex-grow: 1` — items expand to fill the row.  |
 | `wrap`    | `boolean`                           | `false`   | `flex-wrap: wrap`.                              |
-| `justify` | `"start" \| "center" \| "end" \| "space-between" \| "space-around" \| "space-evenly"` | `"start"` | `justify-content`. |
+| `direction` | `Direction` or responsive object | `"row"` | `flex-direction`. |
+| `align`   | `Align` or responsive object | `"center"` | `align-items`. |
+| `justify` | `Justify` or responsive object | `"start"` | `justify-content`. |
 | `not`     | `ScreenSize` or `ScreenSize[]`      | —         | Stack vertically at these breakpoints.          |
 | `class`   | `string`                            | —         | Extra class names merged onto the element.      |
 
 `ScreenSize = "sm" | "md" | "lg" | "xl"`.
 
-## Responsive stacking
+## Responsive layout props
 
-`not` flips the group to a vertical column at the given breakpoint — e.g. `not="sm"` stacks on mobile, stays in a row on tablet+.
+`direction`, `align`, and `justify` accept a plain value or a per-breakpoint object with `base`, `sm`, `md`, `lg`, and `xl` keys.
 
 ```astro
-<Group not={["sm", "md"]}>...</Group>
+<Group
+  direction={{ base: "row", sm: "column" }}
+  align={{ base: "center", md: "start" }}
+  justify={{ base: "start", md: "between" }}
+>
+  ...
+</Group>
 ```
 
-Breakpoints: `sm` ≤817, `md` 818–1041, `lg` 1042–1249, `xl` ≥1250.
+`not` remains supported as a legacy shorthand for responsive column stacking. If both `direction` and `not` are provided, `direction` takes precedence.
 
 ## Note
 
-Unlike `Flex`, `Group`'s `justify` uses `space-between`/`space-around`/`space-evenly` naming (with the `space-` prefix).
+Canonical values match `Flex`: `row`/`column`, `start`/`center`/`end`/`between`/`around`/`evenly`, and `start`/`center`/`end`/`baseline`/`stretch`/`inherit`. The legacy `space-*` justification values remain supported.
 
 ## Accessibility
 

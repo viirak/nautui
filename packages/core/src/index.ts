@@ -41,6 +41,15 @@ import ThemeToggle from "./components/ThemeToggle.astro";
 import Title from "./components/Title.astro";
 import Visibility from "./components/Visibility.astro";
 
+export type {
+  Align,
+  Direction,
+  Justify,
+  Responsive,
+  ResponsiveProp,
+  ResponsiveValue,
+} from "./types";
+
 export {
   Accordion,
   AccordionItem,

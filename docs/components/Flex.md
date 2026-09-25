@@ -1,6 +1,6 @@
 # Flex
 
-A flexbox layout helper with align, justify, direction (including responsive), wrap, and gap controls.
+A flexbox layout helper with responsive direction, alignment, justification, wrap, and gap controls.
 
 ## Usage
 
@@ -21,26 +21,32 @@ import { Flex } from "@nautui/core";
 
 | Prop        | Type                                                          | Default   | Description                                       |
 | ----------- | ------------------------------------------------------------- | --------- | ------------------------------------------------- |
-| `align`     | `"start" \| "center" \| "end" \| "baseline" \| "stretch"`    | `"start"` | `align-items`.                                    |
-| `justify`   | `"start" \| "center" \| "end" \| "between" \| "around" \| "evenly"` | `"start"` | `justify-content`.                           |
-| `direction` | `"row" \| "column"` or responsive object (below)              | `"row"`   | `flex-direction`.                                |
+| `align`     | `Align` or responsive object                                  | `"start"` | `align-items`.                                    |
+| `justify`   | `Justify` or responsive object                                | `"start"` | `justify-content`.                                |
+| `direction` | `Direction` or responsive object                              | `"row"`   | `flex-direction`.                                |
 | `wrap`      | `"nowrap" \| "wrap" \| "wrap-reverse"`                        | —         | `flex-wrap`.                                      |
 | `gap`       | `"xs" \| "sm" \| "md" \| "lg" \| "xl"`                        | —         | Gap between children (`gap-*` utility).          |
 | `class`     | `string`                                                      | —         | Extra class names merged onto the element.       |
 
 Any other attributes pass through to the `<div>`.
 
-## Responsive direction
+## Responsive layout props
 
-`direction` accepts either a plain string or a per-breakpoint object:
+`direction`, `justify`, and `align` accept either a plain value or a per-breakpoint object:
 
 ```astro
-<Flex direction={{ base: "column", md: "row" }}>
+<Flex
+  direction={{ base: "column", md: "row" }}
+  align={{ base: "stretch", md: "center" }}
+  justify={{ base: "start", md: "between" }}
+>
   <span>Stacked on mobile, side-by-side on tablet+</span>
 </Flex>
 ```
 
 Keys: `base`, `sm`, `md`, `lg`, `xl`. Breakpoints match the standard scale (sm ≤817, md ≤1041, lg ≥1042, xl ≥1250).
+
+Canonical values are `row`/`column`, `start`/`center`/`end`/`between`/`around`/`evenly`, and `start`/`center`/`end`/`baseline`/`stretch`/`inherit`. The legacy `horizontal`/`vertical` direction values and `space-*` justification values remain supported.
 
 ## Accessibility
 

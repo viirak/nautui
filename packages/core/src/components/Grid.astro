@@ -1,32 +1,63 @@
 ---
 import "../styles/border.css";
+import {
+  getResponsiveClasses,
+  normalizeDirection,
+  normalizeJustify,
+  resolveResponsiveValue,
+} from "../lib/layout";
 import "../styles/spacing/gap.css";
 import { Border, createBorder } from "../lib/border";
-import type { Base, Gap, Radius, Responsive } from "../types";
+import type {
+  Align,
+  Base,
+  Direction,
+  Gap,
+  Justify,
+  Radius,
+  ResponsiveProp,
+  ResponsiveValue,
+} from "../types";
 
 export type Columns = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
-export type ResponsiveColumns = {
-  [key in Responsive]?: Columns;
-};
+export type ResponsiveColumns = ResponsiveValue<Columns>;
 
 export interface GridProps extends Base {
+  align?: ResponsiveProp<Align>;
   border?: Border;
   columns?: Columns | ResponsiveColumns;
+  direction?: ResponsiveProp<Direction>;
   gap?: Gap;
+  justify?: ResponsiveProp<Justify>;
   radius?: Radius;
 }
 
 const {
   class: className,
+  align,
   columns = 12,
+  direction,
   gap = "md",
+  justify,
   border,
   radius,
   ...rest
 } = Astro.props as GridProps;
 
 const col = typeof columns === "number" ? { base: columns } : columns;
+const alignClasses = getResponsiveClasses(align, "align");
+const directionValue = resolveResponsiveValue(direction, "row");
+const directionClasses = getResponsiveClasses(
+  directionValue,
+  "flow",
+  normalizeDirection
+);
+const justifyClasses = getResponsiveClasses(
+  justify,
+  "justify",
+  normalizeJustify
+);
 const config = typeof border === "string" ? { width: border } : border || {};
 const { borderClasses, borderColors } = createBorder(config);
 ---
@@ -35,6 +66,9 @@ const { borderClasses, borderColors } = createBorder(config);
   class:list={[
     "naut-grid",
     `gap-${gap}`,
+    ...alignClasses,
+    ...directionClasses,
+    ...justifyClasses,
     col?.base && `columns-${col.base}`,
     col?.sm && `sm-columns-${col.sm}`,
     col?.md && `md-columns-${col.md}`,
@@ -52,6 +86,62 @@ const { borderClasses, borderColors } = createBorder(config);
 <style define:vars={{ ...borderColors }}>
   .naut-grid {
     display: grid;
+
+    &.flow-row {
+      grid-auto-flow: row;
+    }
+
+    &.flow-column {
+      grid-auto-flow: column;
+    }
+
+    &.align-start {
+      align-items: start;
+    }
+
+    &.align-center {
+      align-items: center;
+    }
+
+    &.align-end {
+      align-items: end;
+    }
+
+    &.align-baseline {
+      align-items: baseline;
+    }
+
+    &.align-stretch {
+      align-items: stretch;
+    }
+
+    &.align-inherit {
+      align-items: inherit;
+    }
+
+    &.justify-start {
+      justify-content: start;
+    }
+
+    &.justify-center {
+      justify-content: center;
+    }
+
+    &.justify-end {
+      justify-content: end;
+    }
+
+    &.justify-between {
+      justify-content: space-between;
+    }
+
+    &.justify-around {
+      justify-content: space-around;
+    }
+
+    &.justify-evenly {
+      justify-content: space-evenly;
+    }
 
     &.border {
       gap: 1px;
@@ -127,6 +217,62 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     @media only screen and (max-width: 817px) {
+      &.sm-flow-row {
+        grid-auto-flow: row;
+      }
+
+      &.sm-flow-column {
+        grid-auto-flow: column;
+      }
+
+      &.sm-align-start {
+        align-items: start;
+      }
+
+      &.sm-align-center {
+        align-items: center;
+      }
+
+      &.sm-align-end {
+        align-items: end;
+      }
+
+      &.sm-align-baseline {
+        align-items: baseline;
+      }
+
+      &.sm-align-stretch {
+        align-items: stretch;
+      }
+
+      &.sm-align-inherit {
+        align-items: inherit;
+      }
+
+      &.sm-justify-start {
+        justify-content: start;
+      }
+
+      &.sm-justify-center {
+        justify-content: center;
+      }
+
+      &.sm-justify-end {
+        justify-content: end;
+      }
+
+      &.sm-justify-between {
+        justify-content: space-between;
+      }
+
+      &.sm-justify-around {
+        justify-content: space-around;
+      }
+
+      &.sm-justify-evenly {
+        justify-content: space-evenly;
+      }
+
       &.sm-columns-1 {
         grid-template-columns: repeat(1, 1fr);
       }
@@ -177,6 +323,62 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     @media only screen and (min-width: 818px) and (max-width: 1041px) {
+      &.md-flow-row {
+        grid-auto-flow: row;
+      }
+
+      &.md-flow-column {
+        grid-auto-flow: column;
+      }
+
+      &.md-align-start {
+        align-items: start;
+      }
+
+      &.md-align-center {
+        align-items: center;
+      }
+
+      &.md-align-end {
+        align-items: end;
+      }
+
+      &.md-align-baseline {
+        align-items: baseline;
+      }
+
+      &.md-align-stretch {
+        align-items: stretch;
+      }
+
+      &.md-align-inherit {
+        align-items: inherit;
+      }
+
+      &.md-justify-start {
+        justify-content: start;
+      }
+
+      &.md-justify-center {
+        justify-content: center;
+      }
+
+      &.md-justify-end {
+        justify-content: end;
+      }
+
+      &.md-justify-between {
+        justify-content: space-between;
+      }
+
+      &.md-justify-around {
+        justify-content: space-around;
+      }
+
+      &.md-justify-evenly {
+        justify-content: space-evenly;
+      }
+
       &.md-columns-1 {
         grid-template-columns: repeat(1, 1fr);
       }
@@ -227,6 +429,62 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     @media only screen and (min-width: 1042px) {
+      &.lg-flow-row {
+        grid-auto-flow: row;
+      }
+
+      &.lg-flow-column {
+        grid-auto-flow: column;
+      }
+
+      &.lg-align-start {
+        align-items: start;
+      }
+
+      &.lg-align-center {
+        align-items: center;
+      }
+
+      &.lg-align-end {
+        align-items: end;
+      }
+
+      &.lg-align-baseline {
+        align-items: baseline;
+      }
+
+      &.lg-align-stretch {
+        align-items: stretch;
+      }
+
+      &.lg-align-inherit {
+        align-items: inherit;
+      }
+
+      &.lg-justify-start {
+        justify-content: start;
+      }
+
+      &.lg-justify-center {
+        justify-content: center;
+      }
+
+      &.lg-justify-end {
+        justify-content: end;
+      }
+
+      &.lg-justify-between {
+        justify-content: space-between;
+      }
+
+      &.lg-justify-around {
+        justify-content: space-around;
+      }
+
+      &.lg-justify-evenly {
+        justify-content: space-evenly;
+      }
+
       &.lg-columns-1 {
         grid-template-columns: repeat(1, 1fr);
       }
@@ -277,6 +535,62 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     @media only screen and (min-width: 1250px) {
+      &.xl-flow-row {
+        grid-auto-flow: row;
+      }
+
+      &.xl-flow-column {
+        grid-auto-flow: column;
+      }
+
+      &.xl-align-start {
+        align-items: start;
+      }
+
+      &.xl-align-center {
+        align-items: center;
+      }
+
+      &.xl-align-end {
+        align-items: end;
+      }
+
+      &.xl-align-baseline {
+        align-items: baseline;
+      }
+
+      &.xl-align-stretch {
+        align-items: stretch;
+      }
+
+      &.xl-align-inherit {
+        align-items: inherit;
+      }
+
+      &.xl-justify-start {
+        justify-content: start;
+      }
+
+      &.xl-justify-center {
+        justify-content: center;
+      }
+
+      &.xl-justify-end {
+        justify-content: end;
+      }
+
+      &.xl-justify-between {
+        justify-content: space-between;
+      }
+
+      &.xl-justify-around {
+        justify-content: space-around;
+      }
+
+      &.xl-justify-evenly {
+        justify-content: space-evenly;
+      }
+
       &.xl-columns-1 {
         grid-template-columns: repeat(1, 1fr);
       }
