@@ -18,6 +18,7 @@ const {
 } = Astro.props as AccordionItemProps;
 
 const uniqueId = uid("naut-accordion");
+const contentId = `${uniqueId}-content`;
 ---
 
 <div
@@ -26,20 +27,19 @@ const uniqueId = uid("naut-accordion");
     `size-${size}`,
     className
   ]}
+  data-state="closed"
   {...rest}
 >
-  <input
-    type="radio"
-    id={uniqueId}
-    name="accordion-group"
-    class="accordion-radio"
-    hidden
+  <button
+    type="button"
+    class="accordion-header"
+    aria-expanded="false"
+    aria-controls={contentId}
   >
-  <label class="accordion-header" for={uniqueId}>
     <Text inline size={size}>{title}</Text>
     <span class:list={["accordion-icon", icon]}></span>
-  </label>
-  <div class="accordion-content">
+  </button>
+  <div id={contentId} class="accordion-content" aria-hidden="true">
     <div class="content-inner"><slot /></div>
   </div>
 </div>
@@ -64,9 +64,18 @@ const uniqueId = uid("naut-accordion");
       align-items: center;
       justify-content: space-between;
       padding: var(--naut-spacing-sm);
+      font: inherit;
+      color: inherit;
+      text-align: left;
       cursor: pointer;
       user-select: none;
       background-color: var(--accordion-item-bg);
+      border: 0;
+
+      &:focus-visible {
+        outline: 2px solid var(--naut-color-primary);
+        outline-offset: 2px;
+      }
 
       .accordion-icon {
         position: relative;
@@ -134,26 +143,26 @@ const uniqueId = uid("naut-accordion");
       }
     }
 
-    .accordion-radio:checked {
-      ~ .accordion-header {
-        .accordion-icon.chevron {
-          opacity: 1;
-          transform: rotate(-135deg);
+    &[data-state="open"] {
+      .accordion-icon.chevron {
+        opacity: 1;
+        transform: rotate(-135deg);
+      }
+
+      .accordion-icon.plus {
+        opacity: 1;
+
+        &::after {
+          opacity: 0;
+          transform: translateX(-50%) scaleY(0);
         }
 
-        .accordion-icon.plus {
-          opacity: 1;
-
-          &::after {
-            opacity: 0;
-            transform: translateX(-50%) scaleY(0);
-          }
-          &::before {
-            transform: translateY(-50%) rotate(180deg); /* Smooth spin */
-          }
+        &::before {
+          transform: translateY(-50%) rotate(180deg);
         }
       }
-      ~ .accordion-content {
+
+      .accordion-content {
         max-height: 2000px;
       }
     }
@@ -162,13 +171,34 @@ const uniqueId = uid("naut-accordion");
 
 <script>
   const headers = document.querySelectorAll(".accordion-header");
-  for (const header of Array.from(headers) as HTMLElement[]) {
-    header.addEventListener("click", (event) => {
-      const radio = header.previousElementSibling as HTMLInputElement;
-      if (radio?.checked) {
-        event.preventDefault(); // Stop default browser lock
-        radio.checked = false; // Manually collapse the item
+
+  for (const header of Array.from(headers)) {
+    header.addEventListener("click", () => {
+      const item = header.closest(".naut-accordion-item");
+      const content = item?.querySelector(".accordion-content");
+      if (!(item && content)) return;
+
+      const isOpen = header.getAttribute("aria-expanded") === "true";
+      const accordion = item.closest(".naut-accordion");
+
+      if (!isOpen) {
+        const siblings = accordion?.querySelectorAll(".accordion-header") ?? [];
+
+        for (const sibling of Array.from(siblings)) {
+          if (sibling === header) continue;
+
+          const siblingItem = sibling.closest(".naut-accordion-item");
+          const siblingContent =
+            siblingItem?.querySelector(".accordion-content");
+          sibling.setAttribute("aria-expanded", "false");
+          siblingItem?.setAttribute("data-state", "closed");
+          siblingContent?.setAttribute("aria-hidden", "true");
+        }
       }
+
+      header.setAttribute("aria-expanded", String(!isOpen));
+      item.setAttribute("data-state", isOpen ? "closed" : "open");
+      content.setAttribute("aria-hidden", String(isOpen));
     });
   }
 </script>

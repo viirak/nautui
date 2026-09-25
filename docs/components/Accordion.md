@@ -40,12 +40,12 @@ Renders a `<div class="naut-accordion">` flex column. Any attributes pass throug
 
 ## Behavior
 
-- Each item is a radio-backed disclosure — **only one item is open at a time**, and clicking an open item collapses it.
+- Each item is a button-backed disclosure — **only one item in an Accordion is open at a time**, and activating an open item collapses it.
 - The expand icon rotates (chevron) or animates to a minus (plus) on open.
 - Content is revealed with a `max-height` transition (caps at **`2000px`**).
 - Items are separated by a divider line; the last item has none.
 
 ## Accessibility
 
-- The header is a `<label for>` a hidden radio input — keyboard toggling works via Tab + Space/Enter.
-- No `aria-expanded` is set; if you need screen-reader state announcements, add `role="button"` + `aria-expanded` via the `class`/rest props and manage it externally.
+- The header is a native `<button>` with `aria-expanded` and `aria-controls`; keyboard toggling works via Tab + Enter/Space.
+- A visible `:focus-visible` outline identifies the focused header.
