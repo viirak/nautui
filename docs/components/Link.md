@@ -25,6 +25,7 @@ import { Link } from "@nautui/core";
 | ----------- | ----------------------------------- | ----------- | ------------------------------------------------- |
 | `to`        | `string`                            | *(required)* | `href` value.                                    |
 | `hover`     | `"underline" \| "dimmed" \| "surface"` | `"underline"` | Hover feedback.                               |
+| `color`     | `Color`                                | —             | Tokenized text color; defaults to the link token. |
 | `dimmed`    | `boolean`                           | `false`     | Always dimmed at 50% opacity (hover restores).    |
 | `underline` | `boolean`                           | `false`     | Always underlined (not just on hover).            |
 | `external`  | `boolean`                           | `false`     | Adds an external-link icon.                       |

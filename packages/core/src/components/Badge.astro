@@ -1,14 +1,15 @@
 ---
+import { getColorValue } from "../lib/color";
 import {
   getPaddingClassList,
   type Padding,
   type Spacing,
 } from "../lib/spacing";
-import type { Base, Radius } from "../types";
+import type { Base, Color, Radius } from "../types";
 import "../styles/spacing/padding.css";
 
 export interface BadgeProps extends Base {
-  color?: "primary" | "secondary" | "destructive";
+  color?: Color;
   dark?: boolean;
   dotted?: boolean;
   gradient?: { colors: string[]; textColor: string; deg?: number };
@@ -48,6 +49,7 @@ const {
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : "none";
+const colorValue = getColorValue(color);
 let paddingClasses: string[] = [];
 if (paddingProp) {
   paddingClasses = getPaddingClassList(paddingProp);
@@ -65,7 +67,7 @@ if (paddingProp) {
     `radius--${radius}`,
     `size--${size}`,
     (["primary", "secondary", "destructive"].includes(variant) || gradient) && "filled",
-    color && `color--${color}`,
+    colorValue && !gradient && "color--custom",
     dark && "dark",
     dotted && "dotted",
     uppercase && "uppercase",
@@ -82,7 +84,8 @@ if (paddingProp) {
   define:vars={{
   gradientBg,
   gradientColor: gradient?.textColor,
-  outlineColor
+  outlineColor,
+  colorValue: colorValue ?? ""
 }}
 >
   .naut-badge {
@@ -162,30 +165,11 @@ if (paddingProp) {
       }
     }
 
-    &.color--primary:not(.filled) {
-      color: var(--naut-color-primary);
-      &.dotted {
-        &::before {
-          background-color: var(--naut-color-primary);
-        }
-      }
-    }
+    &.color--custom {
+      color: var(--colorValue);
 
-    &.color--secondary:not(.filled) {
-      color: var(--naut-color-secondary);
-      &.dotted {
-        &::before {
-          background-color: var(--naut-color-secondary);
-        }
-      }
-    }
-
-    &.color--destructive:not(.filled) {
-      color: var(--naut-color-destructive);
-      &.dotted {
-        &::before {
-          background-color: var(--naut-color-destructive);
-        }
+      &.dotted::before {
+        background-color: currentColor;
       }
     }
 

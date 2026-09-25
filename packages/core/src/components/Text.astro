@@ -1,16 +1,17 @@
 ---
 import "../styles/spacing/margin.css";
 import "../styles/spacing/letter.css";
+import { getColorValue } from "../lib/color";
 import type { SpacingProps } from "../lib/spacing";
 import { getMarginClassList } from "../lib/spacing";
-import type { Base, Size } from "../types";
+import type { Base, Color, Size } from "../types";
 
 type TextDecoration = "underline" | "strikethrough";
 type TextTranform = "capitalize" | "uppercase" | "lowercase";
 
 export interface TextProps extends Base, SpacingProps {
   align?: "left" | "center" | "right" | "justify";
-  color?: "soft" | "muted" | string;
+  color?: Color;
   decoration?: TextDecoration;
   dimmed?: boolean;
   inline?: boolean;
@@ -55,12 +56,13 @@ const {
 const marginClasses = getMarginClassList(margin);
 const textTransform = transform || tt;
 const textDecoration = decoration || td;
+const colorValue = getColorValue(colorProp);
 
 const classList = [
   "text",
   italic && "italic",
   dimmed && "dimmed",
-  colorProp && `color-${colorProp}`,
+  colorValue && "color--custom",
   nowrap && "nowrap",
   align && `align-${align}`,
   size && `size-${size}`,
@@ -77,7 +79,7 @@ const classList = [
 {inline && <span class:list={classList} {...rest}><slot /></span>}
 {!inline && <p class:list={classList} {...rest}><slot /></p>}
 
-<style define:vars={{ textColor: colorProp }}>
+<style define:vars={{ textColor: colorValue ?? "" }}>
   .text {
     font-family: inherit;
     font-size: inherit;
@@ -120,15 +122,6 @@ const classList = [
 
     &.dimmed {
       color: var(--naut-color-content-soft);
-    }
-
-    &.color-soft {
-      color: var(--naut-color-content-soft);
-    }
-
-    &.color-muted {
-      color: var(--naut-color-content-soft);
-      opacity: 0.65;
     }
 
     &.size-xs {
@@ -231,6 +224,10 @@ const classList = [
     &.variant-highlight {
       color: var(--naut-color-content);
       background: var(--naut-color-highlight);
+    }
+
+    &.color--custom {
+      color: var(--textColor);
     }
   }
 

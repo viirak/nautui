@@ -25,6 +25,7 @@ import { Title } from "@nautui/core";
 | ---------- | --------------------------------------------- | ----------- | ----------------------------------------------- |
 | `level`    | `1 \| 2 \| 3 \| 4 \| 5 \| 6`                  | `2`         | Heading element.                                |
 | `size`     | `"default" \| "display" \| "display-sm" \| "display-md" \| "display-lg" \| "display-xl" \| "display-xxl"` | `"default"` | Type scale override. || `align`    | `"left" \| "center" \| "right" \| "justify"`  | —           | Text alignment.                                 |
+| `color`     | `Color`                                      | —           | Tokenized text color.                            |
 | `gradient` | `{ colors: string[]; deg?: number }`          | —           | Gradient text via `background-clip: text`.      |
 | `class`    | `string`                                      | —           | Extra class names merged onto the heading.      |
 

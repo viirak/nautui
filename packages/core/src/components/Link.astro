@@ -1,7 +1,9 @@
 ---
-import type { Base } from "../types";
+import { getColorValue } from "../lib/color";
+import type { Base, Color } from "../types";
 
 export interface LinkProps extends Base {
+  color?: Color;
   dimmed?: boolean;
   external?: boolean;
   hover?: "underline" | "dimmed" | "surface";
@@ -13,6 +15,7 @@ export interface LinkProps extends Base {
 
 const {
   to,
+  color,
   dimmed,
   class: className,
   hover = "underline",
@@ -22,6 +25,8 @@ const {
   wrap = false,
   ...rest
 } = Astro.props as LinkProps;
+
+const linkColor = getColorValue(color);
 ---
 
 <a
@@ -33,6 +38,7 @@ const {
     external && "external",
     underline && "underline",
     variant !== "default" && `variant-${variant}`,
+    linkColor && "color--custom",
     className
   ]}
   href={to}
@@ -56,7 +62,7 @@ const {
       <path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
   )}
 </a>
-<style>
+<style define:vars={{ linkColor: linkColor ?? "" }}>
   .naut-link {
     display: inline-flex;
     flex-wrap: nowrap;
@@ -101,6 +107,10 @@ const {
 
     &.variant-ghost {
       color: var(--naut-color-content);
+    }
+
+    &.color--custom {
+      color: var(--linkColor);
     }
 
     &:hover {

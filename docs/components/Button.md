@@ -29,6 +29,7 @@ Pass `href` to render an `<a>` instead of a `<button>`:
 | Prop       | Type                                                                  | Default     | Description                                    |
 | ---------- | --------------------------------------------------------------------- | ----------- | ---------------------------------------------- |
 | `variant`  | `"default" \| "primary" \| "secondary" \| "destructive" \| "outline" \| "outline-primary" \| "outline-secondary" \| "flat" \| "ghost" \| "link" \| "rainbow"` | `"default"` | Visual style. See [variants](#variants).        |
+| `color`    | `Color`                                                                  | —         | Tokenized text color; `variant` owns the fill.   |
 | `size`     | `"sm" \| "md" \| "lg"`                                                | `"md"`      | Button height, padding, and font size.         |
 | `rounded`  | `"none" \| "sm" \| "md" \| "lg" \| "full"`                            | `"md"`      | Border radius. `"full"` makes a pill.          |
 | `border`   | `"none" \| "sm" \| "md" \| "lg" \| "xl"`                              | `"md"`      | Border thickness.                              |
@@ -46,6 +47,9 @@ Any other attributes (e.g. `id`, `data-*`, `aria-*`, `disabled`) pass through to
 - **`primary`** — filled with `--naut-color-primary`.
 - **`secondary`** — filled with `--naut-color-secondary`.
 - **`destructive`** — filled with `--naut-color-destructive`.
+- **`success`** — filled with `--naut-color-success`.
+- **`warning`** — filled with `--naut-color-warning`.
+- **`info`** — filled with `--naut-color-info`.
 - **`outline`** — transparent fill, strong border.
 - **`outline-primary`** — transparent fill, primary-colored border.
 - **`outline-secondary`** — transparent fill, secondary-colored border.

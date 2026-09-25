@@ -1,12 +1,13 @@
 ---
 import "../styles/spacing/margin.css";
+import { getColorValue } from "../lib/color";
 import type { SpacingProps } from "../lib/spacing";
 import { getMarginClassList } from "../lib/spacing";
-import type { Base } from "../types";
+import type { Base, Color } from "../types";
 
 export interface TitleProps extends Base, SpacingProps {
   align?: "left" | "center" | "right" | "justify";
-  color?: string;
+  color?: Color;
   gradient?: { colors: string[]; deg?: number };
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   size?:
@@ -32,6 +33,7 @@ const {
 } = nonSpacing;
 
 const spacingClasses = getMarginClassList(margin);
+const colorValue = getColorValue(colorProp);
 
 const classlist = [
   "naut-title",
@@ -40,14 +42,13 @@ const classlist = [
   size && `size-${size}`,
   gradient && "color--gradient",
   ...spacingClasses,
-  colorProp && "color--custom",
+  colorValue && "color--custom",
   className,
 ];
 
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : undefined;
-const resolvedColor = colorProp;
 ---
 
 {level === 1 && <h1 class:list={classlist} {...rest}><slot /></h1>}
@@ -57,7 +58,7 @@ const resolvedColor = colorProp;
 {level === 5 && <h5 class:list={classlist} {...rest}><slot /></h5>}
 {level === 6 && <h6 class:list={classlist} {...rest}><slot /></h6>}
 
-<style define:vars={{ gradientBg, titleColor: resolvedColor ?? "" }}>
+<style define:vars={{ gradientBg, titleColor: colorValue ?? "" }}>
   .naut-title {
     font-family: var(--naut-font-display);
     font-weight: bold;

@@ -139,10 +139,10 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Button` | `variant` (`default`, `primary`, `secondary`, `destructive`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `size` (`sm\/md\/lg`), `href`, `rounded`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>` |
-| `Link` | `to` (required), `dimmed`, `external`, `hover` (`underline\|dimmed\|surface`), `underline`, `variant` (`default\|ghost`), `wrap` | Anchor; `variant="ghost"` = content-colored links for nav/footer lists |
-| `Title` | `size` (`default\|display\|display-sm\|display-md\|display-lg\|display-xl\|display-xxl`), `level` (1–6), `align`, `gradient` | Heading; `level` sets h1–h6 |
-| `Text` | `size`, `variant` (`primary\|secondary\|tertiary\|destructive\|link\|highlight`), `color` (`soft\|muted`), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph; `color="soft"`/`"muted"` soften text |
+| `Button` | `variant` (`default`, `primary`, `secondary`, `destructive`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `color` (token), `size` (`sm\/md\/lg`), `href`, `rounded`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>`; `variant` owns fill |
+| `Link` | `to` (required), `color` (token), `dimmed`, `external`, `hover` (`underline\|dimmed\|surface`), `underline`, `variant` (`default\|ghost`), `wrap` | Anchor; `variant="ghost"` = content-colored links for nav/footer lists |
+| `Title` | `size` (`default\|display\|display-sm\|display-md\|display-lg\|display-xl\|display-xxl`), `color` (token), `level` (1–6), `align`, `gradient` | Heading; `level` sets h1–h6 |
+| `Text` | `size`, `variant` (`primary\|secondary\|tertiary\|destructive\|link\|highlight`), `color` (token), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph; `color` is a shared tokenized text color |
 | `Mark` | `variant` (8 incl `primary\|underline\|sketch-circle`), `gradient`, `rotate`, `ff` | Inline highlight |
 | `Image` | `src`, `alt` (required), `ratio`, `radius`, `shadow`, `cover`, `fluid`, `responsive`, `hover` (`zoom\|zoom-out\|brighten\|grayscale\|fade`), `maxWidth`, `maxHeight` | Clipped frame; `hover="zoom"` scales on hover |
 | `List` / `ListItem` | `ordered`, `horizontal`, `marker`, `gap` / `marker` | Lists |
@@ -162,7 +162,7 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Badge` | `variant` (incl `default\|outline\|primary\|secondary\|destructive\|surface\|text`), `color`, `size`, `dotted`, `iconOnly`, `gradient`, `radius`, `outlineColor`, `letterSpacing` | Pill label |
+| `Badge` | `variant` (incl `default\|outline\|primary\|secondary\|destructive\|surface\|text`), `color` (token), `size`, `dotted`, `iconOnly`, `gradient`, `radius`, `outlineColor`, `letterSpacing`, `dark` | Pill label; `variant` owns fill |
 | `Accordion` / `AccordionItem` | `title` (required), `icon` (`chevron\|plus`), `size` | Collapsible sections |
 | `Background` | `color`, `gradient`, `image`, `pattern`, `opacity`, `mask` | Absolute-positioned layer for hero sections |
 | `Bento` / `BentoItem` | `rows`, `columns`, `gap` / `col`, `row` | Bento grid |

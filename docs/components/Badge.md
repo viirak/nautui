@@ -22,7 +22,7 @@ import { Badge } from "@nautui/core";
 | Prop            | Type                                       | Default     | Description                                       |
 | --------------- | ------------------------------------------ | ----------- | ------------------------------------------------- |
 | `variant`       | `"default" \| "text" \| "surface" \| "outline" \| "primary" \| "secondary" \| "destructive"` | `"default"` | Visual style. See [variants](#variants).          |
-| `color`         | `"primary" \| "secondary" \| "destructive"` | —           | Tints text/dot color. Only applies to unfilled variants; with filled variants it tints the dot. |
+| `color`         | `Color`                                        | —           | Tokenized text/dot color; `variant` owns the fill. |
 | `dark`          | `boolean`                                  | `false`     | Force dark-theme tokens for this badge subtree.   |
 | `size`          | `"sm" \| "md" \| "lg"`                     | `"md"`      | Font size and padding.                            |
 | `radius`        | `"sm" \| "md" \| "lg" \| "xl" \| "full"`   | `"sm"`      | Border radius. `"full"` makes a pill.             |
@@ -44,6 +44,7 @@ import { Badge } from "@nautui/core";
 - **`secondary`** — filled with `--naut-color-secondary`.
 - **`destructive`** — filled with `--naut-color-destructive`.
 
+`color` always controls the badge's text and dotted marker. When combined with a filled `variant`, the explicit color takes precedence over the variant's default foreground.
 ## Examples
 ### Dark container
 

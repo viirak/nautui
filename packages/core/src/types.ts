@@ -2,6 +2,16 @@ export type Size = "sm" | "md" | "lg" | "xl";
 export type Gap = Size;
 export type Shadow = Size;
 export type Radius = Size;
+export type Color =
+  | "primary"
+  | "secondary"
+  | "destructive"
+  | "success"
+  | "warning"
+  | "info"
+  | "content"
+  | "muted"
+  | "link";
 export type Responsive = "base" | Size;
 export type ResponsiveValue<T> = {
   [key in Responsive]?: T;

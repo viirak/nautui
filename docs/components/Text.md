@@ -29,7 +29,7 @@ import { Text } from "@nautui/core";
 | `align`      | `"left" \| "center" \| "right" \| "justify"` | — | Text alignment.                          |
 | `decoration` | `"underline" \| "strikethrough"`         | —         | Text decoration. (Alias: `td`.)                |
 | `transform`  | `"capitalize" \| "uppercase" \| "lowercase"` | —     | Text transform. (Alias: `tt`.)                 |
-| `color`      | `"soft" \| "muted"`                       | —         | Softens the text color (`soft` = content-soft, `muted` = content-soft at 65% opacity). |
+| `color`      | `Color`                                   | —         | Tokenized text color (`content`, `muted`, `link`, or semantic color). |
 | `ls`         | `Size`                                    | —         | Letter-spacing shorthand (`ls-{size}`).         |
 | `dimmed`     | `boolean`                                 | `false`   | `--naut-color-content-soft` color.             || `dimmed`     | `boolean`                                 | `false`   | `--naut-color-content-soft` color.             |
 | `italic`     | `boolean`                                 | `false`   | `font-style: italic`.                          |
@@ -37,6 +37,9 @@ import { Text } from "@nautui/core";
 | `nowrap`     | `boolean`                                 | `false`   | `white-space: nowrap`.                         |
 | `class`      | `string`                                  | —         | Extra class names merged onto the element.     |
 
+## Color tokens
+
+`Color` is shared by `Title`, `Text`, `Button`, `Badge`, and `Link`. Supported values are `primary`, `secondary`, `destructive`, `success`, `warning`, `info`, `content`, `muted`, and `link`. An explicit `color` takes precedence over a component variant's default foreground; variants continue to control fills and backgrounds.
 ## Notes
 
 - `p.text` removes top/bottom margin on `:first-child`/`:last-child` inside a parent, so stacked paragraphs don't double-space.

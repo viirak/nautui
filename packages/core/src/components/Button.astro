@@ -1,10 +1,11 @@
 ---
+import { getColorValue } from "../lib/color";
 import {
   getPaddingClassList,
   type Padding,
   type Spacing,
 } from "../lib/spacing";
-import type { Base, Radius, Size } from "../types";
+import type { Base, Color, Radius, Size } from "../types";
 import "../styles/spacing/padding.css";
 
 type ButtonVariant =
@@ -27,7 +28,7 @@ type ButtonType = "button" | "submit" | "reset";
 
 export interface ButtonProps extends Base {
   border?: Size | "none";
-  color?: string;
+  color?: Color;
   dark?: boolean;
   href?: string;
   padding?: Spacing | Padding;
@@ -53,23 +54,8 @@ const {
   ...rest
 } = Astro.props as ButtonProps;
 
-const shorthandColor: Record<string, string> = {
-  primary: "primary",
-  secondary: "secondary",
-  destructive: "destructive",
-  success: "success",
-  warning: "warning",
-  info: "info",
-};
-const resolvedColor = colorProp ?? shorthandColor[variant];
-let resolvedVariant: string;
-if (variant in shorthandColor) {
-  resolvedVariant = "filled";
-} else if (variant.startsWith("outline-")) {
-  resolvedVariant = "outline";
-} else {
-  resolvedVariant = variant;
-}
+const colorValue = getColorValue(colorProp);
+const resolvedVariant = variant;
 
 let paddingClasses: string[] = [];
 if (paddingProp) {
@@ -84,7 +70,7 @@ const classlist = [
   "naut-button",
   `size-${size}`,
   `variant-${resolvedVariant}`,
-  resolvedColor ? `color-${resolvedColor}` : "color-primary",
+  colorValue && "color--custom",
   `rounded-${rounded}`,
   `border-${border}`,
   dark && "dark",
@@ -97,7 +83,7 @@ const classlist = [
 {href && <a href={href} class:list={classlist} {...rest}><slot /></a>}
 {!href && <button class:list={classlist} type={type} {...rest}><slot /></button>}
 
-<style>
+<style define:vars={{ colorValue: colorValue ?? "" }}>
   .naut-button {
     position: relative;
     display: inline-flex;
@@ -170,6 +156,36 @@ const classlist = [
       }
     }
 
+    &.variant-success {
+      color: var(--naut-color-success-content);
+      background: var(--naut-color-success);
+      border-color: var(--naut-color-success);
+
+      &:hover:not(:disabled) {
+        background: color-mix(in oklch, var(--naut-color-success), white 35%);
+      }
+    }
+
+    &.variant-warning {
+      color: var(--naut-color-warning-content);
+      background: var(--naut-color-warning);
+      border-color: var(--naut-color-warning);
+
+      &:hover:not(:disabled) {
+        background: color-mix(in oklch, var(--naut-color-warning), white 35%);
+      }
+    }
+
+    &.variant-info {
+      color: var(--naut-color-info-content);
+      background: var(--naut-color-info);
+      border-color: var(--naut-color-info);
+
+      &:hover:not(:disabled) {
+        background: color-mix(in oklch, var(--naut-color-info), white 35%);
+      }
+    }
+
     &.variant-outline,
     &.variant-outline-primary,
     &.variant-outline-secondary {
@@ -196,41 +212,6 @@ const classlist = [
       &:hover:not(:disabled) {
         background: rgb(from var(--naut-color-secondary) r g b / 0.15);
       }
-    }
-
-    /* Color overrides via color prop */
-    &.color-primary {
-      color: var(--naut-color-primary-content);
-      background: var(--naut-color-primary);
-      border-color: var(--naut-color-primary);
-    }
-    &.color-secondary {
-      color: var(--naut-color-secondary-content);
-      background: var(--naut-color-secondary);
-      border-color: var(--naut-color-secondary);
-    }
-    &.color-destructive {
-      color: var(--naut-color-destructive-content);
-      background: var(--naut-color-destructive);
-      border-color: var(--naut-color-destructive);
-    }
-    &.color-success {
-      color: var(--naut-color-success-content);
-      background: var(--naut-color-success);
-      border-color: var(--naut-color-success);
-    }
-    &.color-warning {
-      color: var(--naut-color-warning-content);
-      background: var(--naut-color-warning);
-      border-color: var(--naut-color-warning);
-      &:hover:not(:disabled) {
-        background: color-mix(in oklch, var(--naut-color-warning), white 35%);
-      }
-    }
-    &.color-info {
-      color: var(--naut-color-info-content);
-      background: var(--naut-color-info);
-      border-color: var(--naut-color-info);
     }
 
     &.variant-flat {
@@ -277,6 +258,10 @@ const classlist = [
           padding-box,
           var(--naut-rainbow-conic-gradient) border-box;
       }
+    }
+
+    &.color--custom {
+      color: var(--colorValue);
     }
 
     &:disabled {

@@ -48,6 +48,7 @@ import Visibility from "./components/Visibility.astro";
 
 export type {
   Align,
+  Color,
   Direction,
   Justify,
   Responsive,
