@@ -89,7 +89,7 @@ const drawerId = uid("naut-drawer");
 
 <script is:inline>
   let _nautDrawerOpenCount = 0;
-  let _nautOriginalOverflow: string | undefined;
+  let _nautOriginalOverflow = "";
 
   function closeDrawer(drawer) {
     drawer.dataset.state = "closed";
@@ -101,8 +101,8 @@ const drawerId = uid("naut-drawer");
     }
     _nautDrawerOpenCount--;
     if (_nautDrawerOpenCount === 0) {
-      document.body.style.overflow = _nautOriginalOverflow ?? "";
-      _nautOriginalOverflow = undefined;
+      document.body.style.overflow = _nautOriginalOverflow;
+      _nautOriginalOverflow = "";
     }
   }
 
