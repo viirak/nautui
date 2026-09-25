@@ -1,0 +1,240 @@
+---
+import "../styles/radius.css";
+import type { Base, Radius, Size } from "../types";
+
+type FieldControl = "input" | "textarea";
+type FieldResize = "none" | "vertical" | "horizontal" | "both";
+
+export interface FieldProps extends Base {
+  control?: FieldControl;
+  description?: string;
+  error?: string;
+  fullWidth?: boolean;
+  id?: string;
+  label?: string;
+  radius?: Radius | "none" | "full";
+  required?: boolean;
+  resize?: FieldResize;
+  size?: Size;
+}
+
+const {
+  class: className,
+  control = "input",
+  description,
+  error: errorMessage,
+  fullWidth = false,
+  id,
+  label,
+  radius = "md",
+  required = false,
+  resize = "vertical",
+  size = "md",
+  ...rest
+} = Astro.props as FieldProps;
+
+const descriptionId = id && description ? `${id}-description` : undefined;
+const errorId = id && errorMessage ? `${id}-error` : undefined;
+---
+
+<div
+  class:list={[
+    "naut-field",
+    `size--${size}`,
+    `radius--${radius}`,
+    `control--${control}`,
+    `resize--${resize}`,
+    fullWidth && "full-width",
+    errorMessage && "has-error",
+    className
+  ]}
+  {...rest}
+>
+  {label ? (
+    <label class="naut-field__label" for={id}>
+      <span>
+        {label}
+        {required && <span aria-hidden="true" class="naut-field__required">*</span>}
+      </span>
+      <slot />
+    </label>
+  ) : (
+    <slot />
+  )}
+  {description && (
+    <p class="naut-field__description" id={descriptionId}>{description}</p>
+  )}
+  {errorMessage && <p class="naut-field__error" id={errorId}>{errorMessage}</p>}
+</div>
+
+<style>
+  .naut-field {
+    --field-height: 2.75rem;
+    --field-padding-block: 0.625rem;
+    --field-padding-inline: 0.75rem;
+    --field-radius: var(--naut-border-radius-md);
+    --field-border-color: var(--naut-color-border-strong);
+    --field-focus-color: var(--naut-color-link, #3b82f6);
+    --field-muted-text: color-mix(
+      in oklch,
+      var(--naut-color-content) 85%,
+      var(--naut-color-base-0)
+    );
+    --field-error-text: color-mix(
+      in oklch,
+      var(--naut-color-destructive) 35%,
+      var(--naut-color-content)
+    );
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    color: var(--naut-color-content);
+
+    &.full-width {
+      inline-size: 100%;
+    }
+
+    &.size--sm {
+      --field-height: 2.25rem;
+      --field-padding-block: 0.5rem;
+      --field-padding-inline: 0.625rem;
+    }
+
+    &.size--md {
+      --field-height: 2.75rem;
+      --field-padding-block: 0.625rem;
+      --field-padding-inline: 0.75rem;
+    }
+
+    &.size--lg {
+      --field-height: 3.25rem;
+      --field-padding-block: 0.75rem;
+      --field-padding-inline: 0.875rem;
+    }
+
+    &.size--xl {
+      --field-height: 3.75rem;
+      --field-padding-block: 0.875rem;
+      --field-padding-inline: 1rem;
+    }
+
+    &.radius--none {
+      --field-radius: 0;
+    }
+
+    &.radius--sm {
+      --field-radius: var(--naut-border-radius-sm);
+    }
+
+    &.radius--md {
+      --field-radius: var(--naut-border-radius-md);
+    }
+
+    &.radius--lg {
+      --field-radius: var(--naut-border-radius-lg);
+    }
+
+    &.radius--xl {
+      --field-radius: var(--naut-border-radius-xl);
+    }
+
+    &.radius--full {
+      --field-radius: 9999px;
+    }
+
+    &.has-error {
+      --field-border-color: var(--naut-color-destructive);
+    }
+
+    .naut-field__label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.25rem;
+    }
+
+    .naut-field__required {
+      margin-inline-start: 0.125rem;
+      color: var(--field-error-text);
+    }
+
+    .naut-field__description,
+    .naut-field__error {
+      margin: 0;
+      font-size: 0.75rem;
+      line-height: 1.25rem;
+    }
+
+    .naut-field__description {
+      color: var(--field-muted-text);
+    }
+
+    .naut-field__error {
+      color: var(--field-error-text);
+    }
+
+    :global(.naut-field__control) {
+      box-sizing: border-box;
+      display: block;
+      inline-size: 100%;
+      min-block-size: var(--field-height);
+      padding: var(--field-padding-block) var(--field-padding-inline);
+      font: inherit;
+      line-height: 1.5;
+      color: var(--naut-color-content);
+      background-color: var(--naut-color-base-0);
+      border: 1px solid var(--field-border-color);
+      border-radius: var(--field-radius);
+      transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+      &::placeholder {
+        color: var(--field-muted-text);
+        opacity: 1;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--field-focus-color);
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      &:read-only:not(:disabled) {
+        background-color: var(--naut-color-base-200);
+      }
+    }
+
+    &.has-error :global(.naut-field__control:focus-visible) {
+      outline-color: var(--naut-color-destructive);
+    }
+
+    &.control--textarea :global(.naut-field__control) {
+      min-block-size: 8rem;
+    }
+
+    &.resize--none :global(.naut-field__control) {
+      resize: none;
+    }
+
+    &.resize--vertical :global(.naut-field__control) {
+      resize: vertical;
+    }
+
+    &.resize--horizontal :global(.naut-field__control) {
+      resize: horizontal;
+    }
+
+    &.resize--both :global(.naut-field__control) {
+      resize: both;
+    }
+  }
+</style>

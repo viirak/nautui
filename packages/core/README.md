@@ -68,6 +68,8 @@ import { Button, Container, Section, Title, Text } from "@nautui/core";
 - [x] `Badge` — small pill label for status, counts, or tags
 - [x] `Image` — responsive image with optional caption
 - [x] `IconBox` — sized, themed wrapper for SVG icons
+- [x] `TextField` — accessible native single-line form control
+- [x] `Textarea` — accessible native multi-line form control
 
 ### Typography
 - [x] `Title` — semantic h1–h6 with consistent sizing

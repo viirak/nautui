@@ -37,6 +37,8 @@ import type { SectionProps } from "./components/Section.astro";
 import type { SpaceProps } from "./components/Space.astro";
 import type { StackProps } from "./components/Stack.astro";
 import type { TextProps } from "./components/Text.astro";
+import type { TextFieldProps } from "./components/TextField.astro";
+import type { TextareaProps } from "./components/Textarea.astro";
 import type { ThemeProps } from "./components/Theme.astro";
 import type { ThemeToggleProps } from "./components/ThemeToggle.astro";
 import type { TitleProps } from "./components/Title.astro";
@@ -77,6 +79,8 @@ export declare const BentoItem: (props: BentoItemProps) => AstroComponent;
 
 // Typography
 export declare const Text: (props: TextProps) => AstroComponent;
+export declare const TextField: (props: TextFieldProps) => AstroComponent;
+export declare const Textarea: (props: TextareaProps) => AstroComponent;
 export declare const Title: (props: TitleProps) => AstroComponent;
 export declare const Link: (props: LinkProps) => AstroComponent;
 export declare const Mark: (props: MarkProps) => AstroComponent;

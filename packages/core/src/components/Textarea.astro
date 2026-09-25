@@ -1,0 +1,70 @@
+---
+import type { Base, Radius, Size } from "../types";
+import Field from "./Field.astro";
+
+export type TextareaResize = "none" | "vertical" | "horizontal" | "both";
+
+export interface TextareaProps extends Base {
+  "aria-describedby"?: string;
+  "aria-invalid"?: boolean | "true" | "false" | "grammar" | "spelling";
+  description?: string;
+  error?: string;
+  fullWidth?: boolean;
+  id?: string;
+  label?: string;
+  name?: string;
+  radius?: Radius | "none" | "full";
+  required?: boolean;
+  resize?: TextareaResize;
+  rows?: number;
+  size?: Size;
+}
+
+const {
+  "aria-describedby": ariaDescribedBy,
+  "aria-invalid": ariaInvalid,
+  class: className,
+  description,
+  error: errorMessage,
+  fullWidth = false,
+  id,
+  label,
+  radius = "md",
+  required = false,
+  resize = "vertical",
+  rows = 4,
+  size = "md",
+  ...rest
+} = Astro.props as TextareaProps;
+
+const descriptionId = id && description ? `${id}-description` : undefined;
+const errorId = id && errorMessage ? `${id}-error` : undefined;
+const describedBy =
+  [ariaDescribedBy, descriptionId, errorId].filter(Boolean).join(" ") ||
+  undefined;
+const rootClass = className ? `naut-textarea ${className}` : "naut-textarea";
+---
+
+<Field
+  class={rootClass}
+  control="textarea"
+  description={description}
+  error={errorMessage}
+  fullWidth={fullWidth}
+  id={id}
+  label={label}
+  radius={radius}
+  required={required}
+  resize={resize}
+  size={size}
+>
+  <textarea
+    aria-describedby={describedBy}
+    aria-invalid={errorMessage ? "true" : ariaInvalid}
+    class="naut-field__control"
+    id={id}
+    required={required}
+    rows={rows}
+    {...rest}
+  />
+</Field>

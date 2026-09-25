@@ -172,6 +172,8 @@ Theming relies on `color-mix()`, `oklch()`, and relative color syntax (`rgb(from
 - [x] Avatar — profile image or initials with status, shape, and ring options
 - [x] AvatarGroup — overlapping avatar collection with an optional `+N` counter
 - [x] IconBox — sized, themed wrapper for SVG icons
+- [x] TextField — accessible native single-line form control
+- [x] Textarea — accessible native multi-line form control
 
 ### Typography
 - [x] Title — semantic h1–h6 with a display scale and gradient text

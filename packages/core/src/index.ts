@@ -39,6 +39,8 @@ import Section from "./components/Section.astro";
 import Space from "./components/Space.astro";
 import Stack from "./components/Stack.astro";
 import Text from "./components/Text.astro";
+import Textarea from "./components/Textarea.astro";
+import TextField from "./components/TextField.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
 import Title from "./components/Title.astro";
@@ -93,6 +95,8 @@ export {
   Space,
   Stack,
   Text,
+  Textarea,
+  TextField,
   Theme,
   ThemeToggle,
   Title,
