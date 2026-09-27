@@ -23,7 +23,7 @@ type ButtonVariant =
   | "ghost"
   | "link"
   | "rainbow";
-type ButtonRadius = Omit<Radius, "xl"> | "none" | "full";
+type ButtonRadius = Exclude<Radius, "xl"> | "none" | "full";
 type ButtonType = "button" | "submit" | "reset";
 
 export interface ButtonProps extends Base {
@@ -32,6 +32,7 @@ export interface ButtonProps extends Base {
   dark?: boolean;
   href?: string;
   padding?: Spacing | Padding;
+  radius?: ButtonRadius;
   rounded?: ButtonRadius;
   size?: Size;
   square?: boolean;
@@ -46,7 +47,8 @@ const {
   type = "button",
   variant = "default",
   color: colorProp,
-  rounded = "md",
+  radius,
+  rounded,
   border = "md",
   dark = false,
   square = false,
@@ -56,6 +58,7 @@ const {
 
 const colorValue = getColorValue(colorProp);
 const resolvedVariant = variant;
+const resolvedRadius = radius ?? rounded ?? "md";
 
 let paddingClasses: string[] = [];
 if (paddingProp) {
@@ -71,7 +74,7 @@ const classlist = [
   `size-${size}`,
   `variant-${resolvedVariant}`,
   colorValue && "color--custom",
-  `rounded-${rounded}`,
+  `radius-${resolvedRadius}`,
   `border-${border}`,
   dark && "dark",
   square && "square",
@@ -296,23 +299,23 @@ const classlist = [
 
     /* Border Radius */
 
-    &.rounded-none {
+    &.radius-none {
       border-radius: 0;
     }
 
-    &.rounded-sm {
+    &.radius-sm {
       border-radius: var(--naut-border-radius-sm);
     }
 
-    &.rounded-md {
+    &.radius-md {
       border-radius: var(--naut-border-radius-md);
     }
 
-    &.rounded-lg {
+    &.radius-lg {
       border-radius: var(--naut-border-radius-lg);
     }
 
-    &.rounded-full {
+    &.radius-full {
       border-radius: 9999px;
     }
 

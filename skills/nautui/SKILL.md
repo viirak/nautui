@@ -154,7 +154,7 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Button` | `variant` (14: `default`, `primary`, `secondary`, `destructive`, `success`, `warning`, `info`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `color` (token), `size` (`sm\/md\/lg`), `href`, `rounded`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>`; `variant` owns fill |
+| `Button` | `variant` (14: `default`, `primary`, `secondary`, `destructive`, `success`, `warning`, `info`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `color` (token), `size` (`sm\/md\/lg`), `href`, `radius`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>`; `variant` owns fill. `radius` is the shared name across components, but Button's domain omits `xl` and adds `none`/`full` |
 | `Link` | `to` (required), `color` (token), `dimmed`, `external`, `hover` (`underline\|dimmed\|surface`), `underline`, `variant` (`default\|ghost`), `wrap` | Anchor; `variant="ghost"` = content-colored links for nav/footer lists |
 | `Title` | `size` (`default\|display\|display-sm…display-xxl`, or `h1`–`h6` as aliases for the level scale), `color` (token), `level` (1–6), `align`, `gradient` | Heading; `level` sets the h1–h6 tag and its size, `size="hN"` overrides the size only, `size="display*"` uses the bigger display scale |
 | `Text` | `size`, `variant` (`primary\|secondary\|tertiary\|destructive\|link\|highlight`), `color` (token), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph; `color` is a shared tokenized text color |

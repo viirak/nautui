@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+### `@nautui/core` — Breaking Changes
+
+**`Button.rounded` renamed to `Button.radius`** — `radius` is now the single prop name for border radius across every component (`Avatar`, `Badge`, `Box`, `Card`, `Grid`, `IconBox`, `Image`, `MenuItem`, `NavBar`, `TextField`, `Textarea` already used it).
+
+| Old | New |
+|-----|-----|
+| `<Button rounded="full">` | `<Button radius="full">` |
+| `<Button rounded="none">` | `<Button radius="none">` |
+| `<Button rounded="sm" \| "md" \| "lg">` | `<Button radius="sm" \| "md" \| "lg">` |
+
+`rounded` is kept as a **deprecated alias** and resolved as `radius ?? rounded`, matching the `Mark.fontFamily` / `ff` pattern. It still works, so existing call sites keep rendering correctly instead of silently reverting to `radius="md"` — but `astro check` cannot flag a stale `rounded` (the `Base` index signature suppresses excess-property checks), so migrate deliberately.
+
+Also fixed: `ButtonRadius` used `Omit<Radius, "xl">`, which resolves to `{}` and therefore accepted *any* value. It now uses `Exclude<Radius, "xl">`, so `radius="xl"` is a type error rather than a silently square button.
+
 ## v0.1.0 — 2026-05-25
 ## v0.2.0 — 2026-09-04
 
