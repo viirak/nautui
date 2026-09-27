@@ -35,6 +35,13 @@ import { Link } from "@nautui/core";
 
 Any other attributes (e.g. `title`, `target`, `rel`, `id`, `aria-*`) pass through to the `<a>`.
 
+Two props are **rejected at render time** rather than silently ignored, because `Base`'s index signature means an unimplemented prop is not a type error — it would reach the DOM as an invalid attribute and render as a no-op:
+
+| Prop | Why it throws | Use instead |
+| --- | --- | --- |
+| `size` | `Link` has no size scale — a link inherits the size of its surrounding text. | `<Text inline size="lg">` around the link, or a `class`. |
+| `variant` values other than `default` / `ghost` | No such style exists. Note `MenuItem`'s `activeVariant="link"` is a *state* style, not a `Link` variant; the equivalent look is `Link`'s **default**, which is already link-coloured. | Drop the prop for the default; use `ghost` for content-coloured links. |
+
 ## Notes
 
 - Content is wrapped in an inner `.naut-link__wrapper` flex row — icons and text are aligned.

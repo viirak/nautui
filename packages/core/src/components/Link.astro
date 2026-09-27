@@ -2,6 +2,10 @@
 import { getColorValue } from "../lib/color";
 import type { Base, Color } from "../types";
 
+export type LinkVariant = "default" | "ghost";
+
+const linkVariants: readonly LinkVariant[] = ["default", "ghost"];
+
 export interface LinkProps extends Base {
   color?: Color;
   dimmed?: boolean;
@@ -9,7 +13,7 @@ export interface LinkProps extends Base {
   hover?: "underline" | "dimmed" | "surface";
   to: string;
   underline?: boolean;
-  variant?: "default" | "ghost";
+  variant?: LinkVariant;
   wrap?: boolean;
 }
 
@@ -23,8 +27,26 @@ const {
   underline = false,
   variant = "default",
   wrap = false,
+  size,
   ...rest
 } = Astro.props as LinkProps;
+
+/**
+ * `Base`'s index signature means an unimplemented prop is not an
+ * excess-property error — it would reach the DOM as an invalid attribute and
+ * render as a no-op. Reject the two that are natural to guess instead.
+ */
+if (variant !== undefined && !linkVariants.includes(variant)) {
+  throw new TypeError(
+    `Link: \`variant\` must be one of ${linkVariants.join(" | ")}. Received ${JSON.stringify(variant)}.`
+  );
+}
+
+if (size !== undefined) {
+  throw new TypeError(
+    'Link: `size` is not supported. A link inherits the size of its surrounding text. Use <Text inline size="lg"> around it, or a `class`.'
+  );
+}
 
 const linkColor = getColorValue(color);
 ---
