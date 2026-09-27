@@ -17,7 +17,13 @@ export interface TitleProps extends Base, SpacingProps {
     | "display-md"
     | "display-lg"
     | "display-xl"
-    | "display-xxl";
+    | "display-xxl"
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6";
 }
 
 const { margin, ...nonSpacing } = Astro.props as TitleProps;
@@ -35,11 +41,14 @@ const {
 const spacingClasses = getMarginClassList(margin);
 const colorValue = getColorValue(colorProp);
 
+/** `size="hN"` is an alias for the level scale, not a separate size. */
+const sizeLevel = /^h([1-6])$/.exec(size ?? "")?.[1];
+
 const classlist = [
   "naut-title",
   `l-${level}`,
   align && `align-${align}`,
-  size && `size-${size}`,
+  sizeLevel ? `l-${sizeLevel}` : size !== "default" && `size-${size}`,
   gradient && "color--gradient",
   ...spacingClasses,
   colorValue && "color--custom",

@@ -24,7 +24,8 @@ import { Title } from "@nautui/core";
 | Prop       | Type                                          | Default     | Description                                     |
 | ---------- | --------------------------------------------- | ----------- | ----------------------------------------------- |
 | `level`    | `1 \| 2 \| 3 \| 4 \| 5 \| 6`                  | `2`         | Heading element.                                |
-| `size`     | `"default" \| "display" \| "display-sm" \| "display-md" \| "display-lg" \| "display-xl" \| "display-xxl"` | `"default"` | Type scale override. || `align`    | `"left" \| "center" \| "right" \| "justify"`  | —           | Text alignment.                                 |
+| `size`     | `"default" \| "display" \| "display-sm" \| "display-md" \| "display-lg" \| "display-xl" \| "display-xxl" \| "h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6"` | `"default"` | Type scale override. |
+| `align`    | `"left" \| "center" \| "right" \| "justify"`  | —           | Text alignment.                                 |
 | `color`     | `Color`                                      | —           | Tokenized text color.                            |
 | `gradient` | `{ colors: string[]; deg?: number }`          | —           | Gradient text via `background-clip: text`.      |
 | `class`    | `string`                                      | —           | Extra class names merged onto the heading.      |
@@ -35,6 +36,7 @@ Headings use fluid `clamp()` sizes tied to viewport width:
 
 - `level` picks a heading on the document scale (`l-1` biggest → `l-6`).
 - `size` overrides with the display scale (`display` → `display-xxl`, growing).
+- `size="h1"` … `size="h6"` are aliases for the document scale: they re-use the `l-N` sizes, so `size="h4"` sizes the heading like a level-4 heading without changing the tag. When both are set, the `h*` alias wins (e.g. `level={2} size="h4"` renders an `<h2>` at the `l-4` size).
 - Default (no `size`) matches the heading level's own size.
 
 ## Gradient text
