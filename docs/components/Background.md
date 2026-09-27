@@ -12,7 +12,7 @@ import { Background, Section } from "@nautui/core";
 ---
 
 <Section>
-  <Background pattern={{ type: "dots", color: "#3b82f6" }} />
+  <Background pattern={{ style: "dots", color: "#3b82f6" }} />
   <h1>Patterned section</h1>
 </Section>
 ```
@@ -58,7 +58,7 @@ mask-image: radial-gradient(70% 60% at 50% 0, rgb(0 0 0 / 1) 30%, transparent 75
 
 | Prop    | Type                                              | Default                           | Description                         |
 | ------- | ------------------------------------------------- | --------------------------------- | ----------------------------------- |
-| `style`  | `"dots" \| "dots-x" \| "grid" \| "stripes"`    | *(required)*                      | Pattern kind.                       |
+| `style`  | `"dots" \| "dots-x" \| "grid" \| "stripes" \| "diamond-grid"` | *(required)*   | Pattern kind. There is no `type` key — that name belongs to `gradient`. |
 | `color` | `string`                                          | `var(--naut-color-base-200)`      | Pattern stroke color.               |
 | `size`  | `number`                                          | `1`                               | Dot/line thickness (px).            |
 | `gap`   | `number`                                          | per-type                          | Spacing between repeats (px).       |
@@ -88,7 +88,7 @@ mask-image: radial-gradient(70% 60% at 50% 0, rgb(0 0 0 / 1) 30%, transparent 75
 
 ```astro
 <Background
-  pattern={{ type: "stripes", color: "#a855f7", deg: 130, gap: 10 }}
+  pattern={{ style: "stripes", color: "#a855f7", deg: 130, gap: 10 }}
 />
 ```
 

@@ -7,7 +7,7 @@ description: Build marketing-site UI with NautUI, an Astro component library. Us
 
 NautUI is a clean, minimalist component library for marketing websites. Design tokens are derived at runtime via CSS `color-mix()` and OKLCH — no preprocessor, no build step, no JavaScript framework. All components are single-file `.astro` components.
 
-**Packages:** `@nautui/core` (39 primitive components) and `@nautui/blocks` (4 composite components built from core).
+**Packages:** `@nautui/core` (46 primitive components) and `@nautui/blocks` (6 composite components built from core).
 ## Install
 
 ```bash
@@ -54,13 +54,26 @@ Override tokens on `:root` (or anywhere) — they update at runtime, no rebuild:
 
 ```css
 :root {
-  --naut-color-primary: #1c2f58; /* Navy */
-  --naut-color-secondary: #00f2fe; /* Digital Cyan */
+  /* Navy — 13.15:1 against white */
+  --naut-color-primary: #1c2f58;
+  /* Teal — 5.47:1 against white. The library default #121217 is near-black
+     and renders as an invisible secondary CTA fill. */
+  --naut-color-secondary: #0f766e;
 }
-[data-theme="dark"] {
-  --naut-color-primary: #009ead; /* Light Teal as dark-primary when needed */
+
+/* The library re-derives neutrals for dark mode but leaves the brand inputs
+   untouched, so fills must be lifted by hand. Secondary is lifted because
+   #0f766e sits at 3.55:1 on the dark surface; primary is deliberately NOT
+   lifted, so avoid variant="primary" as a large fill on <Section dark>. */
+:root[data-theme="dark"] {
+  --naut-color-secondary: #14b8a6; /* 7.81:1 on the dark surface */
+  --naut-color-secondary-content: #06231f;
 }
 ```
+
+Note the `:root[data-theme="dark"]` form: inside an Astro `<style>` block a bare `[data-theme="dark"]` selector gets scoped and matches nothing.
+
+Nuppun's own brand rules (from `design.md` in the **Nuppun** repo, not this one) are: no purple, no startup cyan, no random blue CTAs. They are why Nuppun overrides the library's default purple `#5423e7` primary — they are not NautUI constraints.
 
 Everything else derives from these via `color-mix()`:
 
@@ -139,23 +152,24 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Button` | `variant` (`default`, `primary`, `secondary`, `destructive`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `color` (token), `size` (`sm\/md\/lg`), `href`, `rounded`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>`; `variant` owns fill |
+| `Button` | `variant` (14: `default`, `primary`, `secondary`, `destructive`, `success`, `warning`, `info`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `color` (token), `size` (`sm\/md\/lg`), `href`, `rounded`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>`; `variant` owns fill |
 | `Link` | `to` (required), `color` (token), `dimmed`, `external`, `hover` (`underline\|dimmed\|surface`), `underline`, `variant` (`default\|ghost`), `wrap` | Anchor; `variant="ghost"` = content-colored links for nav/footer lists |
 | `Title` | `size` (`default\|display\|display-sm\|display-md\|display-lg\|display-xl\|display-xxl`), `color` (token), `level` (1–6), `align`, `gradient` | Heading; `level` sets h1–h6 |
 | `Text` | `size`, `variant` (`primary\|secondary\|tertiary\|destructive\|link\|highlight`), `color` (token), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph; `color` is a shared tokenized text color |
-| `Mark` | `variant` (8 incl `primary\|underline\|sketch-circle`), `gradient`, `rotate`, `ff` | Inline highlight |
+| `Mark` | `variant` (8 incl `primary\|underline\|sketch-circle`), `gradient`, `rotate`, `fontFamily` (legacy alias `ff`) | Inline highlight |
 | `Image` | `src`, `alt` (required), `ratio`, `radius`, `shadow`, `cover`, `fluid`, `responsive`, `hover` (`zoom\|zoom-out\|brighten\|grayscale\|fade`), `maxWidth`, `maxHeight` | Clipped frame; `hover="zoom"` scales on hover |
 | `List` / `ListItem` | `ordered`, `horizontal`, `marker`, `gap` / `marker` | Lists |
 | `Article` | `anchorLinks` | Article typography wrapper |
 | `Masonry` / `MasonryItem` | `columns`, `gap` | CSS-columns masonry |
 | `Marquee` | `duration` (ms), `speed` (`slow\|normal\|fast`), `static`, `orientation`, `pauseOnHover`, `reverse`, `repeat`, `fadeEdges`, `gap` | Infinite scroll strip; `speed` presets override `duration`, `static` disables animation (single group) |
-| `TextRotate` | `duration` (ms), `align` (`start\|center\|end`), `label`, `pauseOnHover`, `reverse`, `static` | CSS-only vertical text rotation for 2–6 slotted items; `static` and `prefers-reduced-motion` show the first item |
+| `TextRotate` | `duration` (ms), `align` (`start\|center\|end`), `label`, `pauseOnHover`, `reverse`, `static` | CSS-only cross-fade of 2–6 slotted child elements; `static` and `prefers-reduced-motion` show the first item |
 ### Navigation & Overlay
 
 | Component | Key props | Notes |
 | --- | --- | --- |
 | `NavBar` | `island`, `sticky`, `autohide`, `bordered`, `dark`, `height`, `offset`, `radius`, `shadow`, `zindex` | Sticky/fixed nav; default slot for wordmark + links |
 | `Menu` / `MenuGroup` / `MenuItem` | `divided`, `gap`, `horizontal` / `label` (req), `collapsible`, `open`, `line` / `href` (req), `active`, `activeVariant`, `dimmed`, `radius` | Dropdown menu |
+| `Dropdown` | `button` (`Button` props), `align` (`start\|center\|end`), `side` (`top\|bottom\|left\|right`), `offset` (`xs\|sm\|md\|lg`), `hover`, `zi` | Generic popover on `<details>`/`<summary>` with a `Button` trigger; default slot is the panel, `zi` defaults to `100`. Use `Menu` for nav link lists |
 | `Drawer` | `position` (`center\|top\|right\|bottom\|left`), `button`, `size`, `zi` | Overlay panel |
 | `BackToTop` | `threshold`, `position`, `offset`, `label`, `showLabel` | Floating button; smooth-scrolls to top, respects `prefers-reduced-motion` |
 | `TOC` | `headings` (required), `sticky`, `title`, `top` | Table of contents from headings |
@@ -163,7 +177,10 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Badge` | `variant` (incl `default\|outline\|primary\|secondary\|destructive\|surface\|text`), `color` (token), `size`, `dotted`, `iconOnly`, `gradient`, `radius`, `outlineColor`, `letterSpacing`, `dark` | Pill label; `variant` owns fill |
+| `Badge` | `variant` (7: `text`, `border`, `surface`, `outline`, `primary`, `secondary`, `destructive` — there is no `default`), `color` (token), `size` (`sm\|md\|lg`), `dotted`, `iconOnly`, `gradient`, `radius`, `outlineColor`, `letterSpacing`, `uppercase`, `padding`, `dark` | Pill label; `variant` owns fill |
+| `IconBox` | `variant` (`default\|surface\|outline\|solid\|primary\|secondary\|destructive\|success\|warning\|info`), `color` (token), `size`, `radius` (adds `none\|full`), `label` | Square (`1 / 1`) themed frame for an SVG slot; `label` sets `aria-label` for icon-only use, or pass `aria-labelledby` |
+| `Avatar` | `src`, `alt`, `initials`, `placeholder`, `size` (adds `xs\|2xl`), `radius` (adds `full\|none`), `mask` (`heart\|squircle\|hexagon`), `ring` (boolean or token), `status` (`online\|offline`), `statusLabel` | Profile image or initials; `initials` + `placeholder` cover broken/missing images |
+| `AvatarGroup` | `size`, `border` (`none\|sm\|md\|lg`), `overlap` (`none\|sm\|md\|lg`), `more` | Overlapping row of `Avatar`s in a `role="group"`; `more` appends a `+N` counter |
 | `Accordion` / `AccordionItem` | `title` (required), `icon` (`chevron\|plus`), `size` | Collapsible sections |
 | `Background` | `color`, `gradient`, `image`, `pattern`, `opacity`, `mask` | Absolute-positioned layer for hero sections |
 | `Bento` / `BentoItem` | `rows`, `columns`, `gap` / `col`, `row` | Bento grid |
@@ -176,6 +193,15 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 | `Theme` | `dark` | Root provider — always wrap layouts |
 | `ThemeToggle` | — | Light/dark switch |
 
+### Forms
+
+| Component | Key props | Notes |
+| --- | --- | --- |
+| `TextField` | `label`, `description`, `error`, `required`, `size`, `radius` (adds `none\|full`), `fullWidth`, `id`, `name`, `type` (`text\|email\|password\|search\|tel\|url`) | Native `<input>`; set `id` to auto-wire `aria-describedby` to the description/error nodes |
+| `Textarea` | same as `TextField` (no `type`) plus `resize` (`none\|vertical\|horizontal\|both`), `rows` | Native `<textarea>`; `rows` defaults to 4 |
+
+Both render through an internal `Field` wrapper (not exported from the barrel) that owns the label/description/error layout and the focus styles.
+
 ### Background patterns & masks
 
 ```astro
@@ -186,11 +212,13 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 <Background
   color="#3b82f6"
-  mask={{ shape: "radial", position: "top", visibility: 0.6 }}
+  mask={{ shape: "radial", position: { x: 50, y: 0 }, size: { x: 70, y: 60 } }}
 />
 ```
 
-`pattern` accepts `{ type: "dots" | "dots-x" | "grid" | "stripes", color, size, gap, deg }`. The `mask` prop renders a `radial-gradient` mask that fades the layer to transparent at the edges — ideal for hero "fade into the page" backgrounds.
+`pattern` takes a **required** `style` — `"dots" | "dots-x" | "grid" | "stripes" | "diamond-grid"` — plus optional `color`, `size`, `gap`, `deg`. There is no `type` key; that name belongs to `gradient`.
+
+`mask` takes `{ shape?: "radial", position?: { x?, y? }, size?: { x?, y? }, visibility? }` and renders a `radial-gradient` mask that fades the layer to transparent at the edges — ideal for hero "fade into the page" backgrounds. `position` and `size` are `{x, y}` objects in **percentages 0–100**, not keyword strings or 0–1 fractions. Defaults: `position` `{x: 50, y: 0}`, `size` `{x: 70, y: 60}`, `visibility` `1`.
 
 ## Blocks Components
 
@@ -216,6 +244,22 @@ Props: `dark` (force dark), `figure: boolean | { clip: "slash" | "backslash", po
 <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Blog" }]} />
 ```
 
+### MegaMenu
+
+```astro
+<MegaMenu>
+  <MegaMenuItem label="Products" drop={{ position: "start", offset: 20 }}>
+    <MegaMenuItem label="Grid" href="/grid" />
+    <MegaMenuItem label="Masonry" href="/masonry" />
+  </MegaMenuItem>
+  <MegaMenuItem label="Pricing" href="/pricing" />
+</MegaMenu>
+```
+
+`MegaMenu` takes no props beyond `class`. `MegaMenuItem` takes `label` (required), `href`, and `drop` (`boolean` or `{ position: "start"|"center"|"end", offset }`); a `drop` item opens one shared panel whose content is that item's default slot. Hover intent and `prefers-reduced-motion` are handled in its script.
+
+Two constraints worth knowing: it is **single-instance per page** (the panel uses a hardcoded `id="mega-panel"` and the script queries `[data-mega-drop]` page-wide, so a second instance collides with the first), and the panel is **hover-only** — the trigger is a `<button>` with no click or keydown handler, so it is not keyboard reachable.
+
 ### DocLayout & TOC
 
 `DocLayout` is a docs-page shell with a sidebar for `TOC` and content slot. `TOC` builds its list from page headings.
@@ -234,7 +278,7 @@ import { SectionHero } from "@nautui/blocks";
     <ThemeToggle />
   </NavBar>
   <SectionHero figure dark>
-    <Fragment slot="background"><Background mask={{ shape: "radial", position: "top" }} /></Fragment>
+    <Fragment slot="background"><Background mask={{ shape: "radial" }} /></Fragment>
     <Title size="display-xxl">Headline goes here</Title>
     <Text size="lg">Supporting copy.</Text>
     <Button href="#cta" variant="primary">Get started</Button>
@@ -250,6 +294,7 @@ import { SectionHero } from "@nautui/blocks";
 2. **No tests exist** in the library. Don't look for them.
 3. **Dark mode** is opt-out — `<Theme>` defaults to auto dark. Pass `dark={false}` to disable.
 4. **`class` prop:** pass `class` (not `className`) from Astro templates; it merges onto the component root.
-5. **Components with client JS:** `NavBar` (scroll listener), `ThemeToggle` (theme switch), `Drawer`, `Menu`, `Marquee`, `Accordion`, `BackToTop`, `TOC` (scrollspy). The rest are render-only.
+5. **Components with client JS:** `Theme` (init), `ThemeToggle` (theme switch), `NavBar` (scroll listener), `Drawer`, `Dropdown`, `MenuGroup`, `AccordionItem`, `Article` (anchor links + copy), `BackToTop`; blocks add `MegaMenu` and `TOC` (scrollspy). The rest are render-only — `Marquee` and `TextRotate` are CSS-only, with no script.
 6. **Contrast:** brand colors are checked against white — keep them dark enough.
-7. **Docs:** per-component reference lives at `docs/components/*.md` in the [GitHub repo](https://github.com/viirak/nautui).
+7. **Docs:** per-component reference lives at `docs/components/*.md` for core and `docs/blocks/*.md` for blocks, in the [GitHub repo](https://github.com/viirak/nautui). Some components share a page — `AvatarGroup` is a section of `Avatar.md`, `Textarea` of `TextField.md`.
+8. **Dark-mode tokens in `<style>`:** write `:root[data-theme="dark"]`, never a bare `[data-theme="dark"]` — Astro scopes the latter, so it matches nothing.
