@@ -96,6 +96,8 @@ CSS layer order: `@layer naut-base, naut-theme, naut-component;`.
 - **BEM naming:** `__` separates block from child element (`naut-card__body`), `--` marks variants (`naut-button.variant-primary`). Passed-in `class` merges onto the root.
 - **Props interfaces** are exported from each component file and follow `Base` (`class?` + arbitrary passthrough attributes).
 - **All components** accept arbitrary extra attributes that pass through to the underlying element.
+- **`size` is component-relative, not a global scale.** The `Size` union (`sm|md|lg|xl`) is the baseline, not a guarantee — check the component's own props table. `AccordionItem` starts at `md`, `Badge`/`Card` stop at `lg`, `Space` adds `auto`/`display*`/`full` and accepts a responsive object, `Avatar` adds `xs`/`2xl` and treats a non-standard string as a custom length. `Badge size="sm"` and `Divider size="sm"` are different sizes by design; a Divider and a Badge cannot share a scale.
+- **Not every `size` is a scale step.** `Background`'s `mask.size` is a `{ x, y }` percentage vector (enforced to be an object — a non-object throws), and `Drawer's size` is a raw CSS length (`"350px"`). Enums are for modes and named token steps; raw numbers/strings are for free-form values.
 
 ## Example Component File
 
@@ -218,7 +220,7 @@ Both render through an internal `Field` wrapper (not exported from the barrel) t
 
 `pattern` takes a **required** `style` — `"dots" | "dots-x" | "grid" | "stripes" | "diamond-grid"` — plus optional `color`, `size`, `gap`, `deg`. There is no `type` key; that name belongs to `gradient`.
 
-`mask` takes `{ shape?: "radial", position?: { x?, y? }, size?: { x?, y? }, visibility? }` and renders a `radial-gradient` mask that fades the layer to transparent at the edges — ideal for hero "fade into the page" backgrounds. `position` and `size` are `{x, y}` objects in **percentages 0–100**, not keyword strings or 0–1 fractions. Defaults: `position` `{x: 50, y: 0}`, `size` `{x: 70, y: 60}`, `visibility` `1`.
+`mask` takes `{ shape?: "radial", position?: { x?, y? }, size?: { x?, y? }, visibility? }` and renders a `radial-gradient` mask that fades the layer to transparent at the edges — ideal for hero "fade into the page" backgrounds. `position` and `size` are `{x, y}` objects in **percentages 0–100** — no keyword strings, no 0–1 fractions. This is enforced: a non-object throws at render time instead of silently falling back to the default anchor. Defaults: `position` `{x: 50, y: 0}`, `size` `{x: 70, y: 60}`, `visibility` `1`.
 
 ## Blocks Components
 

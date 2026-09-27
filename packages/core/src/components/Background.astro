@@ -25,6 +25,26 @@ export interface BackgroundProps {
 
 const { color, image, mask, pattern, gradient, opacity } =
   Astro.props as BackgroundProps;
+
+/**
+ * `mask.position` / `mask.size` must be `{ x?, y? }` objects. A non-object
+ * (e.g. `position: "center"`) would read as `undefined` on every key and
+ * silently fall back to the default anchor, so reject it outright.
+ */
+const assertMaskVector = (value: unknown, name: string) => {
+  if (value === undefined) return;
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    throw new TypeError(
+      `Background: \`mask.${name}\` must be an object of percentages 0-100, e.g. { x: 50, y: 0 }. Received ${JSON.stringify(value)}.`
+    );
+  }
+};
+
+if (mask) {
+  assertMaskVector(mask.position, "position");
+  assertMaskVector(mask.size, "size");
+}
+
 const backgroundColor = color || "transparent";
 const backgroundImage = image ? `url("${image}")` : undefined;
 const backgroundSize = image ? "cover" : undefined;

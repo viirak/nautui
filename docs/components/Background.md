@@ -48,6 +48,8 @@ Any other attributes pass through to the `<div>`.
 | `size`       | `{ x: number; y: number }`              | `{ x: 70, y: 60 }` | Horizontal (x) and vertical (y) size of the opaque core, as percentages (0–100). |
 | `visibility` | `number`                                 | `1`      | Peak opacity of the mask (0–1).                       |
 
+`position` and `size` are **enforced** to be objects: passing anything else (e.g. `position: "center"`) throws at render time with a message naming the prop, rather than silently falling back to the default anchor. Use `{ x: 50, y: 50 }` for centre, or omit the prop entirely to take the default.
+
 `mask` renders a radial-gradient `mask-image` (with `-webkit-` prefix) that keeps the layer opaque near `position` and fades it to transparent at the edges — the classic hero "fade into the page" effect:
 
 ```css
