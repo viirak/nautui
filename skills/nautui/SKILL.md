@@ -82,6 +82,7 @@ Everything else derives from these via `color-mix()`:
 | `--naut-color-base` … `--naut-color-base-400` | Neutral surface scale (tinted from primary, flipped in dark mode) |
 | `--naut-color-content` / `--naut-color-content-soft` | Text on neutrals |
 | `--naut-color-border` / `--naut-color-border-strong` | Border aliases |
+| `--naut-color-link-input` | Internal capture of `--naut-color-link`; the dark block mixes from it (a token cannot reference itself) |
 | `--naut-tint-base` (3%), `--naut-tint-strong` (25%) | Tint strength constants |
 | `--naut-color-primary-content`, `--naut-color-secondary-content` | Foreground on brand fills |
 | `--naut-font-body` | Body font stack (defaults to system-ui) |

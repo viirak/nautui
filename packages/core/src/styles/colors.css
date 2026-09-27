@@ -9,6 +9,13 @@
   --naut-color-link: #3b82f6;
   --naut-color-highlight: #ddd522;
 
+  /* Unmodified link input, captured for dark mode. The dark rule cannot
+     reference `--naut-color-link` from its own declaration (a self-reference
+     is invalid at computed-value time), so it mixes from this instead. The
+     var() is substituted after the cascade, so a consumer override of
+     `--naut-color-link` is picked up regardless of stylesheet order. */
+  --naut-color-link-input: var(--naut-color-link);
+
   /* === Brand content (foreground on brand) === */
   --naut-color-primary-content: white;
   --naut-color-secondary-content: white;
@@ -93,5 +100,9 @@
   );
 
   /* === Specialty === */
-  --naut-color-link: color-mix(in oklch, blue, white 80%);
+  --naut-color-link: color-mix(
+    in oklch,
+    var(--naut-color-link-input),
+    white 80%
+  );
 }

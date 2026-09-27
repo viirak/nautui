@@ -22,6 +22,8 @@ Also fixed: `ButtonRadius` used `Omit<Radius, "xl">`, which resolves to `{}` and
 |-----|-----|
 | `<Mark variant="halflight">` | `<Mark variant="highlight">` |
 
+**Dark mode now honours a custom `--naut-color-link`.** The dark block hardcoded `color-mix(in oklch, blue, white 80%)`, so a consumer's link token applied in light mode and was silently discarded in dark mode. It now mixes from a captured copy of the input (`--naut-color-link-input`), which is required because a custom property cannot reference itself — that would be invalid at computed-value time. The `var()` is substituted after the cascade, so the capture picks up a consumer override regardless of stylesheet order.
+
 **`Link` now rejects `size` and unknown `variant` values at render time.** `Base` declares `[key: string]: unknown`, so `size="lg"` or `variant="link"` were accepted by the type, spread onto the `<a>` as invalid attributes, and rendered as silent no-ops. Both now throw a `TypeError` naming the accepted values. `Link` has no size scale by design — a link inherits the size of its surrounding text; use `<Text inline size="lg">` around it or a `class`. `variant="link"` is not needed: the link-coloured look is `Link`'s default (`MenuItem`'s `activeVariant="link"` is a state style, not a `Link` variant).
 
 ## v0.1.0 — 2026-05-25
