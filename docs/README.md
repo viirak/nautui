@@ -3,7 +3,7 @@
 A clean, minimalist Astro UI component library for marketing websites. Design tokens are derived at runtime via CSS `color-mix()` and OKLCH — no preprocessor, no build step.
 
 ## Packages
-- **[@nautui/core](/packages/core)** — 44 primitive components (buttons, cards, layout, navigation, theming).
+- **[@nautui/core](/packages/core)** — 46 primitive components (buttons, cards, layout, navigation, theming).
 - **[@nautui/blocks](/packages/blocks)** — composable page sections built on core (Breadcrumb, DocLayout, MegaMenu, SectionHero, TOC).
 
 ## Requirements
@@ -113,6 +113,7 @@ Dark mode is enabled by default when `<Theme>` wraps your layout. Switch it with
 | `IconBox` | Sized, themed wrapper for SVG icons | [→](components/IconBox.md) |
 | `TextField` | Native single-line form control with field states | [→](components/TextField.md#textfield-props) |
 | `Textarea` | Native multi-line form control with field states | [→](components/TextField.md#textarea-props) |
+| `TextRotate` | CSS-only rotating text for marketing copy | [→](components/TextRotate.md) |
 
 ## Responsive layout API
 

@@ -41,6 +41,7 @@ import Stack from "./components/Stack.astro";
 import Text from "./components/Text.astro";
 import Textarea from "./components/Textarea.astro";
 import TextField from "./components/TextField.astro";
+import TextRotate from "./components/TextRotate.astro";
 import Theme from "./components/Theme.astro";
 import ThemeToggle from "./components/ThemeToggle.astro";
 import Title from "./components/Title.astro";
@@ -98,6 +99,7 @@ export {
   Text,
   Textarea,
   TextField,
+  TextRotate,
   Theme,
   ThemeToggle,
   Title,

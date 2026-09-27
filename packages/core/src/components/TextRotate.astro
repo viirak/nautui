@@ -1,0 +1,196 @@
+---
+import type { Base } from "../types";
+
+export type TextRotateAlign = "start" | "center" | "end";
+
+export interface TextRotateProps extends Base {
+  align?: TextRotateAlign;
+  "aria-label"?: string;
+  duration?: number;
+  label?: string;
+  pauseOnHover?: boolean;
+  reverse?: boolean;
+  static?: boolean;
+}
+
+const {
+  "aria-label": ariaLabel,
+  align = "start",
+  class: className,
+  duration = 10_000,
+  label,
+  pauseOnHover = true,
+  reverse = false,
+  static: isStatic = false,
+  ...rest
+} = Astro.props as TextRotateProps;
+
+const accessibleLabel = label ?? ariaLabel;
+const safeDuration = Math.max(1, Number.isFinite(duration) ? duration : 10_000);
+const classes = [
+  "naut-text-rotate",
+  `align-${align}`,
+  pauseOnHover && "pause-on-hover",
+  reverse && "reverse",
+  isStatic && "static",
+  className,
+];
+---
+
+{accessibleLabel ? (
+  <span
+    aria-label={accessibleLabel}
+    aria-live="off"
+    class:list={classes}
+    role="img"
+    {...rest}
+  >
+    <span aria-hidden="true" class="naut-text-rotate__viewport">
+      <slot />
+    </span>
+  </span>
+) : (
+  <span aria-live="off" class:list={classes} {...rest}>
+    <span class="naut-text-rotate__viewport">
+      <slot />
+    </span>
+  </span>
+)}
+
+<style define:vars={{ safeDuration }}>
+  .naut-text-rotate {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+
+  .naut-text-rotate__viewport {
+    --text-rotate-count: 1;
+    display: grid;
+    justify-items: start;
+  }
+
+  .naut-text-rotate.align-start .naut-text-rotate__viewport {
+    justify-items: start;
+  }
+
+  .naut-text-rotate.align-center .naut-text-rotate__viewport {
+    justify-items: center;
+  }
+
+  .naut-text-rotate.align-end .naut-text-rotate__viewport {
+    justify-items: end;
+  }
+
+  /* Item count drives the stagger interval; DaisyUI-compatible range of 2–6. */
+  .naut-text-rotate__viewport:has(> :nth-child(2)) {
+    --text-rotate-count: 2;
+  }
+
+  .naut-text-rotate__viewport:has(> :nth-child(3)) {
+    --text-rotate-count: 3;
+  }
+
+  .naut-text-rotate__viewport:has(> :nth-child(4)) {
+    --text-rotate-count: 4;
+  }
+
+  .naut-text-rotate__viewport:has(> :nth-child(5)) {
+    --text-rotate-count: 5;
+  }
+
+  .naut-text-rotate__viewport:has(> :nth-child(6)) {
+    --text-rotate-count: 6;
+  }
+
+  /* Items share one grid cell, so the box grows with the tallest item. */
+  :global(.naut-text-rotate__viewport > *) {
+    grid-area: 1 / 1;
+    animation: naut-text-rotate calc(var(--safeDuration) * 1ms) infinite;
+    animation-delay: calc(
+      var(--safeDuration) *
+      -1ms *
+      var(--text-rotate-index, 0) /
+      var(--text-rotate-count)
+    );
+  }
+
+  :global(.naut-text-rotate__viewport > :nth-child(1)) {
+    --text-rotate-index: 0;
+  }
+
+  :global(.naut-text-rotate__viewport > :nth-child(2)) {
+    --text-rotate-index: 1;
+  }
+
+  :global(.naut-text-rotate__viewport > :nth-child(3)) {
+    --text-rotate-index: 2;
+  }
+
+  :global(.naut-text-rotate__viewport > :nth-child(4)) {
+    --text-rotate-index: 3;
+  }
+
+  :global(.naut-text-rotate__viewport > :nth-child(5)) {
+    --text-rotate-index: 4;
+  }
+
+  :global(.naut-text-rotate__viewport > :nth-child(6)) {
+    --text-rotate-index: 5;
+  }
+
+  .naut-text-rotate.reverse :global(.naut-text-rotate__viewport > *) {
+    animation-direction: reverse;
+  }
+
+  .naut-text-rotate.pause-on-hover:hover
+    :global(.naut-text-rotate__viewport > *) {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .naut-text-rotate :global(.naut-text-rotate__viewport > *) {
+      animation: none;
+    }
+
+    .naut-text-rotate
+      :global(.naut-text-rotate__viewport > *:not(:first-child)) {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .naut-text-rotate:not(.static) :global(.naut-text-rotate__viewport > *) {
+      will-change: transform, opacity;
+    }
+  }
+
+  .naut-text-rotate.static :global(.naut-text-rotate__viewport > *) {
+    animation: none;
+  }
+
+  .naut-text-rotate.static
+    :global(.naut-text-rotate__viewport > *:not(:first-child)) {
+    opacity: 0;
+  }
+
+  @keyframes naut-text-rotate {
+    0% {
+      opacity: 0;
+      transform: translateY(0.3em);
+    }
+
+    15%,
+    85% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateY(-0.3em);
+    }
+  }
+</style>

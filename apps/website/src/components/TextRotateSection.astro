@@ -1,0 +1,29 @@
+---
+import { Box, Section, Text, TextRotate, Title } from "@nautui/core";
+---
+
+<Section>
+  <Box border="md">
+    <Title>TextRotate</Title>
+    <Text>CSS-only rotating text for hero copy and taglines.</Text>
+
+    <p>
+      Built for
+      <TextRotate label="websites that feel fast">
+        <span>websites that feel fast</span>
+        <span>marketing copy that rotates</span>
+        <span>headlines that keep moving</span>
+      </TextRotate>
+      without client JavaScript.
+    </p>
+  </Box>
+
+  <Box border="md">
+    <Text>Custom sizing and reverse direction:</Text>
+    <TextRotate reverse align="center" duration={6000} label="marketing teams">
+      <Text inline size="lg">marketing teams</Text>
+      <Text inline size="lg">designers</Text>
+      <Text inline size="lg">developers</Text>
+    </TextRotate>
+  </Box>
+</Section>

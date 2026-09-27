@@ -149,6 +149,7 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 | `Article` | `anchorLinks` | Article typography wrapper |
 | `Masonry` / `MasonryItem` | `columns`, `gap` | CSS-columns masonry |
 | `Marquee` | `duration` (ms), `speed` (`slow\|normal\|fast`), `static`, `orientation`, `pauseOnHover`, `reverse`, `repeat`, `fadeEdges`, `gap` | Infinite scroll strip; `speed` presets override `duration`, `static` disables animation (single group) |
+| `TextRotate` | `duration` (ms), `align` (`start\|center\|end`), `label`, `pauseOnHover`, `reverse`, `static` | CSS-only vertical text rotation for 2–6 slotted items; `static` and `prefers-reduced-motion` show the first item |
 ### Navigation & Overlay
 
 | Component | Key props | Notes |

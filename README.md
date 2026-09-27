@@ -178,6 +178,7 @@ Theming relies on `color-mix()`, `oklch()`, and relative color syntax (`rgb(from
 ### Typography
 - [x] Title — semantic h1–h6 with a display scale and gradient text
 - [x] Text — body text with size, weight, and variant colors
+- [x] TextRotate — CSS-only rotating text for hero copy and taglines
 
 ### Navigation
 - [x] NavBar — sticky/autohide top navigation with auto-dark detection

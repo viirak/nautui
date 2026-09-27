@@ -74,6 +74,7 @@ import { Button, Container, Section, Title, Text } from "@nautui/core";
 ### Typography
 - [x] `Title` — semantic h1–h6 with consistent sizing
 - [x] `Text` — body text with size variants
+- [x] `TextRotate` — CSS-only rotating text for hero copy and taglines
 - [x] `Mark` — `<mark>` styled with highlight color
 - [x] `Link` — themed anchor with hover and focus states
 - [x] `List` — styled ordered and unordered lists
