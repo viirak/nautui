@@ -45,6 +45,15 @@ Or shorthand (uniform):
 
 **Fluid spacing** — CSS `clamp()` replaces fixed `rem` values. Spacing now scales fluidly across viewport widths without breakpoint classes.
 
+**Direction API unified** — `Flex`, `Stack`, `Group`, and `Grid` now use the canonical `row`/`column` vocabulary for `direction` (and the canonical `start`/`center`/`end`/`between`/`around`/`evenly` for `justify`). The legacy `horizontal`/`vertical` values are still accepted and are normalized to `row`/`column` by `normalizeDirection()` in `lib/layout.ts` before any class is emitted, so both spellings render identically and no `direction-horizontal` class can reach the DOM:
+
+| Old | New |
+|-----|-----|
+| `direction="horizontal"` | `direction="row"` |
+| `direction="vertical"` | `direction="column"` |
+
+`space-*` justification values (e.g. `justify="space-between"`) and `Group`'s `not` prop are likewise still supported.
+
 ### Migration
 
 | Old | New |
