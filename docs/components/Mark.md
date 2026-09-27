@@ -20,7 +20,7 @@ import { Mark } from "@nautui/core";
 
 | Prop          | Type                                      | Default    | Description                                     |
 | ------------- | ----------------------------------------- | ---------- | ----------------------------------------------- |
-| `variant`     | `"default" \| "primary" \| "secondary" \| "destructive" \| "underline" \| "halflight" \| "parallelogram" \| "sketch-circle"` | `"default"` | Style. |
+| `variant`     | `"default" \| "primary" \| "secondary" \| "destructive" \| "underline" \| "highlight" \| "parallelogram" \| "sketch-circle"` | `"default"` | Style. `halflight` is a deprecated alias for `highlight`. |
 | `gradient`    | `{ colors: string[]; deg?: number }`      | —          | Gradient text (background-clip: text).          |
 | `fontFamily`  | `string`                                  | —          | Custom CSS font-family value.                  |
 | `ff`          | `string`                                  | —          | Backward-compatible alias for `fontFamily`.    |
@@ -34,7 +34,7 @@ Use `fontFamily` for new code; `ff` remains supported for existing consumers.
 - **`default`** — solid `--naut-color-highlight` background.
 - **`primary` / `secondary` / `destructive`** — colored text, no background.
 - **`underline`** — text stays `inherit` color; a `120deg` highlight band sits under it.
-- **`halflight`** — a wide, low highlight band across the middle (`.4em` at `88%`).
+- **`highlight`** — a wide, low highlight band across the middle (`.4em` at `88%`). Formerly misspelled `halflight`, which still works as an alias.
 - **`parallelogram`** — angled (slanted) highlight shape.
 - **`sketch-circle`** — a hand-drawn circle outline around the text.
 

@@ -98,6 +98,7 @@ CSS layer order: `@layer naut-base, naut-theme, naut-component;`.
 - **All components** accept arbitrary extra attributes that pass through to the underlying element.
 - **`size` is component-relative, not a global scale.** The `Size` union (`sm|md|lg|xl`) is the baseline, not a guarantee — check the component's own props table. `AccordionItem` starts at `md`, `Badge`/`Card` stop at `lg`, `Space` adds `auto`/`display*`/`full` and accepts a responsive object, `Avatar` adds `xs`/`2xl` and treats a non-standard string as a custom length. `Badge size="sm"` and `Divider size="sm"` are different sizes by design; a Divider and a Badge cannot share a scale.
 - **Not every `size` is a scale step.** `Background`'s `mask.size` is a `{ x, y }` percentage vector (enforced to be an object — a non-object throws), and `Drawer's size` is a raw CSS length (`"350px"`). Enums are for modes and named token steps; raw numbers/strings are for free-form values.
+- **Legacy aliases are intentional — do not "clean them up".** Each is a canonical name plus a still-supported old spelling, normalized inside the component so both render identically: `Mark.fontFamily`/`ff`, `Mark.variant` `highlight`/`halflight` (a former misspelling), `Button.radius`/`rounded`, `Flex|Stack|Group|Grid` `direction` `row|column`/`horizontal|vertical`, `justify` `between`/`space-between`, and `Group.not`. `Base` declares `[key: string]: unknown`, so a stale prop is *not* an excess-property error — `astro check` will not catch a leftover alias, which is exactly why they are kept.
 
 ## Example Component File
 
@@ -158,7 +159,7 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 | `Link` | `to` (required), `color` (token), `dimmed`, `external`, `hover` (`underline\|dimmed\|surface`), `underline`, `variant` (`default\|ghost`), `wrap` | Anchor; `variant="ghost"` = content-colored links for nav/footer lists |
 | `Title` | `size` (`default\|display\|display-sm…display-xxl`, or `h1`–`h6` as aliases for the level scale), `color` (token), `level` (1–6), `align`, `gradient` | Heading; `level` sets the h1–h6 tag and its size, `size="hN"` overrides the size only, `size="display*"` uses the bigger display scale |
 | `Text` | `size`, `variant` (`primary\|secondary\|tertiary\|destructive\|link\|highlight`), `color` (token), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph; `color` is a shared tokenized text color |
-| `Mark` | `variant` (8 incl `primary\|underline\|sketch-circle`), `gradient`, `rotate`, `fontFamily` (legacy alias `ff`) | Inline highlight |
+| `Mark` | `variant` (8 incl `highlight\|primary\|underline\|sketch-circle`; `halflight` is a deprecated alias for `highlight`), `gradient`, `rotate`, `fontFamily` (legacy alias `ff`) | Inline highlight |
 | `Image` | `src`, `alt` (required), `ratio`, `radius`, `shadow`, `cover`, `fluid`, `responsive`, `hover` (`zoom\|zoom-out\|brighten\|grayscale\|fade`), `maxWidth`, `maxHeight` | Clipped frame; `hover="zoom"` scales on hover |
 | `List` / `ListItem` | `ordered`, `horizontal`, `marker`, `gap` / `marker` | Lists |
 | `Article` | `anchorLinks` | Article typography wrapper |

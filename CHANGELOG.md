@@ -16,6 +16,12 @@
 
 Also fixed: `ButtonRadius` used `Omit<Radius, "xl">`, which resolves to `{}` and therefore accepted *any* value. It now uses `Exclude<Radius, "xl">`, so `radius="xl"` is a type error rather than a silently square button.
 
+**`Mark.variant="halflight"` renamed to `"highlight"`** — the value was a misspelling. `halflight` is kept as a deprecated alias and normalized in the component, so existing call sites keep rendering the same style.
+
+| Old | New |
+|-----|-----|
+| `<Mark variant="halflight">` | `<Mark variant="highlight">` |
+
 ## v0.1.0 — 2026-05-25
 ## v0.2.0 — 2026-09-04
 

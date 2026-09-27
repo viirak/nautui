@@ -12,7 +12,8 @@ export interface MarkProps extends Base {
     | "secondary"
     | "destructive"
     | "underline"
-    | "halflight"
+    | "highlight"
+    | "halflight" // legacy alias for "highlight"
     | "parallelogram"
     | "sketch-circle";
 }
@@ -30,12 +31,13 @@ const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : undefined;
 const nautMarkFontFamily = fontFamily ?? ff;
+const resolvedVariant = variant === "halflight" ? "highlight" : variant;
 ---
 
 <mark
   class:list={[
     "naut-mark",
-    variant && `variant--${variant}`,
+    variant && `variant--${resolvedVariant}`,
     rotate && `rotate--${rotate}`,
     gradient && "gradient",
     className]}
@@ -91,7 +93,7 @@ const nautMarkFontFamily = fontFamily ?? ff;
         18px calc(100% + 4px) / calc(100% - 32px) 0.2em transparent;
     }
 
-    &.variant--halflight {
+    &.variant--highlight {
       padding: 0 0.3rem;
       color: inherit;
       background:
