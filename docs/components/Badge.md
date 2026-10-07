@@ -31,6 +31,8 @@ import { Badge } from "@nautui/core";
 | `gradient`      | `{ colors: string[]; textColor: string; deg?: number }` | —    | Gradient background; `deg` defaults to `45`.      |
 | `dotted`        | `boolean`                                  | `false`     | Shows a leading status dot.                       |
 | `iconOnly`      | `boolean`                                  | `false`     | Square aspect for icon-only badges.               |
+| `padding`       | `"0" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "xxl"` | from `size` | One spacing step. Block padding is derived from it (always smaller than inline). Not an axis object. Ignored for `variant="text"` and for `iconOnly` (which sets its own symmetric padding). |
+| `margin`        | —                                          | —           | Not supported; throws. Wrap in a `Box`.           |
 | `class`         | `string`                                   | —           | Extra class names merged onto the element.        |
 | `uppercase`     | `boolean`                                  | `false`     | Forces all-caps text.                             |
 

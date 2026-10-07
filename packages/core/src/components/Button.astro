@@ -1,12 +1,7 @@
 ---
 import { getColorValue } from "../lib/color";
-import {
-  getPaddingClassList,
-  type Padding,
-  type Spacing,
-} from "../lib/spacing";
+import { getPillPadding, type SpacingStep } from "../lib/spacing";
 import type { Base, Color, Radius, Size } from "../types";
-import "../styles/spacing/padding.css";
 
 type ButtonVariant =
   | "default"
@@ -31,7 +26,14 @@ export interface ButtonProps extends Base {
   color?: Color;
   dark?: boolean;
   href?: string;
-  padding?: Spacing | Padding;
+  /** Not supported — wrap in a `Box`. */
+  margin?: never;
+  /**
+   * One spacing step, not an axis object: a button's silhouette depends on
+   * inline padding exceeding block padding, so the component derives both axes
+   * itself (see `getPillPadding`).
+   */
+  padding?: SpacingStep;
   radius?: ButtonRadius;
   rounded?: ButtonRadius;
   size?: Size;
@@ -53,21 +55,32 @@ const {
   dark = false,
   square = false,
   padding: paddingProp,
+  margin,
   ...rest
 } = Astro.props as ButtonProps;
+
+if (margin !== undefined) {
+  throw new TypeError(
+    "Button: `margin` is not supported. Wrap the button in a `Box`, or pass a spacing utility class."
+  );
+}
 
 const colorValue = getColorValue(colorProp);
 const resolvedVariant = variant;
 const resolvedRadius = radius ?? rounded ?? "md";
 
-let paddingClasses: string[] = [];
-if (paddingProp) {
-  paddingClasses = getPaddingClassList(paddingProp);
-} else if (!square) {
-  if (size === "sm") paddingClasses = ["p-xs"];
-  else if (size === "md") paddingClasses = ["p-sm"];
-  else paddingClasses = ["p-md"];
-}
+const sizePadding: Record<NonNullable<ButtonProps["size"]>, SpacingStep> = {
+  sm: "xs",
+  md: "sm",
+  lg: "md",
+  xl: "md",
+};
+const paddingStep: SpacingStep = paddingProp ?? sizePadding[size];
+// A 1:1 button carries no padding at all — the icon owns the box. This is the
+// opt-out from the pill ratio, and it satisfies `y == x` trivially (0 == 0).
+const pad = square ? { x: "0px", y: "0px" } : getPillPadding(paddingStep);
+const padX = pad.x;
+const padY = pad.y;
 
 const classlist = [
   "naut-button",
@@ -78,7 +91,6 @@ const classlist = [
   `border-${border}`,
   dark && "dark",
   square && "square",
-  ...paddingClasses,
   className,
 ];
 ---
@@ -86,7 +98,7 @@ const classlist = [
 {href && <a href={href} class:list={classlist} {...rest}><slot /></a>}
 {!href && <button class:list={classlist} type={type} {...rest}><slot /></button>}
 
-<style define:vars={{ colorValue: colorValue ?? "" }}>
+<style define:vars={{ colorValue: colorValue ?? "", padX, padY }}>
   .naut-button {
     position: relative;
     display: inline-flex;
@@ -96,6 +108,8 @@ const classlist = [
 
     /* Size */
     height: 2.5rem;
+    padding-block: var(--padY);
+    padding-inline: var(--padX);
     font-family: inherit;
     font-size: 0.875rem;
     font-weight: 400;

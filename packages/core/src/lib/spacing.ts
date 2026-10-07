@@ -2,6 +2,49 @@ import type { Size } from "../types";
 
 export type Spacing = Size;
 
+/** Step names that exist as `--naut-spacing-*` tokens and `p-*`/`gap-*` utilities. */
+export type SpacingStep =
+  | "0"
+  | "xxs"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "xxl";
+
+/**
+ * Pill-shaped components (`Button`, `Badge`) keep block padding strictly
+ * smaller than inline padding — a square outline is what makes them read as
+ * pills, and letting the axes drift apart is how they stop looking like pills
+ * at all. The ratio eases toward 1 as the step grows because a flat 2:1 reads
+ * squat at `md` and above. The `0` step has a ratio of 1, which is the way to
+ * ask for equal padding on both axes.
+ */
+const pillBlockRatio: Record<SpacingStep, number> = {
+  "0": 1,
+  xxs: 0.5,
+  xs: 0.5,
+  sm: 0.75,
+  md: 0.85,
+  lg: 0.9,
+  xl: 0.9,
+  xxl: 0.9,
+};
+
+export function getPillPadding(step: SpacingStep): { x: string; y: string } {
+  const ratio = pillBlockRatio[step];
+  // A step outside the union would otherwise yield `calc(… * undefined)`,
+  // which is invalid at computed-value time and silently drops the padding.
+  if (ratio === undefined) {
+    throw new TypeError(
+      `spacing: unknown padding step ${JSON.stringify(step)}. Expected one of ${Object.keys(pillBlockRatio).join(" | ")}.`
+    );
+  }
+  const x = `var(--naut-spacing-${step})`;
+  return { x, y: ratio === 1 ? x : `calc(${x} * ${ratio})` };
+}
+
 export interface Padding {
   bottom?: Spacing;
   left?: Spacing;

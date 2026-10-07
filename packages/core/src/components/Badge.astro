@@ -1,12 +1,7 @@
 ---
 import { getColorValue } from "../lib/color";
-import {
-  getPaddingClassList,
-  type Padding,
-  type Spacing,
-} from "../lib/spacing";
+import { getPillPadding, type SpacingStep } from "../lib/spacing";
 import type { Base, Color, Radius } from "../types";
-import "../styles/spacing/padding.css";
 
 export interface BadgeProps extends Base {
   color?: Color;
@@ -15,8 +10,15 @@ export interface BadgeProps extends Base {
   gradient?: { colors: string[]; textColor: string; deg?: number };
   iconOnly?: boolean;
   letterSpacing?: "sm" | "md" | "lg";
+  /** Not supported — wrap in a `Box`. */
+  margin?: never;
   outlineColor?: string;
-  padding?: Spacing | Padding;
+  /**
+   * One spacing step, not an axis object: a badge's silhouette depends on
+   * inline padding exceeding block padding, so the component derives both axes
+   * itself (see `getPillPadding`). Ignored for `variant="text"`.
+   */
+  padding?: SpacingStep;
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
   uppercase?: boolean;
@@ -43,21 +45,32 @@ const {
   dark = false,
   iconOnly = false,
   padding: paddingProp,
+  margin,
   ...rest
 } = Astro.props as BadgeProps;
+
+if (margin !== undefined) {
+  throw new TypeError(
+    "Badge: `margin` is not supported. Wrap the badge in a `Box`, or pass a spacing utility class."
+  );
+}
 
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : "none";
 const colorValue = getColorValue(color);
-let paddingClasses: string[] = [];
-if (paddingProp) {
-  paddingClasses = getPaddingClassList(paddingProp);
-} else if (variant !== "text") {
-  if (size === "sm") paddingClasses = ["px-xs", "py-xs"];
-  else if (size === "md") paddingClasses = ["px-sm", "py-sm"];
-  else paddingClasses = ["px-md", "py-md"];
-}
+
+const sizePadding: Record<NonNullable<BadgeProps["size"]>, SpacingStep> = {
+  sm: "xs",
+  md: "sm",
+  lg: "md",
+};
+const paddingStep: SpacingStep = paddingProp ?? sizePadding[size];
+// Badge always keeps the pill ratio — it has no square/circle toggle, so
+// nothing opts out. (`iconOnly` is a visual variant with its own padding rule.)
+const pillPadding = getPillPadding(paddingStep);
+const padX = variant === "text" ? "0px" : pillPadding.x;
+const padY = variant === "text" ? "0px" : pillPadding.y;
 ---
 
 <div
@@ -73,7 +86,6 @@ if (paddingProp) {
     uppercase && "uppercase",
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
-    ...paddingClasses,
     iconOnly && "icon-only"
   ]}
   {...rest}
@@ -85,7 +97,9 @@ if (paddingProp) {
   gradientBg,
   gradientColor: gradient?.textColor,
   outlineColor,
-  colorValue: colorValue ?? ""
+  colorValue: colorValue ?? "",
+  padX,
+  padY
 }}
 >
   .naut-badge {
@@ -94,6 +108,8 @@ if (paddingProp) {
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
+    padding-block: var(--padY);
+    padding-inline: var(--padX);
     color: var(--naut-color-content);
     text-wrap: nowrap;
 

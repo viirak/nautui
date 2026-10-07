@@ -36,7 +36,9 @@ Pass `href` to render an `<a>` instead of a `<button>`:
 | `border`   | `"none" \| "sm" \| "md" \| "lg" \| "xl"`                              | `"md"`      | Border thickness.                              |
 | `type`     | `"button" \| "submit" \| "reset"`                                     | `"button"`  | Native `type` attribute (buttons only).        |
 | `dark`     | `boolean`                                                             | `false`     | Force dark-mode styling (dark sections/navs).  |
-| `square`   | `boolean`                                                             | `false`     | Equal width/height aspect for icon-only use.   |
+| `square`   | `boolean`                                                             | `false`     | Equal width/height aspect for icon-only use. A 1:1 button carries **no** padding — it opts out of the pill ratio entirely. |
+| `padding`  | `"0" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "xxl"`      | from `size` | One spacing step. Block padding is derived from it (always smaller than inline). Not an axis object. |
+| `margin`   | —                                                                     | —           | Not supported; throws. Wrap in a `Box`.         |
 | `href`     | `string`                                                              | —           | When set, renders an `<a>` with this `href`.   |
 | `class`    | `string`                                                              | —           | Extra class names merged onto the element.     |
 

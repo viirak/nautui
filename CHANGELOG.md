@@ -2,7 +2,23 @@
 
 ## Unreleased
 
+### `@nautui/core` — Additions
+
+**New spacing step `--naut-spacing-xxs`** (`clamp(0.125rem, 0.1rem + 0.15vw, 0.25rem)`, i.e. 2-4px) below `xs`, with matching `.p-xxs` / `.px-xxs` / `.py-xxs` / `.pt-xxs` / `.pb-xxs` / `.pl-xxs` / `.pr-xxs` padding utilities and `.gap-xxs`.
+
+Note: the utility files expose different subsets of the token scale — `padding.css` has `xxs`–`xl`, `margin.css` has `sm`–`xl`, no file has `xxl`, and the `Spacing` type is `Size` (`sm|md|lg|xl`), so the smaller steps are reachable through the CSS utilities and hardcoded class lists but not through a generic `padding`/`margin` prop.
+
 ### `@nautui/core` — Breaking Changes
+
+**`Button` and `Badge` `padding` no longer accepts an axis object.** A pill's silhouette depends on inline padding exceeding block padding, so letting the axes be set independently is how they stop reading as pills. Both now take a single `SpacingStep` (`0|xxs|xs|sm|md|lg|xl|xxl`) and derive both axes via `getPillPadding()` in `lib/spacing.ts`: block is `calc(inline * ratio)` with the ratio easing toward 1 as the step grows (`xxs`/`xs` 0.5, `sm` 0.75, `md` 0.85, `lg`+ 0.9), so block is always smaller and the ratio holds exactly at every viewport width.
+
+| Old | New |
+|-----|-----|
+| `<Button padding="lg">` | unchanged — a scalar step still works |
+| `<Button padding={{ x: "lg", y: "sm" }}>` | `<Button padding="lg">` (block is derived) |
+| `<Button margin="lg">` | throws — wrap in a `Box` |
+
+Other behaviour changes: padding is rendered through `define:vars` instead of `p-*`/`py-*` utility classes, which removes the utility/specificity collision. `md`/`lg` are now slightly tighter than the old 1:1 (`0.85` instead of `1`), since block must stay below inline. `square` on `Button` opts out of the ratio entirely and keeps receiving **no** padding, unchanged from before. `margin` is declared `never` and also throws at render time. No call site in this repo, the docs, or nuppun used `padding` or `margin` on these two components.
 
 **`Button.rounded` renamed to `Button.radius`** — `radius` is now the single prop name for border radius across every component (`Avatar`, `Badge`, `Box`, `Card`, `Grid`, `IconBox`, `Image`, `MenuItem`, `NavBar`, `TextField`, `Textarea` already used it).
 
