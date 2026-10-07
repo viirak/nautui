@@ -1,24 +1,58 @@
 :root {
-  /* === Theme inputs (overridable) === */
+  /* === Theme inputs (overridable) ===
+   * These are the ONLY tokens a consumer overrides, and the dark block never
+   * redefines them. A themed token may not be the source of its own mix: with
+   * `:root { --a-input: var(--a) }` plus `dark { --a: color-mix(… var(--a-input) …) }`
+   * the pair is a cycle, every token derived from `--a` resolves to nothing, and
+   * dark mode renders black-on-black. Verified in Chromium. So dark-mode
+   * adaptation lives in the role tokens below, which mix from these inputs. */
   --naut-color-primary: #5423e7;
   --naut-color-secondary: #121217;
-  --naut-color-destructive: #ef4444;
+  --naut-color-destructive: #dc2626;
   --naut-color-success: #22c55e;
   --naut-color-warning: #f59e0b;
   --naut-color-info: #0ea5e9;
   --naut-color-link: #3b82f6;
   --naut-color-highlight: #ddd522;
 
-  /* Unmodified link input, captured for dark mode. The dark rule cannot
-     reference `--naut-color-link` from its own declaration (a self-reference
-     is invalid at computed-value time), so it mixes from this instead. The
-     var() is substituted after the cascade, so a consumer override of
-     `--naut-color-link` is picked up regardless of stylesheet order. */
-  --naut-color-link-input: var(--naut-color-link);
-
-  /* === Brand content (foreground on brand) === */
+  /* === Brand roles ===
+   * One job per token, identity in light, adapted in dark:
+   *   -fill    paints a surface
+   *   -text    paints glyphs on any surface
+   *   -content paints glyphs sitting on that -fill
+   * A fill must be dark enough for its foreground while text must be light
+   * enough for the surface — opposite needs, so they cannot share a token. */
+  --naut-color-primary-fill: var(--naut-color-primary);
+  --naut-color-primary-text: var(--naut-color-primary);
   --naut-color-primary-content: white;
+  --naut-color-secondary-fill: var(--naut-color-secondary);
+  --naut-color-secondary-text: var(--naut-color-secondary);
   --naut-color-secondary-content: white;
+  --naut-color-destructive-text: color-mix(
+    in oklch,
+    var(--naut-color-destructive) 90%,
+    black
+  );
+  --naut-color-link-text: var(--naut-color-link);
+  --naut-color-link-fill: var(--naut-color-link);
+
+  /* Fill hover holds the whole mix rather than a shared percentage: each fill
+   * has its own AA ceiling against its own foreground. `primary` tolerates 20%
+   * lightening before white text drops under 4.5:1, `secondary` 40%. */
+  --naut-color-primary-hover: color-mix(
+    in oklch,
+    var(--naut-color-primary-fill),
+    white 20%
+  );
+  --naut-color-secondary-hover: color-mix(
+    in oklch,
+    var(--naut-color-secondary-fill),
+    white 35%
+  );
+
+  /* === Brand content (foreground on brand) ===
+   * `primary` and `secondary` are declared with the roles above; these are the
+   * remaining brands, which are only ever used as fills. */
   --naut-color-destructive-content: white;
   --naut-color-success-content: white;
   --naut-color-warning-content: white;
@@ -88,6 +122,61 @@
   --naut-color-border-soft: var(--naut-color-base-100);
   --naut-color-border-strong: var(--naut-color-base-400);
 
+  /* === Brand roles adapted for dark surfaces ===
+   * Unadapted, `primary` and `secondary` nearly vanish as fills on a near-black
+   * surface: against the dark base they measured 2.77:1 and 1.12:1, under the
+   * 3:1 WCAG 1.4.11 expects of a control boundary. Every token in this section
+   * mixes from the raw inputs declared in `:root`, which the dark block never
+   * redefines. A themed token may not be the source of its own mix. */
+  --naut-color-primary-fill: color-mix(
+    in oklch,
+    var(--naut-color-primary),
+    white 40%
+  );
+  --naut-color-secondary-fill: color-mix(
+    in oklch,
+    var(--naut-color-secondary),
+    white 40%
+  );
+  --naut-color-primary-text: color-mix(
+    in oklch,
+    var(--naut-color-primary),
+    white 55%
+  );
+  --naut-color-secondary-text: color-mix(
+    in oklch,
+    var(--naut-color-secondary),
+    white 70%
+  );
+  --naut-color-destructive-text: color-mix(
+    in oklch,
+    var(--naut-color-destructive),
+    white 55%
+  );
+  --naut-color-link-text: color-mix(
+    in oklch,
+    var(--naut-color-link),
+    white 80%
+  );
+  --naut-color-link-fill: color-mix(
+    in oklch,
+    var(--naut-color-link),
+    white 80%
+  );
+  --naut-color-primary-content: black;
+
+  /* Hover darkens in dark mode — these fills are already lifted. */
+  --naut-color-primary-hover: color-mix(
+    in oklch,
+    var(--naut-color-primary-fill),
+    black 8%
+  );
+  --naut-color-secondary-hover: color-mix(
+    in oklch,
+    var(--naut-color-secondary-fill),
+    black 15%
+  );
+
   /* === Text on neutrals === */
   --naut-color-content: color-mix(
     in oklch,
@@ -98,12 +187,5 @@
     in oklch,
     var(--naut-color-content),
     black 30%
-  );
-
-  /* === Specialty === */
-  --naut-color-link: color-mix(
-    in oklch,
-    var(--naut-color-link-input),
-    white 80%
   );
 }

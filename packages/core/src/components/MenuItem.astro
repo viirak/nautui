@@ -77,7 +77,7 @@ const classList = [
       &:hover {
         background-color: var(--naut-color-base-200);
         &.active-link {
-          color: var(--naut-color-link);
+          color: var(--naut-color-link-text);
         }
       }
 
@@ -88,7 +88,7 @@ const classList = [
 
         &.active-primary {
           color: var(--naut-color-primary-content);
-          background-color: var(--naut-color-primary);
+          background-color: var(--naut-color-primary-fill);
         }
 
         &.active-surface {
@@ -96,9 +96,9 @@ const classList = [
         }
 
         &.active-link {
-          color: var(--naut-color-link);
+          color: var(--naut-color-link-text);
           &::before {
-            background-color: var(--naut-color-link);
+            background-color: var(--naut-color-link-fill);
           }
         }
       }

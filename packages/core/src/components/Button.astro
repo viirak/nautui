@@ -141,21 +141,21 @@ const classlist = [
 
     &.variant-primary {
       color: var(--naut-color-primary-content);
-      background: var(--naut-color-primary);
-      border-color: var(--naut-color-primary);
+      background: var(--naut-color-primary-fill);
+      border-color: var(--naut-color-primary-fill);
 
       &:hover:not(:disabled) {
-        background: color-mix(in oklch, var(--naut-color-primary), white 35%);
+        background: var(--naut-color-primary-hover);
       }
     }
 
     &.variant-secondary {
       color: var(--naut-color-secondary-content);
-      background: var(--naut-color-secondary);
-      border-color: var(--naut-color-secondary);
+      background: var(--naut-color-secondary-fill);
+      border-color: var(--naut-color-secondary-fill);
 
       &:hover:not(:disabled) {
-        background: color-mix(in oklch, var(--naut-color-secondary), white 35%);
+        background: var(--naut-color-secondary-hover);
       }
     }
 
@@ -216,18 +216,18 @@ const classlist = [
     }
 
     &.variant-outline-primary {
-      border-color: var(--naut-color-primary);
+      border-color: var(--naut-color-primary-fill);
 
       &:hover:not(:disabled) {
-        background: rgb(from var(--naut-color-primary) r g b / 0.15);
+        background: rgb(from var(--naut-color-primary-fill) r g b / 0.15);
       }
     }
 
     &.variant-outline-secondary {
-      border-color: var(--naut-color-secondary);
+      border-color: var(--naut-color-secondary-fill);
 
       &:hover:not(:disabled) {
-        background: rgb(from var(--naut-color-secondary) r g b / 0.15);
+        background: rgb(from var(--naut-color-secondary-fill) r g b / 0.15);
       }
     }
 
@@ -244,7 +244,7 @@ const classlist = [
     }
 
     &.variant-link {
-      color: var(--naut-color-primary);
+      color: var(--naut-color-primary-text);
       background: transparent;
       border-color: transparent;
       box-shadow: none;

@@ -176,13 +176,13 @@ const padY = isBare ? "0px" : pillPadding.y;
 
     &.variant--primary {
       color: var(--naut-color-primary-content);
-      background-color: var(--naut-color-primary);
+      background-color: var(--naut-color-primary-fill);
       border: none;
     }
 
     &.variant--secondary {
       color: var(--naut-color-secondary-content);
-      background-color: var(--naut-color-secondary);
+      background-color: var(--naut-color-secondary-fill);
       border: none;
     }
 
@@ -193,7 +193,7 @@ const padY = isBare ? "0px" : pillPadding.y;
     }
 
     /* Outline is an axis independent of the fill variant. Declared after the
-                   variant rules so it wins their `border: none` at equal specificity. */
+                                   variant rules so it wins their `border: none` at equal specificity. */
     &.outline--soft {
       border: 1px solid var(--naut-color-border-soft);
     }
@@ -207,8 +207,8 @@ const padY = isBare ? "0px" : pillPadding.y;
     }
 
     /* A `color` token tints the border too — an outlined badge should not have
-         green text sitting inside a grey border. When `color` is set it wins and
-         `outlineColor` no longer applies. */
+                         green text sitting inside a grey border. When `color` is set it wins and
+                         `outlineColor` no longer applies. */
     &.color--custom.outline--soft,
     &.color--custom.outline--normal,
     &.color--custom.outline--strong {

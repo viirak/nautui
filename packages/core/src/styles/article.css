@@ -3,12 +3,12 @@
   line-height: 1.5;
 
   a {
-    color: var(--naut-color-link);
+    color: var(--naut-color-link-text);
     text-decoration: underline;
     text-underline-offset: 4px;
 
     &:hover {
-      color: var(--naut-color-link);
+      color: var(--naut-color-link-text);
     }
   }
 

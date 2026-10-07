@@ -122,7 +122,7 @@ const avatarStyle = [
   .naut-avatar {
     --avatar-size: 3rem;
     --avatar-radius: 9999px;
-    --avatar-ring-color: var(--naut-color-primary);
+    --avatar-ring-color: var(--naut-color-primary-fill);
     --avatar-mask-clip-path: none;
     --avatar-mask-radius: var(--avatar-radius);
     position: relative;
@@ -207,7 +207,7 @@ const avatarStyle = [
     }
 
     &.ring-secondary {
-      --avatar-ring-color: var(--naut-color-secondary);
+      --avatar-ring-color: var(--naut-color-secondary-fill);
     }
 
     &.ring-success {
@@ -255,7 +255,7 @@ const avatarStyle = [
       font-weight: 600;
       line-height: 1;
       color: var(--naut-color-secondary-content);
-      background-color: var(--naut-color-secondary);
+      background-color: var(--naut-color-secondary-fill);
     }
 
     .naut-avatar__status {

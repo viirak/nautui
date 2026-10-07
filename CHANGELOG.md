@@ -6,6 +6,31 @@
 
 **New spacing step `--naut-spacing-xxs`** (`clamp(0.125rem, 0.1rem + 0.15vw, 0.25rem)`, i.e. 2-4px) below `xs`, with matching `.p-xxs` / `.px-xxs` / `.py-xxs` / `.pt-xxs` / `.pb-xxs` / `.pl-xxs` / `.pr-xxs` padding utilities and `.gap-xxs`.
 
+**Destructive fill darkened for contrast.** `--naut-color-destructive` was `#ef4444`, which against the white `--naut-color-destructive-content` foreground measured **3.76:1**. It is now `#dc2626` (4.83:1). This changes every destructive fill — `Button variant="destructive"`, `Badge variant="destructive"`.
+
+**A custom-property cycle made dark mode render black-on-black. Fixed.** `colors.css` captured each brand colour into a `-input` token and redefined the colour itself in the dark block:
+
+```css
+:root            { --naut-color-primary-input: var(--naut-color-primary); }
+[data-theme=dark]{ --naut-color-primary: color-mix(in oklch, var(--naut-color-primary-input), white 40%); }
+```
+
+The pair is a cycle, so it is invalid at computed-value time. Verified in Chromium against `colors.css` with `<html data-theme="dark">`: `--naut-color-primary`, `--naut-color-secondary`, `--naut-color-link`, `--naut-color-base`, `--naut-color-content` and everything derived from them all resolved to the empty string, rendering the page black-on-black. This already affected `--naut-color-link` on `main`; the brand-fill work extended it to the two most-referenced tokens, taking out the whole theme.
+
+A themed token may not be the source of its own mix. The brand colours are now pure inputs that the dark block never redefines, and dark-mode adaptation lives in role tokens — one job each, identity in light, adapted in dark:
+
+| Role | Tokens | Used by |
+| --- | --- | --- |
+| fill | `-primary-fill`, `-secondary-fill`, `-link-fill` | `background` / `border-color` of Button, Badge, Card, MenuItem, Avatar, IconBox, BackToTop, AccordionItem |
+| text | `-primary-text`, `-secondary-text`, `-destructive-text`, `-link-text` | any brand colour that paints glyphs |
+| content | `-primary-content`, `-secondary-content`, … | the foreground sitting on a `-fill` |
+
+`Text`, `Mark`, and `getColorValue()` (the `color="…"` prop) all read the `-text` tokens, so `variant="x"` and `color="x"` cannot drift apart. Consumer overrides still work in both themes because the inputs they set are no longer redefined.
+
+**Brand fills lifted in dark mode.** Left unadapted they nearly vanished as controls on a near-black surface — 2.77:1 and 1.12:1 against the dark base, against the 3:1 WCAG 1.4.11 expects of a control boundary. `primary-fill` and `secondary-fill` now mix 40% toward white. A lifted fill can no longer carry a white foreground (`primary` would fall to 3.26:1), so `--naut-color-primary-content` becomes `black` in dark; `secondary-content` stays white, which still measures 4.87:1 on the lifted fill.
+
+**New `--naut-color-primary-hover` / `--naut-color-secondary-hover` replace hard-coded hover mixes.** They hold the entire `color-mix()` rather than a shared percentage, because each fill has its own ceiling — lightening `primary` past 20% drops its white foreground below 4.5:1 (the old 35% mix measured 3.65:1, a pre-existing failure). In dark mode both flip to *darkening* the fill, because the fill is already lifted and the old "lighten 35%" hover drove `secondary` text to 2.52:1.
+
 Note: the utility files expose different subsets of the token scale — `padding.css` has `xxs`–`xl`, `margin.css` has `sm`–`xl`, no file has `xxl`, and the `Spacing` type is `Size` (`sm|md|lg|xl`), so the smaller steps are reachable through the CSS utilities and hardcoded class lists but not through a generic `padding`/`margin` prop.
 
 **`Badge` splits fill and outline into independent axes, and `outlineColor` is now a border weight.** `variant` carries the fill/text treatment only (`text | surface | primary | secondary | destructive`); the new boolean `outline` adds the border, so a filled badge can now be outlined — impossible with the old variant list. `outlineColor` went from an arbitrary colour string to `"soft" | "normal" | "strong"`, mapping onto `--naut-color-border-soft` / `-border` / `-border-strong`; the outline **hue** comes from the shared `color` token. This fixes two latent bugs: `outlineColor` previously tinted the *text* while the border stayed grey, so `outlineColor="green"` produced a green-text/grey-border badge; and `--naut-color-border-soft` was defined only in the dark block, so it had no light-mode value (its light value is `base-200`, not `base-100`, so it stays visible on `base-100` surfaces like `Card`). An outlined badge also keeps its pill padding — `variant="border"`/`variant="outline"` no longer collapse to a bare `text` badge. When `color` is set it also tints the border, and an `outlineColor` outside `soft|normal|strong` throws rather than emitting a class that matches no rule. Deprecated aliases are kept: `variant="border"` → `outline`, `variant="outline"` → `outline outlineColor="strong"`.

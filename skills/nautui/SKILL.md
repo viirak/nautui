@@ -42,7 +42,7 @@ Override tokens on `:root` (or anywhere) — they update at runtime, no rebuild:
 :root {
   --naut-color-primary: #5423e7;
   --naut-color-secondary: #121217;
-  --naut-color-destructive: #ef4444;
+  --naut-color-destructive: #dc2626;
   --naut-color-link: blue;
   --naut-color-highlight: #ddd522;
 }
@@ -61,10 +61,11 @@ Override tokens on `:root` (or anywhere) — they update at runtime, no rebuild:
   --naut-color-secondary: #0f766e;
 }
 
-/* The library re-derives neutrals for dark mode but leaves the brand inputs
-   untouched, so fills must be lifted by hand. Secondary is lifted because
-   #0f766e sits at 3.55:1 on the dark surface; primary is deliberately NOT
-   lifted, so avoid variant="primary" as a large fill on <Section dark>. */
+/* The library lifts primary and secondary fills in dark mode itself (both mix
+   40% toward white, off the -input captures), so a secondary CTA no longer
+   disappears on a dark surface. If you override a brand input and still need a
+   hand-tuned lift — e.g. a teal that lands under 3:1 — override it the same
+   way, and give the fill a dark foreground to match. */
 :root[data-theme="dark"] {
   --naut-color-secondary: #14b8a6; /* 7.81:1 on the dark surface */
   --naut-color-secondary-content: #06231f;
@@ -82,9 +83,11 @@ Everything else derives from these via `color-mix()`:
 | `--naut-color-base` … `--naut-color-base-400` | Neutral surface scale (tinted from primary, flipped in dark mode) |
 | `--naut-color-content` / `--naut-color-content-soft` | Text on neutrals |
 | `--naut-color-border-soft` / `--naut-color-border` / `--naut-color-border-strong` | Border weight scale (soft → normal → strong) |
-| `--naut-color-link-input` | Internal capture of `--naut-color-link`; the dark block mixes from it (a token cannot reference itself) |
 | `--naut-tint-base` (3%), `--naut-tint-strong` (25%) | Tint strength constants |
-| `--naut-color-primary-content`, `--naut-color-secondary-content` | Foreground on brand fills |
+| `--naut-color-primary-fill`, `--naut-color-secondary-fill`, `--naut-color-link-fill` | Brand colour as a **fill**. The dark block lifts these — the raw `--naut-color-primary` / `-secondary` / `-link` are pure inputs it never redefines |
+| `--naut-color-primary-text`, `--naut-color-secondary-text`, `--naut-color-destructive-text`, `--naut-color-link-text` | Brand colour as **foreground**. Use for any brand colour that paints glyphs, never the raw token |
+| `--naut-color-primary-content`, `--naut-color-secondary-content` | Foreground sitting *on* the matching `-fill`; `primary-content` becomes `black` in dark, where the fill is lifted |
+| `--naut-color-primary-hover`, `--naut-color-secondary-hover` | Fill hover colour (whole `color-mix()`, not a percentage — each fill has its own AA ceiling). Dark mode darkens instead of lightening |
 | `--naut-font-body` | Body font stack (defaults to system-ui) |
 | `--naut-font-display` | Display/heading font stack (defaults to body) |
 | `--naut-shadow-{sm\|md\|lg\|xl}`, `--naut-border-radius-*`, `--naut-border-width-*` | Effects |
