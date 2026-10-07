@@ -56,6 +56,7 @@
   );
 
   /* === Border aliases (separately themeable) === */
+  --naut-color-border-soft: var(--naut-color-base-200);
   --naut-color-border: var(--naut-color-base-300);
   --naut-color-border-strong: var(--naut-color-base-400);
 

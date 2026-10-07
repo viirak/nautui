@@ -3,6 +3,14 @@ import { getColorValue } from "../lib/color";
 import { getPillPadding, type SpacingStep } from "../lib/spacing";
 import type { Base, Color, Radius } from "../types";
 
+export type BadgeOutlineColor = "soft" | "normal" | "strong";
+
+const outlineColors: readonly BadgeOutlineColor[] = [
+  "soft",
+  "normal",
+  "strong",
+];
+
 export interface BadgeProps extends Base {
   color?: Color;
   dark?: boolean;
@@ -12,7 +20,10 @@ export interface BadgeProps extends Base {
   letterSpacing?: "sm" | "md" | "lg";
   /** Not supported — wrap in a `Box`. */
   margin?: never;
-  outlineColor?: string;
+  /** Adds a border, independently of the fill `variant`. */
+  outline?: boolean;
+  /** Border weight for `outline`. Hue comes from `color`. */
+  outlineColor?: BadgeOutlineColor;
   /**
    * One spacing step, not an axis object: a badge's silhouette depends on
    * inline padding exceeding block padding, so the component derives both axes
@@ -24,12 +35,14 @@ export interface BadgeProps extends Base {
   uppercase?: boolean;
   variant?:
     | "text"
-    | "border"
     | "surface"
-    | "outline"
     | "primary"
     | "secondary"
-    | "destructive";
+    | "destructive"
+    /** @deprecated Use `outline` (with `outlineColor` for the weight). */
+    | "border"
+    /** @deprecated Use `outline outlineColor="strong"`. */
+    | "outline";
 }
 
 const {
@@ -38,6 +51,7 @@ const {
   gradient,
   radius = "sm",
   letterSpacing = "md",
+  outline = false,
   outlineColor,
   dotted = false,
   uppercase = false,
@@ -60,6 +74,21 @@ const gradientBg = gradient
   : "none";
 const colorValue = getColorValue(color);
 
+// `border`/`outline` are legacy spellings of the `outline` flag: `outline`
+// used the strong border, `border` the normal one.
+const isLegacyOutline = variant === "border" || variant === "outline";
+const resolvedVariant = isLegacyOutline ? "text" : variant;
+const hasOutline = outline || isLegacyOutline;
+// A weight outside the union would emit `outline--<value>`, matching no rule,
+// so the border would silently vanish. Catch it instead.
+if (outlineColor !== undefined && !outlineColors.includes(outlineColor)) {
+  throw new TypeError(
+    `Badge: unknown outlineColor ${JSON.stringify(outlineColor)}. Expected one of ${outlineColors.join(" | ")}.`
+  );
+}
+const outlineWeight: BadgeOutlineColor =
+  outlineColor ?? (variant === "outline" ? "strong" : "normal");
+
 const sizePadding: Record<NonNullable<BadgeProps["size"]>, SpacingStep> = {
   sm: "xs",
   md: "sm",
@@ -69,23 +98,27 @@ const paddingStep: SpacingStep = paddingProp ?? sizePadding[size];
 // Badge always keeps the pill ratio — it has no square/circle toggle, so
 // nothing opts out. (`iconOnly` is a visual variant with its own padding rule.)
 const pillPadding = getPillPadding(paddingStep);
-const padX = variant === "text" ? "0px" : pillPadding.x;
-const padY = variant === "text" ? "0px" : pillPadding.y;
+// Bare text carries no padding; an outlined badge is still a badge, so the
+// border axis counts as ink even when the fill is `text`.
+const isBare = resolvedVariant === "text" && !hasOutline;
+const padX = isBare ? "0px" : pillPadding.x;
+const padY = isBare ? "0px" : pillPadding.y;
 ---
 
 <div
   class:list={[
     "naut-badge",
-    `variant--${variant}`,
+    `variant--${resolvedVariant}`,
     `radius--${radius}`,
     `size--${size}`,
-    (["primary", "secondary", "destructive"].includes(variant) || gradient) && "filled",
+    (["primary", "secondary", "destructive"].includes(resolvedVariant) || gradient) && "filled",
     colorValue && !gradient && "color--custom",
     dark && "dark",
     dotted && "dotted",
     uppercase && "uppercase",
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
+    hasOutline && `outline--${outlineWeight}`,
     iconOnly && "icon-only"
   ]}
   {...rest}
@@ -96,14 +129,12 @@ const padY = variant === "text" ? "0px" : pillPadding.y;
   define:vars={{
   gradientBg,
   gradientColor: gradient?.textColor,
-  outlineColor,
   colorValue: colorValue ?? "",
   padX,
   padY
 }}
 >
   .naut-badge {
-    --outline-color: var(--outlineColor);
     display: inline-flex;
     gap: 0.5rem;
     align-items: center;
@@ -134,10 +165,6 @@ const padY = variant === "text" ? "0px" : pillPadding.y;
       background: var(--gradientBg);
     }
 
-    &.variant--border {
-      border: 1px solid var(--naut-color-border);
-    }
-
     &.variant--text {
       border: none;
     }
@@ -145,11 +172,6 @@ const padY = variant === "text" ? "0px" : pillPadding.y;
     &.variant--surface {
       background-color: var(--naut-color-base-200);
       border: none;
-    }
-
-    &.variant--outline {
-      color: var(--outline-color);
-      border: 1px solid var(--naut-color-border-strong);
     }
 
     &.variant--primary {
@@ -168,6 +190,29 @@ const padY = variant === "text" ? "0px" : pillPadding.y;
       color: var(--naut-color-destructive-content);
       background-color: var(--naut-color-destructive);
       border: none;
+    }
+
+    /* Outline is an axis independent of the fill variant. Declared after the
+                   variant rules so it wins their `border: none` at equal specificity. */
+    &.outline--soft {
+      border: 1px solid var(--naut-color-border-soft);
+    }
+
+    &.outline--normal {
+      border: 1px solid var(--naut-color-border);
+    }
+
+    &.outline--strong {
+      border: 1px solid var(--naut-color-border-strong);
+    }
+
+    /* A `color` token tints the border too — an outlined badge should not have
+         green text sitting inside a grey border. When `color` is set it wins and
+         `outlineColor` no longer applies. */
+    &.color--custom.outline--soft,
+    &.color--custom.outline--normal,
+    &.color--custom.outline--strong {
+      border-color: var(--colorValue);
     }
 
     &.dotted {

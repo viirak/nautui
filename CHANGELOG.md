@@ -8,6 +8,15 @@
 
 Note: the utility files expose different subsets of the token scale — `padding.css` has `xxs`–`xl`, `margin.css` has `sm`–`xl`, no file has `xxl`, and the `Spacing` type is `Size` (`sm|md|lg|xl`), so the smaller steps are reachable through the CSS utilities and hardcoded class lists but not through a generic `padding`/`margin` prop.
 
+**`Badge` splits fill and outline into independent axes, and `outlineColor` is now a border weight.** `variant` carries the fill/text treatment only (`text | surface | primary | secondary | destructive`); the new boolean `outline` adds the border, so a filled badge can now be outlined — impossible with the old variant list. `outlineColor` went from an arbitrary colour string to `"soft" | "normal" | "strong"`, mapping onto `--naut-color-border-soft` / `-border` / `-border-strong`; the outline **hue** comes from the shared `color` token. This fixes two latent bugs: `outlineColor` previously tinted the *text* while the border stayed grey, so `outlineColor="green"` produced a green-text/grey-border badge; and `--naut-color-border-soft` was defined only in the dark block, so it had no light-mode value (its light value is `base-200`, not `base-100`, so it stays visible on `base-100` surfaces like `Card`). An outlined badge also keeps its pill padding — `variant="border"`/`variant="outline"` no longer collapse to a bare `text` badge. When `color` is set it also tints the border, and an `outlineColor` outside `soft|normal|strong` throws rather than emitting a class that matches no rule. Deprecated aliases are kept: `variant="border"` → `outline`, `variant="outline"` → `outline outlineColor="strong"`.
+
+| Old | New |
+|-----|-----|
+| `<Badge variant="outline">` | `<Badge outline>` |
+| `<Badge variant="border">` | `<Badge outline>` |
+| `<Badge variant="outline" outlineColor="green">` | `<Badge outline outlineColor="strong" color="success">` |
+| `<Badge variant="primary">` | unchanged |
+
 ### `@nautui/core` — Breaking Changes
 
 **`Button` and `Badge` `padding` no longer accepts an axis object.** A pill's silhouette depends on inline padding exceeding block padding, so letting the axes be set independently is how they stop reading as pills. Both now take a single `SpacingStep` (`0|xxs|xs|sm|md|lg|xl|xxl`) and derive both axes via `getPillPadding()` in `lib/spacing.ts`: block is `calc(inline * ratio)` with the ratio easing toward 1 as the step grows (`xxs`/`xs` 0.5, `sm` 0.75, `md` 0.85, `lg`+ 0.9), so block is always smaller and the ratio holds exactly at every viewport width.
