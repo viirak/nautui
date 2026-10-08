@@ -1,191 +1,594 @@
-# Changelog
+## [unreleased]
 
-## Unreleased
+### 🚀 Features
 
-### `@nautui/core` — Additions
+- Update Astro peer dependency to ^6.0.0
+- Add variant prop to Text component
+- Remove maxWidth prop and style from Text component
+- Add styling for inline code blocks in text components
+- Add letter spacing prop to Text component
+- Add letter spacing utility classes
+- Add text decoration shorthand prop
+- Add text transform and decoration shorthand props
+- Add primary, secondary, and destructive variants to Mark component
+- Add font family prop to Mark component
+- Add light hover variant to Card component
+- Add badged prop to Card component
+- Add title font family variable
+- Simplify Container component props and styles
+- Add conditional container for non-fluid NavBar
+- Add radius prop to MenuItem component
+- Add soft border color variable
+- Add article component with styling
+- Add 1440px max-width breakpoint for large screens
+- Update NavBar component to use sticky positioning
+- Add button prop to Drawer component
+- Add position and size props to Drawer component
+- Rename zIndex to zi and update CSS vars
+- Improve Button component styling for square and SVG icons
+- Standardize hidden breakpoint values in Drawer component
+- Make drawer component instance-specific
+- Increase drawer size and improve centered panel styling
+- Add square button variant
+- Add square prop to ThemeToggle component
+- Add square prop to Drawer buttons
+- Add TOC component for documentation navigation
+- Add default empty array for headings prop in TOC
+- *(Text)* Add nowrap prop to Text component
+- Improve TOC styling and accessibility
+- Add MenuGroup component with collapsible functionality
+- Update MenuItem padding and active state background
+- Simplify Menu component structure and styling
+- Add CSS module type declaration and update tsconfig lib
+- Add active indicator to TOC component and regenerate Astro content types
+- Add active variant styling to MenuItem component
+- Remove overflow hidden from collapsed MenuGroup
+- Add optional line prop to MenuGroup component
+- Add border indicator to MenuGroup component
+- *(MenuItem)* Adjust padding and indicator position
+- Add dimmed state to MenuItem component
+- *(Link)* Adjust spacing in Link component
+- Update hidden utility classes to use consistent naming
+- *(Article)* Add anchor link functionality to headings
+- Add depth styling to TOC links
+- Add uid utility for consistent component IDs
+- Add Hide component for responsive visibility control
+- *(Drawer)* Add uid import and remove hidden prop
+- Add rest props to ThemeToggle component
+- *(Box)* Add maxWidth and text-align props
+- *(blocks)* Update core dependency to workspace version
+- Add DocLayout component for documentation pages
+- Replace Hide with Visibility component
+- *(blocks)* Add base type interface for component props
+- Move Breadcrumb and TOC components to @nautui/blocks package
+- Move TOC import to local file in DocLayout
+- Add icon slot to MenuGroup component
+- Migrate website to new astro version and update dependencies
+- Add tool-specific ignore patterns to .gitignore
+- Initialize NautUI website project
+- Rename nautui-website to website
+- Add Cloudflare adapter to website
+- Replace Nav with NavDoc in LayoutDoc
+- Add .wrangler to website .gitignore
+- Update favicon with new SVG and ICO files
+- Add documentation pages with dynamic routing
+- Add home page with layout component
+- Add 404 page with basic layout
+- Add syntax highlighting themes to markdown config
+- Add code copy button to article component
+- Wrap content in Article component
+- Add Poolside to .gitignore
+- Add dark mode styling for code blocks in article.css
+- Update TypeScript to 7.0.2
+- Update Astro and related dependencies
+- Add dotted variant to Badge component
+- Add new badge variants and update styling
+- Add color prop to Badge component
+- Add letter spacing variants to Badge component
+- Add color to default badge variant
+- Add border and color to default Badge variant
+- Remove TOC drawer from DocLayout
+- Reduce MenuGroup arrow size
+- Adjust font size for TOC links
+- Update DocLayout structure and styling
+- Swap Inter for Schibsted Grotesk and init impeccable product doc
+- *(core)* Add mask prop to Background (radial fade with position + visibility)
+- *(core)* Add hover effects to Image (zoom, zoom-out, brighten, grayscale, fade)
+- *(core)* Add BackToTop component with smooth scroll; fix lint errors across core
+- Add nautui agent skill installable via skills CLI
+- *(core)* Add Footer; add Link/Title/Text/Stack/Marquee props; sync skill+docs
+- Reset default margins on Title and Text components
+- *(core)* Add modern CSS reset to base layer
+- *(core)* Retitle font tokens to display/body system stacks
+- *(blocks)* Add NavMenu composite; switch type-checks to astro check
+- *(Text)* Remove default margin from Title and Text components
+- Add Dropdown component
+- Add dropdown support to NavMenu component
+- Refactor MenuItem component structure
+- *(Dropdown)* Add side and align classes to content container
+- *(NavMenu)* Replace custom dropdowns with MenuItem primitive
+- Update NavMenu chevron icon attributes
+- Add click-outside handler to close dropdowns
+- *(Dropdown)* Add offset prop for positioning control
+- *(Dropdown)* Add shadow styling to dropdown panel
+- *(core)* Add offset prop, click-outside close and fade animation to Dropdown
+- Improve dropdown animations and hover behavior
+- *(core)* [**breaking**] Add mode prop to Visibility, deprecate hidden toggle
+- Remove default gap value from Group component
+- Apply backdrop filter to scrolled navbar content
+- Add size prop to MenuItem component
+- Changes in docs/README.md
+- Simplify Box.astro text alignment types
+- Remove redundant margin from max-width classes in Box.astro
+- Rename Background pattern type prop to style
+- *(pattern)* Add diamond-grid pattern style
+- Update pattern style class in Background component
+- Add inner wrapper to Background component
+- *(core)* Add size prop to Background mask
+- *(core)* Redesign Background mask props for flexibility
+- *(core)* Add custom padding prop to Badge and Button with size-relative defaults
+- *(core)* Add semantic color tokens (success, warning, danger, info)
+- *(core)* Add color prop and extended color variants to Button, Text, Title
+- Add horizontal padding support to Button component
+- Add button padding resolution utility
+- Add border variant to Badge component
+- Remove unused button padding resolver
+- *(Badge)* Adjust padding logic for text variant
+- Update Button padding logic
+- *(Badge)* Add uppercase prop to control text transform
+- Changes in packages/core/src/components/Card.astro
+- Changes in packages/core/src/components/Badge.astro, packages/core/src/components/Card.astro
+- Add avatar components
+- Add IconBox component
+- Add text form controls
+- Add fontFamily prop to Mark
+- Support dark mode for Badge
+- Standardize text color tokens
+- Add TextRotate component
+- Derive pill padding from a single spacing step
+- Split Badge fill and outline into independent axes
 
-**New spacing step `--naut-spacing-xxs`** (`clamp(0.125rem, 0.1rem + 0.15vw, 0.25rem)`, i.e. 2-4px) below `xs`, with matching `.p-xxs` / `.px-xxs` / `.py-xxs` / `.pt-xxs` / `.pb-xxs` / `.pl-xxs` / `.pr-xxs` padding utilities and `.gap-xxs`.
+### 🐛 Bug Fixes
 
-**Destructive fill darkened for contrast.** `--naut-color-destructive` was `#ef4444`, which against the white `--naut-color-destructive-content` foreground measured **3.76:1**. It is now `#dc2626` (4.83:1). This changes every destructive fill — `Button variant="destructive"`, `Badge variant="destructive"`.
+- Update dark card background color to use content variable
+- Remove maxWidth prop from Text component
+- Remove Hello prefix from DocLayout title and fix indentation
+- Enable type checking and relax filenaming rule for astro components
+- Resolve prop drift and CSS issues in core components
+- Clean up website lint issues and unused imports
+- *(blocks)* SectionHero dark prop, Breadcrumb aria + dead prop, Button rounded type
+- *(core)* Wire Badge outlineColor prop through define:vars
+- *(core)* Make NavBar height optional; docs: add NavBar doc
+- *(core)* Support radial gradient type in Background; docs: Article + Background
+- *(core)* Add Card outline-dark variant + Container fluid prop; docs: Card, Container, Divider
+- *(core)* Correct Group not-md/not-lg media query bounds; docs: Grid, Group
+- *(core)* Image ratio type, List noMarker dead prop, Link title passthrough; docs: Image, Link, List, ListItem
+- *(core)* Mark ff prop now applies font family; docs: Mark, Marquee, Masonry
+- *(core)* Remove dead cross destructure in Section; docs: Section, Space, Stack
+- *(core)* Text weight/variant CSS, Title display-sm type, Visibility show-only band exclusion
+- *(core)* Style tables in Article (borders, header fill, zebra striping)
+- *(core)* Soften grid/dots pattern default line color to base-200
+- *(skill)* Split merged table rows in Layout quick-API table
+- Changes in packages/blocks/src/index.d.ts, packages/blocks/src/index.ts
+- *(blocks)* Remove core CSS imports from NavMenu; make it self-contained
+- *(blocks)* Remove core CSS imports from NavMenu; make it self-contained
+- *(blocks)* Resolve Biome lint errors in NavMenu
+- Changes in docs/components/Box.md
+- *(core)* Add optional chaining to mask.size access in Background
+- *(core)* Add optional chaining to mask.position access
+- *(a11y)* Rewrite Drawer - global toggleMenu removed, aria-modal, Escape key, focus to close button
+- *(a11y)* NavBar singleton warning, global :focus-visible
+- *(core)* Button - move .square after .size-* to remove !important, add transition-property
+- *(tokens)* Card outline-dark border token, NavBar shadow token, link color as hex
+- *(a11y)* Dropdown keyboard navigation - Escape closes, ArrowUp/Down navigate items
+- *(css)* Change Section overflow from hidden to visible to prevent clipping floating elements
+- Changes in packages/core/src/components/Badge.astro
+- Changes in packages/core/src/components/Badge.astro
+- Changes in packages/core/src/components/Button.astro
+- Changes in packages/core/src/components/Button.astro
+- Changes in packages/core/src/components/Button.astro
+- Changes in packages/core/src/components/Badge.astro
+- Changes in packages/core/src/components/Flex.astro
+- Changes in packages/core/src/components/Section.astro
+- Changes in packages/core/src/components/Button.astro
+- Changes in packages/core/src/components/Button.astro
+- Changes in packages/core/src/components/Section.astro
+- Changes in packages/core/src/components/AccordionItem.astro
+- Changes in packages/core/src/components/Drawer.astro
+- Body-scroll lock in Drawer — use global counter instead of per-drawer _nautPrevOverflow to prevent overwrite issues when multiple drawers/modals coexist; and add Dropdown.md documentation
+- Correct Drawer inline script typing
+- Correct skill and Background docs against source
+- Support h1-h6 size aliases on Title
+- Enforce object mask position and size on Background
+- Rename Mark halflight variant to highlight
+- Reject unimplemented Link props at render time
+- Honour custom link color in dark mode
+- Repair dark mode cycle and split brand colour roles
 
-**A custom-property cycle made dark mode render black-on-black. Fixed.** `colors.css` captured each brand colour into a `-input` token and redefined the colour itself in the dark block:
+### 📚 Documentation
 
-```css
-:root            { --naut-color-primary-input: var(--naut-color-primary); }
-[data-theme=dark]{ --naut-color-primary: color-mix(in oklch, var(--naut-color-primary-input), white 40%); }
-```
+- Add AGENTS.md and CLAUDE.md documentation files
+- Document BEM naming convention in AGENTS.md and CLAUDE.md
+- Update CLAUDE.md with blocks package details
+- Add PandaFilter token optimization rules
+- Add Impeccable design skill note to AGENTS.md
+- Add consumer README + Button doc, blocks PRODUCT.md, gitignore fossil cache
+- Add Theme + ThemeToggle component doc
+- Add Bento, BentoItem, Box
+- Add Drawer, Flex
+- Add Menu, MenuGroup, MenuItem
+- Add Title, Text, Visibility
+- Add blocks component docs (Breadcrumb, SectionHero, DocLayout, TOC)
+- Link README component index to per-component docs; correct Visibility description
+- Add Accordion + AccordionItem doc
+- Reposition README as lightweight astro-native lib; refresh component checklist
+- *(core)* Document Background mask prop; fix stale variant/opacity references
+- *(core)* Document Image hover effects
+- *(skill)* Add example component file, Nuppun token mapping, cross-repo coordination link
+- *(skill)* Remove Nuppun-specific cross-repo coordination section
+- *(skill)* Rewrite quick-API tables from source-verified component props
+- Clean up AGENTS.md; fix stale facts
+- Move component docs to blocks directory
+- Changes in docs/README.md
+- Document context firewall guidelines in agents.md
+- Update patchloom command in AGENTS.md
+- Add Context Firewall shell semantics note to AGENTS.md
+- Move NavMenu to recipe and update blocks checklist
+- Changes in docs/blocks/MegaMenu.md
+- Changes in docs/components/Box.md
+- *(changelog)* Record v0.2.0 spacing API refactor
+- Update Background mask API and NavBar singleton note
+- Changes in docs/components/Badge.md
+- Changes in docs/components/Accordion.md
+- Document direction API unification and legacy aliases
 
-The pair is a cycle, so it is invalid at computed-value time. Verified in Chromium against `colors.css` with `<html data-theme="dark">`: `--naut-color-primary`, `--naut-color-secondary`, `--naut-color-link`, `--naut-color-base`, `--naut-color-content` and everything derived from them all resolved to the empty string, rendering the page black-on-black. This already affected `--naut-color-link` on `main`; the brand-fill work extended it to the two most-referenced tokens, taking out the whole theme.
+### 🚜 Refactor
 
-A themed token may not be the source of its own mix. The brand colours are now pure inputs that the dark block never redefines, and dark-mode adaptation lives in role tokens — one job each, identity in light, adapted in dark:
+- Simplify tint controls in colors.css
+- Update card variant and hover colors to use new design tokens
+- *(core)* Simplify NavBar API to island boolean; sync docs + skill
+- *(blocks)* [**breaking**] Remove NavMenu composition component in favor of docs recipe
+- *(core)* Replace flat spacing props with object-based API
+- Rename Button rounded to radius with deprecated alias
 
-| Role | Tokens | Used by |
-| --- | --- | --- |
-| fill | `-primary-fill`, `-secondary-fill`, `-link-fill` | `background` / `border-color` of Button, Badge, Card, MenuItem, Avatar, IconBox, BackToTop, AccordionItem |
-| text | `-primary-text`, `-secondary-text`, `-destructive-text`, `-link-text` | any brand colour that paints glyphs |
-| content | `-primary-content`, `-secondary-content`, … | the foreground sitting on a `-fill` |
+### 🎨 Styling
 
-`Text`, `Mark`, and `getColorValue()` (the `color="…"` prop) all read the `-text` tokens, so `variant="x"` and `color="x"` cannot drift apart. Consumer overrides still work in both themes because the inputs they set are no longer redefined.
+- Simplify CSS color-mix expressions
+- Remove margin utility classes from Text component
+- Add base-0 color variables for light and dark themes
+- Replace fixed font sizes with responsive clamp() values
+- Update hover and active states to use content color
+- Adjust medium font size to 0.9375rem
+- Update hover background color for MenuItem
+- Adjust border color variables for better contrast
+- Update CSS class naming convention to use double underscore
+- Remove empty lines in article.css
+- Format Box and Flow component styles consistently
+- Format CSS variables for better readability
+- Format color-mix CSS functions consistently
+- Add content color to text components
 
-**Brand fills lifted in dark mode.** Left unadapted they nearly vanished as controls on a near-black surface — 2.77:1 and 1.12:1 against the dark base, against the 3:1 WCAG 1.4.11 expects of a control boundary. `primary-fill` and `secondary-fill` now mix 40% toward white. A lifted fill can no longer carry a white foreground (`primary` would fall to 3.26:1), so `--naut-color-primary-content` becomes `black` in dark; `secondary-content` stays white, which still measures 4.87:1 on the lifted fill.
+### ⚙️ Miscellaneous Tasks
 
-**New `--naut-color-primary-hover` / `--naut-color-secondary-hover` replace hard-coded hover mixes.** They hold the entire `color-mix()` rather than a shared percentage, because each fill has its own ceiling — lightening `primary` past 20% drops its white foreground below 4.5:1 (the old 35% mix measured 3.65:1, a pre-existing failure). In dark mode both flip to *darkening* the fill, because the fill is already lifted and the old "lighten 35%" hover drove `secondary` text to 2.52:1.
+- Update astro peer dependency to ^6.0.0
+- Bump package versions to 0.1.1
+- Update biome.json configuration
+- Replace turbo with pnpm for build and lint scripts
+- Remove turbo.json
+- Remove turbo dependency
+- Update dark theme to dracula in astro config
+- Remove agent tooling configs and add skills-lock.json
+- Add design-system-patterns skill to lockfile
+- Add .patchloom/ to .gitignore
 
-Note: the utility files expose different subsets of the token scale — `padding.css` has `xxs`–`xl`, `margin.css` has `sm`–`xl`, no file has `xxl`, and the `Spacing` type is `Size` (`sm|md|lg|xl`), so the smaller steps are reachable through the CSS utilities and hardcoded class lists but not through a generic `padding`/`margin` prop.
+### 💼 Other
 
-**`Badge` splits fill and outline into independent axes, and `outlineColor` is now a border weight.** `variant` carries the fill/text treatment only (`text | surface | primary | secondary | destructive`); the new boolean `outline` adds the border, so a filled badge can now be outlined — impossible with the old variant list. `outlineColor` went from an arbitrary colour string to `"soft" | "normal" | "strong"`, mapping onto `--naut-color-border-soft` / `-border` / `-border-strong`; the outline **hue** comes from the shared `color` token. This fixes two latent bugs: `outlineColor` previously tinted the *text* while the border stayed grey, so `outlineColor="green"` produced a green-text/grey-border badge; and `--naut-color-border-soft` was defined only in the dark block, so it had no light-mode value (its light value is `base-200`, not `base-100`, so it stays visible on `base-100` surfaces like `Card`). An outlined badge also keeps its pill padding — `variant="border"`/`variant="outline"` no longer collapse to a bare `text` badge. When `color` is set it also tints the border, and an `outlineColor` outside `soft|normal|strong` throws rather than emitting a class that matches no rule. Deprecated aliases are kept: `variant="border"` → `outline`, `variant="outline"` → `outline outlineColor="strong"`.
+- Aria landmark roles to NavBar (role.navigation, aria-label) and Footer (role.contentinfo, aria-label)
+## [0.1.0] - 2026-05-25
 
-| Old | New |
-|-----|-----|
-| `<Badge variant="outline">` | `<Badge outline>` |
-| `<Badge variant="border">` | `<Badge outline>` |
-| `<Badge variant="outline" outlineColor="green">` | `<Badge outline outlineColor="strong" color="success">` |
-| `<Badge variant="primary">` | unchanged |
+### 🚀 Features
 
-### `@nautui/core` — Breaking Changes
+- Add core and blocks packages with initial package.json and README files
+- Add core package with TypeScript configuration
+- Add theme components and button component
+- Add Button, Theme, and ThemeToggle components to core exports
+- Update package.json exports and add website dependencies
+- Initialize Astro website with minimal template
+- Add Container and Section components
+- Add Box component with layout and styling capabilities
+- Add Group component with flex layout utilities
+- Add Grid component with responsive columns and gap options
+- Add Link component with styling and external link support
+- Add List component with configurable gap, orientation, and marker options
+- Add ListItem component with customizable marker support
+- Add Mark component with multiple variants and rotation options
+- Add Text component with styling and props
+- Add Title component with responsive variants and rainbow effect
+- Add Badge component with multiple variants and sizes
+- Add Card component with header, body, and footer slots
+- Add Divider component with customizable orientation, size, and variant
+- Add Image component with responsive ratio support
+- Add breadcrumb component
+- Add drawer component with responsive toggle functionality
+- Add NavBar component with default and island variants
+- Update padding variable to use Naut spacing system
+- Update card body padding to use Naut spacing variable
+- Use consistent spacing variable for margin-bottom in Box component
+- Update grid bordered class selector to use naut-grid prefix
+- Update border width variable to use consistent naming convention
+- Update theme storage key to 'naut-theme'
+- Refactor NavBar component structure and props
+- Improve Container component class list formatting
+- Simplify NavBar component logic and styling
+- Add outline customization to Section component
+- Update pattern class name to match naming convention
+- Add fluid container option
+- Add fluid and outline variants to NavBar component
+- Add shadow prop to NavBar component
+- Add glassy navbar variant
+- Add full border radius CSS variable
+- Add radius prop to NavBar component
+- Change navbar height prop from string to number with default value
+- Implement GridItem component and refactor Grid to use dynamic responsive columns
+- Replace rainbow prop with configurable gradient support in Title component
+- Define static --naut-color-selection and apply it to Title selection styles
+- Add dynamic gradient support to Mark component and remove rainbow variant
+- Add flex prop to Container component and apply default layout sizing to Section
+- Remove background from glassy navbar variant
+- Update Badge component gradient props and styling
+- Add Glow and Stack components, introduce text alignment, mobile-responsive groups, and image styling options
+- Add class property to Group component for custom styling support
+- Add Menu and MenuItem components for navigation layouts
+- Add spacing props to components
+- *(blocks)* Add @nautui/core as dependency
+- Add maxWidth prop to Text component
+- Set default padding to "md" in Box component
+- Rename line-height-ratio CSS variable and improve shadow formatting
+- Add gradient background support to Mark component
+- Center navbar content in a flex container
+- Add selection styles to Mark component
+- Increase font sizes for hero title variant
+- Rename zi prop to zindex for clarity
+- *(NavBar)* Add dark mode support
+- *(Button)* Add dark mode support
+- Add responsive display spacing variables to Theme component
+- Add padding props to Section component
+- Update display spacing variables with responsive clamp values
+- Add dark mode toggle for navbar on dark section intersection
+- Remove glassy navbar variant
+- Simplify dark theme color definitions
+- Add Figure component with grid, stack, and masonry layouts
+- Add dark mode support to Section component
+- Add cover prop to Image component
+- Add fluid prop to Image component
+- Add more aspect ratio options to Image component
+- Add maxWidth prop to Image component
+- Change Group component to use inline-flex instead of flex
+- Add maxWidthVar variable for conditional max-width styling
+- Add maxWidthVar and flexVar to Container component
+- Add inline-block display to text spans
+- Add display prop to Stack component
+- Add SectionHero and BackgroundGradient components
+- Improve SectionHero figure configuration options
+- Add text selection styling
+- Remove Figure component
+- Add maxHeight prop to Image component
+- Center hero section content and align figure right properly
+- Remove background color from SectionHero component
+- Add scroll effect to navbar backdrop filter
+- Add semi-transparent background to scrolled navbar
+- Add autohide functionality to NavBar
+- Add Masonry and MasonryItem components
+- Add Marquee component with animation controls
+- Remove overflow hidden from section component
+- Add mini-stripes pattern option
+- Add responsive prop to Image component
+- Add Background component with gradient, image, and pattern support
+- Remove pattern prop from Section component
+- Add slot to Background component
+- Rename pattern name prop to type
+- Rename section slots for consistency
+- Rename slot name from "section-before" to "before" in SectionHero
+- Add border customization to Box component
+- Rename BorderProps to Border in border.ts and update imports
+- Add createPadding and createMargin utility functions
+- Replace padding resolution with createPadding utility
+- Rename border styles to use box prefix
+- Add prefix support to createBorder function
+- Extract border logic into reusable function
+- Remove spacing props from Container component
+- Add default padding to Card component
+- Change image dimensions to use undefined instead of "none" or "auto"
+- Update hero section figure positioning
+- Use pattern type instead of name for background pattern class
+- Simplify background styling and add gradient support
+- Remove BackgroundGradient component and related exports
+- Add background slot to Box and Section components
+- Split background image properties for better control
+- Add content alignment logic for hero section figure position
+- Add overflow hidden to Section component center block
+- Add responsive screen size control to Group component
+- Add responsive grid column spanning support
+- Remove spacing props from Grid and GridItem components
+- Replace inline spacing styles with utility classes
+- Simplify Stack component and remove spacing props
+- Add xs spacing variant
+- Replace padding utility with spacing classes
+- Simplify Card component padding and remove spacing props
+- Add Flow component with responsive direction support
+- Add Responsive type to types
+- Remove Stack wrapper from SectionHero component
+- Add responsive alignment and justify props to Stack component
+- Refactor spacing props to use Size type and improve type definitions
+- Rename alignment types and add gap styles
+- *(space)* Add Space component for flexible spacing
+- *(SectionHero)* Add Space components and adjust layout
+- Apply gap spacing to marquee groups instead of container
+- Add user authentication endpoint
+- Replace Spacing with Gap in GridProps type
+- Add responsive columns support to Grid component
+- Add maxWidth prop to Flow component
+- Add gap-xl utility class
+- Set default Space component size to "md"
+- Add Flex component to core package
+- Add Flex component with responsive direction support
+- Add margin props to Divider component
+- Add default margin to divider component
+- Add conditional default padding to Box component
+- Add default padding to Section component
+- Add border utility classes for styling
+- Add comprehensive border configuration system
+- Add border styling to Box and Section components
+- Add border and radius support to Grid component
+- Remove decoration and mode props from Section component
+- Add corner color CSS variables for light and dark themes
+- Add radius utility classes
+- Add corner styling support to Box component
+- Extract spacing props with undefined values filtered
+- Replace createSpacingClasses with getSpacingClasses in components
+- Extract padding props from Card component
+- Add border customization to Card component
+- Replace createSpacingClasses with getSpacingClasses in components
+- Add gap utility classes to Masonry component
+- Add radius class to Grid component
+- Add horizontal menu layout and divider support
+- Add gap utility classes for Group component
+- Add gap prop to List component
+- Add size prop to Card component
+- Add height prop to Card component
+- Add fluid prop to Card component
+- Add light and dark color variables to Theme component
+- Add hover and variant props to Card component
+- Replace dimmed prop with color prop for MenuItem component
+- Move padding to wrapper div and add overflow hidden
+- Simplify accordion component and implement radio-based interaction
+- Add rainbow variant to Card component
+- Extract theme styles into separate CSS files
+- Add shadow style import to Card component
+- Import display spacing styles
+- Update default pattern colors to use lighter variants
+- Update corner background color to use border-strong variable
+- Update breadcrumb styling to use content colors
+- Update drawer text color to use content variable
+- Update image background color to use base-100
+- Apply link styling with color and opacity variants
+- Update MenuItem colors to use content variables
+- Update navbar text color to use content variable
+- Update selection styles for gradient text
+- Update Card hover variant to use "surface" instead of "light"
+- Update MenuItem hover and active states to use base-100 color
+- Add responsive size support to Space component
+- Add centered prop to Box component
+- Add bento grid layout components
+- Make BentoProps columns and rows optional
+- Rename bento-item class to naut-bento-item
+- Add screenshot to README and update component list
+- Add metadata to package.json files
+- Add initial release changelog for Naut UI v0.1.0
 
-**`Button` and `Badge` `padding` no longer accepts an axis object.** A pill's silhouette depends on inline padding exceeding block padding, so letting the axes be set independently is how they stop reading as pills. Both now take a single `SpacingStep` (`0|xxs|xs|sm|md|lg|xl|xxl`) and derive both axes via `getPillPadding()` in `lib/spacing.ts`: block is `calc(inline * ratio)` with the ratio easing toward 1 as the step grows (`xxs`/`xs` 0.5, `sm` 0.75, `md` 0.85, `lg`+ 0.9), so block is always smaller and the ratio holds exactly at every viewport width.
+### 🐛 Bug Fixes
 
-| Old | New |
-|-----|-----|
-| `<Button padding="lg">` | unchanged — a scalar step still works |
-| `<Button padding={{ x: "lg", y: "sm" }}>` | `<Button padding="lg">` (block is derived) |
-| `<Button margin="lg">` | throws — wrap in a `Box` |
+- Update Button component class name from dara-button to naut-button
+- Update NavBar container flex property for proper layout sizing
+- Mark color on gradient
+- Format tsconfig.json include/exclude arrays for consistency
+- Add newline at end of package.json
+- Adjust line-height for size-lg text component
+- *(core)* Prevent text wrapping in Badge component
+- Remove debug console.log from createBorder
+- Update default pattern colors to use base color variables
+- Update divider label color to use content-soft instead of dimmed
+- Remove redundant padding and margin properties from masonry item
+- Adjust gap handling in Bento component and remove margin from BentoItem
 
-Other behaviour changes: padding is rendered through `define:vars` instead of `p-*`/`py-*` utility classes, which removes the utility/specificity collision. `md`/`lg` are now slightly tighter than the old 1:1 (`0.85` instead of `1`), since block must stay below inline. `square` on `Button` opts out of the ratio entirely and keeps receiving **no** padding, unchanged from before. `margin` is declared `never` and also throws at render time. No call site in this repo, the docs, or nuppun used `padding` or `margin` on these two components.
+### 📚 Documentation
 
-**`Button.rounded` renamed to `Button.radius`** — `radius` is now the single prop name for border radius across every component (`Avatar`, `Badge`, `Box`, `Card`, `Grid`, `IconBox`, `Image`, `MenuItem`, `NavBar`, `TextField`, `Textarea` already used it).
+- Simplify README to focus on Naut UI purpose
+- Update keywords in package.json files
+- Update README with installation, usage, and theming details
+- Add detailed documentation for core and blocks packages
+- Add mission statement to README
+- Update theme component import and usage examples
+- Update README to remove redundant explanation
+- Update installation instructions for local development
+- Mark Badge, Image, Link, List, Navbar, and Drawer components as completed in core README
+- Remove inspirations section from README
 
-| Old | New |
-|-----|-----|
-| `<Button rounded="full">` | `<Button radius="full">` |
-| `<Button rounded="none">` | `<Button radius="none">` |
-| `<Button rounded="sm" \| "md" \| "lg">` | `<Button radius="sm" \| "md" \| "lg">` |
+### 🚜 Refactor
 
-`rounded` is kept as a **deprecated alias** and resolved as `radius ?? rounded`, matching the `Mark.fontFamily` / `ff` pattern. It still works, so existing call sites keep rendering correctly instead of silently reverting to `radius="md"` — but `astro check` cannot flag a stale `rounded` (the `Base` index signature suppresses excess-property checks), so migrate deliberately.
+- Update CSS variable prefixes to use `--naut-` prefix
+- Padding x using spacing-md
+- Padding x to using spacing-md
+- Rename NautTheme and NautThemeToggle to Theme and ThemeToggle in documentation
+- Update GridItem to use dynamic grid-column property instead of a fixed span variable
+- Centralize shadow definitions in Theme component and update Card and Image to use global CSS variables
+- Remove spacing props and simplify section layout
+- Move spacing logic to CSS variables
+- Move padding styles to card body
+- Replace spacingToStyle with createPadding and createMargin
+- Update Card component to use new spacing utility functions
+- Simplify Box component spacing implementation
+- Replace spacingToStyle with createPadding and createMargin
+- Replace spacingToStyle with createMargin and createPadding
+- Simplify spacing logic in MasonryItem component
+- Rename image-related CSS variable names for clarity
+- Remove unused Spacing type and related functions
+- Remove unused margin props from Badge component
+- Improve Flow component formatting and readability
+- Simplify size-related types and reorder exports
+- Extract spacing logic to utility functions
+- Extract spacing props from Section component
+- *(blocks)* Simplify SectionHero component props and imports
+- Extract spacing logic to shared utility functions
+- Extract spacing logic into reusable utility functions
+- Clean up formatting in configuration and style files
+- Simplify formatting in tsconfig.json
+- Update button color variables to use new color system
+- Remove legacy color aliases and unused variables
+- Remove unused DisplaySize and Pattern types
 
-Also fixed: `ButtonRadius` used `Omit<Radius, "xl">`, which resolves to `{}` and therefore accepted *any* value. It now uses `Exclude<Radius, "xl">`, so `radius="xl"` is a type error rather than a silently square button.
+### 🎨 Styling
 
-**`Mark.variant="halflight"` renamed to `"highlight"`** — the value was a misspelling. `halflight` is kept as a deprecated alias and normalized in the component, so existing call sites keep rendering the same style.
+- *(theme)* Refactor dark theme color variables
+- *(Title)* Update gradient background handling
+- Improve button text color and CSS variable formatting
+- Replace hardcoded media queries with clamp() for responsive typography
+- Remove dark mode CSS variables from NavBar component
+- Apply shadow classes only to non-cover images
+- Split padding shorthand into individual properties
+- *(title)* Remove bottom margin from title component
+- Remove duplicate border color and style declarations
+- Remove duplicate base color variable
+- Update accordion chevron and border colors to use content color
+- Rename color variables to use consistent naming scheme
+- Update badge color variables to use content instead of text
+- Simplify color variable naming in dark mode
+- Adjust neutral color scale and border variables
+- Update text color variables to use content color
+- Update text selection and dimmed colors to use content variables
+- Remove dark theme overrides from Button component
+- Remove commented-out CSS variables
+- Adjust display spacing values
 
-| Old | New |
-|-----|-----|
-| `<Mark variant="halflight">` | `<Mark variant="highlight">` |
+### ⚙️ Miscellaneous Tasks
 
-**Dark mode now honours a custom `--naut-color-link`.** The dark block hardcoded `color-mix(in oklch, blue, white 80%)`, so a consumer's link token applied in light mode and was silently discarded in dark mode. It now mixes from a captured copy of the input (`--naut-color-link-input`), which is required because a custom property cannot reference itself — that would be invalid at computed-value time. The `var()` is substituted after the cascade, so the capture picks up a consumer override regardless of stylesheet order.
+- Add biome and ultracite config
+- Add VS Code and Zed editor configuration files
+- Update Biome configuration
+- Move package files to root of blocks package
+- Ignore tsconfig.tsbuildinfo files
+- Update package.json with new entry points and type definitions
+- Add apps directory to workspace packages
+- Update tsconfig.json with Astro JSX configuration
+- Fixed spacing between blocks
+- Remove website application files
+- Add path alias and reference to core package
+- Disable a11y rule for anchor content
+- Format biome.json configuration
+- Add screenshot of Naut UI
+- Update package versions to 0.1.0
+- Set package to private
 
-**`Link` now rejects `size` and unknown `variant` values at render time.** `Base` declares `[key: string]: unknown`, so `size="lg"` or `variant="link"` were accepted by the type, spread onto the `<a>` as invalid attributes, and rendered as silent no-ops. Both now throw a `TypeError` naming the accepted values. `Link` has no size scale by design — a link inherits the size of its surrounding text; use `<Text inline size="lg">` around it or a `class`. `variant="link"` is not needed: the link-coloured look is `Link`'s default (`MenuItem`'s `activeVariant="link"` is a state style, not a `Link` variant).
+### 💼 Other
 
-## v0.1.0 — 2026-05-25
-## v0.2.0 — 2026-09-04
-
-### `@nautui/core` — Breaking Changes
-
-**Spacing API refactored** — flat Tailwind-style spacing props replaced with object-based API.
-
-Before (removed):
-```astro
-<Card p="lg" mt="md">
-<Text mx="sm" my="lg">
-```
-
-After:
-```astro
-<Card padding={{ x: "lg", y: "lg" }}>
-<Text margin={{ x: "sm", y: "lg" }}>
-```
-
-Or shorthand (uniform):
-```astro
-<Card padding="lg">
-<Text margin="lg">
-```
-
-**Simplified types** — removed `ResponsiveObject`, `SpacingValue`, `PaddingProps`, `MarginProps`. Now uses `Spacing` (`"sm" | "md" | "lg" | "xl"`) and `SpacingProps` with `margin`/`padding` accepting `Spacing | Margin` or `Spacing | Padding`.
-
-**Fluid spacing** — CSS `clamp()` replaces fixed `rem` values. Spacing now scales fluidly across viewport widths without breakpoint classes.
-
-**Direction API unified** — `Flex`, `Stack`, `Group`, and `Grid` now use the canonical `row`/`column` vocabulary for `direction` (and the canonical `start`/`center`/`end`/`between`/`around`/`evenly` for `justify`). The legacy `horizontal`/`vertical` values are still accepted and are normalized to `row`/`column` by `normalizeDirection()` in `lib/layout.ts` before any class is emitted, so both spellings render identically and no `direction-horizontal` class can reach the DOM:
-
-| Old | New |
-|-----|-----|
-| `direction="horizontal"` | `direction="row"` |
-| `direction="vertical"` | `direction="column"` |
-
-`space-*` justification values (e.g. `justify="space-between"`) and `Group`'s `not` prop are likewise still supported.
-
-### Migration
-
-| Old | New |
-|-----|-----|
-| `p="md"` | `padding="md"` |
-| `pt="lg"` | `padding={{ top: "lg" }}` |
-| `px="sm" py="md"` | `padding={{ x: "sm", y: "md" }}` |
-| `mx="lg"` | `margin="lg"` |
-| `mt="md" mb="lg"` | `margin={{ top: "md", bottom: "lg" }}` |
-
-
-Initial release of Naut UI — a clean, minimalist UI component library for Astro, built for marketing websites.
-
-### `@nautui/core` — 36 components
-
-**Theme**
-- `Theme` — provider that injects CSS custom properties and wires up auto dark mode
-- `ThemeToggle` — button that switches between light/dark and persists the choice
-
-**Layout**
-- `Container` — center content with padding and max-width
-- `Section` — full-width page section with background, border, and slot-based layout
-- `Box` — low-level layout component for spacing, borders, and background
-- `Group` — flex container helper with gap and alignment shortcuts
-- `Stack` — row container helper with configurable gap
-- `Flow` — container helper with configurable text alignment
-- `Grid` — responsive 12-column grid with configurable gap
-- `GridItem` — grid item with column and offset props
-- `Bento` — bento grid layout with configurable rows and columns
-- `BentoItem` — bento grid item with row/column span props
-- `Masonry` — responsive masonry grid with configurable gap
-- `MasonryItem` — masonry grid item with column span prop
-- `Marquee` — horizontal/vertical scroll container with pause on hover and fade edges
-- `Space` — flexible spacer with configurable direction and size
-- `Flex` — flex layout component with alignment and gap props
-
-**Typography**
-- `Title` — semantic h1–h6 with consistent sizing and muted variant
-- `Text` — body text with size variants and muted variant
-- `Link` — themed anchor with hover and focus states
-- `Mark` — `<mark>` styled with highlight color token
-- `List` — styled ordered and unordered lists
-- `ListItem` — list item with optional leading icon and themed marker
-
-**UI Elements**
-- `Button` — link or button with 11 variants (default, primary, secondary, destructive, outline, outline-primary, outline-secondary, flat, ghost, link, rainbow)
-- `Badge` — small pill label for status, counts, or tags
-- `Card` — surface container with default, bordered, and flat variants
-- `Divider` — horizontal rule styled with theme tokens
-- `Image` — responsive image with optional caption and themed border
-- `Background` — section background with pattern support
-
-**Navigation**
-- `NavBar` — horizontal site navigation with dropdown support
-- `Drawer` — off-canvas sidebar for mobile navigation
-- `Breadcrumb` — hierarchical page links
-- `Accordion` — collapsible content panels
-- `AccordionItem` — individual accordion panel
-- `Menu` — list of links with hover and focus states
-- `MenuItem` — link with optional leading icon
-
-### `@nautui/blocks` — 1 composite block
-
-- `SectionHero` — marketing hero section with headline, subtext, and CTA slots
-
-### Theming
-
-- Two-brand-color system: provide `--naut-color-primary` and `--naut-color-secondary`, everything else derived via OKLCH and `color-mix()` at runtime
-- Auto dark mode with `prefers-color-scheme` detection and manual toggle
-- Runtime theme switching — no build step or preprocessor required
-- WCAG AA contrast ratio (≥ 4.5:1) expected on brand colors
-
-### Browser support
-
-Baseline 2024: Chrome 119+, Safari 16.4+, Firefox 128+
+- Update tsconfig with jsx and astro configuration
