@@ -52,6 +52,7 @@ const linkColor = getColorValue(color);
 ---
 
 <a
+  href={to}
   class:list={[
     "naut-link",
     `hover--${hover}`,
@@ -61,9 +62,8 @@ const linkColor = getColorValue(color);
     underline && "underline",
     variant !== "default" && `variant-${variant}`,
     linkColor && "color--custom",
-    className
+    className,
   ]}
-  href={to}
   {...rest}
 >
   <div class="naut-link__wrapper"><slot /></div>
@@ -81,7 +81,10 @@ const linkColor = getColorValue(color);
       xmlns="http://www.w3.org/2000/svg"
     >
       <title>External Link</title>
-      <path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+      <path d="M15 3h6v6" />
+      <path d="M10 14 21 3" />
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+    </svg>
   )}
 </a>
 <style define:vars={{ linkColor: linkColor ?? "" }}>

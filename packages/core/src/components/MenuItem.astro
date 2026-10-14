@@ -34,11 +34,19 @@ const classList = [
 ---
 
 <li class="naut-menu-item">
-  {href && <a href={href} class:list={classList} {...rest}>
-    <span class="naut-menu-item__left"><slot name="before" /></span>
-    <span class="naut-menu-item__main"><slot /></span>
-    <span class="naut-menu-item__right"><slot name="after" /></span>
-  </a>}
+  {href && (
+    <a class:list={classList} href={href} {...rest}>
+      <span class="naut-menu-item__left">
+        <slot name="before" />
+      </span>
+      <span class="naut-menu-item__main">
+        <slot />
+      </span>
+      <span class="naut-menu-item__right">
+        <slot name="after" />
+      </span>
+    </a>
+  )}
   {!href && <slot />}
   <slot name="sub" />
 </li>

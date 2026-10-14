@@ -43,7 +43,7 @@ const { class: className, ...rest } = Astro.props as MegaMenuProps;
 
     function getItemOffset(item: HTMLElement): number {
       const raw = item.getAttribute("data-mega-offset");
-      return raw == null ? Number(offset) : Number(raw);
+      return raw === null ? Number(offset) : Number(raw);
     }
 
     function positionPanel(item: HTMLElement) {

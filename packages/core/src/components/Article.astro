@@ -23,12 +23,12 @@ const articleId = uid("naut-article");
   <slot />
 </article>
 
-<script is:inline define:vars={{ anchorLinks, articleId }}>
+<script define:vars={{ anchorLinks, articleId }} is:inline>
   if (anchorLinks) {
     const article = document.getElementById(articleId);
     if (article) {
       for (const heading of article.querySelectorAll("h2, h3, h4, h5, h6")) {
-        const id = heading.id;
+        const { id } = heading;
         if (!id) continue;
 
         const link = document.createElement("a");
@@ -69,7 +69,7 @@ const articleId = uid("naut-article");
   }
 </script>
 
-<script is:inline define:vars={{ articleId }}>
+<script define:vars={{ articleId }} is:inline>
   const article = document.getElementById(articleId);
   if (article) {
     for (const pre of article.querySelectorAll("pre")) {

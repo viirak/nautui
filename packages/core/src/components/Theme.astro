@@ -13,7 +13,7 @@ const { class: className, dark = true } = Astro.props as ThemeProps;
 
 <Fragment class:list={["naut-theme", className]}> <slot /> </Fragment>
 
-<script is:inline define:vars={{ dark }}>
+<script define:vars={{ dark }} is:inline>
   (() => {
     if (dark) {
       if (window.__nautThemeInitialized) {

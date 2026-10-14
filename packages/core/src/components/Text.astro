@@ -76,8 +76,16 @@ const classList = [
 ];
 ---
 
-{inline && <span class:list={classList} {...rest}><slot /></span>}
-{!inline && <p class:list={classList} {...rest}><slot /></p>}
+{inline && (
+  <span class:list={classList} {...rest}>
+    <slot />
+  </span>
+)}
+{!inline && (
+  <p class:list={classList} {...rest}>
+    <slot />
+  </p>
+)}
 
 <style define:vars={{ textColor: colorValue ?? "" }}>
   .text {

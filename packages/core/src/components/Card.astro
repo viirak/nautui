@@ -73,11 +73,15 @@ const { borderClasses, borderColors } = createBorder(config);
     radius && `radius-${radius}`,
     shadow && `shadow-${shadow}`,
     ...borderClasses,
-    className
+    className,
   ]}
   {...rest}
 >
-  {badged && <div class="naut-card__badge"><slot name="badge" /></div>}
+  {badged && (
+    <div class="naut-card__badge">
+      <slot name="badge" />
+    </div>
+  )}
   <div class="naut-card__header"><slot name="header" /></div>
   <div class:list={["naut-card__body", ...paddingClasses]}><slot /></div>
   <div class="naut-card__footer"><slot name="footer" /></div>

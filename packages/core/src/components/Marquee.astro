@@ -42,7 +42,7 @@ const {
 } = nonSpacing;
 
 const speedDuration = speed
-  ? { slow: 80_000, normal: 40_000, fast: 20_000 }[speed]
+  ? { fast: 20_000, normal: 40_000, slow: 80_000 }[speed]
   : duration;
 const safeDuration = Math.max(1, speedDuration);
 const safeRepeat = isStatic ? 1 : Math.max(2, Math.floor(repeat));
@@ -57,7 +57,7 @@ const safeRepeat = isStatic ? 1 : Math.max(2, Math.floor(repeat));
     isStatic && "static",
     !fadeEdges && "no-fade",
     className,
-    ...spacingClasses
+    ...spacingClasses,
   ]}
   {...rest}
 >
@@ -72,10 +72,10 @@ const safeRepeat = isStatic ? 1 : Math.max(2, Math.floor(repeat));
 
 <style
   define:vars={{
+    fadeEdgeColor,
+    fadeEdgeSize,
     safeDuration,
     safeRepeat,
-    fadeEdgeColor,
-    fadeEdgeSize
   }}
 >
   .naut-marquee {

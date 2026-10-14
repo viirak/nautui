@@ -17,7 +17,11 @@ const { items, class: className } = Astro.props as BreadcrumbProps;
   <ol>
     {items.map((item) => (
       <li>
-        {item.href && <a href={item.href} title={item.label}>{item.label}</a>}
+        {item.href && (
+          <a href={item.href} title={item.label}>
+            {item.label}
+          </a>
+        )}
         {!item.href && <span>{item.label}</span>}
       </li>
     ))}

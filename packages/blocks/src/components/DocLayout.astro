@@ -15,15 +15,15 @@ const { title, headings, class: className } = Astro.props as DocLayoutProps;
 <Container>
   <div class:list={["naut-docpage", className]}>
     <aside class="naut-docpage__nav">
-      <Box pt="sm" pr="sm" class="naut-docpage__nav-inner">
+      <Box class="naut-docpage__nav-inner" pr="sm" pt="sm">
         <slot name="nav" />
       </Box>
     </aside>
     <main class="naut-docpage__content">
       <Box p="lg">
         <Article
-          class:list={["naut-docpage__article", headings && "with-toc"]}
           anchorLinks
+          class:list={["naut-docpage__article", headings && "with-toc"]}
         >
           <Title id="intro" level={1} mt="0">{title}</Title>
           <slot />
@@ -34,7 +34,7 @@ const { title, headings, class: className } = Astro.props as DocLayoutProps;
       <aside class="naut-docpage__toc">
         <TOC
           headings={headings}
-          top={{ slug: "intro", label: "Introduction" }}
+          top={{ label: "Introduction", slug: "intro" }}
         />
       </aside>
     )}

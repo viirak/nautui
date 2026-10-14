@@ -97,10 +97,18 @@ const classlist = [
 ---
 
 <div class:list={classlist} {...rest}>
-  {corner?.topLeft && <span class:list={["corner", "top-left", corner.topLeft]} />}
-  {corner?.topRight && <span class:list={["corner", "top-right", corner.topRight]} />}
-  {corner?.bottomRight && <span class:list={["corner", "bottom-right", corner.bottomRight]} />}
-  {corner?.bottomLeft && <span class:list={["corner", "bottom-left", corner.bottomLeft]} />}
+  {corner?.topLeft && (
+    <span class:list={["corner", "top-left", corner.topLeft]} />
+  )}
+  {corner?.topRight && (
+    <span class:list={["corner", "top-right", corner.topRight]} />
+  )}
+  {corner?.bottomRight && (
+    <span class:list={["corner", "bottom-right", corner.bottomRight]} />
+  )}
+  {corner?.bottomLeft && (
+    <span class:list={["corner", "bottom-left", corner.bottomLeft]} />
+  )}
   <slot name="background" />
   <slot name="before" />
   <div class:list={["naut-box__wrapper", ...paddingClasses]}><slot /></div>

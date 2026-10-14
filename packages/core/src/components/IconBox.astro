@@ -63,15 +63,15 @@ const hasAccessibleName = Boolean(accessibleLabel ?? ariaLabelledBy);
 <span
   aria-hidden={hasAccessibleName ? undefined : "true"}
   aria-label={accessibleLabel}
+  role="img"
   class:list={[
     "naut-icon-box",
     `size--${size}`,
     `radius--${radius}`,
     `variant--${variant}`,
     `color--${resolvedColor}`,
-    className
+    className,
   ]}
-  role="img"
   {...rest}
 >
   <slot />

@@ -34,11 +34,7 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
 ---
 
 <details
-  class:list={[
-    "naut-dropdown",
-    hover && "hoverable",
-    className,
-  ]}
+  class:list={["naut-dropdown", hover && "hoverable", className]}
   {...rest}
 >
   <summary class="naut-dropdown__trigger">
@@ -194,7 +190,7 @@ const offsetValue = offset ? `var(--naut-spacing-${offset})` : "0px";
 </script>
 
 <style
-  define:vars={{ nautDropdownZIndex: zi, nautDropdownOffset: offsetValue }}
+  define:vars={{ nautDropdownOffset: offsetValue, nautDropdownZIndex: zi }}
 >
   .naut-dropdown {
     position: relative;

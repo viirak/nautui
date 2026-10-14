@@ -21,6 +21,9 @@ const {
 ---
 
 <button
+  aria-label={label}
+  data-naut-threshold={threshold}
+  title={label}
   type="button"
   class:list={[
     "naut-back-to-top",
@@ -28,22 +31,19 @@ const {
     showLabel && "with-label",
     className,
   ]}
-  aria-label={label}
-  title={label}
-  data-naut-threshold={threshold}
   {...rest}
 >
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
+    aria-hidden="true"
     fill="none"
+    height="20"
     stroke="currentColor"
-    stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    aria-hidden="true"
+    stroke-width="2"
+    viewBox="0 0 24 24"
+    width="20"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path d="m5 12 7-7 7 7" />
     <path d="M12 19V5" />
@@ -134,7 +134,7 @@ const {
       const reduced = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
-      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+      window.scrollTo({ behavior: reduced ? "auto" : "smooth", top: 0 });
     };
 
     for (const btn of Array.from(buttons)) {

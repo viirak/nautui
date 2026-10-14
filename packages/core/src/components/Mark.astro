@@ -40,7 +40,8 @@ const resolvedVariant = variant === "halflight" ? "highlight" : variant;
     variant && `variant--${resolvedVariant}`,
     rotate && `rotate--${rotate}`,
     gradient && "gradient",
-    className]}
+    className,
+  ]}
   {...rest}
 >
   <slot />

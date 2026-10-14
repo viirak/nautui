@@ -78,9 +78,9 @@ const sizePadding: Record<
   NonNullable<ButtonProps["size"]>,
   { x: string; y: string }
 > = {
-  sm: { x: "0.75rem", y: "0.375rem" },
-  md: { x: "0.875rem", y: "0.5rem" },
   lg: { x: "1rem", y: "0.625rem" },
+  md: { x: "0.875rem", y: "0.5rem" },
+  sm: { x: "0.75rem", y: "0.375rem" },
   xl: { x: "1.125rem", y: "0.75rem" },
 };
 // A 1:1 button carries no padding at all — the icon owns the box. This is the
@@ -108,8 +108,16 @@ const classlist = [
 ];
 ---
 
-{href && <a href={href} class:list={classlist} {...rest}><slot /></a>}
-{!href && <button class:list={classlist} type={type} {...rest}><slot /></button>}
+{href && (
+  <a class:list={classlist} href={href} {...rest}>
+    <slot />
+  </a>
+)}
+{!href && (
+  <button class:list={classlist} type={type} {...rest}>
+    <slot />
+  </button>
+)}
 
 <style define:vars={{ colorValue: colorValue ?? "", padX, padY }}>
   .naut-button {
@@ -119,21 +127,21 @@ const classlist = [
     align-items: center;
     justify-content: center;
 
-    /* Size is fluid because the padding below is fluid: `padding` resolves */
-    /* against --naut-spacing-*, itself a clamp. */
-    /* min-height, not height: that padding scales independently of this */
-    /* box, so a hard height runs out of room and the label spills past the */
-    /* border. min-height lets the box grow instead. Each floor is the old */
-    /* fixed value, so nothing shifts on small screens and no target drops */
-    /* below the 24px WCAG 2.5.8 floor. */
+    /* Size — fluid, because the padding below is fluid, since an explicit `padding` resolves
+                              * against --naut-spacing-*, which is itself a clamp. min-height, not
+                              * height: that padding scales independently of this box, so a hard
+                              * height eventually has less room than its own line box and the label
+                              * spills past the border. min-height lets the box grow instead of
+                              * clipping. Each floor is the old fixed value, so nothing shifts on
+                              * small screens and no target drops below the 24px WCAG 2.5.8 floor. */
     min-height: clamp(2.5rem, 2.35rem + 0.75vw, 2.75rem);
     padding-block: var(--padY);
     padding-inline: var(--padX);
     font-family: inherit;
     font-size: clamp(0.875rem, 0.85rem + 0.125vw, 0.9375rem);
     font-weight: 400;
-    /* Unitless so it tracks the font-size above. A fixed rem here reads as */
-    /* 1.88 at `sm` and 1.2 at `xl` — four sizes, one declared value. */
+    /* Unitless so it tracks the font-size above. A fixed rem here reads as
+                                                     * 1.88 at `sm` and 1.2 at `xl` — four sizes, one declared value. */
     line-height: var(--naut-line-height-ratio);
 
     /* Variant default */
@@ -354,8 +362,8 @@ const classlist = [
       border-radius: 9999px;
     }
 
-    /* SVG icons — fluid for the same reason as the box, so the icon */
-    /* keeps its proportion to the button instead of shrinking inside it. */
+    /* SVG icons — fluid for the same reason as the box, so the icon keeps
+                                 * its proportion to the button instead of shrinking inside it. */
     :global(svg) {
       width: clamp(1.2815rem, 1.23rem + 0.25vw, 1.375rem);
       height: clamp(1.2815rem, 1.23rem + 0.25vw, 1.375rem);

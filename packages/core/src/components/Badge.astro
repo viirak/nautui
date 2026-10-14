@@ -96,9 +96,9 @@ const sizePadding: Record<
   NonNullable<BadgeProps["size"]>,
   { x: string; y: string }
 > = {
-  sm: { x: "0.5rem", y: "0.25rem" },
-  md: { x: "0.625rem", y: "0.375rem" },
   lg: { x: "0.75rem", y: "0.4375rem" },
+  md: { x: "0.625rem", y: "0.375rem" },
+  sm: { x: "0.5rem", y: "0.25rem" },
 };
 // `iconOnly` is square, so it wants symmetric padding taken from the size's
 // inline value. It overrides both the size default and an explicit `padding`,
@@ -131,7 +131,7 @@ const padY = isBare ? "0px" : pillPadding.y;
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
     hasOutline && `outline--${outlineWeight}`,
-    iconOnly && "icon-only"
+    iconOnly && "icon-only",
   ]}
   {...rest}
 >
@@ -139,12 +139,12 @@ const padY = isBare ? "0px" : pillPadding.y;
 </div>
 <style
   define:vars={{
-  gradientBg,
-  gradientColor: gradient?.textColor,
-  colorValue: colorValue ?? "",
-  padX,
-  padY
-}}
+    colorValue: colorValue ?? "",
+    gradientBg,
+    gradientColor: gradient?.textColor,
+    padX,
+    padY,
+  }}
 >
   .naut-badge {
     display: inline-flex;

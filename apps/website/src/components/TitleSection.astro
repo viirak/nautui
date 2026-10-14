@@ -13,11 +13,10 @@ import { Box, Mark, Section, Text, Title } from "@nautui/core";
     <Title level={5}>Title Level 5</Title>
     <Title level={6}>Title Level 6</Title>
     <Text dimmed
-      >The smallest heading is <Text inline weight="bold"
-        >Title Level 6</Text
-      ></Text
+      >The smallest heading is
+      <Text inline weight="bold">Title Level 6</Text></Text
     >
-    <Title level={1} gradient={{ colors: ["darkorchid", "orchid", "red"] }}
+    <Title gradient={{ colors: ["darkorchid", "orchid", "red"] }} level={1}
       >Gradient Title with multiple colors</Title
     >
     <Title size="display-xl"
@@ -32,15 +31,15 @@ import { Box, Mark, Section, Text, Title } from "@nautui/core";
       <Mark gradient={{ colors: ["blue", "orchid", "red"] }}>Rainbow</Mark>. All
       done
       <Mark
-        variant="sketch-circle"
         gradient={{ colors: ["blue", "orchid", "red"] }}
+        variant="sketch-circle"
         >Effortlessly</Mark
       ></Title
     >
     <Title level={1} size="display-xl"
-      >Title Size XL : Big, Bold, <Text weight="light" inline>Light</Text>
+      >Title Size XL : Big, Bold, <Text inline weight="light">Light</Text>
       , Responsive,
-      <Mark variant="underline" rotate="md">Effortlessly</Mark></Title
+      <Mark rotate="md" variant="underline">Effortlessly</Mark></Title
     >
     <Text size="xxl">
       Hero title like this, usually has description text like this. Stop
@@ -49,7 +48,7 @@ import { Box, Mark, Section, Text, Title } from "@nautui/core";
       your team act on what actually matters.</Text
     >
     <Title size="display-lg"
-      >Page Title : Big, Bold, <Text weight="light" inline>Light</Text>
+      >Page Title : Big, Bold, <Text inline weight="light">Light</Text>
       , and Responsive, Effortlessly</Title
     >
     <Text size="xl">
@@ -59,16 +58,16 @@ import { Box, Mark, Section, Text, Title } from "@nautui/core";
       your team act on what actually matters.</Text
     >
     <Title size="display"
-      >Section Title : Big, Bold, <Text weight="light" inline>Light</Text>
+      >Section Title : Big, Bold, <Text inline weight="light">Light</Text>
       , Responsive, Effortlessly</Title
     >
-    <Text size="lg" dimmed>
+    <Text dimmed size="lg">
       Section title like this, usually has description text like this. Stop
       guessing. Start understanding, what is actually happening across your
       systems, identifies what is going wrong before damage occurs, and helps
       your team act on what actually matters.</Text
     >
-    <Title size="display" gradient={{ colors: ["darkorchid", "orchid", "red"] }}
+    <Title gradient={{ colors: ["darkorchid", "orchid", "red"] }} size="display"
       >Section Title with Rainbow Color</Title
     >
   </Box>

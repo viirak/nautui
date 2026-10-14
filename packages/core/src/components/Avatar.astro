@@ -83,7 +83,7 @@ const avatarStyle = [
     mask && `mask-${mask}`,
     ringValue && `ring-${ringValue}`,
     ringValue && "has-ring",
-    className
+    className,
   ]}
   {...rest}
   style={avatarStyle || undefined}
@@ -115,7 +115,9 @@ const avatarStyle = [
       class:list={["naut-avatar__status", `status--${status}`]}
     />
   )}
-  {status && <span class="naut-avatar__status-label">{resolvedStatusLabel}</span>}
+  {status && (
+    <span class="naut-avatar__status-label">{resolvedStatusLabel}</span>
+  )}
 </div>
 
 <style>

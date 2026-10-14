@@ -23,13 +23,13 @@ export type SpacingStep =
  */
 const pillBlockRatio: Record<SpacingStep, number> = {
   "0": 1,
-  xxs: 0.5,
-  xs: 0.5,
-  sm: 0.75,
-  md: 0.85,
   lg: 0.9,
+  md: 0.85,
+  sm: 0.75,
   xl: 0.9,
+  xs: 0.5,
   xxl: 0.9,
+  xxs: 0.5,
 };
 
 export function getPillPadding(step: SpacingStep): { x: string; y: string } {

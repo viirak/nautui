@@ -1,8 +1,10 @@
 import type { BreadcrumbProps } from "./components/Breadcrumb.astro";
 import type { DocLayoutProps } from "./components/DocLayout.astro";
+import type {
+  MegaMenuItemProps,
+  MegaMenuProps,
+} from "./components/MegaMenu.astro";
 import type { SectionHeroProps } from "./components/SectionHero.astro";
-import type { MegaMenuProps } from "./components/MegaMenu.astro";
-import type { MegaMenuItemProps } from "./components/MegaMenu.astro";
 import type { TOCProps } from "./components/TOC.astro";
 
 export type AstroComponent = () => Promise<{ Content: unknown }>;

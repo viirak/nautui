@@ -11,6 +11,6 @@ const { Content, headings } = await render(entry);
 const { title, description } = entry.data;
 ---
 
-<Layout title={title} description={description} headings={headings}>
+<Layout description={description} headings={headings} title={title}>
   <Content />
 </Layout>

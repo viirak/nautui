@@ -5,8 +5,8 @@ import { z } from "astro/zod";
 const article = defineCollection({
   loader: glob({ base: "./src/contents", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
-    title: z.string(),
     description: z.string(),
+    title: z.string(),
   }),
 });
 

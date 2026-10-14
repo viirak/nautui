@@ -5,17 +5,19 @@ import { Badge, Box, Button, Marquee, Section, Title } from "@nautui/core";
 <Section border={{ top: "md" }}>
   <Title>Marquee</Title>
   <Box border="md">
-    <!-- biome-ignore lint/a11y/noDistractingElements: NautUI Marquee is a custom component; supports pauseOnHover + prefers-reduced-motion -->
+    <!-- NautUI Marquee is a custom component that honours pauseOnHover and
+         prefers-reduced-motion, so it meets WCAG 2.2.2 without a suppression. -->
     <Marquee duration={18_000}>
       <Badge outline>NautUI</Badge>
       <Badge variant="flat">Astro</Badge>
       <Badge variant="outline-primary">TypeScript</Badge>
       <Badge variant="outline-secondary">Design System</Badge>
       <Badge variant="dot">Components</Badge>
-      <Badge variant="flat" mr="md">Developer Experience</Badge>
+      <Badge mr="md" variant="flat">Developer Experience</Badge>
     </Marquee>
-    <!-- biome-ignore lint/a11y/noDistractingElements: NautUI Marquee is a custom component; supports pauseOnHover + prefers-reduced-motion -->
-    <Marquee reverse pauseOnHover duration={22_000} fadeEdgeSize="10%">
+    <!-- NautUI Marquee is a custom component that honours pauseOnHover and
+         prefers-reduced-motion, so it meets WCAG 2.2.2 without a suppression. -->
+    <Marquee duration={22_000} fadeEdgeSize="10%" pauseOnHover reverse>
       <Button variant="ghost">Pause on hover</Button>
       <Button variant="outline">Reverse direction</Button>
       <Button variant="flat">Smooth scrolling</Button>

@@ -10,24 +10,24 @@ const { class: className, ...rest } = Astro.props as ThemeToggleProps;
 ---
 
 <Button
-  variant="ghost"
   aria-label="Toggle theme"
   onclick="toggleTheme()"
-  class:list={["naut-theme-toggle", className]}
-  title="Toggle theme"
   square
+  title="Toggle theme"
+  variant="ghost"
+  class:list={["naut-theme-toggle", className]}
   {...rest}
 >
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
     fill="none"
+    height="24"
     stroke="currentColor"
-    stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
+    stroke-width="2"
+    viewBox="0 0 24 24"
+    width="24"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <title>Sun and Moon</title>
     <g class="naut-theme-toggle__sun">

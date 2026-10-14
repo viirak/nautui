@@ -46,7 +46,7 @@ const errorId = id && errorMessage ? `${id}-error` : undefined;
     `resize--${resize}`,
     fullWidth && "full-width",
     errorMessage && "has-error",
-    className
+    className,
   ]}
   {...rest}
 >
@@ -54,7 +54,11 @@ const errorId = id && errorMessage ? `${id}-error` : undefined;
     <label class="naut-field__label" for={id}>
       <span>
         {label}
-        {required && <span aria-hidden="true" class="naut-field__required">*</span>}
+        {required && (
+          <span aria-hidden="true" class="naut-field__required">
+            *
+          </span>
+        )}
       </span>
       <slot />
     </label>
@@ -62,9 +66,15 @@ const errorId = id && errorMessage ? `${id}-error` : undefined;
     <slot />
   )}
   {description && (
-    <p class="naut-field__description" id={descriptionId}>{description}</p>
+    <p class="naut-field__description" id={descriptionId}>
+      {description}
+    </p>
   )}
-  {errorMessage && <p class="naut-field__error" id={errorId}>{errorMessage}</p>}
+  {errorMessage && (
+    <p class="naut-field__error" id={errorId}>
+      {errorMessage}
+    </p>
+  )}
 </div>
 
 <style>

@@ -26,24 +26,24 @@ const drawerId = uid("naut-drawer");
 ---
 
 <Button
-  variant="ghost"
-  data-drawer-trigger={drawerId}
-  aria-expanded="false"
   aria-controls={drawerId}
+  aria-expanded="false"
+  data-drawer-trigger={drawerId}
   square
+  variant="ghost"
   {...button}
 >
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
+    class="lucide lucide-menu-icon lucide-menu"
     fill="none"
+    height="24"
     stroke="currentColor"
-    stroke-width="1.7"
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="lucide lucide-menu-icon lucide-menu"
+    stroke-width="1.7"
+    viewBox="0 0 24 24"
+    width="24"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <title>Menu</title>
     <g class="menu-icon">
@@ -53,23 +53,26 @@ const drawerId = uid("naut-drawer");
     </g>
   </svg>
 </Button>
-<div id={drawerId} class="naut-drawer" data-state="closed" aria-hidden="true">
+<div aria-hidden="true" class="naut-drawer" data-state="closed" id={drawerId}>
   <div class="naut-drawer-backdrop" data-drawer-close></div>
   <Button
-    variant="ghost"
-    class:list={["naut-drawer-close", position === "center" && "panel-centered"]}
     data-drawer-close
     square
+    variant="ghost"
+    class:list={[
+      "naut-drawer-close",
+      position === "center" && "panel-centered",
+    ]}
   >
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
+      class="lucide lucide-x"
       fill="none"
       stroke="currentColor"
-      stroke-width="1.7"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="lucide lucide-x"
+      stroke-width="1.7"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <title>Close</title>
       <path d="M18 6 6 18" />
@@ -77,11 +80,11 @@ const drawerId = uid("naut-drawer");
     </svg>
   </Button>
   <div
-    class:list={["naut-drawer-panel", `position--${position}`]}
-    role="dialog"
-    aria-modal="true"
     aria-label="Dialog"
+    aria-modal="true"
+    role="dialog"
     tabindex="-1"
+    class:list={["naut-drawer-panel", `position--${position}`]}
   >
     <div class="naut-drawer-content"><slot /></div>
   </div>
@@ -99,7 +102,7 @@ const drawerId = uid("naut-drawer");
       btn.setAttribute("aria-expanded", "false");
       btn.focus();
     }
-    _nautDrawerOpenCount--;
+    _nautDrawerOpenCount -= 1;
     if (_nautDrawerOpenCount === 0) {
       document.body.style.overflow = _nautOriginalOverflow;
       _nautOriginalOverflow = "";
@@ -110,7 +113,7 @@ const drawerId = uid("naut-drawer");
     if (_nautDrawerOpenCount === 0) {
       _nautOriginalOverflow = document.body.style.overflow;
     }
-    _nautDrawerOpenCount++;
+    _nautDrawerOpenCount += 1;
     drawer.dataset.state = "open";
     drawer.setAttribute("aria-hidden", "false");
     const btn = document.querySelector(`[data-drawer-trigger="${drawer.id}"]`);
@@ -160,7 +163,7 @@ const drawerId = uid("naut-drawer");
         'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])'
       );
       if (focusable.length === 0) return;
-      const first = focusable[0];
+      const [first] = focusable;
       const last = focusable.at(-1);
       if (!(first && last)) return;
       if (e.shiftKey) {
@@ -176,7 +179,7 @@ const drawerId = uid("naut-drawer");
   });
 </script>
 
-<style define:vars={{ nautDrawerZIndex: zi, nautDrawerSize: size }}>
+<style define:vars={{ nautDrawerSize: size, nautDrawerZIndex: zi }}>
   .naut-drawer-toggle {
     display: inline-block;
   }

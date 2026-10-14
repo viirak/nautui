@@ -35,6 +35,12 @@ Two follow-ups found reviewing that change:
 
 `apps/website/public/favicon.svg` gained a `<title>`, clearing the last `noSvgWithoutTitle` lint error.
 
+**Biome 2.5.15 and ultracite 8.0.0.** The toolchain is now aligned across the workspace (`apps/website` had been pinned to biome 2.4.9 / ultracite 7.4.2 while the root sat on 2.4.12 / 7.6.2 -- two formatters in one monorepo). ultracite 8.0.1 was deliberately not taken: it was published hours before this change and installing it made pnpm add a `minimumReleaseAgeExclude` to bypass its own supply-chain policy. 8.0.0 is the newest release that clears that guard.
+
+The upgrade retires a formatter bug that made `pnpm fix` non-idempotent. Under 2.4.12, a multi-line CSS comment inside an Astro `<style>` block was re-indented on every run and the formatter never reached a fixed point -- [biomejs/biome#10515](https://github.com/biomejs/biome/issues/10515), fixed by [PR #10533](https://github.com/biomejs/biome/pull/10533). That is what the recurring `Button.astro` churn was. Verified across three passes: `//` comments still diverge on 2.5.15, block comments now converge. `.naut-article` and `.naut-image` selectors were reordered to ascending specificity for the same reason; `Image`'s `:not(...)` arguments moved into `:where(...)` so they contribute zero specificity and the sizing modifiers share one tier. Both reorders were checked in Chromium against the previous build -- 30 resting and 17 hover combinations resolve to identical computed styles.
+
+New rules in 2.5 also flagged real cleanup: a shadowed `size`/`color` in `getGradientPattern`, `== null` comparisons in `MegaMenu`, and an unreachable clipboard fallback. `.naut-avatar-group` keeps `role="group"` with a documented suppression -- `fieldset` is for form controls, not avatars, and would bring a default border and padding that break the flex layout.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0

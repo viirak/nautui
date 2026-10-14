@@ -33,11 +33,16 @@ const tocId = uid("naut-toc");
 >
   <h2 class="naut-toc__title">{title}</h2>
   <div class="naut-toc__list-wrapper">
-    <span class="naut-toc__indicator" aria-hidden="true" />
+    <span aria-hidden="true" class="naut-toc__indicator" />
     <ul class="naut-toc__list">
       {allHeadings.map((heading) => (
         <li class:list={["naut-toc__list-item"]}>
-          <a href={`#${heading.slug}`} class:list={["naut-toc__link", `depth-${heading.depth}`]}>{heading.text}</a>
+          <a
+            class:list={["naut-toc__link", `depth-${heading.depth}`]}
+            href={`#${heading.slug}`}
+          >
+            {heading.text}
+          </a>
         </li>
       ))}
     </ul>
@@ -108,7 +113,7 @@ const tocId = uid("naut-toc");
   }
 </style>
 
-<script is:inline define:vars={{ headings: allHeadings, offsetNumber, tocId }}>
+<script define:vars={{ headings: allHeadings, offsetNumber, tocId }} is:inline>
   function updateIndicator(link) {
     const wrapper = document.querySelector(`#${tocId} .naut-toc__list-wrapper`);
     const indicator = wrapper?.querySelector(".naut-toc__indicator");

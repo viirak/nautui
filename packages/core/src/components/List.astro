@@ -27,13 +27,17 @@ const classList = [
 ];
 ---
 
-{!ordered && <ul class:list={classList} {...rest}>
-  <slot />
-</ul>}
+{!ordered && (
+  <ul class:list={classList} {...rest}>
+    <slot />
+  </ul>
+)}
 
-{ordered && <ol class:list={classList} {...rest}>
-  <slot />
-</ol>}
+{ordered && (
+  <ol class:list={classList} {...rest}>
+    <slot />
+  </ol>
+)}
 
 <style define:vars={{ marker: markerValue }}>
   .naut-list {
