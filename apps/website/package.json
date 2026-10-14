@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
-    "@astrojs/cloudflare": "^14.1.7",
+    "@astrojs/cloudflare": "14.1.7",
     "@astrojs/mdx": "7.0.5",
     "@lucide/astro": "^1.21.0",
     "@nautui/blocks": "workspace:^0.1.1",
