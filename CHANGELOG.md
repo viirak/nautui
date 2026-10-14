@@ -1,5 +1,15 @@
 ## [unreleased]
 
+**`Badge` is smaller and its sizes no longer drift with the viewport.** The default `md` badge drops from 0.875rem to 0.75rem type — every existing `<Badge>` without an explicit `size` renders smaller. This is what puts a badge below a button in the type hierarchy.
+
+Three related fixes, all found by measuring rendered geometry in Chromium rather than reading the CSS:
+
+- Internal padding is now fixed `rem` per size instead of `--naut-spacing-*`. Those tokens grow ~2.4x faster than a type scale, so an `lg` badge climbed 54px to 64px across the viewport. Badge heights are now identical at 375px and 1600px.
+- `line-height` is the unitless `--naut-line-height-ratio` rather than the absolute length inherited from `body`. That inherited value is computed from the *body's* font size, so it never tracked a badge's own: leading was 1.94 at `sm`, 1.66 at `md`, 1.45 at `lg`. All three are now 1.55.
+- `iconOnly` took a hardcoded `padding: 0.85rem`, so `size` was close to a no-op there — an `sm` icon-only badge came out 44px, taller than an `lg` plain badge. It now takes symmetric padding from its own `size`, mirroring how `Button` handles `square`.
+
+A bare `variant="text"` badge with no `outline` still carries no padding. Note the `padding` prop still resolves against the fluid spacing scale, which is a different scale from `size` — `padding="lg"` is considerably more padding than `size="lg"`.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0

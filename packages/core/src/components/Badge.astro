@@ -89,18 +89,31 @@ if (outlineColor !== undefined && !outlineColors.includes(outlineColor)) {
 const outlineWeight: BadgeOutlineColor =
   outlineColor ?? (variant === "outline" ? "strong" : "normal");
 
-const sizePadding: Record<NonNullable<BadgeProps["size"]>, SpacingStep> = {
-  sm: "xs",
-  md: "sm",
-  lg: "md",
+// Fixed rem rather than --naut-spacing-*: the spacing tokens grow ~2.4x faster
+// than a type scale, which made `lg` climb 54px -> 64px across the viewport.
+// Each pair keeps inline > block so the pill ratio still reads.
+const sizePadding: Record<
+  NonNullable<BadgeProps["size"]>,
+  { x: string; y: string }
+> = {
+  sm: { x: "0.5rem", y: "0.25rem" },
+  md: { x: "0.625rem", y: "0.375rem" },
+  lg: { x: "0.75rem", y: "0.4375rem" },
 };
-const paddingStep: SpacingStep = paddingProp ?? sizePadding[size];
-// Badge always keeps the pill ratio — it has no square/circle toggle, so
-// nothing opts out. (`iconOnly` is a visual variant with its own padding rule.)
-const pillPadding = getPillPadding(paddingStep);
+// `iconOnly` is square, so it wants symmetric padding taken from the size's
+// inline value. It overrides both the size default and an explicit `padding`,
+// and is exempt from `isBare` below — a bare icon-only badge still needs room
+// around its glyph. An explicit `padding` otherwise resolves against the
+// fluid spacing tokens.
+let pillPadding = sizePadding[size];
+if (iconOnly) {
+  pillPadding = { x: sizePadding[size].x, y: sizePadding[size].x };
+} else if (paddingProp) {
+  pillPadding = getPillPadding(paddingProp);
+}
 // Bare text carries no padding; an outlined badge is still a badge, so the
 // border axis counts as ink even when the fill is `text`.
-const isBare = resolvedVariant === "text" && !hasOutline;
+const isBare = resolvedVariant === "text" && !hasOutline && !iconOnly;
 const padX = isBare ? "0px" : pillPadding.x;
 const padY = isBare ? "0px" : pillPadding.y;
 ---
@@ -140,6 +153,7 @@ const padY = isBare ? "0px" : pillPadding.y;
     justify-content: center;
     padding-block: var(--padY);
     padding-inline: var(--padX);
+    line-height: var(--naut-line-height-ratio);
     color: var(--naut-color-content);
     text-wrap: nowrap;
 
@@ -191,8 +205,6 @@ const padY = isBare ? "0px" : pillPadding.y;
       border: none;
     }
 
-    /* Outline is an axis independent of the fill variant. Declared after the
-                                                   variant rules so it wins their `border: none` at equal specificity. */
     &.outline--soft {
       border: 1px solid var(--naut-color-border-soft);
     }
@@ -205,9 +217,6 @@ const padY = isBare ? "0px" : pillPadding.y;
       border: 1px solid var(--naut-color-border-strong);
     }
 
-    /* A `color` token tints the border too — an outlined badge should not have
-                                         green text sitting inside a grey border. When `color` is set it wins and
-                                         `outlineColor` no longer applies. */
     &.color--custom.outline--soft,
     &.color--custom.outline--normal,
     &.color--custom.outline--strong {
@@ -251,14 +260,17 @@ const padY = isBare ? "0px" : pillPadding.y;
 
     &.icon-only {
       aspect-ratio: 1 / 1;
-      padding: 0.85rem;
     }
 
     &.size--sm {
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
     }
 
     &.size--md {
+      font-size: 0.75rem;
+    }
+
+    &.size--lg {
       font-size: 0.875rem;
     }
   }
