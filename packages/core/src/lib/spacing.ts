@@ -164,14 +164,3 @@ export function getMarginClassList(
   }
   return classes;
 }
-
-export function withPaddingDefault(
-  input: Spacing | Padding | undefined,
-  defaultValue: Spacing
-): Padding {
-  const padding = resolvePadding(input);
-  if (Object.keys(padding).length === 0) {
-    return { x: defaultValue, y: defaultValue };
-  }
-  return padding;
-}

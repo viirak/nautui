@@ -41,6 +41,8 @@ The upgrade retires a formatter bug that made `pnpm fix` non-idempotent. Under 2
 
 New rules in 2.5 also flagged real cleanup: a shadowed `size`/`color` in `getGradientPattern`, `== null` comparisons in `MegaMenu`, and an unreachable clipboard fallback. `.naut-avatar-group` keeps `role="group"` with a documented suppression -- `fieldset` is for form controls, not avatars, and would bring a default border and padding that break the flex layout.
 
+**Removed the dead `withPaddingDefault` from `lib/spacing.ts`.** It resolved a padding input and substituted a default when none was given, but nothing called it: it is absent from the twelve components that import from `spacing.ts`, from `index.ts` / `index.d.ts`, and from the docs. It arrived with `a341fd7`, the refactor to the object-based spacing API, and the `getPaddingClassList` path superseded it -- an empty padding yields no utility classes either way, so there was never a default to apply. `spacing.ts` is not re-exported from the package barrel, so this was never public API.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0
