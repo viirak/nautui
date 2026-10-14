@@ -6,7 +6,13 @@ export interface MenuItemProps extends Base {
   active?: boolean;
   activeVariant?: "link" | "primary" | "surface";
   dimmed?: boolean;
-  href: string;
+  /**
+   * Optional by design: with no `href` the item renders its default slot
+   * directly instead of wrapping it in an `<a>`, which is how a `MenuItem`
+   * hosts an interactive trigger such as `Dropdown` (see
+   * `docs/recipes/nav-menu.md`).
+   */
+  href?: string;
   radius?: Radius;
   size?: Size;
 }

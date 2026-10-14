@@ -53,7 +53,7 @@ When `collapsible`, the label becomes a `<button aria-expanded>` with a chevron 
 
 | Prop           | Type                          | Default | Description                                   |
 | -------------- | ----------------------------- | ------- | --------------------------------------------- |
-| `href`         | `string`                      | *(required)* | Destination URL.                          |
+| `href`         | `string`                      |              | Destination URL. Omit it to render the default slot unwrapped, which is how a `MenuItem` hosts an interactive trigger such as `Dropdown`. |
 | `active`       | `boolean`                     | `false` | Marks the current page.                       |
 | `activeVariant`| `"link" \| "primary" \| "surface"` | — | Active style: link-colored bar, filled primary, or subtle fill. |
 | `dimmed`       | `boolean`                     | `false` | Soft color (restores on hover when inactive). |

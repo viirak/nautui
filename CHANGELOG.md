@@ -43,6 +43,8 @@ New rules in 2.5 also flagged real cleanup: a shadowed `size`/`color` in `getGra
 
 **Removed the dead `withPaddingDefault` from `lib/spacing.ts`.** It resolved a padding input and substituted a default when none was given, but nothing called it: it is absent from the twelve components that import from `spacing.ts`, from `index.ts` / `index.d.ts`, and from the docs. It arrived with `a341fd7`, the refactor to the object-based spacing API, and the `getPaddingClassList` path superseded it -- an empty padding yields no utility classes either way, so there was never a default to apply. `spacing.ts` is not re-exported from the package barrel, so this was never public API.
 
+**`MenuItem` no longer requires `href`.** The prop was typed `href: string`, but the component has always rendered its default slot directly when `href` is absent (`{!href && <slot />}`), and `docs/recipes/nav-menu.md` relies on that to host a `Dropdown` trigger inside a `MenuItem`. Typing it required contradicted both the implementation and the recipe, so `<MenuItem>Home</MenuItem>` failed to type-check even though it renders correctly. It is now `href?: string`, and the `Menu` doc no longer marks it required.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0
