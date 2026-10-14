@@ -29,6 +29,12 @@ Two follow-ups found reviewing that change:
 - **`IconBox` solid `success`/`warning`/`info` were unreadable in light mode.** It sources its own foreground from a hardcoded `oklch(0.18 ...)` ink, correct while the fill was the bright raw colour but inverted once light mode darkened the fill -- 2.89 / 3.05 / 3.37:1. They now read the `-content` token like `primary`/`secondary`/`destructive` already do, which measures 6.46 / 6.18 / 5.56:1.
 - **`color="success"`, `"warning"` and `"info"` shift slightly darker in light mode.** `getColorValue()` mixed the raw token 60% toward `--naut-color-content`; it now reads `-text` tokens, which alias `-fill`. That was already the last consumer left on the pre-role pattern, and it means `Text color="success"` and `Button variant="success"` finally render the same green instead of drifting apart.
 
+**Two fixes in `Article` and `List`, both invisible until the specific case hit.** `Article`'s anchor-link handler called `navigator.clipboard.writeText(url).catch(...)`, which throws *synchronously* when `navigator.clipboard` is undefined -- as it is outside a secure context. `.catch()` only handles rejection, so the `execCommand` fallback it was guarding never ran and the click silently did nothing. The existence check has to come first.
+
+`List` carried an unused `const spacing` beside `gap: calc(var(--naut-spacing) * 1.5)`. `--naut-spacing` is not a token -- the scale is `--naut-spacing-{size}` -- so that declaration was invalid at computed-value time and dropped. Nothing looked broken because `gap` already comes from the `.gap-*` utility class, but the pair read as a working feature that was doing nothing. Both removed; no rendered change.
+
+`apps/website/public/favicon.svg` gained a `<title>`, clearing the last `noSvgWithoutTitle` lint error.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0

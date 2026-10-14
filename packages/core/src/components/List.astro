@@ -25,7 +25,6 @@ const classList = [
   gap && `gap-${gap}`,
   className,
 ];
-const spacing = `var(--naut-spacing-${gap})`;
 ---
 
 {!ordered && <ul class:list={classList} {...rest}>
@@ -50,7 +49,6 @@ const spacing = `var(--naut-spacing-${gap})`;
     &.horizontal {
       display: flex;
       flex-direction: row;
-      gap: calc(var(--naut-spacing) * 1.5);
       padding: 0;
     }
   }
