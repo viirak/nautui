@@ -120,12 +120,12 @@ const classlist = [
     justify-content: center;
 
     /* Size — fluid, because the padding below is fluid, since an explicit `padding` resolves
-                      * against --naut-spacing-*, which is itself a clamp. min-height, not
-                      * height: that padding scales independently of this box, so a hard
-                      * height eventually has less room than its own line box and the label
-                      * spills past the border. min-height lets the box grow instead of
-                      * clipping. Each floor is the old fixed value, so nothing shifts on
-                      * small screens and no target drops below the 24px WCAG 2.5.8 floor. */
+                          * against --naut-spacing-*, which is itself a clamp. min-height, not
+                          * height: that padding scales independently of this box, so a hard
+                          * height eventually has less room than its own line box and the label
+                          * spills past the border. min-height lets the box grow instead of
+                          * clipping. Each floor is the old fixed value, so nothing shifts on
+                          * small screens and no target drops below the 24px WCAG 2.5.8 floor. */
     min-height: clamp(2.5rem, 2.35rem + 0.75vw, 2.75rem);
     padding-block: var(--padY);
     padding-inline: var(--padX);
@@ -133,7 +133,7 @@ const classlist = [
     font-size: clamp(0.875rem, 0.85rem + 0.125vw, 0.9375rem);
     font-weight: 400;
     /* Unitless so it tracks the font-size above. A fixed rem here reads as
-                                             * 1.88 at `sm` and 1.2 at `xl` — four sizes, one declared value. */
+                                                 * 1.88 at `sm` and 1.2 at `xl` — four sizes, one declared value. */
     line-height: var(--naut-line-height-ratio);
 
     /* Variant default */
@@ -355,7 +355,7 @@ const classlist = [
     }
 
     /* SVG icons — fluid for the same reason as the box, so the icon keeps
-                         * its proportion to the button instead of shrinking inside it. */
+                             * its proportion to the button instead of shrinking inside it. */
     :global(svg) {
       width: clamp(1.2815rem, 1.23rem + 0.25vw, 1.375rem);
       height: clamp(1.2815rem, 1.23rem + 0.25vw, 1.375rem);

@@ -24,6 +24,11 @@ Dark now mixes 15/20/25%, giving `base-100` `#0d0d11` and `base-200` `#18181c`. 
 
 Each now has `-fill`, `-content` and `-hover` role tokens matching the primary/secondary pattern. Light darkens the fill 35/35/25% and keeps a white foreground; dark keeps the fill bright and flips the foreground to black, which reads 9.2 / 9.8 / 7.6:1. The split has to be per-theme because `warning` cannot be darkened and stay amber — past 25% it is brown. Their hover darkens in light (lightening cost `warning` and `info` their 4.5:1, measuring 4.44 and 4.11) and lightens in dark, mirroring the existing primary/secondary behaviour. `Button`, `IconBox` and `Avatar` now read `-fill`.
 
+Two follow-ups found reviewing that change:
+
+- **`IconBox` solid `success`/`warning`/`info` were unreadable in light mode.** It sources its own foreground from a hardcoded `oklch(0.18 ...)` ink, correct while the fill was the bright raw colour but inverted once light mode darkened the fill -- 2.89 / 3.05 / 3.37:1. They now read the `-content` token like `primary`/`secondary`/`destructive` already do, which measures 6.46 / 6.18 / 5.56:1.
+- **`color="success"`, `"warning"` and `"info"` shift slightly darker in light mode.** `getColorValue()` mixed the raw token 60% toward `--naut-color-content`; it now reads `-text` tokens, which alias `-fill`. That was already the last consumer left on the pre-role pattern, and it means `Text color="success"` and `Button variant="success"` finally render the same green instead of drifting apart.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0

@@ -98,6 +98,15 @@
   --naut-color-warning-content: white;
   --naut-color-info-content: white;
 
+  /* These three alias `-fill` for the text role. Unlike `primary`, their fill
+   * is already the colour that reads against the current surface -- dark in
+   * light, bright in dark -- so there is nothing to re-derive. The alias is
+   * deliberate: it keeps `color="success"` and `variant="success"` on one
+   * green instead of drifting apart. */
+  --naut-color-success-text: var(--naut-color-success-fill);
+  --naut-color-warning-text: var(--naut-color-warning-fill);
+  --naut-color-info-text: var(--naut-color-info-fill);
+
   /* === Tint controls (overridable) ===
     * Convention constants for component-side color-mix.
     */
@@ -220,6 +229,9 @@
   --naut-color-success-content: black;
   --naut-color-warning-content: black;
   --naut-color-info-content: black;
+  --naut-color-success-text: var(--naut-color-success-fill);
+  --naut-color-warning-text: var(--naut-color-warning-fill);
+  --naut-color-info-text: var(--naut-color-info-fill);
 
   /* Hover darkens in dark mode — these fills are already lifted. The status
    * brands invert: their fill stays bright here and the foreground is black,
