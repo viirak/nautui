@@ -1,8 +1,8 @@
 // @ts-check
-import mdx from "@astrojs/mdx";
-import { defineConfig } from "astro/config";
 
 import cloudflare from "@astrojs/cloudflare";
+import mdx from "@astrojs/mdx";
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
   integrations: [mdx()],
@@ -17,9 +17,9 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       themes: {
-        light: 'catppuccin-latte',
-        dark: 'dracula'
-      }
-    }
-  }
+        light: "catppuccin-latte",
+        dark: "dracula",
+      },
+    },
+  },
 });
