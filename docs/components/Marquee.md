@@ -28,7 +28,7 @@ import { Marquee } from "@nautui/core";
 | `reverse`       | `boolean`                     | `false`            | Reverse scroll direction.                      |
 | `orientation`   | `"horizontal" \| "vertical"`  | `"horizontal"`     | Scroll axis.                                   |
 | `pauseOnHover`  | `boolean`                     | `false`            | Pause animation on hover.                      |
-| `gap`           | `"sm" \| "md" \| "lg" \| "xl"` | `"md"`             | Space between repeated groups.                 |
+| `gap`           | `"xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"`             | Space between repeated groups.                 |
 | `fadeEdges`     | `boolean`                     | `true`             | Soft gradient fade at both ends.               |
 | `fadeEdgeColor` | `string`                      | `var(--naut-color-base)` | Fade color (match the section background). |
 | `fadeEdgeSize`  | `string`                      | `"5%"`             | Fade width/height.                             |

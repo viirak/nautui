@@ -45,6 +45,10 @@ New rules in 2.5 also flagged real cleanup: a shadowed `size`/`color` in `getGra
 
 **`MenuItem` no longer requires `href`.** The prop was typed `href: string`, but the component has always rendered its default slot directly when `href` is absent (`{!href && <slot />}`), and `docs/recipes/nav-menu.md` relies on that to host a `Dropdown` trigger inside a `MenuItem`. Typing it required contradicted both the implementation and the recipe, so `<MenuItem>Home</MenuItem>` failed to type-check even though it renders correctly. It is now `href?: string`, and the `Menu` doc no longer marks it required.
 
+**`Gap` now includes `xxs` and `xs`.** `gap.css` has shipped `.gap-xxs` and `.gap-xs` alongside the `--naut-spacing-xxs` / `--naut-spacing-xs` tokens, but `Gap` was aliased to `Size` (`"sm" | "md" | "lg" | "xl"`), so neither step could be passed to any component. This was never a regression -- `Gap` has been `Size` since `5748eab`, and the predecessor `Spacing` union did not list them either -- the type was simply authored narrower than the CSS. The `Group` and `Flex` docs already advertised `"xs"`, which the type did not honour.
+
+Widening the shared type means all eight `Gap` consumers have to resolve both steps, and they split in two. Seven (`Flex`, `Group`, `Grid`, `List`, `Marquee`, `Menu`, `Stack`) are backed by `gap.css` and needed no change. Two hand-roll their own `.gap-*` rules and had to gain the missing steps, or `gap="xxs"` would have type-checked and rendered nothing: `Masonry` (`column-gap`, plus a `:global(... > .naut-masonry-item)` `margin-bottom`) and `Marquee` (`margin-left` between connected groups). Measured in Chromium across all six steps, all three paths now agree -- `3.4 / 7.08 / 14.6 / 24 / 32 / 40px`.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0

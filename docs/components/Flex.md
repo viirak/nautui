@@ -25,7 +25,7 @@ import { Flex } from "@nautui/core";
 | `justify`   | `Justify` or responsive object                                | `"start"` | `justify-content`.                                |
 | `direction` | `Direction` or responsive object                              | `"row"`   | `flex-direction`.                                |
 | `wrap`      | `"nowrap" \| "wrap" \| "wrap-reverse"`                        | —         | `flex-wrap`.                                      |
-| `gap`       | `"xs" \| "sm" \| "md" \| "lg" \| "xl"`                        | —         | Gap between children (`gap-*` utility).          |
+| `gap`       | `"xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl"`                        | —         | Gap between children (`gap-*` utility).          |
 | `class`     | `string`                                                      | —         | Extra class names merged onto the element.       |
 
 Any other attributes pass through to the `<div>`.

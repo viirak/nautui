@@ -28,7 +28,7 @@ import { List, ListItem } from "@nautui/core";
 | `ordered` | `boolean`               | `false`  | Render `<ol>` instead of `<ul>`.              |
 | `horizontal` | `boolean`            | `false`  | Items laid out in a row (flex).               |
 | `marker`  | `"none"` (or pass a color string) | — | `"none"` removes list markers; any other string sets the marker color. |
-| `gap`     | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"sm"` | Gap between items. |
+| `gap`     | `"xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"sm"` | Gap between items. |
 | `class`   | `string`                 | —        | Extra class names merged onto the element.    |
 
 Marker color: pass a color, e.g. `marker="primary"` or any CSS color string — applied to the `::marker`.

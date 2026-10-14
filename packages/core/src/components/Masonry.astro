@@ -34,6 +34,14 @@ const { class: className, columns = 4, gap = "md" } = nonSpacing;
       column-count: var(--columns); /* Desktop columns */
     }
 
+    &.gap-xxs {
+      column-gap: var(--naut-spacing-xxs);
+    }
+
+    &.gap-xs {
+      column-gap: var(--naut-spacing-xs);
+    }
+
     &.gap-sm {
       column-gap: var(--naut-spacing-sm);
     }
@@ -53,6 +61,14 @@ const { class: className, columns = 4, gap = "md" } = nonSpacing;
 
   :global(.naut-masonry.gap-none > .naut-masonry-item) {
     margin-bottom: 0;
+  }
+
+  :global(.naut-masonry.gap-xxs > .naut-masonry-item) {
+    margin-bottom: var(--naut-spacing-xxs);
+  }
+
+  :global(.naut-masonry.gap-xs > .naut-masonry-item) {
+    margin-bottom: var(--naut-spacing-xs);
   }
 
   :global(.naut-masonry.gap-sm > .naut-masonry-item) {

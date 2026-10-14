@@ -22,7 +22,7 @@ import { Masonry, MasonryItem } from "@nautui/core";
 | Prop      | Type                        | Default | Description                                   |
 | --------- | --------------------------- | ------- | --------------------------------------------- |
 | `columns` | `number`                    | `4`     | Column count on desktop (≥1042px).            |
-| `gap`     | `"none" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Column + row gap.                  |
+| `gap`     | `"none" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Column + row gap.                  |
 | `class`   | `string`                    | —       | Extra class names merged onto the element.    |
 
 Plus all spacing props (`m-*`, `p-*`).

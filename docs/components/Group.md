@@ -21,7 +21,7 @@ import { Group, Button } from "@nautui/core";
 
 | Prop      | Type                                | Default   | Description                                      |
 | --------- | ----------------------------------- | --------- | ------------------------------------------------ |
-| `gap`     | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | — | Gap between items.                              |
+| `gap`     | `"xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl"` | — | Gap between items.                              |
 | `grow`    | `boolean`                           | `false`   | `flex-grow: 1` — items expand to fill the row.  |
 | `wrap`    | `boolean`                           | `false`   | `flex-wrap: wrap`.                              |
 | `direction` | `Direction` or responsive object | `"row"` | `flex-direction`. |
