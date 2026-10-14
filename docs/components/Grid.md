@@ -22,7 +22,7 @@ import { Grid, GridItem } from "@nautui/core";
 | Prop      | Type                          | Default | Description                                |
 | --------- | ----------------------------- | ------- | ------------------------------------------ |
 | `columns` | `Columns` or per-breakpoint object | `12` | Column count.                            |
-| `gap`     | `"xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Gap between cells.               |
+| `gap`     | `"0" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Gap between cells.               |
 | `direction` | `Direction` or per-breakpoint object | `"row"` | `grid-auto-flow`. |
 | `align`   | `Align` or per-breakpoint object | — | `align-items` for grid items. |
 | `justify` | `Justify` or per-breakpoint object | — | `justify-content` for grid tracks. |

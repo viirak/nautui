@@ -49,6 +49,10 @@ New rules in 2.5 also flagged real cleanup: a shadowed `size`/`color` in `getGra
 
 Widening the shared type means all eight `Gap` consumers have to resolve both steps, and they split in two. Seven (`Flex`, `Group`, `Grid`, `List`, `Marquee`, `Menu`, `Stack`) are backed by `gap.css` and needed no change. Two hand-roll their own `.gap-*` rules and had to gain the missing steps, or `gap="xxs"` would have type-checked and rendered nothing: `Masonry` (`column-gap`, plus a `:global(... > .naut-masonry-item)` `margin-bottom`) and `Marquee` (`margin-left` between connected groups). Measured in Chromium across all six steps, all three paths now agree -- `3.4 / 7.08 / 14.6 / 24 / 32 / 40px`.
 
+**`gap.css` gains a zero step.** `--naut-spacing-0: 0` has been the first entry of the token scale all along and `SpacingStep` already declared `"0"`, but the utility classes started at `xxs` -- as `padding.css` and `margin.css` still do. It is added as `.gap-0` rather than `.gap-none` so it matches both the token name and `SpacingStep`; `none` would have been the only "none"-named spacing utility.
+
+`Masonry` documented `gap="none"`, which the type had never permitted, so that was a doc bug rather than a contract. Its two hand-rolled `gap-none` rules are now `gap-0`, and the doc lists `"0"`. Measured in Chromium, `Group`, `Masonry` and `Marquee` agree across the full seven-step scale: `0 / 3.4 / 7.08 / 14.6 / 24 / 32 / 40px`.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0

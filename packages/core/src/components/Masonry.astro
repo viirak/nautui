@@ -34,6 +34,10 @@ const { class: className, columns = 4, gap = "md" } = nonSpacing;
       column-count: var(--columns); /* Desktop columns */
     }
 
+    &.gap-0 {
+      column-gap: var(--naut-spacing-0);
+    }
+
     &.gap-xxs {
       column-gap: var(--naut-spacing-xxs);
     }
@@ -59,7 +63,11 @@ const { class: className, columns = 4, gap = "md" } = nonSpacing;
     }
   }
 
-  :global(.naut-masonry.gap-none > .naut-masonry-item) {
+  :global(.naut-masonry.gap-0 > .naut-masonry-item) {
+    margin-bottom: 0;
+  }
+
+  :global(.naut-masonry.gap-0 > .naut-masonry-item) {
     margin-bottom: 0;
   }
 
