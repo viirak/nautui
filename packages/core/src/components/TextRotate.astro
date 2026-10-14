@@ -171,11 +171,8 @@ const classes = [
     opacity: 0;
   }
 
-  /* Declared after `.static` deliberately: this selector carries an extra
-     `:hover`, so it has to sit last or it would descend. Specificity decides
-     the outcome either way, so the move is behaviour-neutral. */
   .naut-text-rotate.pause-on-hover:hover
-  :global(.naut-text-rotate__viewport > *) {
+    :global(.naut-text-rotate__viewport > *) {
     animation-play-state: paused;
   }
 

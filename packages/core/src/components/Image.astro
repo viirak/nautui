@@ -90,10 +90,6 @@ const imageHeight = maxHeight && !cover ? maxHeight : undefined;
         opacity 0.35s ease;
     }
 
-    /* Sizing. `:not(:where(...))` selects exactly what `:not(...)` did but
-       contributes zero specificity, which keeps every sizing rule on one
-       tier so the cascade stays predictable instead of depending on which
-       modifier happens to be declared first. */
     &.fit-cover {
       width: 100%;
       height: 100%;
@@ -143,10 +139,6 @@ const imageHeight = maxHeight && !cover ? maxHeight : undefined;
       }
     }
 
-    /* Hover effects, resting state first. Each `:hover` rule carries an extra
-       class so it outranks its own resting rule on specificity alone, which is
-       why the two halves no longer need to be interleaved. Sizing above only
-       touches width/height/object-fit, so it cannot collide with these. */
     &.hover-zoom-out img {
       transform: scale(1.08);
     }

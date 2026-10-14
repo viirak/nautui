@@ -21,8 +21,6 @@ const {
   ...rest
 } = Astro.props as MegaMenuItemProps;
 
-// `??` collapses an explicit null to undefined, so the template below can
-// test for a single missing value instead of reaching for `!= null`.
 const dropOffset =
   (drop && typeof drop === "object" ? drop.offset : undefined) ?? undefined;
 const megaOffset = dropOffset === undefined ? undefined : String(dropOffset);

@@ -82,9 +82,6 @@
     }
   }
 
-  /* Before `.anchor-links` below: the heading-link rules carry more
-     specificity, and these set properties on a different element, so the two
-     blocks cannot collide. */
   .code-copy-btn {
     position: absolute;
     top: 0.5rem;
