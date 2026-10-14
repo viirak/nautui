@@ -10,6 +10,20 @@ Three related fixes, all found by measuring rendered geometry in Chromium rather
 
 A bare `variant="text"` badge with no `outline` still carries no padding. Note the `padding` prop still resolves against the fluid spacing scale, which is a different scale from `size` — `padding="lg"` is considerably more padding than `size="lg"`.
 
+**The dark neutral scale was miscalibrated, putting every brand colour out of reach on a Card.** Light mixes 2/5/10% *black* into a near-white base; dark mirrored that with 35/40/45/70% *white* into a near-black one. Mixing white into near-black overshoots by an order of magnitude, landing `base-100` on `#3c3d40` — a mid-grey Card on a near-black page. Measured against it:
+
+| token | before | after (15/20/25) |
+| --- | --- | --- |
+| `secondary-fill` on `base-100` (needs 3:1) | 1.89 | 3.37 |
+| `primary-text` on `base-200` (needs 4.5:1) | 4.09 | 8.17 |
+| `secondary-text` on `base-200` (needs 4.5:1) | 4.06 | 8.11 |
+
+Dark now mixes 15/20/25%, giving `base-100` `#0d0d11` and `base-200` `#18181c`. `base-400` drops 70% → 50% so it mirrors light's 50% and both scales land on mid-grey for `border-strong`.
+
+**`success`, `warning` and `info` now carry a legible foreground in both themes.** These are mid-tone, so unlike the other brands they fail against *both* near-white and near-black: raw `success` sits at 2.05:1 on light `base-100`, and the white foreground measured 2.28 / 2.15 / 2.77:1 with hovers worse at 1.74 / 1.65 / 1.97. Mixing toward a darker same-hue colour was tried first and does not work — it preserves chroma but cannot darken enough, and only `info` cleared 4.5:1 even at 45%.
+
+Each now has `-fill`, `-content` and `-hover` role tokens matching the primary/secondary pattern. Light darkens the fill 35/35/25% and keeps a white foreground; dark keeps the fill bright and flips the foreground to black, which reads 9.2 / 9.8 / 7.6:1. The split has to be per-theme because `warning` cannot be darkened and stay amber — past 25% it is brown. Their hover darkens in light (lightening cost `warning` and `info` their 4.5:1, measuring 4.44 and 4.11) and lightens in dark, mirroring the existing primary/secondary behaviour. `Button`, `IconBox` and `Avatar` now read `-fill`.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0
