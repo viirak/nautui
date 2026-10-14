@@ -29,17 +29,16 @@ import { Space } from "@nautui/core";
 
 ```ts
 type SpaceSize =
-  | "auto"
-  | "sm" | "md" | "lg" | "xl"          // --naut-spacing-{size}
-  | "display" | "display-lg" | "display-xl" // large display tokens
-  | "full";                              // horizontal only: width: 100%
+  | "auto"                                // height/width: auto
+  | "sm" | "md" | "lg" | "xl"             // --naut-spacing-{size}
+  | "display" | "display-lg" | "display-xl"; // large display tokens
 ```
 
 Every step resolves to a fluid `clamp()` token (see `--naut-spacing-*` in `global.css`), so a single value already adapts across the viewport range — there is no per-breakpoint `size` override.
 
 ## Notes
 
-- `vertical` sizes `height`; `horizontal` sizes `width`. `full` is only meaningful horizontally (`width: 100%`).
+- `vertical` sizes `height`; `horizontal` sizes `width`. Every size in `SpaceSize` is defined for both axes, so none of them silently no-ops on a given orientation.
 - `grow` is handy inside `Flex`/`Group` to push siblings apart without explicit `justify`.
 - Prefer `Space` over manual margins for consistent vertical rhythm; the padding utilities (`p-*`) handle the inner-padding case.
 
