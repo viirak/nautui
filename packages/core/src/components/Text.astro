@@ -18,17 +18,11 @@ export interface TextProps extends Base, SpacingProps {
   italic?: boolean;
   ls?: Size; // letter spacing shorthand
   nowrap?: boolean;
-  size?: Size;
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   td?: TextDecoration; // text decoration shorthand
   transform?: TextTranform;
   tt?: TextTranform; // text transform shorthand
-  variant?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "destructive"
-    | "link"
-    | "highlight";
+  variant?: "primary" | "secondary" | "destructive" | "link" | "highlight";
   weight?: "light" | "normal" | "medium" | "bold" | "semi-bold" | "extra-bold";
 }
 
