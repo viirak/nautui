@@ -5,7 +5,9 @@ import Layout from "../../layouts/LayoutDoc.astro";
 const articles = await getCollection("article");
 const entry = articles.find((a) => a.id === "docs");
 
-if (!entry) return Astro.redirect("/404", 404);
+if (!entry) {
+  return new Response("Not found", { status: 404 });
+}
 
 const { Content, headings } = await render(entry);
 const { title, description } = entry.data;
