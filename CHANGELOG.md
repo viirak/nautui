@@ -53,6 +53,16 @@ Widening the shared type means all eight `Gap` consumers have to resolve both st
 
 `Masonry` documented `gap="none"`, which the type had never permitted, so that was a doc bug rather than a contract. Its two hand-rolled `gap-none` rules are now `gap-0`, and the doc lists `"0"`. Measured in Chromium, `Group`, `Masonry` and `Marquee` agree across the full seven-step scale: `0 / 3.4 / 7.08 / 14.6 / 24 / 32 / 40px`.
 
+**Badge is uppercase by default and every badge carries padding.** Four changes, all found by measuring rendered geometry in Chromium rather than reading the CSS.
+
+`uppercase` defaulted to `false`, so most badges shipped mixed case. Now `true`; pass `uppercase={false}` to opt out.
+
+Block padding came down 2-3px per step while inline padding went up 4px, because the two were interacting. Reducing block alone stretched the pill to 3.3:1 with `radius--sm` still at 8px, so the corner curve ate most of the inline padding. Measured as `clearance = padX - effectiveRadius`, rounded badges now clear their curve by 6-10px depending on size.
+
+`radius--full` was the real outlier. `50rem` clamps to half the box height, which at `md` is 13.3px against 12px of inline padding -- the text sat *inside* the curve by 1.3px. Inline padding now clears it by 0.7px. That sits at the geometric floor rather than comfortably above it, because a stadium's required padding *is* h/2 and grows with the font; if it reads tight, `radius--full` wants its own padding record rather than a larger global default.
+
+`isBare` is gone. A bare `variant="text"` badge resolved to `0px` padding, which was right for inline prose but wrong for anything carrying ink: a `gradient` badge paints a full background and was rendering with no padding at all. The same logic already excluded outlines ("an outlined badge is still a badge"); gradient now counts too. Worth knowing: bare text badges are no longer inline -- `md` went 19px to 25px tall, and a two-word one from 37px to 65px wide. A `padding` prop on a bare badge is now honoured instead of discarded.
+
 ### 🚀 Features
 
 - Update Astro peer dependency to ^6.0.0

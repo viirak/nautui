@@ -32,10 +32,10 @@ import { Badge } from "@nautui/core";
 | `gradient`      | `{ colors: string[]; textColor: string; deg?: number }` | —    | Gradient background; `deg` defaults to `45`.      |
 | `dotted`        | `boolean`                                  | `false`     | Shows a leading status dot.                       |
 | `iconOnly`      | `boolean`                                  | `false`     | Square aspect for icon-only badges.               |
-| `padding`       | `"0" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "xxl"` | from `size` | One spacing step, resolved against the **fluid spacing scale** — not the `size` scale, so `padding="lg"` is far more than `size="lg"`. Block padding is derived from it (always smaller than inline). Not an axis object. Ignored for a bare `text` badge (no `outline`) and for `iconOnly`, which takes symmetric padding from its own `size`. |
+| `padding`       | `"0" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "xxl"` | from `size` | One spacing step, resolved against the **fluid spacing scale** — not the `size` scale, so `padding="lg"` is far more than `size="lg"`. Block padding is derived from it (always smaller than inline). Not an axis object. Ignored for `iconOnly`, which takes symmetric padding from its own `size`. |
 | `margin`        | —                                          | —           | Not supported; throws. Wrap in a `Box`.           |
 | `class`         | `string`                                   | —           | Extra class names merged onto the element.        |
-| `uppercase`     | `boolean`                                  | `false`     | Forces all-caps text.                             |
+| `uppercase`     | `boolean`                                  | `true`      | All-caps by default; set `false` to opt out.      |
 
 ## Variants
 
