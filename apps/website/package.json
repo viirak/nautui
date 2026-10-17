@@ -19,8 +19,8 @@
     "@astrojs/cloudflare": "14.1.7",
     "@astrojs/mdx": "7.0.5",
     "@lucide/astro": "^1.21.0",
-    "@nautui/blocks": "workspace:^0.1.1",
-    "@nautui/core": "workspace:^0.1.1",
+    "@nautui/blocks": "workspace:^0.2.0",
+    "@nautui/core": "workspace:^0.2.0",
     "astro": "7.1.6",
     "lightningcss": "^1.32.0",
     "wrangler": "^4.114.0"

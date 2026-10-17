@@ -1,6 +1,6 @@
 {
   "name": "nautui",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "description": "A clean, minimalist UI component library for Astro — built for marketing websites, not apps.",
   "homepage": "https://github.com/viirak/nautui",

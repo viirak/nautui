@@ -1,4 +1,4 @@
-## [unreleased]
+## [0.2.0] - 2026-10-17
 
 **`Badge` is smaller and its sizes no longer drift with the viewport.** The default `md` badge drops from 0.875rem to 0.75rem type — every existing `<Badge>` without an explicit `size` renders smaller. This is what puts a badge below a button in the type hierarchy.
 
