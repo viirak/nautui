@@ -1,28 +1,111 @@
 :root {
-  /* === Theme inputs (overridable) === */
+  /* === Theme inputs (overridable) ===
+   * These are the ONLY tokens a consumer overrides, and the dark block never
+   * redefines them. A themed token may not be the source of its own mix: with
+   * `:root { --a-input: var(--a) }` plus `dark { --a: color-mix(… var(--a-input) …) }`
+   * the pair is a cycle, every token derived from `--a` resolves to nothing, and
+   * dark mode renders black-on-black. Verified in Chromium. So dark-mode
+   * adaptation lives in the role tokens below, which mix from these inputs. */
   --naut-color-primary: #5423e7;
   --naut-color-secondary: #121217;
-  --naut-color-destructive: #ef4444;
+  --naut-color-destructive: #dc2626;
   --naut-color-success: #22c55e;
   --naut-color-warning: #f59e0b;
   --naut-color-info: #0ea5e9;
   --naut-color-link: #3b82f6;
   --naut-color-highlight: #ddd522;
 
-  /* Unmodified link input, captured for dark mode. The dark rule cannot
-     reference `--naut-color-link` from its own declaration (a self-reference
-     is invalid at computed-value time), so it mixes from this instead. The
-     var() is substituted after the cascade, so a consumer override of
-     `--naut-color-link` is picked up regardless of stylesheet order. */
-  --naut-color-link-input: var(--naut-color-link);
-
-  /* === Brand content (foreground on brand) === */
+  /* === Brand roles ===
+   * One job per token, identity in light, adapted in dark:
+   *   -fill    paints a surface
+   *   -text    paints glyphs on any surface
+   *   -content paints glyphs sitting on that -fill
+   * A fill must be dark enough for its foreground while text must be light
+   * enough for the surface — opposite needs, so they cannot share a token. */
+  --naut-color-primary-fill: var(--naut-color-primary);
+  --naut-color-primary-text: var(--naut-color-primary);
   --naut-color-primary-content: white;
+  --naut-color-secondary-fill: var(--naut-color-secondary);
+  --naut-color-secondary-text: var(--naut-color-secondary);
   --naut-color-secondary-content: white;
+  --naut-color-destructive-text: color-mix(
+    in oklch,
+    var(--naut-color-destructive) 90%,
+    black
+  );
+  --naut-color-link-text: var(--naut-color-link);
+  --naut-color-link-fill: var(--naut-color-link);
+
+  /* Fill hover holds the whole mix rather than a shared percentage: each fill
+   * has its own AA ceiling against its own foreground. `primary` tolerates 20%
+   * lightening before white text drops under 4.5:1, `secondary` 40%. */
+  --naut-color-primary-hover: color-mix(
+    in oklch,
+    var(--naut-color-primary-fill),
+    white 20%
+  );
+  --naut-color-secondary-hover: color-mix(
+    in oklch,
+    var(--naut-color-secondary-fill),
+    white 35%
+  );
+  /* These three darken on hover rather than lighten: their fill carries a
+   * white foreground with less headroom than `primary`, and lightening cost
+   * `warning` and `info` their 4.5:1 (measured 4.44 and 4.11). Darkening can
+   * only move white contrast up. */
+  --naut-color-success-hover: color-mix(
+    in oklch,
+    var(--naut-color-success-fill),
+    black 10%
+  );
+  --naut-color-warning-hover: color-mix(
+    in oklch,
+    var(--naut-color-warning-fill),
+    black 10%
+  );
+  --naut-color-info-hover: color-mix(
+    in oklch,
+    var(--naut-color-info-fill),
+    black 10%
+  );
+
+  /* === Status brands: role tokens ===
+   * `success`, `warning` and `info` are mid-tone, so unlike the other brands
+   * they measure badly against *both* near-white and near-black: raw `success`
+   * sits at 2.05:1 on light base-100, and their white foregrounds measured
+   * 2.28 / 2.15 / 2.77:1. Darkening is the only way to carry white text, so
+   * light darkens the fill and dark keeps the fill bright but flips the
+   * foreground to black (8.7-9.2:1). Hence the per-theme split: `warning`
+   * cannot be darkened and stay amber -- past 25% it is brown -- so it needs
+   * the dark foreground rather than a lighter white-on-fill. */
   --naut-color-destructive-content: white;
+  --naut-color-success-fill: color-mix(
+    in oklch,
+    var(--naut-color-success),
+    black 35%
+  );
+  --naut-color-warning-fill: color-mix(
+    in oklch,
+    var(--naut-color-warning),
+    black 35%
+  );
+  --naut-color-info-fill: color-mix(
+    in oklch,
+    var(--naut-color-info),
+    black 25%
+  );
   --naut-color-success-content: white;
   --naut-color-warning-content: white;
   --naut-color-info-content: white;
+
+  /* These three alias `-fill` for the text role. Unlike `primary`, their fill
+   * is already the colour that reads against the current surface -- dark in
+   * light, bright in dark -- so there is nothing to re-derive. The alias is
+   * deliberate: it keeps `color="success"` and `variant="success"` on one
+   * green instead of drifting apart. */
+  --naut-color-success-text: var(--naut-color-success-fill);
+  --naut-color-warning-text: var(--naut-color-warning-fill);
+  --naut-color-info-text: var(--naut-color-info-fill);
 
   /* === Tint controls (overridable) ===
     * Convention constants for component-side color-mix.
@@ -56,6 +139,7 @@
   );
 
   /* === Border aliases (separately themeable) === */
+  --naut-color-border-soft: var(--naut-color-base-200);
   --naut-color-border: var(--naut-color-base-300);
   --naut-color-border-strong: var(--naut-color-base-400);
 
@@ -70,22 +154,113 @@
 
 [data-theme="dark"],
 :where(.dark) {
-  /* === Neutral surface scale (flipped: mix toward white instead of black) === */
+  /* === Neutral surface scale (flipped: mix toward white instead of black) ===
+   * The white percentages are far lower than they look. Light mode mixes
+   * 2/5/10% black into a near-white base, which barely moves it; the same
+   * effect against a near-black base needs a much larger share, but the
+   * previous 35/40/45% overshot and landed base-100 at #3c3d40 -- a mid-grey
+   * Card on a near-black page. That put every brand colour out of reach on
+   * it: secondary-fill measured 1.89:1 against base-100 (a control boundary
+   * needs 3:1) and brand text 4.06:1 on base-200 (text needs 4.5:1).
+   * At 15/20/25 those read 3.37:1 and 8.11:1. base-400 now mirrors light's
+   * 50%, so both scales land on mid-grey for border-strong. */
   --naut-color-base-0: black;
   --naut-color-base: color-mix(
     in oklch,
     black,
     var(--naut-color-primary) var(--naut-tint-base)
   );
-  --naut-color-base-100: color-mix(in oklch, var(--naut-color-base), white 35%);
-  --naut-color-base-200: color-mix(in oklch, var(--naut-color-base), white 40%);
-  --naut-color-base-300: color-mix(in oklch, var(--naut-color-base), white 45%);
-  --naut-color-base-400: color-mix(in oklch, var(--naut-color-base), white 70%);
+  --naut-color-base-100: color-mix(in oklch, var(--naut-color-base), white 15%);
+  --naut-color-base-200: color-mix(in oklch, var(--naut-color-base), white 20%);
+  --naut-color-base-300: color-mix(in oklch, var(--naut-color-base), white 25%);
+  --naut-color-base-400: color-mix(in oklch, var(--naut-color-base), white 50%);
 
   /* === Border (re-aliased onto the dark neutral scale) === */
   --naut-color-border: var(--naut-color-base-200);
   --naut-color-border-soft: var(--naut-color-base-100);
   --naut-color-border-strong: var(--naut-color-base-400);
+
+  /* === Brand roles adapted for dark surfaces ===
+   * Unadapted, `primary` and `secondary` nearly vanish as fills on a near-black
+   * surface: against the dark base they measured 2.77:1 and 1.12:1, under the
+   * 3:1 WCAG 1.4.11 expects of a control boundary. Every token in this section
+   * mixes from the raw inputs declared in `:root`, which the dark block never
+   * redefines. A themed token may not be the source of its own mix. */
+  --naut-color-primary-fill: color-mix(
+    in oklch,
+    var(--naut-color-primary),
+    white 40%
+  );
+  --naut-color-secondary-fill: color-mix(
+    in oklch,
+    var(--naut-color-secondary),
+    white 40%
+  );
+  --naut-color-primary-text: color-mix(
+    in oklch,
+    var(--naut-color-primary),
+    white 55%
+  );
+  --naut-color-secondary-text: color-mix(
+    in oklch,
+    var(--naut-color-secondary),
+    white 70%
+  );
+  --naut-color-destructive-text: color-mix(
+    in oklch,
+    var(--naut-color-destructive),
+    white 55%
+  );
+  --naut-color-link-text: color-mix(
+    in oklch,
+    var(--naut-color-link),
+    white 80%
+  );
+  --naut-color-link-fill: color-mix(
+    in oklch,
+    var(--naut-color-link),
+    white 80%
+  );
+  --naut-color-primary-content: black;
+
+  --naut-color-success-fill: var(--naut-color-success);
+  --naut-color-warning-fill: var(--naut-color-warning);
+  --naut-color-info-fill: var(--naut-color-info);
+  --naut-color-success-content: black;
+  --naut-color-warning-content: black;
+  --naut-color-info-content: black;
+  --naut-color-success-text: var(--naut-color-success-fill);
+  --naut-color-warning-text: var(--naut-color-warning-fill);
+  --naut-color-info-text: var(--naut-color-info-fill);
+
+  /* Hover darkens in dark mode — these fills are already lifted. The status
+   * brands invert: their fill stays bright here and the foreground is black,
+   * so hover lightens. */
+  --naut-color-primary-hover: color-mix(
+    in oklch,
+    var(--naut-color-primary-fill),
+    black 8%
+  );
+  --naut-color-secondary-hover: color-mix(
+    in oklch,
+    var(--naut-color-secondary-fill),
+    black 15%
+  );
+  --naut-color-success-hover: color-mix(
+    in oklch,
+    var(--naut-color-success-fill),
+    white 12%
+  );
+  --naut-color-warning-hover: color-mix(
+    in oklch,
+    var(--naut-color-warning-fill),
+    white 12%
+  );
+  --naut-color-info-hover: color-mix(
+    in oklch,
+    var(--naut-color-info-fill),
+    white 12%
+  );
 
   /* === Text on neutrals === */
   --naut-color-content: color-mix(
@@ -97,12 +272,5 @@
     in oklch,
     var(--naut-color-content),
     black 30%
-  );
-
-  /* === Specialty === */
-  --naut-color-link: color-mix(
-    in oklch,
-    var(--naut-color-link-input),
-    white 80%
   );
 }

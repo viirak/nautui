@@ -58,8 +58,10 @@ Extra Large:    1450px+
 ### Shared CSS Utilities
 
 In `packages/core/src/styles/`:
-- `spacing/padding.css`, `spacing/margin.css` — `.p-*`/`.m-*` with axis variants (`px`, `py`, `pt`, …); sizes: 0, xs, sm, md, lg, xl, xxl
-- `spacing/gap.css` — `.gap-{size}` (xs–xl)
+- `spacing/padding.css` — `.p-*` with axis variants (`px`, `py`, `pt`, …); sizes: xxs, xs, sm, md, lg, xl
+- `spacing/margin.css` — `.m-*` with axis variants; sizes: sm, md, lg, xl
+- `spacing/gap.css` — `.gap-{size}` (xxs–xl)
+- The `--naut-spacing-*` token scale is `0, xxs, xs, sm, md, lg, xl, xxl` plus `display`, `display-lg`, `display-xl`; all are fluid `clamp()` values in `global.css`. The utility files cover only part of the scale
 - `border.css` — border width/style classes with side-specific variants
 - `radius.css` — `.radius-{sm|md|lg|xl}` (+ `--naut-border-radius-full`)
 - `shadow.css` — `--naut-shadow-{sm|md|lg|xl}` derived from `--naut-shadow-scale`

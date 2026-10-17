@@ -31,7 +31,7 @@ export function resolveResponsiveValue<T extends string>(
 export function getResponsiveClasses<T extends string>(
   value: ResponsiveProp<T> | undefined,
   prefix: string,
-  normalize: (value: T) => string = (value) => value
+  normalize: (value: T) => string = (normalized) => normalized
 ): string[] {
   if (value === undefined) {
     return [];

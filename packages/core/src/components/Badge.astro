@@ -1,12 +1,15 @@
 ---
 import { getColorValue } from "../lib/color";
-import {
-  getPaddingClassList,
-  type Padding,
-  type Spacing,
-} from "../lib/spacing";
+import { getPillPadding, type SpacingStep } from "../lib/spacing";
 import type { Base, Color, Radius } from "../types";
-import "../styles/spacing/padding.css";
+
+export type BadgeOutlineColor = "soft" | "normal" | "strong";
+
+const outlineColors: readonly BadgeOutlineColor[] = [
+  "soft",
+  "normal",
+  "strong",
+];
 
 export interface BadgeProps extends Base {
   color?: Color;
@@ -15,19 +18,31 @@ export interface BadgeProps extends Base {
   gradient?: { colors: string[]; textColor: string; deg?: number };
   iconOnly?: boolean;
   letterSpacing?: "sm" | "md" | "lg";
-  outlineColor?: string;
-  padding?: Spacing | Padding;
+  /** Not supported — wrap in a `Box`. */
+  margin?: never;
+  /** Adds a border, independently of the fill `variant`. */
+  outline?: boolean;
+  /** Border weight for `outline`. Hue comes from `color`. */
+  outlineColor?: BadgeOutlineColor;
+  /**
+   * One spacing step, not an axis object: a badge's silhouette depends on
+   * inline padding exceeding block padding, so the component derives both axes
+   * itself (see `getPillPadding`). Ignored for `variant="text"`.
+   */
+  padding?: SpacingStep;
   radius?: Radius | "full";
   size?: "sm" | "md" | "lg";
   uppercase?: boolean;
   variant?:
     | "text"
-    | "border"
     | "surface"
-    | "outline"
     | "primary"
     | "secondary"
-    | "destructive";
+    | "destructive"
+    /** @deprecated Use `outline` (with `outlineColor` for the weight). */
+    | "border"
+    /** @deprecated Use `outline outlineColor="strong"`. */
+    | "outline";
 }
 
 const {
@@ -36,45 +51,82 @@ const {
   gradient,
   radius = "sm",
   letterSpacing = "md",
+  outline = false,
   outlineColor,
   dotted = false,
-  uppercase = false,
+  uppercase = true,
   color,
   dark = false,
   iconOnly = false,
   padding: paddingProp,
+  margin,
   ...rest
 } = Astro.props as BadgeProps;
+
+if (margin !== undefined) {
+  throw new TypeError(
+    "Badge: `margin` is not supported. Wrap the badge in a `Box`, or pass a spacing utility class."
+  );
+}
 
 const gradientBg = gradient
   ? `linear-gradient(${gradient.deg || 45}deg, ${gradient.colors.join(", ")})`
   : "none";
 const colorValue = getColorValue(color);
-let paddingClasses: string[] = [];
-if (paddingProp) {
-  paddingClasses = getPaddingClassList(paddingProp);
-} else if (variant !== "text") {
-  if (size === "sm") paddingClasses = ["px-xs", "py-xs"];
-  else if (size === "md") paddingClasses = ["px-sm", "py-sm"];
-  else paddingClasses = ["px-md", "py-md"];
+
+// `border`/`outline` are legacy spellings of the `outline` flag: `outline`
+// used the strong border, `border` the normal one.
+const isLegacyOutline = variant === "border" || variant === "outline";
+const resolvedVariant = isLegacyOutline ? "text" : variant;
+const hasOutline = outline || isLegacyOutline;
+// A weight outside the union would emit `outline--<value>`, matching no rule,
+// so the border would silently vanish. Catch it instead.
+if (outlineColor !== undefined && !outlineColors.includes(outlineColor)) {
+  throw new TypeError(
+    `Badge: unknown outlineColor ${JSON.stringify(outlineColor)}. Expected one of ${outlineColors.join(" | ")}.`
+  );
 }
+const outlineWeight: BadgeOutlineColor =
+  outlineColor ?? (variant === "outline" ? "strong" : "normal");
+
+// Fixed rem rather than --naut-spacing-*: the spacing tokens grow ~2.4x faster
+// than a type scale, which made `lg` climb 54px -> 64px across the viewport.
+// Each pair keeps inline > block so the pill ratio still reads.
+const sizePadding: Record<
+  NonNullable<BadgeProps["size"]>,
+  { x: string; y: string }
+> = {
+  lg: { x: "1rem", y: "0.25rem" },
+  md: { x: "0.875rem", y: "0.1875rem" },
+  sm: { x: "0.75rem", y: "0.125rem" },
+};
+// `iconOnly` is square, so it wants symmetric padding taken from the size's
+// inline value. It overrides both the size default and an explicit `padding`.
+// An explicit `padding` otherwise resolves against the fluid spacing tokens.
+let pillPadding = sizePadding[size];
+if (iconOnly) {
+  pillPadding = { x: sizePadding[size].x, y: sizePadding[size].x };
+} else if (paddingProp) {
+  pillPadding = getPillPadding(paddingProp);
+}
+const padX = pillPadding.x;
+const padY = pillPadding.y;
 ---
 
 <div
   class:list={[
     "naut-badge",
-    `variant--${variant}`,
+    `variant--${resolvedVariant}`,
     `radius--${radius}`,
     `size--${size}`,
-    (["primary", "secondary", "destructive"].includes(variant) || gradient) && "filled",
     colorValue && !gradient && "color--custom",
     dark && "dark",
     dotted && "dotted",
     uppercase && "uppercase",
     gradient && "color--gradient",
     letterSpacing && `ls--${letterSpacing}`,
-    ...paddingClasses,
-    iconOnly && "icon-only"
+    hasOutline && `outline--${outlineWeight}`,
+    iconOnly && "icon-only",
   ]}
   {...rest}
 >
@@ -82,18 +134,21 @@ if (paddingProp) {
 </div>
 <style
   define:vars={{
-  gradientBg,
-  gradientColor: gradient?.textColor,
-  outlineColor,
-  colorValue: colorValue ?? ""
-}}
+    colorValue: colorValue ?? "",
+    gradientBg,
+    gradientColor: gradient?.textColor,
+    padX,
+    padY,
+  }}
 >
   .naut-badge {
-    --outline-color: var(--outlineColor);
     display: inline-flex;
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
+    padding-block: var(--padY);
+    padding-inline: var(--padX);
+    line-height: var(--naut-line-height-ratio);
     color: var(--naut-color-content);
     text-wrap: nowrap;
 
@@ -118,10 +173,6 @@ if (paddingProp) {
       background: var(--gradientBg);
     }
 
-    &.variant--border {
-      border: 1px solid var(--naut-color-border);
-    }
-
     &.variant--text {
       border: none;
     }
@@ -131,20 +182,15 @@ if (paddingProp) {
       border: none;
     }
 
-    &.variant--outline {
-      color: var(--outline-color);
-      border: 1px solid var(--naut-color-border-strong);
-    }
-
     &.variant--primary {
       color: var(--naut-color-primary-content);
-      background-color: var(--naut-color-primary);
+      background-color: var(--naut-color-primary-fill);
       border: none;
     }
 
     &.variant--secondary {
       color: var(--naut-color-secondary-content);
-      background-color: var(--naut-color-secondary);
+      background-color: var(--naut-color-secondary-fill);
       border: none;
     }
 
@@ -152,6 +198,24 @@ if (paddingProp) {
       color: var(--naut-color-destructive-content);
       background-color: var(--naut-color-destructive);
       border: none;
+    }
+
+    &.outline--soft {
+      border: 1px solid var(--naut-color-border-soft);
+    }
+
+    &.outline--normal {
+      border: 1px solid var(--naut-color-border);
+    }
+
+    &.outline--strong {
+      border: 1px solid var(--naut-color-border-strong);
+    }
+
+    &.color--custom.outline--soft,
+    &.color--custom.outline--normal,
+    &.color--custom.outline--strong {
+      border-color: var(--colorValue);
     }
 
     &.dotted {
@@ -191,14 +255,17 @@ if (paddingProp) {
 
     &.icon-only {
       aspect-ratio: 1 / 1;
-      padding: 0.85rem;
     }
 
     &.size--sm {
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
     }
 
     &.size--md {
+      font-size: 0.75rem;
+    }
+
+    &.size--lg {
       font-size: 0.875rem;
     }
   }

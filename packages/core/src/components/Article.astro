@@ -23,12 +23,12 @@ const articleId = uid("naut-article");
   <slot />
 </article>
 
-<script is:inline define:vars={{ anchorLinks, articleId }}>
+<script define:vars={{ anchorLinks, articleId }} is:inline>
   if (anchorLinks) {
     const article = document.getElementById(articleId);
     if (article) {
       for (const heading of article.querySelectorAll("h2, h3, h4, h5, h6")) {
-        const id = heading.id;
+        const { id } = heading;
         if (!id) continue;
 
         const link = document.createElement("a");
@@ -41,7 +41,12 @@ const articleId = uid("naut-article");
         link.addEventListener("click", (e) => {
           e.preventDefault();
           const url = `${window.location.origin}${window.location.pathname}#${id}`;
-          navigator.clipboard.writeText(url).catch(() => {
+          // `navigator.clipboard` is undefined outside a secure context, which
+          // makes `.writeText` throw synchronously -- `.catch()` alone would not
+          // reach the fallback, so the existence check has to come first.
+          // `execCommand` is deprecated but is the only synchronous option left
+          // for the browsers that still need this path.
+          const copyFallback = () => {
             const textarea = document.createElement("textarea");
             textarea.value = url;
             textarea.style.position = "fixed";
@@ -50,7 +55,12 @@ const articleId = uid("naut-article");
             textarea.select();
             document.execCommand("copy");
             textarea.remove();
-          });
+          };
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(url).catch(copyFallback);
+          } else {
+            copyFallback();
+          }
           history.pushState(null, "", `#${id}`);
           heading.scrollIntoView({ behavior: "smooth", block: "start" });
         });
@@ -59,7 +69,7 @@ const articleId = uid("naut-article");
   }
 </script>
 
-<script is:inline define:vars={{ articleId }}>
+<script define:vars={{ articleId }} is:inline>
   const article = document.getElementById(articleId);
   if (article) {
     for (const pre of article.querySelectorAll("pre")) {

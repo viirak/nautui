@@ -22,24 +22,20 @@ const contentId = `${uniqueId}-content`;
 ---
 
 <div
-  class:list={[
-    "naut-accordion-item",
-    `size-${size}`,
-    className
-  ]}
   data-state="closed"
+  class:list={["naut-accordion-item", `size-${size}`, className]}
   {...rest}
 >
   <button
-    type="button"
-    class="accordion-header"
-    aria-expanded="false"
     aria-controls={contentId}
+    aria-expanded="false"
+    class="accordion-header"
+    type="button"
   >
     <Text inline size={size}>{title}</Text>
     <span class:list={["accordion-icon", icon]}></span>
   </button>
-  <div id={contentId} class="accordion-content" aria-hidden="true">
+  <div aria-hidden="true" class="accordion-content" id={contentId}>
     <div class="content-inner"><slot /></div>
   </div>
 </div>
@@ -73,7 +69,7 @@ const contentId = `${uniqueId}-content`;
       border: 0;
 
       &:focus-visible {
-        outline: 2px solid var(--naut-color-primary);
+        outline: 2px solid var(--naut-color-primary-fill);
         outline-offset: 2px;
       }
 

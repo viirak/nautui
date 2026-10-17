@@ -6,13 +6,7 @@ export interface AccordionProps extends Base {}
 const { class: className, ...rest } = Astro.props as AccordionProps;
 ---
 
-<div
-  class:list={[
-    "naut-accordion",
-    className
-  ]}
-  {...rest}
->
+<div class:list={["naut-accordion", className]} {...rest}>
   <slot />
 </div>
 

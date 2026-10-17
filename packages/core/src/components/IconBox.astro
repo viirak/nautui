@@ -63,15 +63,15 @@ const hasAccessibleName = Boolean(accessibleLabel ?? ariaLabelledBy);
 <span
   aria-hidden={hasAccessibleName ? undefined : "true"}
   aria-label={accessibleLabel}
+  role="img"
   class:list={[
     "naut-icon-box",
     `size--${size}`,
     `radius--${radius}`,
     `variant--${variant}`,
     `color--${resolvedColor}`,
-    className
+    className,
   ]}
-  role="img"
   {...rest}
 >
   <slot />
@@ -142,12 +142,12 @@ const hasAccessibleName = Boolean(accessibleLabel ?? ariaLabelledBy);
     }
 
     &.color--primary {
-      --icon-box-color: var(--naut-color-primary);
+      --icon-box-color: var(--naut-color-primary-fill);
       --icon-box-on-color: var(--naut-color-primary-content);
     }
 
     &.color--secondary {
-      --icon-box-color: var(--naut-color-secondary);
+      --icon-box-color: var(--naut-color-secondary-fill);
       --icon-box-on-color: var(--naut-color-secondary-content);
     }
 
@@ -157,18 +157,18 @@ const hasAccessibleName = Boolean(accessibleLabel ?? ariaLabelledBy);
     }
 
     &.color--success {
-      --icon-box-color: var(--naut-color-success);
-      --icon-box-on-color: oklch(0.18 0.03 145);
+      --icon-box-color: var(--naut-color-success-fill);
+      --icon-box-on-color: var(--naut-color-success-content);
     }
 
     &.color--warning {
-      --icon-box-color: var(--naut-color-warning);
-      --icon-box-on-color: oklch(0.18 0.03 80);
+      --icon-box-color: var(--naut-color-warning-fill);
+      --icon-box-on-color: var(--naut-color-warning-content);
     }
 
     &.color--info {
-      --icon-box-color: var(--naut-color-info);
-      --icon-box-on-color: oklch(0.18 0.03 230);
+      --icon-box-color: var(--naut-color-info-fill);
+      --icon-box-on-color: var(--naut-color-info-content);
     }
 
     &.color--muted {
@@ -191,12 +191,12 @@ const hasAccessibleName = Boolean(accessibleLabel ?? ariaLabelledBy);
     }
 
     &.variant--primary {
-      --icon-box-background: var(--naut-color-primary);
+      --icon-box-background: var(--naut-color-primary-fill);
       --icon-box-color: var(--icon-box-on-color);
     }
 
     &.variant--secondary {
-      --icon-box-background: var(--naut-color-secondary);
+      --icon-box-background: var(--naut-color-secondary-fill);
       --icon-box-color: var(--icon-box-on-color);
     }
 
@@ -206,17 +206,17 @@ const hasAccessibleName = Boolean(accessibleLabel ?? ariaLabelledBy);
     }
 
     &.variant--success {
-      --icon-box-background: var(--naut-color-success);
+      --icon-box-background: var(--naut-color-success-fill);
       --icon-box-color: var(--icon-box-on-color);
     }
 
     &.variant--warning {
-      --icon-box-background: var(--naut-color-warning);
+      --icon-box-background: var(--naut-color-warning-fill);
       --icon-box-color: var(--icon-box-on-color);
     }
 
     &.variant--info {
-      --icon-box-background: var(--naut-color-info);
+      --icon-box-background: var(--naut-color-info-fill);
       --icon-box-color: var(--icon-box-on-color);
     }
 

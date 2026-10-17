@@ -8,14 +8,7 @@ export interface ContainerProps extends Base {
 const { class: className, fluid, ...rest } = Astro.props as ContainerProps;
 ---
 
-<div
-  class:list={[
-    "naut-container",
-    fluid && "fluid",
-    className
-  ]}
-  {...rest}
->
+<div class:list={["naut-container", fluid && "fluid", className]} {...rest}>
   <slot />
 </div>
 

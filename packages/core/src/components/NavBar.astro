@@ -41,38 +41,40 @@ const contentClasses = [
 ---
 
 <nav
-  id="naut-navbar"
-  role="navigation"
   aria-label="Main navigation"
-  class:list={[
-      "naut-navbar",
-      sticky && "sticky",
-      dark && "dark",
-      className
-    ]}
+  id="naut-navbar"
+  class:list={["naut-navbar", sticky && "sticky", dark && "dark", className]}
   {...rest}
 >
   <div class="naut-space naut-space--left"></div>
   <div class="naut-space naut-space--center">
-    {island && <Container>
+    {island && (
+      <Container>
+        <div class:list={["naut-navbar__content", ...contentClasses]}>
+          <div class="naut-navbar__content__inner">
+            <slot />
+          </div>
+        </div>
+      </Container>
+    )}
+    {!island && (
       <div class:list={["naut-navbar__content", ...contentClasses]}>
-        <div class="naut-navbar__content__inner"><slot /></div>
+        <div class="naut-navbar__content__inner">
+          <slot />
+        </div>
       </div>
-    </Container>}
-    {!island && <div class:list={["naut-navbar__content", ...contentClasses]}>
-      <div class="naut-navbar__content__inner"><slot /></div>
-    </div>}
+    )}
   </div>
   <div class="naut-space naut-space--right"></div>
 </nav>
 
 <style
   define:vars={{
-    zindex,
     barHeight,
     borderRadius,
+    hiddenOffset,
     offsetTop,
-    hiddenOffset
+    zindex,
   }}
 >
   #naut-navbar {
@@ -131,7 +133,7 @@ const contentClasses = [
   }
 </style>
 
-<script is:inline define:vars={{ autohide, height, offset }}>
+<script define:vars={{ autohide, height, offset }} is:inline>
   const nav = document.querySelector("#naut-navbar");
   if (document.querySelectorAll(".naut-navbar").length > 1) {
     console.warn(

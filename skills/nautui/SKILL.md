@@ -42,7 +42,7 @@ Override tokens on `:root` (or anywhere) — they update at runtime, no rebuild:
 :root {
   --naut-color-primary: #5423e7;
   --naut-color-secondary: #121217;
-  --naut-color-destructive: #ef4444;
+  --naut-color-destructive: #dc2626;
   --naut-color-link: blue;
   --naut-color-highlight: #ddd522;
 }
@@ -61,10 +61,11 @@ Override tokens on `:root` (or anywhere) — they update at runtime, no rebuild:
   --naut-color-secondary: #0f766e;
 }
 
-/* The library re-derives neutrals for dark mode but leaves the brand inputs
-   untouched, so fills must be lifted by hand. Secondary is lifted because
-   #0f766e sits at 3.55:1 on the dark surface; primary is deliberately NOT
-   lifted, so avoid variant="primary" as a large fill on <Section dark>. */
+/* The library lifts primary and secondary fills in dark mode itself (both mix
+   40% toward white, off the -input captures), so a secondary CTA no longer
+   disappears on a dark surface. If you override a brand input and still need a
+   hand-tuned lift — e.g. a teal that lands under 3:1 — override it the same
+   way, and give the fill a dark foreground to match. */
 :root[data-theme="dark"] {
   --naut-color-secondary: #14b8a6; /* 7.81:1 on the dark surface */
   --naut-color-secondary-content: #06231f;
@@ -81,10 +82,12 @@ Everything else derives from these via `color-mix()`:
 | --- | --- |
 | `--naut-color-base` … `--naut-color-base-400` | Neutral surface scale (tinted from primary, flipped in dark mode) |
 | `--naut-color-content` / `--naut-color-content-soft` | Text on neutrals |
-| `--naut-color-border` / `--naut-color-border-strong` | Border aliases |
-| `--naut-color-link-input` | Internal capture of `--naut-color-link`; the dark block mixes from it (a token cannot reference itself) |
+| `--naut-color-border-soft` / `--naut-color-border` / `--naut-color-border-strong` | Border weight scale (soft → normal → strong) |
 | `--naut-tint-base` (3%), `--naut-tint-strong` (25%) | Tint strength constants |
-| `--naut-color-primary-content`, `--naut-color-secondary-content` | Foreground on brand fills |
+| `--naut-color-primary-fill`, `--naut-color-secondary-fill`, `--naut-color-link-fill` | Brand colour as a **fill**. The dark block lifts these — the raw `--naut-color-primary` / `-secondary` / `-link` are pure inputs it never redefines |
+| `--naut-color-primary-text`, `--naut-color-secondary-text`, `--naut-color-destructive-text`, `--naut-color-link-text` | Brand colour as **foreground**. Use for any brand colour that paints glyphs, never the raw token |
+| `--naut-color-primary-content`, `--naut-color-secondary-content` | Foreground sitting *on* the matching `-fill`; `primary-content` becomes `black` in dark, where the fill is lifted |
+| `--naut-color-primary-hover`, `--naut-color-secondary-hover` | Fill hover colour (whole `color-mix()`, not a percentage — each fill has its own AA ceiling). Dark mode darkens instead of lightening |
 | `--naut-font-body` | Body font stack (defaults to system-ui) |
 | `--naut-font-display` | Display/heading font stack (defaults to body) |
 | `--naut-shadow-{sm\|md\|lg\|xl}`, `--naut-border-radius-*`, `--naut-border-width-*` | Effects |
@@ -99,8 +102,10 @@ CSS layer order: `@layer naut-base, naut-theme, naut-component;`.
 - **All components** accept arbitrary extra attributes that pass through to the underlying element.
 - **`size` is component-relative, not a global scale.** The `Size` union (`sm|md|lg|xl`) is the baseline, not a guarantee — check the component's own props table. `AccordionItem` starts at `md`, `Badge`/`Card` stop at `lg`, `Space` adds `auto`/`display*`/`full` and accepts a responsive object, `Avatar` adds `xs`/`2xl` and treats a non-standard string as a custom length. `Badge size="sm"` and `Divider size="sm"` are different sizes by design; a Divider and a Badge cannot share a scale.
 - **Not every `size` is a scale step.** `Background`'s `mask.size` is a `{ x, y }` percentage vector (enforced to be an object — a non-object throws), and `Drawer's size` is a raw CSS length (`"350px"`). Enums are for modes and named token steps; raw numbers/strings are for free-form values.
-- **Unimplemented props are rejected at render time, not silently ignored.** `Base` declares `[key: string]: unknown`, so a prop a component never implemented is not an excess-property error — it is spread onto the root element as an invalid attribute and renders as a no-op with no diagnostic anywhere. Where a prop is plausible but missing, or a value falls outside a union, the component throws a `TypeError` naming what it accepts: `Background`'s `mask.position`/`mask.size` must be objects (percentages 0-100, no keyword strings), and `Link` rejects `size` and any `variant` outside `default|ghost`. Follow this when adding props rather than widening the API to accept a guess.
-- **Legacy aliases are intentional — do not "clean them up".** Each is a canonical name plus a still-supported old spelling, normalized inside the component so both render identically: `Mark.fontFamily`/`ff`, `Mark.variant` `highlight`/`halflight` (a former misspelling), `Button.radius`/`rounded`, `Flex|Stack|Group|Grid` `direction` `row|column`/`horizontal|vertical`, `justify` `between`/`space-between`, and `Group.not`. `Base` declares `[key: string]: unknown`, so a stale prop is *not* an excess-property error — `astro check` will not catch a leftover alias, which is exactly why they are kept.
+- **Unimplemented props are rejected at render time, not silently ignored.** `Base` declares `[key: string]: unknown`, so a prop a component never implemented is not an excess-property error — it is spread onto the root element as an invalid attribute and renders as a no-op with no diagnostic anywhere. Where a prop is plausible but missing, or a value falls outside a union, the component throws a `TypeError` naming what it accepts: `Background`'s `mask.position`/`mask.size` must be objects (percentages 0-100, no keyword strings), and `Link` rejects `size` and any `variant` outside `default|ghost`, and `Button`/`Badge` reject `margin` (neither ever implemented it, so it would otherwise land on the element as an invalid attribute). Follow this when adding props rather than widening the API to accept a guess.
+- **Pill components (`Button`, `Badge`) take one `padding` step, not `{x, y}`.** Their silhouette depends on inline padding exceeding block padding, so `getPillPadding()` in `lib/spacing.ts` derives both axes from a single step and block is always the smaller one — the ratio eases toward 1 as the step grows (`xxs`/`xs` 0.5, `sm` 0.75, `md` 0.85, `lg`+ 0.9) because a flat 2:1 reads squat at `md` and above. `square` on `Button` is the only opt-out; `Badge` has no such toggle. The other components still take the full `Spacing | Padding` object.
+- **Independent visual axes are separate props, not a cross-product of variant names.** When a component has two orthogonal treatments — `Badge`'s fill (`variant`) and border (`outline` + `outlineColor`) — model them as separate props so every combination is reachable without inventing a name per combination. `Button` encodes the cross-product in its variant names (`outline`, `outline-primary`, `outline-secondary`); do not extend that pattern to other components, and do not fold `Badge`'s axes back into variant names.
+- **Legacy aliases are intentional — do not "clean them up".** Each is a canonical name plus a still-supported old spelling, normalized inside the component so both render identically: `Mark.fontFamily`/`ff`, `Mark.variant` `highlight`/`halflight` (a former misspelling), `Button.radius`/`rounded`, `Badge.variant` `border`/`outline` → the `outline` flag (`outline` implies `outlineColor="strong"`, `border` implies `"normal"`), `Flex|Stack|Group|Grid` `direction` `row|column`/`horizontal|vertical`, `justify` `between`/`space-between`, and `Group.not`. `Base` declares `[key: string]: unknown`, so a stale prop is *not* an excess-property error — `astro check` will not catch a leftover alias, which is exactly why they are kept.
 
 ## Example Component File
 
@@ -157,10 +162,10 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Button` | `variant` (14: `default`, `primary`, `secondary`, `destructive`, `success`, `warning`, `info`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `color` (token), `size` (`sm\/md\/lg`), `href`, `radius`, `border`, `square`, `dark`, `type` | Renders `<a>` when `href` given, else `<button>`; `variant` owns fill. `radius` is the shared name across components, but Button's domain omits `xl` and adds `none`/`full` |
+| `Button` | `variant` (14: `default`, `primary`, `secondary`, `destructive`, `success`, `warning`, `info`, `outline`, `outline-primary`, `outline-secondary`, `flat`, `ghost`, `link`, `rainbow`), `color` (token), `size` (`sm\/md\/lg`), `href`, `radius`, `border`, `square`, `dark`, `type`, `padding` (one step) | Renders `<a>` when `href` given, else `<button>`; `variant` owns fill. `radius` is the shared name across components, but Button's domain omits `xl` and adds `none`/`full`. `padding` takes one spacing step, not `{x,y}` — see pill padding |
 | `Link` | `to` (required), `color` (token), `dimmed`, `external`, `hover` (`underline\|dimmed\|surface`), `underline`, `variant` (`default\|ghost`), `wrap` | Anchor; `variant="ghost"` = content-colored links for nav/footer lists. **Enforced:** `size` and any `variant` outside `default\|ghost` throw — `Link` has no size scale (it inherits from surrounding text), and the link-colored look is already the default, so `MenuItem`'s `activeVariant="link"` has no `Link` counterpart |
 | `Title` | `size` (`default\|display\|display-sm…display-xxl`, or `h1`–`h6` as aliases for the level scale), `color` (token), `level` (1–6), `align`, `gradient` | Heading; `level` sets the h1–h6 tag and its size, `size="hN"` overrides the size only, `size="display*"` uses the bigger display scale |
-| `Text` | `size`, `variant` (`primary\|secondary\|tertiary\|destructive\|link\|highlight`), `color` (token), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph; `color` is a shared tokenized text color |
+| `Text` | `size` (`xs\|sm\|md\|lg\|xl\|xxl`), `variant` (`primary\|secondary\|destructive\|link\|highlight`), `color` (token), `weight`, `align`, `dimmed`, `inline`, `italic`, `nowrap`, `transform` | Paragraph; `color` is a shared tokenized text color. Every `variant` has a matching rule — there is no phantom option |
 | `Mark` | `variant` (8 incl `highlight\|primary\|underline\|sketch-circle`; `halflight` is a deprecated alias for `highlight`), `gradient`, `rotate`, `fontFamily` (legacy alias `ff`) | Inline highlight |
 | `Image` | `src`, `alt` (required), `ratio`, `radius`, `shadow`, `cover`, `fluid`, `responsive`, `hover` (`zoom\|zoom-out\|brighten\|grayscale\|fade`), `maxWidth`, `maxHeight` | Clipped frame; `hover="zoom"` scales on hover |
 | `List` / `ListItem` | `ordered`, `horizontal`, `marker`, `gap` / `marker` | Lists |
@@ -173,7 +178,7 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 | Component | Key props | Notes |
 | --- | --- | --- |
 | `NavBar` | `island`, `sticky`, `autohide`, `bordered`, `dark`, `height`, `offset`, `radius`, `shadow`, `zindex` | Sticky/fixed nav; default slot for wordmark + links |
-| `Menu` / `MenuGroup` / `MenuItem` | `divided`, `gap`, `horizontal` / `label` (req), `collapsible`, `open`, `line` / `href` (req), `active`, `activeVariant`, `dimmed`, `radius` | Dropdown menu |
+| `Menu` / `MenuGroup` / `MenuItem` | `divided`, `gap`, `horizontal` / `label` (req), `collapsible`, `open`, `line` / `href`, `active`, `activeVariant`, `dimmed`, `radius` | Dropdown menu. `MenuItem` renders its default slot inside an `<a>` when `href` is given, and directly when it is not — that is how a menu item hosts an interactive trigger such as `Dropdown` |
 | `Dropdown` | `button` (`Button` props), `align` (`start\|center\|end`), `side` (`top\|bottom\|left\|right`), `offset` (`xs\|sm\|md\|lg`), `hover`, `zi` | Generic popover on `<details>`/`<summary>` with a `Button` trigger; default slot is the panel, `zi` defaults to `100`. Use `Menu` for nav link lists |
 | `Drawer` | `position` (`center\|top\|right\|bottom\|left`), `button`, `size`, `zi` | Overlay panel |
 | `BackToTop` | `threshold`, `position`, `offset`, `label`, `showLabel` | Floating button; smooth-scrolls to top, respects `prefers-reduced-motion` |
@@ -182,7 +187,7 @@ Rules: `class` is destructured as `class: className` (reserved word), CSS is sco
 
 | Component | Key props | Notes |
 | --- | --- | --- |
-| `Badge` | `variant` (7: `text`, `border`, `surface`, `outline`, `primary`, `secondary`, `destructive` — there is no `default`), `color` (token), `size` (`sm\|md\|lg`), `dotted`, `iconOnly`, `gradient`, `radius`, `outlineColor`, `letterSpacing`, `uppercase`, `padding`, `dark` | Pill label; `variant` owns fill |
+| `Badge` | `variant` (5: `text`, `surface`, `primary`, `secondary`, `destructive` — fill/text only; `border`/`outline` are deprecated aliases for the `outline` flag), `outline` (boolean), `outlineColor` (`soft\|normal\|strong`), `color` (token, also the outline hue), `size` (`sm\|md\|lg`), `dotted`, `iconOnly`, `gradient`, `radius`, `letterSpacing`, `uppercase`, `padding` (one step), `dark` | Pill label. `variant` and `outline` are orthogonal axes, so a filled badge can be outlined. `outlineColor` is a border **weight**; the hue is `color`. `padding` takes one spacing step, not `{x,y}`, and is ignored for `variant="text"` — see pill padding. No square/circle toggle, so it always keeps the pill ratio |
 | `IconBox` | `variant` (`default\|surface\|outline\|solid\|primary\|secondary\|destructive\|success\|warning\|info`), `color` (token), `size`, `radius` (adds `none\|full`), `label` | Square (`1 / 1`) themed frame for an SVG slot; `label` sets `aria-label` for icon-only use, or pass `aria-labelledby` |
 | `Avatar` | `src`, `alt`, `initials`, `placeholder`, `size` (adds `xs\|2xl`), `radius` (adds `full\|none`), `mask` (`heart\|squircle\|hexagon`), `ring` (boolean or token), `status` (`online\|offline`), `statusLabel` | Profile image or initials; `initials` + `placeholder` cover broken/missing images |
 | `AvatarGroup` | `size`, `border` (`none\|sm\|md\|lg`), `overlap` (`none\|sm\|md\|lg`), `more` | Overlapping row of `Avatar`s in a `role="group"`; `more` appends a `+N` counter |

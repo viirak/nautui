@@ -60,7 +60,7 @@ export function createBorder(props: BorderProps) {
   // 1. Global Props
   applyBorderConfig(
     "border",
-    { width, style, color },
+    { color, style, width },
     borderClasses,
     borderColors
   );

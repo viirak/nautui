@@ -25,16 +25,19 @@ const classList = [
   gap && `gap-${gap}`,
   className,
 ];
-const spacing = `var(--naut-spacing-${gap})`;
 ---
 
-{!ordered && <ul class:list={classList} {...rest}>
-  <slot />
-</ul>}
+{!ordered && (
+  <ul class:list={classList} {...rest}>
+    <slot />
+  </ul>
+)}
 
-{ordered && <ol class:list={classList} {...rest}>
-  <slot />
-</ol>}
+{ordered && (
+  <ol class:list={classList} {...rest}>
+    <slot />
+  </ol>
+)}
 
 <style define:vars={{ marker: markerValue }}>
   .naut-list {
@@ -50,7 +53,6 @@ const spacing = `var(--naut-spacing-${gap})`;
     &.horizontal {
       display: flex;
       flex-direction: row;
-      gap: calc(var(--naut-spacing) * 1.5);
       padding: 0;
     }
   }

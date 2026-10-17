@@ -21,7 +21,7 @@ import { Stack } from "@nautui/core";
 
 | Prop      | Type                                      | Default   | Description                                       |
 | --------- | ----------------------------------------- | --------- | ------------------------------------------------- |
-| `gap`     | `"xs" \| "sm" \| "md" \| "lg" \| "xl"`    | `"md"`    | Gap between children.                            |
+| `gap`     | `"0" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl"`    | `"md"`    | Gap between children.                            |
 | `direction` | `Direction` or responsive object          | `"column"` | `flex-direction`.                                |
 | `align`   | `Align` or responsive object              | —         | `align-items` (cross axis).                      |
 | `justify` | `Justify` or responsive object            | `"start"` | `justify-content` (main axis).                   |

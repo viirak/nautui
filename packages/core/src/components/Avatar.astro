@@ -83,7 +83,7 @@ const avatarStyle = [
     mask && `mask-${mask}`,
     ringValue && `ring-${ringValue}`,
     ringValue && "has-ring",
-    className
+    className,
   ]}
   {...rest}
   style={avatarStyle || undefined}
@@ -115,14 +115,16 @@ const avatarStyle = [
       class:list={["naut-avatar__status", `status--${status}`]}
     />
   )}
-  {status && <span class="naut-avatar__status-label">{resolvedStatusLabel}</span>}
+  {status && (
+    <span class="naut-avatar__status-label">{resolvedStatusLabel}</span>
+  )}
 </div>
 
 <style>
   .naut-avatar {
     --avatar-size: 3rem;
     --avatar-radius: 9999px;
-    --avatar-ring-color: var(--naut-color-primary);
+    --avatar-ring-color: var(--naut-color-primary-fill);
     --avatar-mask-clip-path: none;
     --avatar-mask-radius: var(--avatar-radius);
     position: relative;
@@ -207,19 +209,19 @@ const avatarStyle = [
     }
 
     &.ring-secondary {
-      --avatar-ring-color: var(--naut-color-secondary);
+      --avatar-ring-color: var(--naut-color-secondary-fill);
     }
 
     &.ring-success {
-      --avatar-ring-color: var(--naut-color-success);
+      --avatar-ring-color: var(--naut-color-success-fill);
     }
 
     &.ring-warning {
-      --avatar-ring-color: var(--naut-color-warning);
+      --avatar-ring-color: var(--naut-color-warning-fill);
     }
 
     &.ring-info {
-      --avatar-ring-color: var(--naut-color-info);
+      --avatar-ring-color: var(--naut-color-info-fill);
     }
 
     &.has-ring {
@@ -255,7 +257,7 @@ const avatarStyle = [
       font-weight: 600;
       line-height: 1;
       color: var(--naut-color-secondary-content);
-      background-color: var(--naut-color-secondary);
+      background-color: var(--naut-color-secondary-fill);
     }
 
     .naut-avatar__status {
@@ -270,7 +272,7 @@ const avatarStyle = [
       box-shadow: 0 0 0 2px var(--naut-color-base-100);
 
       &.status--online {
-        background-color: var(--naut-color-success);
+        background-color: var(--naut-color-success-fill);
       }
     }
 

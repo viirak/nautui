@@ -73,11 +73,15 @@ const { borderClasses, borderColors } = createBorder(config);
     radius && `radius-${radius}`,
     shadow && `shadow-${shadow}`,
     ...borderClasses,
-    className
+    className,
   ]}
   {...rest}
 >
-  {badged && <div class="naut-card__badge"><slot name="badge" /></div>}
+  {badged && (
+    <div class="naut-card__badge">
+      <slot name="badge" />
+    </div>
+  )}
   <div class="naut-card__header"><slot name="header" /></div>
   <div class:list={["naut-card__body", ...paddingClasses]}><slot /></div>
   <div class="naut-card__footer"><slot name="footer" /></div>
@@ -169,7 +173,7 @@ const { borderClasses, borderColors } = createBorder(config);
 
     &.variant-primary {
       color: var(--naut-color-primary-content);
-      background-color: var(--naut-color-primary);
+      background-color: var(--naut-color-primary-fill);
     }
 
     &.variant-light {
@@ -182,7 +186,7 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     &.variant-outline-primary {
-      border-color: var(--naut-color-primary);
+      border-color: var(--naut-color-primary-fill);
       border-width: var(--naut-border-width-lg);
     }
 
@@ -213,7 +217,7 @@ const { borderClasses, borderColors } = createBorder(config);
 
     &.hover-primary:hover {
       color: var(--naut-color-base);
-      background-color: var(--naut-color-primary);
+      background-color: var(--naut-color-primary-fill);
     }
 
     &.hover-outline:hover {
@@ -221,7 +225,7 @@ const { borderClasses, borderColors } = createBorder(config);
     }
 
     &.hover-outline-primary:hover {
-      border-color: var(--naut-color-primary);
+      border-color: var(--naut-color-primary-fill);
     }
 
     &.hover-light:hover {

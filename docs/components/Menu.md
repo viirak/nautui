@@ -28,7 +28,7 @@ import { Menu, MenuGroup, MenuItem } from "@nautui/core";
 | ------------ | ---------------------- | -------- | --------------------------------------------- |
 | `horizontal` | `boolean`              | `false`  | Render items in a row instead of a column.    |
 | `divided`    | `boolean`              | `false`  | Add a divider line between groups.            |
-| `gap`        | `"sm" \| "md" \| "lg" \| "xl"` | —  | Gap between items.                            |
+| `gap`        | `"0" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl"` | —  | Gap between items.                            |
 | `class`      | `string`               | —        | Extra class names merged onto the element.    |
 
 Renders a semantic `<ul class="naut-menu">`. Children should be `MenuGroup` or `MenuItem` (both render `<li>`).
@@ -53,7 +53,7 @@ When `collapsible`, the label becomes a `<button aria-expanded>` with a chevron 
 
 | Prop           | Type                          | Default | Description                                   |
 | -------------- | ----------------------------- | ------- | --------------------------------------------- |
-| `href`         | `string`                      | *(required)* | Destination URL.                          |
+| `href`         | `string`                      |              | Destination URL. Omit it to render the default slot unwrapped, which is how a `MenuItem` hosts an interactive trigger such as `Dropdown`. |
 | `active`       | `boolean`                     | `false` | Marks the current page.                       |
 | `activeVariant`| `"link" \| "primary" \| "surface"` | — | Active style: link-colored bar, filled primary, or subtle fill. |
 | `dimmed`       | `boolean`                     | `false` | Soft color (restores on hover when inactive). |

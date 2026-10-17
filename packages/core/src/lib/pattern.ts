@@ -25,18 +25,18 @@ export function getGradientPattern(props?: PatternProps) {
       return `linear-gradient(${deg}deg, ${color} ${size}px, transparent ${size}px) 0 0 / ${gap}px ${gap}px repeat, linear-gradient(${color} ${size}px, transparent ${size}px) 0 0 / ${gap}px ${gap}px repeat`;
     }
     case "stripes": {
-      const deg = props.deg || 130;
-      const gap = props.gap || 10;
-      const size = props.size || 5;
-      const color = props.color || "var(--naut-color-base-100)";
-      return `repeating-linear-gradient(${deg}deg, ${color} 0, ${color} ${size}px,transparent ${size}px,transparent ${gap}px)`;
+      const stripeDeg = props.deg || 130;
+      const stripeGap = props.gap || 10;
+      const stripeSize = props.size || 5;
+      const stripeColor = props.color || "var(--naut-color-base-100)";
+      return `repeating-linear-gradient(${stripeDeg}deg, ${stripeColor} 0, ${stripeColor} ${stripeSize}px,transparent ${stripeSize}px,transparent ${stripeGap}px)`;
     }
     case "diamond-grid": {
-      const deg = props.deg || 45;
-      const gap = props.gap || 50;
-      const size = props.size || 1;
-      const color = props.color || "var(--naut-color-base-100)";
-      return `repeating-linear-gradient(${deg}deg, ${color} 0px, ${color} ${size}px, transparent ${size}px, transparent ${gap}px), repeating-linear-gradient(135deg, ${color} 0px, ${color} ${size}px, transparent ${size}px, transparent ${gap}px)`;
+      const diamondDeg = props.deg || 45;
+      const diamondGap = props.gap || 50;
+      const diamondSize = props.size || 1;
+      const diamondColor = props.color || "var(--naut-color-base-100)";
+      return `repeating-linear-gradient(${diamondDeg}deg, ${diamondColor} 0px, ${diamondColor} ${diamondSize}px, transparent ${diamondSize}px, transparent ${diamondGap}px), repeating-linear-gradient(135deg, ${diamondColor} 0px, ${diamondColor} ${diamondSize}px, transparent ${diamondSize}px, transparent ${diamondGap}px)`;
     }
     default:
       return "none";

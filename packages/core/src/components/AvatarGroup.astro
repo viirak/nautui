@@ -20,14 +20,15 @@ const {
 const safeMore = more && more > 0 ? Math.floor(more) : undefined;
 ---
 
+<!-- biome-ignore lint/a11y/useSemanticElements: fieldset groups form controls; this groups avatars, and fieldset would bring a default border and padding that break the flex layout -->
 <div
+  role="group"
   class:list={[
     "naut-avatar-group",
     `border-${border}`,
     `overlap-${overlap}`,
-    className
+    className,
   ]}
-  role="group"
   {...rest}
 >
   <slot />

@@ -25,7 +25,7 @@ import { Text } from "@nautui/core";
 | ------------ | ---------------------------------------- | ------- | ------------------------------------------------- |
 | `size`       | `"xs" \| "sm" \| "md" \| "lg" \| "xl" \| "xxl"` | `"md"` | Font size + line height.                    |
 | `weight`     | `"light" \| "normal" \| "medium" \| "bold" \| "semi-bold" \| "extra-bold"` | — | Font weight. |
-| `variant`    | `"primary" \| "secondary" \| "tertiary" \| "destructive" \| "link" \| "highlight"` | — | Text color. |
+| `variant`    | `"primary" \| "secondary" \| "destructive" \| "link" \| "highlight"` | — | Text color. |
 | `align`      | `"left" \| "center" \| "right" \| "justify"` | — | Text alignment.                          |
 | `decoration` | `"underline" \| "strikethrough"`         | —         | Text decoration. (Alias: `td`.)                |
 | `transform`  | `"capitalize" \| "uppercase" \| "lowercase"` | —     | Text transform. (Alias: `tt`.)                 |

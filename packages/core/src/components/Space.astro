@@ -1,23 +1,17 @@
 ---
-import "../styles/spacing/display.css";
-import { Base, Responsive, Size } from "../types";
+import { Base, Size } from "../types";
 
-type SpaceSize =
-  | "auto"
-  | Size
-  | "display"
-  | "display-lg"
-  | "display-xl"
-  | "full";
-
-type ResponsiveSize = {
-  [key in Responsive]?: SpaceSize;
-};
+type SpaceSize = "auto" | Size | "display" | "display-lg" | "display-xl";
 
 export interface SpaceProps extends Base {
   grow?: boolean;
   orientation?: "horizontal" | "vertical";
-  size?: ResponsiveSize;
+  /**
+   * Every step is a fluid `clamp()`, so one value adapts across the whole
+   * viewport range on its own — there is nothing for a per-breakpoint
+   * override to add.
+   */
+  size?: SpaceSize;
 }
 
 const {
@@ -26,18 +20,12 @@ const {
   grow = false,
   size = "md",
 } = Astro.props as SpaceProps;
-const measure = orientation === "vertical" ? "height" : "width";
-const spaceSize =
-  typeof size === "string" ? ({ base: size } as ResponsiveSize) : size;
 const classlist = [
   "naut-space",
   orientation,
-  spaceSize?.base && `size-${spaceSize.base}`,
-  spaceSize?.sm && `sm-size-${spaceSize.sm}`,
-  spaceSize?.md && `md-size-${spaceSize.md}`,
-  spaceSize?.lg && `lg-size-${spaceSize.lg}`,
-  spaceSize?.xl && `xl-size-${spaceSize.xl}`,
+  size && `size-${size}`,
   grow && "grow",
+  className,
 ];
 ---
 
@@ -84,152 +72,12 @@ const classlist = [
       &.size-display-xl {
         height: var(--naut-spacing-display-xl);
       }
-
-      @media only screen and (max-width: 817px) {
-        &.sm-size-auto {
-          height: auto;
-        }
-
-        &.sm-size-sm {
-          height: var(--naut-spacing-sm);
-        }
-
-        &.sm-size-md {
-          height: var(--naut-spacing-md);
-        }
-
-        &.sm-size-lg {
-          height: var(--naut-spacing-lg);
-        }
-
-        &.sm-size-xl {
-          height: var(--naut-spacing-xl);
-        }
-
-        &.sm-size-display {
-          height: var(--naut-spacing-display);
-        }
-
-        &.sm-size-display-lg {
-          height: var(--naut-spacing-display-lg);
-        }
-
-        &.sm-size-display-xl {
-          height: var(--naut-spacing-display-xl);
-        }
-      }
-
-      @media only screen and (min-width: 818px) and (max-width: 1041px) {
-        &.md-size-auto {
-          height: auto;
-        }
-
-        &.md-size-sm {
-          height: var(--naut-spacing-sm);
-        }
-
-        &.md-size-md {
-          height: var(--naut-spacing-md);
-        }
-
-        &.md-size-lg {
-          height: var(--naut-spacing-lg);
-        }
-
-        &.md-size-xl {
-          height: var(--naut-spacing-xl);
-        }
-
-        &.md-size-display {
-          height: var(--naut-spacing-display);
-        }
-
-        &.md-size-display-lg {
-          height: var(--naut-spacing-display-lg);
-        }
-
-        &.md-size-display-xl {
-          height: var(--naut-spacing-display-xl);
-        }
-      }
-
-      @media only screen and (min-width: 1042px) {
-        &.lg-size-auto {
-          height: auto;
-        }
-
-        &.lg-size-sm {
-          height: var(--naut-spacing-sm);
-        }
-
-        &.lg-size-md {
-          height: var(--naut-spacing-md);
-        }
-
-        &.lg-size-lg {
-          height: var(--naut-spacing-lg);
-        }
-
-        &.lg-size-xl {
-          height: var(--naut-spacing-xl);
-        }
-
-        &.lg-size-display {
-          height: var(--naut-spacing-display);
-        }
-
-        &.lg-size-display-lg {
-          height: var(--naut-spacing-display-lg);
-        }
-
-        &.lg-size-display-xl {
-          height: var(--naut-spacing-display-xl);
-        }
-      }
-
-      @media only screen and (min-width: 1250px) {
-        &.xl-size-auto {
-          height: auto;
-        }
-
-        &.xl-size-sm {
-          height: var(--naut-spacing-sm);
-        }
-
-        &.xl-size-md {
-          height: var(--naut-spacing-md);
-        }
-
-        &.xl-size-lg {
-          height: var(--naut-spacing-lg);
-        }
-
-        &.xl-size-xl {
-          height: var(--naut-spacing-xl);
-        }
-
-        &.xl-size-display {
-          height: var(--naut-spacing-display);
-        }
-
-        &.xl-size-display-lg {
-          height: var(--naut-spacing-display-lg);
-        }
-
-        &.xl-size-display-xl {
-          height: var(--naut-spacing-display-xl);
-        }
-      }
     }
 
     &.horizontal {
       display: inline-block;
       &.size-auto {
         width: auto;
-      }
-
-      &.size-full {
-        width: 100%;
       }
 
       &.size-sm {
@@ -258,142 +106,6 @@ const classlist = [
 
       &.size-display-xl {
         width: var(--naut-spacing-display-xl);
-      }
-
-      @media only screen and (max-width: 817px) {
-        &.sm-size-auto {
-          width: auto;
-        }
-
-        &.sm-size-sm {
-          width: var(--naut-spacing-sm);
-        }
-
-        &.sm-size-md {
-          width: var(--naut-spacing-md);
-        }
-
-        &.sm-size-lg {
-          width: var(--naut-spacing-lg);
-        }
-
-        &.sm-size-xl {
-          width: var(--naut-spacing-xl);
-        }
-
-        &.sm-size-display {
-          width: var(--naut-spacing-display);
-        }
-
-        &.sm-size-display-lg {
-          width: var(--naut-spacing-display-lg);
-        }
-
-        &.sm-size-display-xl {
-          width: var(--naut-spacing-display-xl);
-        }
-      }
-
-      @media only screen and (min-width: 818px) and (max-width: 1041px) {
-        &.md-size-auto {
-          width: auto;
-        }
-
-        &.md-size-sm {
-          width: var(--naut-spacing-sm);
-        }
-
-        &.md-size-md {
-          width: var(--naut-spacing-md);
-        }
-
-        &.md-size-lg {
-          width: var(--naut-spacing-lg);
-        }
-
-        &.md-size-xl {
-          width: var(--naut-spacing-xl);
-        }
-
-        &.md-size-display {
-          width: var(--naut-spacing-display);
-        }
-
-        &.md-size-display-lg {
-          width: var(--naut-spacing-display-lg);
-        }
-
-        &.md-size-display-xl {
-          width: var(--naut-spacing-display-xl);
-        }
-      }
-
-      @media only screen and (min-width: 1042px) {
-        &.lg-size-auto {
-          width: auto;
-        }
-
-        &.lg-size-sm {
-          width: var(--naut-spacing-sm);
-        }
-
-        &.lg-size-md {
-          width: var(--naut-spacing-md);
-        }
-
-        &.lg-size-lg {
-          width: var(--naut-spacing-lg);
-        }
-
-        &.lg-size-xl {
-          width: var(--naut-spacing-xl);
-        }
-
-        &.lg-size-display {
-          width: var(--naut-spacing-display);
-        }
-
-        &.lg-size-display-lg {
-          width: var(--naut-spacing-display-lg);
-        }
-
-        &.lg-size-display-xl {
-          width: var(--naut-spacing-display-xl);
-        }
-      }
-
-      @media only screen and (min-width: 1250px) {
-        &.xl-size-auto {
-          width: auto;
-        }
-
-        &.xl-size-sm {
-          width: var(--naut-spacing-sm);
-        }
-
-        &.xl-size-md {
-          width: var(--naut-spacing-md);
-        }
-
-        &.xl-size-lg {
-          width: var(--naut-spacing-lg);
-        }
-
-        &.xl-size-xl {
-          width: var(--naut-spacing-xl);
-        }
-
-        &.xl-size-display {
-          width: var(--naut-spacing-display);
-        }
-
-        &.xl-size-display-lg {
-          width: var(--naut-spacing-display-lg);
-        }
-
-        &.xl-size-display-xl {
-          width: var(--naut-spacing-display-xl);
-        }
       }
     }
   }

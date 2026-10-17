@@ -4,11 +4,11 @@ import { Article } from "@nautui/core";
 import Layout from "../../layouts/LayoutDoc.astro";
 
 export async function getStaticPaths() {
-  const articles = await getCollection("article");
-  return articles
-    .filter((entry) => entry.id.startsWith("docs/"))
-    .map((entry) => ({
-      params: { id: entry.id.replace("docs/", "") },
+  const allDocs = await getCollection("article");
+  return allDocs
+    .filter((doc) => doc.id.startsWith("docs/"))
+    .map((doc) => ({
+      params: { id: doc.id.replace("docs/", "") },
     }));
 }
 
@@ -17,12 +17,14 @@ const { id } = Astro.params;
 const articles = await getCollection("article");
 const entry = articles.find((a) => a.id === `docs/${id}`);
 
-if (!entry) return Astro.redirect("/404", 404);
+if (!entry) {
+  return new Response("Not found", { status: 404 });
+}
 
 const { Content, headings } = await render(entry);
 const { title, description } = entry.data;
 ---
 
-<Layout title={title} description={description} headings={headings}>
+<Layout description={description} headings={headings} title={title}>
   <Article> <Content /> </Article>
 </Layout>

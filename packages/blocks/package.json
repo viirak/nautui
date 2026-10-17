@@ -1,12 +1,7 @@
 {
   "name": "@nautui/blocks",
-  "description": "Composite components built from @nautui/core for NautUI",
   "version": "0.1.1",
-  "author": "Virak Hor",
-  "license": "MIT",
-  "homepage": "https://github.com/viirak/nautui",
-  "repository": "https://github.com/viirak/nautui",
-  "bugs": "https://github.com/viirak/nautui/issues",
+  "description": "Composite components built from @nautui/core for NautUI",
   "keywords": [
     "Astro",
     "UI",
@@ -14,24 +9,29 @@
     "library",
     "NautUI"
   ],
+  "homepage": "https://github.com/viirak/nautui",
+  "bugs": "https://github.com/viirak/nautui/issues",
+  "repository": "https://github.com/viirak/nautui",
+  "license": "MIT",
+  "author": "Virak Hor",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "main": "./src/index.ts",
   "types": "./src/index.d.ts",
   "files": [
     "src"
   ],
-  "exports": {
-    ".": "./src/index.ts"
+  "scripts": {
+    "check-types": "astro check",
+    "lint": "biome check src",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@nautui/core": "workspace:^0.1.1"
   },
   "peerDependencies": {
     "astro": "^6.0.0"
-  },
-  "scripts": {
-    "lint": "biome check src",
-    "check-types": "astro check",
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {
     "access": "public"

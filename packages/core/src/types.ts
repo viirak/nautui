@@ -1,5 +1,5 @@
 export type Size = "sm" | "md" | "lg" | "xl";
-export type Gap = Size;
+export type Gap = Size | "xs" | "xxs" | "0";
 export type Shadow = Size;
 export type Radius = Size;
 export type Color =

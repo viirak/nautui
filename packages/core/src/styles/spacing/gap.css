@@ -1,3 +1,11 @@
+.gap-0 {
+  gap: var(--naut-spacing-0);
+}
+
+.gap-xxs {
+  gap: var(--naut-spacing-xxs);
+}
+
 .gap-xs {
   gap: var(--naut-spacing-xs);
 }

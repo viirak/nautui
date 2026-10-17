@@ -30,13 +30,15 @@ Pass `href` to render an `<a>` instead of a `<button>`:
 | ---------- | --------------------------------------------------------------------- | ----------- | ---------------------------------------------- |
 | `variant`  | `"default" \| "primary" \| "secondary" \| "destructive" \| "outline" \| "outline-primary" \| "outline-secondary" \| "flat" \| "ghost" \| "link" \| "rainbow"` | `"default"` | Visual style. See [variants](#variants).        |
 | `color`    | `Color`                                                                  | —         | Tokenized text color; `variant` owns the fill.   |
-| `size`     | `"sm" \| "md" \| "lg"`                                                | `"md"`      | Button height, padding, and font size.         |
+| `size`     | `"sm" \| "md" \| "lg" \| "xl"`                                      | `"md"`      | Button height, padding, font size, and icon size. All fluid via `clamp()` — heights floor at 2 / 2.5 / 3 / 3.5rem and grow with the viewport, matching the already-fluid padding. |
 | `radius`   | `"none" \| "sm" \| "md" \| "lg" \| "full"`                            | `"md"`      | Border radius. `"full"` makes a pill.          |
 | `rounded`  | *(deprecated)*                                                       | —           | Alias for `radius`; use `radius` instead.      |
 | `border`   | `"none" \| "sm" \| "md" \| "lg" \| "xl"`                              | `"md"`      | Border thickness.                              |
 | `type`     | `"button" \| "submit" \| "reset"`                                     | `"button"`  | Native `type` attribute (buttons only).        |
 | `dark`     | `boolean`                                                             | `false`     | Force dark-mode styling (dark sections/navs).  |
-| `square`   | `boolean`                                                             | `false`     | Equal width/height aspect for icon-only use.   |
+| `square`   | `boolean`                                                             | `false`     | Equal width/height aspect for icon-only use. A 1:1 button carries **no** padding — it opts out of the pill ratio entirely. |
+| `padding`  | `"0" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "xxl"`      | from `size` | One spacing step. Block padding is derived from it (always smaller than inline). Not an axis object. |
+| `margin`   | —                                                                     | —           | Not supported; throws. Wrap in a `Box`.         |
 | `href`     | `string`                                                              | —           | When set, renders an `<a>` with this `href`.   |
 | `class`    | `string`                                                              | —           | Extra class names merged onto the element.     |
 

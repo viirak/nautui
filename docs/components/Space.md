@@ -1,6 +1,6 @@
 # Space
 
-A spacer that adds vertical or horizontal whitespace using the spacing scale, with responsive overrides. Renders a `<div>` sized via CSS classes.
+A spacer that adds vertical or horizontal whitespace using the spacing scale. Renders a `<div>` sized via CSS classes.
 
 ## Usage
 
@@ -21,7 +21,7 @@ import { Space } from "@nautui/core";
 | Prop          | Type                       | Default    | Description                                   |
 | ------------- | -------------------------- | ---------- | --------------------------------------------- |
 | `orientation` | `"vertical" \| "horizontal"` | `"vertical"` | Which axis to size.                        |
-| `size`        | `SpaceSize` or responsive object | `"md"` | Spacing amount.                            |
+| `size`        | `SpaceSize`                  | `"md"`    | Spacing amount.                            |
 | `grow`        | `boolean`                  | `false`    | `flex-grow: 1` — fills remaining space in a flex container. |
 | `class`       | `string`                   | —          | Extra class names merged onto the element.    |
 
@@ -29,19 +29,16 @@ import { Space } from "@nautui/core";
 
 ```ts
 type SpaceSize =
-  | "auto"
-  | "sm" | "md" | "lg" | "xl"          // --naut-spacing-{size}
-  | "display" | "display-lg" | "display-xl" // large display tokens
-  | "full";                              // horizontal only: width: 100%
+  | "auto"                                // height/width: auto
+  | "sm" | "md" | "lg" | "xl"             // --naut-spacing-{size}
+  | "display" | "display-lg" | "display-xl"; // large display tokens
 ```
 
-### Responsive
-
-`size` accepts a per-breakpoint object: `{ base, sm, md, lg, xl }` — e.g. `{ base: "md", lg: "display" }` yields `md` on mobile and the display token from 1042px up.
+Every step resolves to a fluid `clamp()` token (see `--naut-spacing-*` in `global.css`), so a single value already adapts across the viewport range — there is no per-breakpoint `size` override.
 
 ## Notes
 
-- `vertical` sizes `height`; `horizontal` sizes `width`. `full` is only meaningful horizontally (`width: 100%`).
+- `vertical` sizes `height`; `horizontal` sizes `width`. Every size in `SpaceSize` is defined for both axes, so none of them silently no-ops on a given orientation.
 - `grow` is handy inside `Flex`/`Group` to push siblings apart without explicit `justify`.
 - Prefer `Space` over manual margins for consistent vertical rhythm; the padding utilities (`p-*`) handle the inner-padding case.
 

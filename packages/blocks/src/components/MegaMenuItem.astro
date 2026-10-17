@@ -20,17 +20,23 @@ const {
   label,
   ...rest
 } = Astro.props as MegaMenuItemProps;
+
+const dropOffset =
+  (drop && typeof drop === "object" ? drop.offset : undefined) ?? undefined;
+const megaOffset = dropOffset === undefined ? undefined : String(dropOffset);
 ---
 
 <li
+  data-mega-drop={drop ? "" : undefined}
+  data-mega-offset={megaOffset}
+  data-mega-position={drop && typeof drop === "object" && drop.position
+    ? drop.position
+    : undefined}
   class:list={[
     "naut-mega-menu__item",
     drop && "naut-mega-menu__item--drop",
     className,
   ]}
-  data-mega-drop={drop ? "" : undefined}
-  data-mega-position={drop && typeof drop === "object" && drop.position ? drop.position : undefined}
-  data-mega-offset={drop && typeof drop === "object" && drop.offset != null ? String(drop.offset) : undefined}
   {...rest}
 >
   {href && !drop ? (
@@ -55,9 +61,10 @@ const {
         stroke-width="2"
         viewBox="0 0 24 24"
         width="16"
-        xmlns="http://www.w3.org/2000/svg">
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <title>Chevron Down</title>
-        <path d="m6 9 6 6 6-6"/>
+        <path d="m6 9 6 6 6-6" />
       </svg>
     </Button>
   )}

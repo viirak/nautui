@@ -18,17 +18,11 @@ export interface TextProps extends Base, SpacingProps {
   italic?: boolean;
   ls?: Size; // letter spacing shorthand
   nowrap?: boolean;
-  size?: Size;
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   td?: TextDecoration; // text decoration shorthand
   transform?: TextTranform;
   tt?: TextTranform; // text transform shorthand
-  variant?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "destructive"
-    | "link"
-    | "highlight";
+  variant?: "primary" | "secondary" | "destructive" | "link" | "highlight";
   weight?: "light" | "normal" | "medium" | "bold" | "semi-bold" | "extra-bold";
 }
 
@@ -76,8 +70,16 @@ const classList = [
 ];
 ---
 
-{inline && <span class:list={classList} {...rest}><slot /></span>}
-{!inline && <p class:list={classList} {...rest}><slot /></p>}
+{inline && (
+  <span class:list={classList} {...rest}>
+    <slot />
+  </span>
+)}
+{!inline && (
+  <p class:list={classList} {...rest}>
+    <slot />
+  </p>
+)}
 
 <style define:vars={{ textColor: colorValue ?? "" }}>
   .text {
@@ -206,19 +208,19 @@ const classList = [
 
     /* Variants */
     &.variant-primary {
-      color: var(--naut-color-primary);
+      color: var(--naut-color-primary-text);
     }
 
     &.variant-secondary {
-      color: var(--naut-color-secondary);
+      color: var(--naut-color-secondary-text);
     }
 
     &.variant-destructive {
-      color: var(--naut-color-destructive);
+      color: var(--naut-color-destructive-text);
     }
 
     &.variant-link {
-      color: var(--naut-color-link);
+      color: var(--naut-color-link-text);
     }
 
     &.variant-highlight {

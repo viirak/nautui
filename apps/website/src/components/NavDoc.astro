@@ -8,80 +8,129 @@ const currentPath = stripTrailing(Astro.url.pathname);
 
 const generalItems = [
   {
-    title: "Getting Started",
     href: "/docs",
+    title: "Getting Started",
   },
   {
-    title: "Installation",
     href: "/docs/installation",
+    title: "Installation",
   },
   {
-    title: "Colors",
     href: "/docs/colors",
+    title: "Colors",
   },
   {
-    title: "Agent Introduction",
     href: "/docs/introduction-to-agent",
+    title: "Agent Introduction",
   },
   {
-    title: "Mastra Memory",
     href: "/docs/mastra-memory",
+    title: "Mastra Memory",
   },
 ];
 const componentItems = [
   {
-    title: "Button",
     href: "/docs/components/button",
+    title: "Button",
   },
   {
-    title: "Badge",
     href: "/docs/components/badge",
+    title: "Badge",
   },
   {
-    title: "Accordion",
     href: "/docs/components/accordion",
+    title: "Accordion",
   },
   {
-    title: "Grid",
     href: "/docs/components/grid",
+    title: "Grid",
+  },
+  {
+    href: "/docs/components/bento",
+    title: "Bento",
+  },
+  {
+    href: "/docs/components/breadcrumb",
+    title: "Breadcrumb",
+  },
+  {
+    href: "/docs/components/card",
+    title: "Card",
+  },
+  {
+    href: "/docs/components/divider",
+    title: "Divider",
+  },
+  {
+    href: "/docs/components/link",
+    title: "Link",
+  },
+  {
+    href: "/docs/components/list",
+    title: "List",
+  },
+  {
+    href: "/docs/components/marquee",
+    title: "Marquee",
+  },
+  {
+    href: "/docs/components/masonry",
+    title: "Masonry",
+  },
+  {
+    href: "/docs/components/menu",
+    title: "Menu",
+  },
+  {
+    href: "/docs/components/text",
+    title: "Text",
+  },
+  {
+    href: "/docs/components/text-rotate",
+    title: "Text Rotate",
+  },
+  {
+    href: "/docs/components/title",
+    title: "Title",
   },
 ];
 
 const fundamentalItems = [
   {
-    title: "Project Structure",
     href: "/docs/components/button",
+    title: "Project Structure",
   },
   {
-    title: "Manual Installation",
     href: "/docs/components/manual-installation",
+    title: "Manual Installation",
   },
   {
-    title: "Configure Tools",
     href: "/docs/components/configure-tools",
+    title: "Configure Tools",
   },
 ];
 
 const navItems = {
-  general: { title: "General", items: generalItems },
-  components: { title: "Components", items: componentItems },
-  fundamentals: { title: "Fundamentals", items: fundamentalItems },
+  components: { items: componentItems, title: "Components" },
+  fundamentals: { items: fundamentalItems, title: "Fundamentals" },
+  general: { items: generalItems, title: "General" },
 };
 ---
 
 <Menu>
   {Object.entries(navItems).map(([key, { title, items }]) => (
-      <MenuGroup collapsible key={key} label={title} line={false}>
-        <Camera size="20" slot="icon" />
-        {items.map(({ title, href }) => (
-          <MenuItem
-            active={currentPath === stripTrailing(href)}
-            activeVariant="primary"
-            href={href}
-            key={href}>
-            {title}
-          </MenuItem>
-        ))}
-      </MenuGroup>
-    ))}
+    <MenuGroup collapsible key={key} label={title} line={false}>
+      <Camera size="20" slot="icon" />
+      {items.map(({ title: itemTitle, href }) => (
+        <MenuItem
+          active={currentPath === stripTrailing(href)}
+          activeVariant="primary"
+          href={href}
+          key={href}
+        >
+          {itemTitle}
+        </MenuItem>
+      ))}
+    </MenuGroup>
+  ))}
 </Menu>

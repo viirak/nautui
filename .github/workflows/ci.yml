@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.11.2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Biome is idempotent on this repo, so formatting the tree must be a
+      # no-op. This is the gate that catches a non-idempotent formatter before
+      # it turns into unexplained churn: under 2.4.12 a multi-line CSS comment
+      # in an Astro <style> block was re-indented on every run and `pnpm fix`
+      # could never reach a fixed point (biomejs/biome#10515, fixed in 2.5.x).
+      #
+      # `pnpm fix` exits non-zero on findings it cannot auto-fix (the
+      # `useSortedAttributes` assists), so its status is deliberately ignored
+      # and only the resulting tree state is asserted.
+      - name: Formatter converges
+        run: |
+          pnpm fix || echo "::notice::fix reported unfixable findings; asserting tree state instead"
+          git diff --exit-code
+
+      - name: Lint @nautui/core
+        run: pnpm --filter @nautui/core lint
+
+      # @astrojs/check is a dependency of apps/website, not of core, so the
+      # binary is borrowed from there. Deliberately scoped to packages/core:
+      # apps/website carries 24 pre-existing type errors (Badge is called with
+      # variant="solid" and variant="flat", neither of which its prop type
+      # allows), and gating on those would block every PR until they are fixed
+      # on their own terms.
+      - name: Type-check @nautui/core
+        working-directory: packages/core
+        run: ../../apps/website/node_modules/.bin/astro-check
+
+      - name: Build
+        run: pnpm --filter naut-ui-website build

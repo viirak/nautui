@@ -16,21 +16,21 @@ import {
 
 <Section border={{ top: "md" }}>
   <Title>Card</Title>
-  <Box mb="md" border="md">
-    <Grid columns={3} border="md">
+  <Box border="md" mb="md">
+    <Grid border="md" columns={3}>
       <GridItem>
         <Card>
-          <Badge variant="flat" iconOnly>
+          <Badge iconOnly variant="surface">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
               fill="none"
+              height="48"
               stroke="currentColor"
-              stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              width="48"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <title>Weather</title>
               <path d="M12 2v2" />
@@ -53,16 +53,16 @@ import {
             <Button href="/about" variant="ghost">
               <span>Learn More</span>
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
+                class="lucide lucide-arrow-right-icon lucide-arrow-right"
                 fill="none"
+                height="20"
                 stroke="currentColor"
-                stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-arrow-right-icon lucide-arrow-right"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <title>Arrow Right</title>
                 <path d="M5 12h14" />
@@ -74,18 +74,18 @@ import {
       </GridItem>
       <GridItem>
         <Card>
-          <Badge variant="flat" iconOnly>
+          <Badge iconOnly variant="surface">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
+              class="lucide lucide-haze-icon lucide-haze"
               fill="none"
+              height="48"
               stroke="currentColor"
-              stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-haze-icon lucide-haze"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              width="48"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <title>Haze</title>
               <path d="m5.2 6.2 1.4 1.4" />
@@ -109,18 +109,18 @@ import {
       </GridItem>
       <GridItem>
         <Card>
-          <Badge variant="flat" iconOnly>
+          <Badge iconOnly variant="surface">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
+              class="lucide lucide-crown-icon lucide-crown"
               fill="none"
+              height="48"
               stroke="currentColor"
-              stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-crown-icon lucide-crown"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              width="48"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <title>Crown</title>
               <path
@@ -143,12 +143,12 @@ import {
   <Box border="md">
     <Grid columns={3}>
       <GridItem>
-        <Card shadow="sm" radius="sm" border="md">
+        <Card border="md" radius="sm" shadow="sm">
           <slot slot="header">
             <Image
+              alt="Example"
               fluid
               src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-              alt="Example"
             />
           </slot>
           <Title level={3}>Card with Small Border, Radius, and Shadow</Title>
@@ -161,12 +161,12 @@ import {
         </Card>
       </GridItem>
       <GridItem>
-        <Card shadow="md" radius="md" border="md">
+        <Card border="md" radius="md" shadow="md">
           <slot slot="header">
             <Image
+              alt="Example"
               fluid
               src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-              alt="Example"
             />
           </slot>
           <Title level={3}>Card with Medium Border, Radius, and Shadow</Title>
@@ -179,12 +179,12 @@ import {
         </Card>
       </GridItem>
       <GridItem>
-        <Card shadow="lg" radius="lg" border="md">
+        <Card border="md" radius="lg" shadow="lg">
           <slot slot="header">
             <Image
+              alt="Example"
               fluid
               src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-              alt="Example"
             />
           </slot>
           <Title level={3}>Card with Large Shadow and Radius</Title>
@@ -198,7 +198,7 @@ import {
       </GridItem>
       <GridItem>
         <Card variant="rainbow">
-          <Title mt="0" level={3}>Card with Rainbow Variant</Title>
+          <Title level={3} mt="0">Card with Rainbow Variant</Title>
           <Text>
             Over time, Mermind learns what normal looks like for your specific
             store — your products, your workflows, your integrations. When
@@ -209,7 +209,7 @@ import {
       </GridItem>
       <GridItem>
         <Card variant="light">
-          <Title mt="0" level={3}>Card with Light Variant</Title>
+          <Title level={3} mt="0">Card with Light Variant</Title>
           <Text>
             Over time, Mermind learns what normal looks like for your specific
             store — your products, your workflows, your integrations. When
@@ -219,8 +219,8 @@ import {
         </Card>
       </GridItem>
       <GridItem>
-        <Card variant="surface" hover="light">
-          <Title mt="0" level={3}>Card with Surface Variant</Title>
+        <Card hover="light" variant="surface">
+          <Title level={3} mt="0">Card with Surface Variant</Title>
           <Text>
             Over time, Mermind learns what normal looks like for your specific
             store — your products, your workflows, your integrations. When
@@ -230,9 +230,9 @@ import {
         </Card>
       </GridItem>
       <GridItem>
-        <Card variant="surface" hover="light" badged>
-          <Badge slot="badge" variant="solid">Most Popular</Badge>
-          <Title mt="0" level={3}>Card with Badge</Title>
+        <Card badged hover="light" variant="surface">
+          <Badge slot="badge" variant="primary">Most Popular</Badge>
+          <Title level={3} mt="0">Card with Badge</Title>
           <Text>
             Over time, Mermind learns what normal looks like for your specific
             store — your products, your workflows, your integrations. When

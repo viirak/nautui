@@ -17,7 +17,7 @@ const {
 ---
 
 <div class:list={["naut-bento", className]} {...rest}><slot /></div>
-<style define:vars={{ bentoColumns: columns, bentoRows: rows, bentoGap: gap }}>
+<style define:vars={{ bentoColumns: columns, bentoGap: gap, bentoRows: rows }}>
   .naut-bento {
     --naut-bento-cols: var(--bentoColumns);
     --naut-bento-rows: var(--bentoRows);

@@ -28,16 +28,17 @@ const {
   {...rest}
 >
   {collapsible ? (
-      <button aria-expanded={open} class="naut-menu-group__toggle" type="button">
-        <slot name="icon" />
-        {label}
-        <span aria-hidden="true" class="naut-menu-group__chevron" />
-      </button>
-    ) : (
-      <span class="naut-menu-group__label">
-        <slot name="icon" />
-        {label}</span>
-    )}
+    <button aria-expanded={open} class="naut-menu-group__toggle" type="button">
+      <slot name="icon" />
+      {label}
+      <span aria-hidden="true" class="naut-menu-group__chevron" />
+    </button>
+  ) : (
+    <span class="naut-menu-group__label">
+      <slot name="icon" />
+      {label}
+    </span>
+  )}
   <ul class:list={["naut-menu-group__list", line === false && "no-line"]}>
     <slot />
   </ul>

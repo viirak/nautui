@@ -40,7 +40,8 @@ const resolvedVariant = variant === "halflight" ? "highlight" : variant;
     variant && `variant--${resolvedVariant}`,
     rotate && `rotate--${rotate}`,
     gradient && "gradient",
-    className]}
+    className,
+  ]}
   {...rest}
 >
   <slot />
@@ -72,17 +73,17 @@ const resolvedVariant = variant === "halflight" ? "highlight" : variant;
     }
 
     &.variant--primary {
-      color: var(--naut-color-primary);
+      color: var(--naut-color-primary-text);
       background: none;
     }
 
     &.variant--secondary {
-      color: var(--naut-color-secondary);
+      color: var(--naut-color-secondary-text);
       background: none;
     }
 
     &.variant--destructive {
-      color: var(--naut-color-destructive);
+      color: var(--naut-color-destructive-text);
       background: none;
     }
 

@@ -6,7 +6,7 @@ export interface MenuItemProps extends Base {
   active?: boolean;
   activeVariant?: "link" | "primary" | "surface";
   dimmed?: boolean;
-  href: string;
+  href?: string;
   radius?: Radius;
   size?: Size;
 }
@@ -34,11 +34,19 @@ const classList = [
 ---
 
 <li class="naut-menu-item">
-  {href && <a href={href} class:list={classList} {...rest}>
-    <span class="naut-menu-item__left"><slot name="before" /></span>
-    <span class="naut-menu-item__main"><slot /></span>
-    <span class="naut-menu-item__right"><slot name="after" /></span>
-  </a>}
+  {href && (
+    <a class:list={classList} href={href} {...rest}>
+      <span class="naut-menu-item__left">
+        <slot name="before" />
+      </span>
+      <span class="naut-menu-item__main">
+        <slot />
+      </span>
+      <span class="naut-menu-item__right">
+        <slot name="after" />
+      </span>
+    </a>
+  )}
   {!href && <slot />}
   <slot name="sub" />
 </li>
@@ -77,7 +85,7 @@ const classList = [
       &:hover {
         background-color: var(--naut-color-base-200);
         &.active-link {
-          color: var(--naut-color-link);
+          color: var(--naut-color-link-text);
         }
       }
 
@@ -88,7 +96,7 @@ const classList = [
 
         &.active-primary {
           color: var(--naut-color-primary-content);
-          background-color: var(--naut-color-primary);
+          background-color: var(--naut-color-primary-fill);
         }
 
         &.active-surface {
@@ -96,9 +104,9 @@ const classList = [
         }
 
         &.active-link {
-          color: var(--naut-color-link);
+          color: var(--naut-color-link-text);
           &::before {
-            background-color: var(--naut-color-link);
+            background-color: var(--naut-color-link-fill);
           }
         }
       }
